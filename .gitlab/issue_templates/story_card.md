@@ -5,8 +5,5 @@
 WER WAS WARUM (schätzbar, testbar, business value)
 
 
-**Angenommen** < Vorbedingung >,
-
-**wenn** < Aktion >,
-
-**dann** < Ergebnis >
+**Abgeschlossen wenn**
+- [ ] 
