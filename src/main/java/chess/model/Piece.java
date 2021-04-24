@@ -18,7 +18,7 @@ public class Piece {
     public static final int typeMask   = 0b00111;
     public static final int blackMask  = 0b10000;
     public static final int whiteMask  = 0b01000;
-    public static final int colourMask = whiteMask | blackMask;
+    public static final int colorMask = whiteMask | blackMask;
 
     public static final String UTFSymbolNone        = " ";
     public static final String UTFSymbolKingWhite   = "♔";
@@ -43,7 +43,7 @@ public class Piece {
     public static Boolean isColor(int piece, int color) {
         // TODO write tests
         // TODO write function
-        return true;
+        return (piece & colorMask) == color;
     }
 
 
