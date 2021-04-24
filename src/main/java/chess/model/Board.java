@@ -7,6 +7,9 @@ import java.util.ArrayList;
  * Instances of Board will be used as game history and as parameter for the engine.
  */
 public class Board {
+    public static final String fileNames = "abcdefgh";
+    public static final String rankNames = "12345678";
+
     // representing the chess board where squares[0] is "a1" and squares[63] is "h8"
     private int[] squares;
     private int turnColor;
@@ -26,8 +29,75 @@ public class Board {
      * @param fenString Integer representation starting square
      */
     public Board(String fenString) {
-        // TODO write tests
-        // TODO write function
+        this();
+        squares = Board.squaresFromFENString(fenString);
+    }
+
+    /**
+     * Used to init the squares field
+     * @param fenString the board position as FEN-String
+     * @return returns the squares representation for fenString
+     */
+    private static int[] squaresFromFENString(String fenString) {
+
+        int[] squares = new int[64];
+        int position = 0;
+        for (Character s: fenString.toCharArray()) {
+            if (Character.isDigit(s)) {
+                position += Character.getNumericValue(s);
+                continue;
+            }
+
+            switch (s) {
+                case 'k':
+                    squares[position] = Piece.King + Piece.Black;
+                    break;
+                case 'K':
+                    squares[position] = Piece.King + Piece.White;
+                    break;
+                case 'p':
+                    squares[position] = Piece.Pawn + Piece.Black;
+                    break;
+                case 'P':
+                    squares[position] = Piece.Pawn + Piece.White;
+                    break;
+                case 'n':
+                    squares[position] = Piece.Knight + Piece.Black;
+                    break;
+                case 'N':
+                    squares[position] = Piece.Knight + Piece.White;
+                    break;
+                case 'b':
+                    squares[position] = Piece.Bishop + Piece.Black;
+                    break;
+                case 'B':
+                    squares[position] = Piece.Bishop + Piece.White;
+                    break;
+                case 'r':
+                    squares[position] = Piece.Rook + Piece.Black;
+                    break;
+                case 'R':
+                    squares[position] = Piece.Rook + Piece.White;
+                    break;
+                case 'q':
+                    squares[position] = Piece.Queen + Piece.Black;
+                    break;
+                case 'Q':
+                    squares[position] = Piece.Queen + Piece.White;
+                    break;
+                case '/':
+                    // increase position until nextline
+                    if (position % 8 == 0) {
+                        position -= 1;
+                    } else {
+                        position += 8 - position % 8;
+                    }
+                    break;
+            }
+            position += 1;
+        }
+
+        return squares;
     }
 
 

@@ -4,25 +4,31 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BoardTest {
+public class BoardTest {
 
     @Test
-    void makeMove() {
+    public void squaresFromFENString() {
+        String fen = "kqrbnp2/8/7p/4p2N/3p3B/2P1P2R/7Q/7K";
+        Board b = new Board(fen);
     }
 
     @Test
-    void positionToIndex() {
+    public void makeMove() {
     }
 
     @Test
-    void testToString() {
+    public void positionToIndex() {
     }
 
     @Test
-    void getPieceAt() {
+    public void testToString() {
     }
 
     @Test
-    void getPiecePositionsFor() {
+    public void getPieceAt() {
+    }
+
+    @Test
+    public void getPiecePositionsFor() {
     }
 }
