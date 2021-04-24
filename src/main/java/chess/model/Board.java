@@ -140,18 +140,24 @@ public class Board {
     public String toString() {
         // TODO write tests
         // TODO write function
-        return "";
+
+        // temporary solution to get any output:
+        StringBuilder s = new StringBuilder();
+        for (int i=0; i < 64; i++) {
+            if (0 < i && i % 8 == 0) s.append("\n");
+            s.append(Piece.toString(squares[i]));
+        }
+        return s.toString();
     }
 
 
     /**
      * Returns the current piece at position squareIndex
      * @param squareIndex where to look for piece
+     * @return the int value of peace at squareIndex position
      */
     public int getPieceAt(int squareIndex) {
-        // TODO write tests
-        // TODO write function
-        return 0;
+        return squares[squareIndex];
     }
 
 
@@ -162,7 +168,11 @@ public class Board {
     public ArrayList<Integer> getPiecePositionsFor(int color){
         // TODO write tests
         // TODO write function
-        return null;
+        ArrayList<Integer> positions = new ArrayList<>();
+        for (int i=0; i < 64; i++) {
+            if (Piece.isColor(squares[i], color)) positions.add(i);
+        }
+        return positions;
     }
 
 }
