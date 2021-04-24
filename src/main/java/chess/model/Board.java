@@ -8,16 +8,16 @@ import java.util.ArrayList;
  */
 public class Board {
     // representing the chess board where squares[0] is "a1" and squares[63] is "h8"
-    private int[] squares = new int[64];
-    private int turnColor = Piece.White;
+    private int[] squares;
+    private int turnColor;
 
 
     /**
      * Construct empty Board instance
      */
     public Board() {
-        // TODO write tests
-        // TODO write function
+        this.squares = new int[64];
+        this.turnColor = Piece.White;
     }
 
 
@@ -34,7 +34,7 @@ public class Board {
     /**
      * Construct Board instance from fen string
      * @param fenString board position in Forsyth–Edwards Notation
-     * @param turnColor
+     * @param turnColor which color is next turn
      */
     public Board(String fenString, int turnColor) {
         // TODO write tests
