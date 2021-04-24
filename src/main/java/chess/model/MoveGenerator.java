@@ -58,15 +58,22 @@ public class MoveGenerator {
 
         // if still in starting row, move two squares forward
         forwardPosition = startSquare + 2 * direction;
-        int rank = Coordinate.fromIndex(forwardPosition)[1];
+        int rank = Coordinate.fromIndex(startSquare)[1];
         if (rank == 1 && direction == DOWN || rank == 6 && direction == UP) {
             if (board.getPieceAt(forwardPosition) == Piece.None)
                 generatedMoves.add(new Move(startSquare, forwardPosition, Move.PawnTwoForward));
         }
 
         // if possible, capture diagonal pieces
-        // TODO Check if diagonalPosition is a en passant capture square
-        
+        for (int diagonalPosition : new int[]{startSquare+direction+LEFT, startSquare+direction+RIGHT}) {
+
+            if (!Coordinate.isOnBorder(startSquare)) {
+                if (Piece.isColor(board.getPieceAt(diagonalPosition), opponentColor))
+                    generatedMoves.add(new Move(startSquare, diagonalPosition));
+                if (board.getEnPassantSquare() == diagonalPosition)
+                    generatedMoves.add(new Move(startSquare, diagonalPosition, Move.EnPassantCapture));
+            }
+        }
 
         return generatedMoves;
     }

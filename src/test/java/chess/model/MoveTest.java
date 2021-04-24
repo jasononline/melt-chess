@@ -23,6 +23,16 @@ public class MoveTest {
     }
 
     @Test
+    public void equals() {
+        Move m1 = new Move(1, 2, 1);
+        Move m2 = new Move(1, 2, 1);
+        Move m3 = new Move(1, 3, 2);
+        assertEquals(m1, m2);
+        assertEquals(m2, m1);
+        assertNotEquals(m1, m3);
+    }
+
+    @Test
     public void testToString() {
     }
 }

@@ -37,26 +37,43 @@ public class MoveGeneratorTest {
         for (Move expected : expectedMoves) {
             found = false;
             for (Move generated : generatedMoves) {
-                if (expected.equals(generated)) found = true;
+                if (expected.equals(generated)) {
+                    found = true;
+                    break;
+                }
             }
             assertTrue(found);
         }
 
+
+    }
+
+    /**
+     * Tests for the en passant capture rule of the pawn
+     */
+    @Test
+    public void testPawnEnPassantCapture() {
         // test en passant capture
-        fen = "rnbqkbnr/ppp1pppp/8/3pP3/4P3/8/PPPPPPPP/RNBQKBNR";
-        board = new Board(fen);
+        String fen = "rnbqkbnr/ppp1pppp/8/3pP3/4P3/8/PPPPPPPP/RNBQKBNR";
+        Board board = new Board(fen);
         board.setEnPassantSquare(19);
         Move expectedMove = new Move(28, 19, Move.EnPassantCapture);
 
-        generator = new MoveGenerator(board);
-        generatedMoves = generator.generateMoves();
+        MoveGenerator generator = new MoveGenerator(board);
+        ArrayList<Move> generatedMoves = generator.generateMoves();
         assertTrue(generatedMoves.contains(expectedMove));
     }
 
+    /**
+     * Test MoveGenerator on empty board... for the coverage!
+     */
     @Test
     public void generateMoves() {
         // test pawn rules
-        testPawnRules();
+        Board b = new Board();
+        MoveGenerator generator = new MoveGenerator(b);
+        ArrayList<Move> moves = generator.generateMoves();
+        assertTrue(moves.isEmpty());
     }
 
     @Test

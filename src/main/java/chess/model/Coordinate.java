@@ -54,4 +54,13 @@ public class Coordinate {
         return fromIndex(index)[1] == 7;
     }
 
+
+    /**
+     * Returns True if index is any of the border squares
+     * @param index the position in the board.squares array
+     */
+    public static boolean isOnBorder(int index) {
+        return isUpMost(index) || isDownMost(index) || isLeftMost(index) || isRightMost(index);
+    }
+
 }

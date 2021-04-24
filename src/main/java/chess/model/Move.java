@@ -72,8 +72,13 @@ public class Move {
      * @param other the other Move object
      * @return true if objects have same fields else false
      */
-    public boolean equals(Move other) {
-        return startSquare == other.startSquare && targetSquare == other.targetSquare && flag == other.flag;
+    public boolean equals(Object other) {
+        if (other instanceof Move) {
+            Move o = (Move) other;
+            return startSquare == o.startSquare && targetSquare == o.targetSquare && flag == o.flag;
+        } else {
+            return super.equals(other);
+        }
     }
 
 }
