@@ -44,32 +44,29 @@ public class MoveGenerator {
 
         // move forward if possible
         int forwardPosition = startSquare + direction;
-        if (8 <= forwardPosition && forwardPosition < 56 && board.getPieceAt(forwardPosition) == Piece.None) {
+        if (!Coordinate.isUpMost(forwardPosition) && !Coordinate.isDownMost(forwardPosition)
+                && board.getPieceAt(forwardPosition) == Piece.None) {
             generatedMoves.add(new Move(startSquare, forwardPosition));
         }
 
-        // if moving forward lead to the last square, exchanging the piece is possible
-        if (board.getPieceAt(forwardPosition) == Piece.None && (
-                0 <= forwardPosition && forwardPosition < 8 ||
-                56 <= forwardPosition && forwardPosition < 64)) {
+        // if moving forward lead to the last square in the file, exchanging the piece is possible
+        if (board.getPieceAt(forwardPosition) == Piece.None
+                && (Coordinate.isUpMost(forwardPosition) || Coordinate.isDownMost(forwardPosition))) {
             // Make the default queen exchange
             generatedMoves.add(new Move(startSquare, forwardPosition, Move.PromoteToQueen));
         }
 
         // if still in starting row, move two squares forward
         forwardPosition = startSquare + 2 * direction;
-        if (8 <= startSquare && startSquare < 16 && direction == DOWN ||
-                48 <= startSquare && startSquare < 56 && direction == UP) {
+        int rank = Coordinate.fromIndex(forwardPosition)[1];
+        if (rank == 1 && direction == DOWN || rank == 6 && direction == UP) {
             if (board.getPieceAt(forwardPosition) == Piece.None)
                 generatedMoves.add(new Move(startSquare, forwardPosition, Move.PawnTwoForward));
         }
 
         // if possible, capture diagonal pieces
         // TODO Check if diagonalPosition is a en passant capture square
-        for (int diagonalPosition : new int[]{startSquare+direction+LEFT, startSquare+direction+RIGHT}) {
-            if (Piece.isColor(board.getPieceAt(diagonalPosition), opponentColor))
-                generatedMoves.add(new Move(startSquare, diagonalPosition));
-        }
+        
 
         return generatedMoves;
     }

@@ -8,9 +8,9 @@ public class CoordinateTest {
 
     @Test
     public void indexToCoordinate() {
-        assertArrayEquals(Coordinate.indexToCoordinate(0), new int[]{0, 0});
-        assertArrayEquals(Coordinate.indexToCoordinate(63), new int[]{7, 7});
-        assertArrayEquals(Coordinate.indexToCoordinate(33), new int[]{1, 4});
+        assertArrayEquals(Coordinate.fromIndex(0), new int[]{0, 0});
+        assertArrayEquals(Coordinate.fromIndex(63), new int[]{7, 7});
+        assertArrayEquals(Coordinate.fromIndex(33), new int[]{1, 4});
     }
 
     @Test

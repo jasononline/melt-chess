@@ -13,7 +13,7 @@ public class Coordinate {
      * @param index the position in the board.squares array
      * @return array containing {file, rank}
      */
-    public static int[] indexToCoordinate(int index) {
+    public static int[] fromIndex(int index) {
         int file = index % 8;
         int rank = index / 8;
         return new int[] {file, rank};
@@ -24,7 +24,7 @@ public class Coordinate {
      * @param index the position in the board.squares array
      */
     public static boolean isLeftMost(int index) {
-        return indexToCoordinate(index)[0] == 0;
+        return fromIndex(index)[0] == 0;
     }
 
 
@@ -33,7 +33,7 @@ public class Coordinate {
      * @param index the position in the board.squares array
      */
     public static boolean isRightMost(int index) {
-        return indexToCoordinate(index)[0] == 7;
+        return fromIndex(index)[0] == 7;
     }
 
 
@@ -42,7 +42,7 @@ public class Coordinate {
      * @param index the position in the board.squares array
      */
     public static boolean isUpMost(int index) {
-        return indexToCoordinate(index)[1] == 0;
+        return fromIndex(index)[1] == 0;
     }
 
 
@@ -51,7 +51,7 @@ public class Coordinate {
      * @param index the position in the board.squares array
      */
     public static boolean isDownMost(int index) {
-        return indexToCoordinate(index)[1] == 7;
+        return fromIndex(index)[1] == 7;
     }
 
 }
