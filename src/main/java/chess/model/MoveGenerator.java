@@ -10,7 +10,7 @@ public class MoveGenerator {
 
     // constants for directions: newPosition = currentPosition + <direction>
     public static final int UP = -8;
-    public static final int DOWN = -8;
+    public static final int DOWN = 8;
     public static final int LEFT = -1;
     public static final int RIGHT = 1;
     public static final int UPLEFT = -7;
@@ -33,59 +33,84 @@ public class MoveGenerator {
 
 
     /**
+     * Generates moves according to the rules for the pawn piece
+     * @param startSquare the position of the pawn
+     * @return ArrayList of Move objects
+     */
+    private ArrayList<Move> generatePawnMoves(int startSquare) {
+
+        ArrayList<Move> generatedMoves = new ArrayList<>();
+        int direction = teamColor == Piece.Black ? DOWN : UP;
+
+        // move forward if possible
+        int forwardPosition = startSquare + direction;
+        if (8 <= forwardPosition && forwardPosition < 56 && board.getPieceAt(forwardPosition) == Piece.None) {
+            generatedMoves.add(new Move(startSquare, forwardPosition));
+        }
+
+        // if moving forward lead to the last square, exchanging the piece is possible
+        if (board.getPieceAt(forwardPosition) == Piece.None && (
+                0 <= forwardPosition && forwardPosition < 8 ||
+                56 <= forwardPosition && forwardPosition < 64)) {
+            // Make the default queen exchange
+            generatedMoves.add(new Move(startSquare, forwardPosition, Move.PromoteToQueen));
+        }
+
+        // if still in starting row, move two squares forward
+        forwardPosition = startSquare + 2 * direction;
+        if (8 <= startSquare && startSquare < 16 && direction == DOWN ||
+                48 <= startSquare && startSquare < 56 && direction == UP) {
+            if (board.getPieceAt(forwardPosition) == Piece.None)
+                generatedMoves.add(new Move(startSquare, forwardPosition, Move.PawnTwoForward));
+        }
+
+        // if possible, capture diagonal pieces
+        // TODO Check if diagonalPosition is a en passant capture square
+        for (int diagonalPosition : new int[]{startSquare+direction+LEFT, startSquare+direction+RIGHT}) {
+            if (Piece.isColor(board.getPieceAt(diagonalPosition), opponentColor))
+                generatedMoves.add(new Move(startSquare, diagonalPosition));
+        }
+
+        return generatedMoves;
+    }
+
+
+    /**
      * Generate a list of all possible moves
-     * @param board the current state of the game
      */
-    public static ArrayList<Move> generateMoves(Board board) {
-        // TODO write tests
-        // TODO write function
-        return null;
-    }
+    public ArrayList<Move> generateMoves() {
+        // TODO write tests (king, queen, rook, bishop, knight, pawn)
+        ArrayList<Move> generatedMoves = new ArrayList<>();
+        ArrayList<Integer> teamPositions = teamColor == Piece.Black ? blackPiecePositions : whitePiecePositions;
 
-
-    /**
-     * Generate a list of all possible moves for pieces of a given color
-     * @param board the current state of the game
-     * @param color pieces color to find moves for
-     */
-    public static ArrayList<Move> generateMovesFor(Board board, int color) {
-        // TODO write tests
-        // TODO write function
-        return null;
-    }
-
-
-    /**
-     * Generate a list of all possible moves for pieces of the current color
-     * @param board the current state of the game
-     */
-    public static ArrayList<Move> generateNextMoves(Board board) {
-        // TODO write tests
-        // TODO write function
-        return null;
+        for (int position : teamPositions) {
+            generatedMoves.addAll(generateMovesFrom(position));
+        }
+        return generatedMoves;
     }
 
 
     /**
      * Returns true if the move is legal according to the rules of chess
-     * @param board the current state of the game
      * @param move the move to check
      */
-    public static ArrayList<Move> isValid(Board board, Move move) {
+    public boolean isValid(Move move) {
         // TODO write tests
         // TODO write function
-        return null;
+        return false;
     }
 
 
     /**
      * Generate a list of all possible moves starting on a given square
-     * @param board the current state of the game
      * @param startSquare the starting square
+     * @return ArrayList of Move objects
      */
-    public static ArrayList<Move> generateMovesFrom(Board board, int startSquare) {
-        // TODO write tests
+    public ArrayList<Move> generateMovesFrom(int startSquare) {
+        // gets tested via generateMoves()
         // TODO write function
+        if (Piece.getType(board.getPieceAt(startSquare)) == Piece.Pawn)
+            return generatePawnMoves(startSquare);
         return null;
     }
 

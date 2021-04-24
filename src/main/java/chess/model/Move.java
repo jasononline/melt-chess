@@ -64,7 +64,16 @@ public class Move {
     public String toString() {
         // TODO write tests
         // TODO write function
-        return "";
+        return startSquare + "->" + targetSquare +" " +flag;
+    }
+
+    /**
+     * Checks whether this is the same as other move
+     * @param other the other Move object
+     * @return true if objects have same fields else false
+     */
+    public boolean equals(Move other) {
+        return startSquare == other.startSquare && targetSquare == other.targetSquare && flag == other.flag;
     }
 
 }

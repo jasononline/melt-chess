@@ -125,12 +125,21 @@ public class Board {
         return this;
     }
 
+
     /**
      * Who's turn is it
      * @return int of current turn color
      */
     public int getTurnColor() {
         return turnColor;
+    }
+
+
+    /**
+     * Set who's turn is it
+     */
+    public void setTurnColor(int turnColor) {
+        this.turnColor = turnColor;
     }
 
     /**
