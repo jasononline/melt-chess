@@ -19,7 +19,12 @@ public class PieceTest {
     }
 
     @Test
-    public void color() {
+    public void getColor() {
+        assertEquals(Piece.getColor(Piece.None), 0);
+        assertEquals(Piece.getColor(Piece.King + Piece.White), Piece.White);
+        assertEquals(Piece.getColor(Piece.King + Piece.Black), Piece.Black);
+        assertEquals(Piece.getColor(Piece.Queen + Piece.White), Piece.White);
+        assertEquals(Piece.getColor(Piece.Queen + Piece.Black), Piece.Black);
     }
 
     @Test

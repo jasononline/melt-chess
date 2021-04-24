@@ -41,8 +41,6 @@ public class Piece {
      * @param color Integer representation of the color
      */
     public static Boolean isColor(int piece, int color) {
-        // TODO write tests
-        // TODO write function
         return (piece & colorMask) == color;
     }
 
@@ -51,10 +49,8 @@ public class Piece {
      * Returns the Integer value of color of the piece
      * @param piece Integer representation of the piece
      */
-    public static Integer color(int piece) {
-        // TODO write tests
-        // TODO write function
-        return 8;
+    public static Integer getColor(int piece) {
+        return piece & colorMask;
     }
 
 
