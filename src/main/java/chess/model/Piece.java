@@ -59,8 +59,6 @@ public class Piece {
      * @param piece Integer representation of the piece
      */
     public static Integer getType(int piece) {
-        // TODO write tests
-        // TODO write function
         return piece & typeMask;
     }
 
@@ -70,9 +68,22 @@ public class Piece {
      * @param piece Integer representation of the piece
      */
     public static String toString(int piece) {
-        // TODO write tests
-        // TODO write function
-        return "K";
+        switch (getType(piece)) {
+            case Piece.King:
+                return isColor(piece, Piece.Black) ? UTFSymbolKingBlack : UTFSymbolKingWhite;
+            case Piece.Pawn:
+                return isColor(piece, Piece.Black) ? UTFSymbolPawnBlack : UTFSymbolPawnWhite;
+            case Piece.Knight:
+                return isColor(piece, Piece.Black) ? UTFSymbolKnightBlack : UTFSymbolKnightWhite;
+            case Piece.Bishop:
+                return isColor(piece, Piece.Black) ? UTFSymbolBishopBlack : UTFSymbolBishopWhite;
+            case Piece.Rook:
+                return isColor(piece, Piece.Black) ? UTFSymbolRookBlack : UTFSymbolRookWhite;
+            case Piece.Queen:
+                return isColor(piece, Piece.Black) ? UTFSymbolQueenBlack : UTFSymbolQueenWhite;
+            default:
+                return UTFSymbolNone;
+        }
     }
 
 }

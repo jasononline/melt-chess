@@ -38,5 +38,18 @@ public class PieceTest {
 
     @Test
     public void testToString() {
+        assertEquals(Piece.toString(Piece.King + Piece.Black), Piece.UTFSymbolKingBlack);
+        assertEquals(Piece.toString(Piece.King + Piece.White), Piece.UTFSymbolKingWhite);
+        assertEquals(Piece.toString(Piece.Pawn + Piece.Black), Piece.UTFSymbolPawnBlack);
+        assertEquals(Piece.toString(Piece.Pawn + Piece.White), Piece.UTFSymbolPawnWhite);
+        assertEquals(Piece.toString(Piece.Knight + Piece.Black), Piece.UTFSymbolKnightBlack);
+        assertEquals(Piece.toString(Piece.Knight + Piece.White), Piece.UTFSymbolKnightWhite);
+        assertEquals(Piece.toString(Piece.Bishop + Piece.Black), Piece.UTFSymbolBishopBlack);
+        assertEquals(Piece.toString(Piece.Bishop + Piece.White), Piece.UTFSymbolBishopWhite);
+        assertEquals(Piece.toString(Piece.Rook + Piece.Black), Piece.UTFSymbolRookBlack);
+        assertEquals(Piece.toString(Piece.Rook + Piece.White), Piece.UTFSymbolRookWhite);
+        assertEquals(Piece.toString(Piece.Queen + Piece.Black), Piece.UTFSymbolQueenBlack);
+        assertEquals(Piece.toString(Piece.Queen + Piece.White), Piece.UTFSymbolQueenWhite);
+        assertEquals(Piece.toString(Piece.None), Piece.UTFSymbolNone);
     }
 }
