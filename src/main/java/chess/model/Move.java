@@ -18,6 +18,7 @@ public class Move {
 
     private int startSquare;
     private int targetSquare;
+    private int flag;
 
     /**
      * Construct Move
@@ -25,8 +26,9 @@ public class Move {
      * @param targetSquare Integer representation of the target square
      */
     public Move(int startSquare, int targetSquare) {
-        // TODO write tests
-        // TODO write function
+        this.startSquare = startSquare;
+        this.targetSquare = targetSquare;
+        this.flag = 0;
     }
 
     /**
@@ -36,8 +38,8 @@ public class Move {
      * @param flag set any of the flags 0 to 7
      */
     public Move(int startSquare, int targetSquare, int flag) {
-        // TODO write tests
-        // TODO write function
+        this(startSquare, targetSquare);
+        this.flag = flag;
     }
 
 
