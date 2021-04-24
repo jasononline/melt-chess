@@ -28,7 +28,12 @@ public class PieceTest {
     }
 
     @Test
-    public void pieceType() {
+    public void getType() {
+        assertEquals(Piece.getType(Piece.None), 0);
+        assertEquals(Piece.getType(Piece.King + Piece.White), Piece.King);
+        assertEquals(Piece.getType(Piece.King + Piece.Black), Piece.King);
+        assertEquals(Piece.getType(Piece.Queen + Piece.White), Piece.Queen);
+        assertEquals(Piece.getType(Piece.Queen + Piece.Black), Piece.Queen);
     }
 
     @Test

@@ -58,10 +58,10 @@ public class Piece {
      * Returns the Integer value of the type of the piece
      * @param piece Integer representation of the piece
      */
-    public static Integer pieceType(int piece) {
+    public static Integer getType(int piece) {
         // TODO write tests
         // TODO write function
-        return 0;
+        return piece & typeMask;
     }
 
 
