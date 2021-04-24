@@ -8,6 +8,29 @@ import java.util.ArrayList;
  */
 public class MoveGenerator {
 
+    // constants for directions: newPosition = currentPosition + <direction>
+    public static final int UP = -8;
+    public static final int DOWN = -8;
+    public static final int LEFT = -1;
+    public static final int RIGHT = 1;
+    public static final int UPLEFT = -7;
+    public static final int UPRIGHT = -9;
+    public static final int DOWNLEFT = 7;
+    public static final int DOWNRIGHT = 9;
+
+    private Board board;
+    private ArrayList<Integer> whitePiecePositions;
+    private ArrayList<Integer> blackPiecePositions;
+    private int teamColor, opponentColor;
+
+    MoveGenerator(Board board) {
+        this.board = board;
+        whitePiecePositions = board.getPiecePositionsFor(Piece.White);
+        blackPiecePositions = board.getPiecePositionsFor(Piece.Black);
+        teamColor = board.getTurnColor();
+        opponentColor = teamColor == Piece.White ? Piece.Black : Piece.White;
+    }
+
 
     /**
      * Generate a list of all possible moves

@@ -12,6 +12,9 @@ public class Board {
 
     // representing the chess board where squares[0] is "a1" and squares[63] is "h8"
     private int[] squares;
+
+
+
     private int turnColor;
 
 
@@ -122,6 +125,13 @@ public class Board {
         return this;
     }
 
+    /**
+     * Who's turn is it
+     * @return int of current turn color
+     */
+    public int getTurnColor() {
+        return turnColor;
+    }
 
     /**
      * Returns the index in square array for position
