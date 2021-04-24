@@ -37,7 +37,7 @@ public class MoveGenerator {
      * @param startSquare the position of the pawn
      * @return ArrayList of Move objects
      */
-    private ArrayList<Move> generatePawnMoves(int startSquare) {
+    public ArrayList<Move> generatePawnMoves(int startSquare) {
 
         ArrayList<Move> generatedMoves = new ArrayList<>();
         int direction = teamColor == Piece.Black ? DOWN : UP;
@@ -148,12 +148,43 @@ public class MoveGenerator {
         return generateDirectionalMoves(startSquare, directions);
     }
 
+    /**
+     * Generate moves for the rook
+     * @param startSquare the position of the rook
+     * @return ArrayList of Move objects
+     */
+    public ArrayList<Move> generateRookMoves(int startSquare) {
+        return generateAcrossMoves(startSquare);
+    }
+
+
+    /**
+     * Generate moves for the bishop
+     * @param startSquare the position of the rook
+     * @return ArrayList of Move objects
+     */
+    public ArrayList<Move> generateBishopMoves(int startSquare) {
+        return generateDiagonalMoves(startSquare);
+    }
+
+
+    /**
+     * Generate moves for the queen
+     * @param startSquare the position of the rook
+     * @return ArrayList of Move objects
+     */
+    public ArrayList<Move> generateQueenMoves(int startSquare) {
+        ArrayList<Move> moves = generateDiagonalMoves(startSquare);
+        moves.addAll(generateAcrossMoves(startSquare));
+        return moves;
+    }
+
 
     /**
      * Generate a list of all possible moves
      */
     public ArrayList<Move> generateMoves() {
-        // TODO write tests (king, queen, rook, bishop, knight, pawn)
+        // TODO write tests (king, knight)
         ArrayList<Move> generatedMoves = new ArrayList<>();
         ArrayList<Integer> teamPositions = teamColor == Piece.Black ? blackPiecePositions : whitePiecePositions;
 
@@ -183,8 +214,17 @@ public class MoveGenerator {
     public ArrayList<Move> generateMovesFrom(int startSquare) {
         // gets tested via generateMoves()
         // TODO write function
-        if (Piece.getType(board.getPieceAt(startSquare)) == Piece.Pawn)
-            return generatePawnMoves(startSquare);
+
+        switch (board.getPieceAt(startSquare)) {
+            case Piece.Pawn:
+                return generatePawnMoves(startSquare);
+            case Piece.Queen:
+                return generateQueenMoves(startSquare);
+            case Piece.Bishop:
+                return generateBishopMoves(startSquare);
+            case Piece.Rook:
+                return generateRookMoves((startSquare));
+        }
         return new ArrayList<>();
     }
 
