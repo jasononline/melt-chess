@@ -1,5 +1,6 @@
 package chess.model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -12,9 +13,8 @@ public class Board {
 
     // representing the chess board where squares[0] is "a1" and squares[63] is "h8"
     private int[] squares;
-
-
-
+    // if a pawn moved two spaces when this board was created, it is possible to capture the pawn at this position:
+    private int enPassantSquare;
     private int turnColor;
 
 
@@ -22,8 +22,9 @@ public class Board {
      * Construct empty Board instance
      */
     public Board() {
-        this.squares = new int[64];
-        this.turnColor = Piece.White;
+        squares = new int[64];
+        turnColor = Piece.White;
+        enPassantSquare = -1;
     }
 
 
@@ -140,6 +141,22 @@ public class Board {
      */
     public void setTurnColor(int turnColor) {
         this.turnColor = turnColor;
+    }
+
+    /**
+     * If a pawn moved two spaces when this board was created, it is possible to capture the pawn at this position
+     * @return position of the enPassantSquare
+     */
+    public int getEnPassantSquare() {
+        return enPassantSquare;
+    }
+
+    /**
+     * If a pawn moved two spaces when this board was created, it is possible to capture the pawn at this position
+     * @param enPassantSquare set position of the enPassantSquare
+     */
+    public void setEnPassantSquare(int enPassantSquare) {
+        this.enPassantSquare = enPassantSquare;
     }
 
     /**

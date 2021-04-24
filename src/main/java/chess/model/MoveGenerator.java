@@ -111,7 +111,7 @@ public class MoveGenerator {
         // TODO write function
         if (Piece.getType(board.getPieceAt(startSquare)) == Piece.Pawn)
             return generatePawnMoves(startSquare);
-        return null;
+        return new ArrayList<>();
     }
 
 }
