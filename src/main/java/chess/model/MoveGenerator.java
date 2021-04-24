@@ -78,6 +78,76 @@ public class MoveGenerator {
         return generatedMoves;
     }
 
+    /**
+     * Walks in each direction until border of the board or another piece is reached
+     * @param startSquare the position of the piece
+     * @param directions ArrayList of {UP, DOWNRIGHT, ...}
+     * @return ArrayList of Move objects
+     */
+    private ArrayList<Move> generateDirectionalMoves(int startSquare, ArrayList<Integer> directions) {
+        // walk in each direction until meeting border or piece
+        ArrayList<Move> generatedMoves = new ArrayList<>();
+        int currentSquare;
+        int piece;
+        for (int direction : directions) {
+            currentSquare = startSquare;
+            do {
+                currentSquare += direction;
+                piece = board.getPieceAt(currentSquare);
+                if (Piece.getType(piece) == Piece.None || Piece.isColor(piece, opponentColor)) {
+                    generatedMoves.add(new Move(startSquare, currentSquare));
+                    if (Piece.isColor(piece, opponentColor))
+                        break;
+                }
+                if (Piece.isColor(piece, teamColor))
+                    break;
+            } while (!Coordinate.isOnBorder(currentSquare));
+
+        }
+        return generatedMoves;
+    }
+
+
+    /**
+     * Generates moves across the current file and rank
+     * @param startSquare the position of the piece
+     * @return ArrayList of Move objects
+     */
+    public ArrayList<Move> generateAcrossMoves(int startSquare) {
+        ArrayList<Integer> directions = new ArrayList<>();
+        // do not walk off the board
+        if (!Coordinate.isLeftMost(startSquare))
+            directions.add(LEFT);
+        if (!Coordinate.isRightMost(startSquare))
+            directions.add(RIGHT);
+        if (!Coordinate.isUpMost(startSquare))
+            directions.add(UP);
+        if (!Coordinate.isDownMost(startSquare))
+            directions.add(DOWN);
+
+        return generateDirectionalMoves(startSquare, directions);
+    }
+
+    /**
+     * Generates diagonal moves
+     * @param startSquare the position of the piece
+     * @return ArrayList of Move objects
+     */
+    public ArrayList<Move> generateDiagonalMoves(int startSquare) {
+        ArrayList<Integer> directions = new ArrayList<>();
+        // do not walk off the board
+        if (!Coordinate.isLeftMost(startSquare) && !Coordinate.isUpMost(startSquare))
+            directions.add(UPLEFT);
+        if (!Coordinate.isRightMost(startSquare) && !Coordinate.isUpMost(startSquare))
+            directions.add(UPRIGHT);
+        if (!Coordinate.isLeftMost(startSquare) && !Coordinate.isDownMost(startSquare))
+            directions.add(DOWNLEFT);
+        if (!Coordinate.isRightMost(startSquare) && !Coordinate.isDownMost(startSquare))
+            directions.add(DOWNRIGHT);
+
+        return generateDirectionalMoves(startSquare, directions);
+    }
+
 
     /**
      * Generate a list of all possible moves

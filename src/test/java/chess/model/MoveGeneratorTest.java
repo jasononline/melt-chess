@@ -1,6 +1,7 @@
 package chess.model;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
@@ -33,19 +34,7 @@ public class MoveGeneratorTest {
         expectedMoves.add(new Move(28, 20));
         // check generated vs expected
         assertEquals(generatedMoves.size(), expectedMoves.size());
-        boolean found;
-        for (Move expected : expectedMoves) {
-            found = false;
-            for (Move generated : generatedMoves) {
-                if (expected.equals(generated)) {
-                    found = true;
-                    break;
-                }
-            }
-            assertTrue(found);
-        }
-
-
+        assertTrue(expectedMoves.containsAll(generatedMoves));
     }
 
     /**
@@ -70,10 +59,50 @@ public class MoveGeneratorTest {
     @Test
     public void generateMoves() {
         // test pawn rules
-        Board b = new Board();
-        MoveGenerator generator = new MoveGenerator(b);
+        Board board = new Board();
+        MoveGenerator generator = new MoveGenerator(board);
         ArrayList<Move> moves = generator.generateMoves();
         assertTrue(moves.isEmpty());
+    }
+
+
+    /**
+     * Test diagonal move generation
+     */
+    @Test
+    public void generateDiagonalMoves() {
+        int startSquare = 25;
+        String fen = "8/3R4/8/1Q6/8/3r4/8/8";
+        Board board = new Board(fen);
+        MoveGenerator generator = new MoveGenerator(board);
+        ArrayList<Move> generatedMoves;
+        ArrayList<Move> expectedMoves = new ArrayList<>();
+        for (int expectedTarget : new int[]{16, 32, 18, 34, 43}) {
+            expectedMoves.add(new Move(startSquare, expectedTarget));
+        }
+
+        generatedMoves = generator.generateDiagonalMoves(startSquare);
+        assertTrue(expectedMoves.containsAll(generatedMoves));
+    }
+
+
+    /**
+     * Test diagonal move generation
+     */
+    @Test
+    public void generateAcrossMoves() {
+        int startSquare = 41;
+        String fen = "8/8/1R6/8/8/1Q2r3/8/8";
+        Board board = new Board(fen);
+        MoveGenerator generator = new MoveGenerator(board);
+        ArrayList<Move> generatedMoves;
+        ArrayList<Move> expectedMoves = new ArrayList<>();
+        for (int expectedTarget : new int[]{40, 49, 57, 42, 43, 44, 33, 25}) {
+            expectedMoves.add(new Move(startSquare, expectedTarget));
+        }
+
+        generatedMoves = generator.generateAcrossMoves(startSquare);
+        assertTrue(expectedMoves.containsAll(generatedMoves));
     }
 
     @Test
