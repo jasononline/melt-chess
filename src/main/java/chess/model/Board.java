@@ -8,8 +8,6 @@ import java.util.ArrayList;
  * Instances of Board will be used as game history and as parameter for the engine.
  */
 public class Board {
-    public static final String fileNames = "abcdefgh";
-    public static final String rankNames = "12345678";
 
     // representing the chess board where squares[0] is "a1" and squares[63] is "h8"
     private int[] squares;
