@@ -108,12 +108,7 @@ public class MoveGenerator {
     }
 
 
-    /**
-     * Generates moves across the current file and rank
-     * @param startSquare the position of the piece
-     * @return ArrayList of Move objects
-     */
-    public ArrayList<Move> generateAcrossMoves(int startSquare) {
+    private ArrayList<Integer> generateStartingDirectionsAcross(int startSquare) {
         ArrayList<Integer> directions = new ArrayList<>();
         // do not walk off the board
         if (!Coordinate.isLeftMost(startSquare))
@@ -124,16 +119,21 @@ public class MoveGenerator {
             directions.add(UP);
         if (!Coordinate.isDownMost(startSquare))
             directions.add(DOWN);
-
-        return generateDirectionalMoves(startSquare, directions);
+        return directions;
     }
 
+
     /**
-     * Generates diagonal moves
+     * Generates moves across the current file and rank
      * @param startSquare the position of the piece
      * @return ArrayList of Move objects
      */
-    public ArrayList<Move> generateDiagonalMoves(int startSquare) {
+    public ArrayList<Move> generateAcrossMoves(int startSquare) {
+        ArrayList<Integer> directions = generateStartingDirectionsAcross(startSquare);
+        return generateDirectionalMoves(startSquare, directions);
+    }
+
+    private ArrayList<Integer> generateStartingDirectionsDiagonal(int startSquare) {
         ArrayList<Integer> directions = new ArrayList<>();
         // do not walk off the board
         if (!Coordinate.isLeftMost(startSquare) && !Coordinate.isUpMost(startSquare))
@@ -144,7 +144,16 @@ public class MoveGenerator {
             directions.add(DOWNLEFT);
         if (!Coordinate.isRightMost(startSquare) && !Coordinate.isDownMost(startSquare))
             directions.add(DOWNRIGHT);
+        return directions;
+    }
 
+    /**
+     * Generates diagonal moves
+     * @param startSquare the position of the piece
+     * @return ArrayList of Move objects
+     */
+    public ArrayList<Move> generateDiagonalMoves(int startSquare) {
+        ArrayList<Integer> directions = generateStartingDirectionsDiagonal(startSquare);
         return generateDirectionalMoves(startSquare, directions);
     }
 
@@ -170,13 +179,82 @@ public class MoveGenerator {
 
     /**
      * Generate moves for the queen
-     * @param startSquare the position of the rook
+     * @param startSquare the position of the queen
      * @return ArrayList of Move objects
      */
     public ArrayList<Move> generateQueenMoves(int startSquare) {
         ArrayList<Move> moves = generateDiagonalMoves(startSquare);
         moves.addAll(generateAcrossMoves(startSquare));
         return moves;
+    }
+
+    /**
+     * Checks whether castling for current color is possible
+     * @return array of two booleans {x1Possible, x8Possible}
+     */
+    private boolean[] isCastlingPossible(int startSquare) {
+        if (startSquare != 4 && startSquare != 60)
+            return new boolean[]{false, false};
+        boolean[] isPossible = new boolean[]{true, true};
+
+        if (board.isCastlingA1Possible() && teamColor == Piece.White || board.isCastlingH1Possible() && teamColor == Piece.Black) {
+            for (int i = 1; i < 4; i++) {
+                if (Piece.getType(board.getPieceAt(startSquare - i)) != Piece.None) {
+                    isPossible[0] = false;
+                    break;
+                }
+            }
+            if (Piece.getType(board.getPieceAt(startSquare - 4)) != Piece.Rook)
+                isPossible[0] = false;
+        } else {
+            isPossible[0] = false;
+        }
+        if (board.isCastlingA8Possible() && teamColor == Piece.White || board.isCastlingH8Possible() && teamColor == Piece.Black) {
+            for (int i = 1; i < 3; i++) {
+                if (Piece.getType(board.getPieceAt(startSquare + i)) != Piece.None) {
+                    isPossible[1] = false;
+                    break;
+                }
+            }
+            if (Piece.getType(board.getPieceAt(startSquare + 3)) != Piece.Rook)
+                isPossible[1] = false;
+        } else {
+            isPossible[1] = false;
+        }
+        return isPossible;
+    }
+
+    /**
+     * Generate moves for the king
+     * @param startSquare the position of the king
+     * @return ArrayList of Move objects
+     */
+    public ArrayList<Move> generateKingMoves(int startSquare) {
+        ArrayList<Move> generatedMoves = new ArrayList<>();
+        ArrayList<Integer> directions = generateStartingDirectionsAcross(startSquare);
+        directions.addAll(generateStartingDirectionsDiagonal(startSquare));
+
+        // normal movement
+        int targetSquare, piece;
+        for (int direction : directions) {
+            targetSquare = startSquare + direction;
+            piece = board.getPieceAt(targetSquare);
+            if (Piece.getColor(piece) == teamColor)
+                continue;
+            generatedMoves.add(new Move(startSquare, targetSquare));
+        }
+
+        // castling
+        boolean[] castlingPossible = isCastlingPossible(startSquare);
+        if (castlingPossible[0]) {
+            targetSquare = (teamColor == Piece.Black) ? 2 : 58;
+            generatedMoves.add(new Move(startSquare, targetSquare, Move.Castling));
+        }
+        if (castlingPossible[1]) {
+            targetSquare = (teamColor == Piece.Black) ? 6 : 62;
+            generatedMoves.add(new Move(startSquare, targetSquare, Move.Castling));
+        }
+        return generatedMoves;
     }
 
 

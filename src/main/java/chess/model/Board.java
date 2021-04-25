@@ -1,6 +1,5 @@
 package chess.model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +13,20 @@ public class Board {
     // if a pawn moved two spaces when this board was created, it is possible to capture the pawn at this position:
     private int enPassantSquare;
     private int turnColor;
+    // is castling with one of the four rooks still possible?
+    private boolean CastlingA1Possible = true;
+    private boolean CastlingA8Possible = true;
+    private boolean CastlingH1Possible = true;
+    private boolean CastlingH8Possible = true;
 
+    public boolean isCastlingA1Possible(){return CastlingA1Possible;}
+    public boolean isCastlingA8Possible(){return CastlingA8Possible;}
+    public boolean isCastlingH1Possible(){return CastlingH1Possible;}
+    public boolean isCastlingH8Possible(){return CastlingH8Possible;}
+    public void forbidCastlingA1(){CastlingA1Possible =false;}
+    public void forbidCastlingA8(){CastlingA8Possible =false;}
+    public void forbidCastlingH1(){CastlingH1Possible =false;}
+    public void forbidCastlingH8(){CastlingH8Possible =false;}
 
     /**
      * Construct empty Board instance
