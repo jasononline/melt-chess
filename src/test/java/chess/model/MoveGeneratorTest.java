@@ -1,6 +1,7 @@
 package chess.model;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
@@ -57,6 +58,7 @@ public class MoveGeneratorTest {
         assertTrue(generatedMoves.contains(expectedMove));
     }
 
+
     /**
      * Test MoveGenerator on empty board... for the coverage!
      */
@@ -66,6 +68,66 @@ public class MoveGeneratorTest {
         MoveGenerator generator = new MoveGenerator(board);
         ArrayList<Move> moves = generator.generateMoves();
         assertTrue(moves.isEmpty());
+    }
+
+
+    /**
+     * Simple test of move generation for the knight standing in a corner
+     */
+    @Test
+    public void generateKnightMovesBorder() {
+        String fen = "N7/8/8/8/8/8/8/7N";
+        Board board = new Board(fen);
+
+        ArrayList<Move> expectedMoves = new ArrayList<>();
+        expectedMoves.add(new Move(63, 46));
+        expectedMoves.add(new Move(63, 53));
+        expectedMoves.add(new Move(0, 10));
+        expectedMoves.add(new Move(0, 17));
+
+
+        MoveGenerator generator = new MoveGenerator(board);
+        ArrayList<Move> generatedMoves = generator.generateKnightMoves(63);
+        generatedMoves.addAll(generator.generateKnightMoves(0));
+        assertTrue(generatedMoves.containsAll(expectedMoves));
+    }
+
+
+    /**
+     * Test move generation for the knight without blocking squares
+     */
+    @Test
+    public void generateKnightMovesNonBlocking() {
+        String fen = "8/8/2N5/8/8/8/8/8";
+        int startSquare = 18;
+        Board board = new Board(fen);
+
+
+        ArrayList<Move> expectedMoves = new ArrayList<>();
+        for (int expectedTarget : new int[]{1,3,8,12,24,28,33,35})
+            expectedMoves.add(new Move(startSquare, expectedTarget));
+
+        MoveGenerator generator = new MoveGenerator(board);
+        ArrayList<Move> generatedMoves = generator.generateKnightMoves(startSquare);
+        assertTrue(generatedMoves.containsAll(expectedMoves));
+    }
+
+
+    /**
+     * Test move generation for the knight with blocking pieces
+     */
+    @Test
+    public void generateKnightMovesBlocking() {
+        String fen = "3P4/P3P3/2N5/P3P3/1P1P4/8/8/8";
+        int startSquare = 18;
+        Board board = new Board(fen);
+
+        Move expectedMove = new Move(startSquare, 1);
+
+        MoveGenerator generator = new MoveGenerator(board);
+        ArrayList<Move> generatedMoves = generator.generateKnightMoves(startSquare);
+        assertTrue(generatedMoves.contains(expectedMove));
+        assertEquals(generatedMoves.size(), 1);
     }
 
 
@@ -169,11 +231,11 @@ public class MoveGeneratorTest {
         ArrayList<Move> generatedMoves;
         ArrayList<Move> expectedMoves = new ArrayList<>();
         // expected moves for white
-        int startSquare = 60;/*
+        int startSquare = 60;
         for (int expectedTarget : new int[]{51, 52, 53, 59, 61}) {
             expectedMoves.add(new Move(startSquare, expectedTarget));
         }
-        expectedMoves.add(new Move(startSquare, 62, Move.Castling));*/
+        expectedMoves.add(new Move(startSquare, 62, Move.Castling));
         generatedMoves = generator.generateKingMoves(startSquare);
 
         // now test black king

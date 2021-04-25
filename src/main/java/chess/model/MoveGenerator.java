@@ -1,5 +1,6 @@
 package chess.model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -13,8 +14,8 @@ public class MoveGenerator {
     public static final int DOWN = 8;
     public static final int LEFT = -1;
     public static final int RIGHT = 1;
-    public static final int UPLEFT = -7;
-    public static final int UPRIGHT = -9;
+    public static final int UPLEFT = -9;
+    public static final int UPRIGHT = -7;
     public static final int DOWNLEFT = 7;
     public static final int DOWNRIGHT = 9;
 
@@ -75,6 +76,52 @@ public class MoveGenerator {
             }
         }
 
+        return generatedMoves;
+    }
+
+    /**
+     * Generates list of possible knight moves
+     * @param startSquare the position of the knight
+     * @return ArrayList of Move objects
+     */
+    public ArrayList<Move> generateKnightMoves(int startSquare) {
+        ArrayList<Move>  generatedMoves = new ArrayList<>();
+        ArrayList<Integer> directions = new ArrayList<>();
+        int[] startCoordinates = Coordinate.fromIndex(startSquare);
+
+        // make sure to not fall off the board
+        if (1 < startCoordinates[1]) {
+            if (0 < startCoordinates[0])
+                directions.add(UP + UPLEFT);
+            if (startCoordinates[0] < 7)
+                directions.add(UP + UPRIGHT);
+        }
+        if (startCoordinates[1] < 6) {
+            if (0 < startCoordinates[0])
+                directions.add(DOWN + DOWNLEFT);
+            if (startCoordinates[0] < 7)
+                directions.add(DOWN + DOWNRIGHT);
+        }
+        if (1 < startCoordinates[0]) {
+            if (0 < startCoordinates[1])
+                directions.add(LEFT + UPLEFT);
+            if (startCoordinates[1] < 7)
+                directions.add(LEFT + DOWNLEFT);
+        }
+        if (startCoordinates[0] < 6) {
+            if (0 < startCoordinates[1])
+                directions.add(RIGHT + UPRIGHT);
+            if (startCoordinates[1] < 7)
+                directions.add(RIGHT + DOWNRIGHT);
+        }
+        // generate moves
+        int targetSquare;
+        for (int direction : directions) {
+            targetSquare = startSquare + direction;
+            if (Piece.isColor(board.getPieceAt(targetSquare), teamColor))
+                continue;
+            generatedMoves.add(new Move(startSquare, targetSquare));
+        }
         return generatedMoves;
     }
 

@@ -6,7 +6,7 @@ package chess.model;
  */
 public class Coordinate {
     public static final String fileNames = "abcdefgh";
-    public static final String rankNames = "12345678";
+    public static final String rankNames = "87654321";
 
     /**
      * Convert squares index to 2d coordinate
