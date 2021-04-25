@@ -34,5 +34,21 @@ public class MoveTest {
 
     @Test
     public void testToString() {
+        Move[] testMoves = new Move[] {
+                new Move(0, 1),
+                new Move(12, 4, Move.PromoteToQueen),
+                new Move(12, 4, Move.PromoteToBishop),
+                new Move(12, 4, Move.PromoteToKnight),
+                new Move(12, 4, Move.PromoteToRook),
+                new Move(0, 63),
+
+        };
+
+        String[] expectedStrings = new String[] {
+                "a1-b1", "e2-e1Q", "e2-e1B", "e2-e1N", "e2-e1R", "a1-h8"
+        };
+        for (int i=0; i< testMoves.length; i++) {
+            assertEquals(expectedStrings[i], testMoves[i].toString());
+        }
     }
 }

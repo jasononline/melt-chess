@@ -64,7 +64,24 @@ public class Move {
     public String toString() {
         // TODO write tests
         // TODO write function
-        return startSquare + "->" + targetSquare +" " +flag;
+        String promotion;
+        switch (flag) {
+            case Move.PromoteToQueen:
+                promotion = "Q";
+                break;
+            case Move.PromoteToBishop:
+                promotion = "B";
+                break;
+            case Move.PromoteToKnight:
+                promotion = "N";
+                break;
+            case Move.PromoteToRook:
+                promotion = "R";
+                break;
+            default:
+                promotion = "";
+        }
+        return Coordinate.toString(startSquare) + "-" + Coordinate.toString(targetSquare) + promotion;
     }
 
     /**

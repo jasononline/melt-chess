@@ -63,4 +63,14 @@ public class Coordinate {
         return isUpMost(index) || isDownMost(index) || isLeftMost(index) || isRightMost(index);
     }
 
+    /**
+     * Converts square index to String representation of the coordinate
+     * @param index position of the square
+     * @return String representation of the coordinate
+     */
+    public static String toString(int index) {
+        int[] coordinates = fromIndex(index);
+        return fileNames.charAt(coordinates[0]) +"" + rankNames.charAt(coordinates[1]);
+    }
+
 }
