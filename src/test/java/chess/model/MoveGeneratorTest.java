@@ -40,6 +40,7 @@ public class MoveGeneratorTest {
         assertTrue(expectedMoves.containsAll(generatedMoves));
     }
 
+
     /**
      * Tests for the en passant capture rule of the pawn
      */
@@ -60,14 +61,16 @@ public class MoveGeneratorTest {
 
 
     /**
-     * Test MoveGenerator on empty board... for the coverage!
+     * Test MoveGenerator on initial board... for the coverage!
      */
     @Test
     public void generateMoves() {
-        Board board = new Board();
+        String fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+        Board board = new Board(fen);
         MoveGenerator generator = new MoveGenerator(board);
         ArrayList<Move> moves = generator.generateMoves();
-        assertTrue(moves.isEmpty());
+        // expect 16 possible pawn moves + 4 possible knight moves for white
+        assertEquals(20, moves.size());
     }
 
 
@@ -152,7 +155,7 @@ public class MoveGeneratorTest {
 
 
     /**
-     * Test diagonal move generation
+     * Test across move generation
      */
     @Test
     public void generateRookMoves() {
@@ -172,7 +175,7 @@ public class MoveGeneratorTest {
 
 
     /**
-     * Test Queen move generation
+     * Test queen move generation
      */
     @Test
     public void generateQueenMoves() {
@@ -193,7 +196,7 @@ public class MoveGeneratorTest {
 
 
     /**
-     * Test King move generation
+     * Test king move generation
      */
     @Test
     public void generateKingMoves() {
@@ -220,7 +223,9 @@ public class MoveGeneratorTest {
         assertTrue(generatedMoves.containsAll(expectedMoves));
     }
 
-
+    /**
+     * Test king castling
+     */
     @Test
     public void generateKingMovesCastling() {
         String fen = "r3kq1r/8/8/8/8/8/8/R3K2R";
@@ -249,9 +254,5 @@ public class MoveGeneratorTest {
         expectedMoves.add(new Move(startSquare, 2, Move.Castling));
         generatedMoves.addAll(generator.generateKingMoves(startSquare));
         assertTrue(generatedMoves.containsAll(expectedMoves));
-    }
-
-    @Test
-    public void isValid() {
     }
 }

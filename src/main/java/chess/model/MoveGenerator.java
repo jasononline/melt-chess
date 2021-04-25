@@ -1,15 +1,13 @@
 package chess.model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
- * Encapsulates the rules for moving pieces on the chess board
- * and offers functions for finding and validating moves.
+ * Implements the rules for moving pieces on the chess board.
  */
 public class MoveGenerator {
 
-    // constants for directions: newPosition = currentPosition + <direction>
+    // constants for directions: newPosition = currentPosition + <direction> + <direction> + ...
     public static final int UP = -8;
     public static final int DOWN = 8;
     public static final int LEFT = -1;
@@ -34,7 +32,7 @@ public class MoveGenerator {
 
 
     /**
-     * Generates moves according to the rules for the pawn piece
+     * Generate list of possible pawn moves
      * @param startSquare the position of the pawn
      * @return ArrayList of Move objects
      */
@@ -79,6 +77,7 @@ public class MoveGenerator {
         return generatedMoves;
     }
 
+
     /**
      * Generates list of possible knight moves
      * @param startSquare the position of the knight
@@ -114,6 +113,7 @@ public class MoveGenerator {
             if (startCoordinates[1] < 7)
                 directions.add(RIGHT + DOWNRIGHT);
         }
+
         // generate moves
         int targetSquare;
         for (int direction : directions) {
@@ -125,6 +125,7 @@ public class MoveGenerator {
         return generatedMoves;
     }
 
+
     /**
      * Walks in each direction until border of the board or another piece is reached
      * @param startSquare the position of the piece
@@ -132,7 +133,6 @@ public class MoveGenerator {
      * @return ArrayList of Move objects
      */
     private ArrayList<Move> generateDirectionalMoves(int startSquare, ArrayList<Integer> directions) {
-        // walk in each direction until meeting border or piece
         ArrayList<Move> generatedMoves = new ArrayList<>();
         int currentSquare;
         int piece;
@@ -149,7 +149,6 @@ public class MoveGenerator {
                 if (Piece.isColor(piece, teamColor))
                     break;
             } while (!Coordinate.isOnBorder(currentSquare));
-
         }
         return generatedMoves;
     }
@@ -170,16 +169,6 @@ public class MoveGenerator {
     }
 
 
-    /**
-     * Generates moves across the current file and rank
-     * @param startSquare the position of the piece
-     * @return ArrayList of Move objects
-     */
-    public ArrayList<Move> generateAcrossMoves(int startSquare) {
-        ArrayList<Integer> directions = generateStartingDirectionsAcross(startSquare);
-        return generateDirectionalMoves(startSquare, directions);
-    }
-
     private ArrayList<Integer> generateStartingDirectionsDiagonal(int startSquare) {
         ArrayList<Integer> directions = new ArrayList<>();
         // do not walk off the board
@@ -194,8 +183,20 @@ public class MoveGenerator {
         return directions;
     }
 
+
     /**
-     * Generates diagonal moves
+     * Generates moves across the current file and rank
+     * @param startSquare the position of the piece
+     * @return ArrayList of Move objects
+     */
+    public ArrayList<Move> generateAcrossMoves(int startSquare) {
+        ArrayList<Integer> directions = generateStartingDirectionsAcross(startSquare);
+        return generateDirectionalMoves(startSquare, directions);
+    }
+
+
+    /**
+     * Generate diagonal moves
      * @param startSquare the position of the piece
      * @return ArrayList of Move objects
      */
@@ -203,6 +204,7 @@ public class MoveGenerator {
         ArrayList<Integer> directions = generateStartingDirectionsDiagonal(startSquare);
         return generateDirectionalMoves(startSquare, directions);
     }
+
 
     /**
      * Generate moves for the rook
@@ -235,15 +237,18 @@ public class MoveGenerator {
         return moves;
     }
 
+
     /**
      * Checks whether castling for current color is possible
-     * @return array of two booleans {x1Possible, x8Possible}
+     * @return array of two booleans {leftCastlingPossible, rightCastlingPossible}
      */
     private boolean[] isCastlingPossible(int startSquare) {
+        // return if king not at initial position
         if (startSquare != 4 && startSquare != 60)
             return new boolean[]{false, false};
         boolean[] isPossible = new boolean[]{true, true};
 
+        // check if no pieces to the left of king except the rook
         if (board.isCastlingA1Possible() && teamColor == Piece.White || board.isCastlingH1Possible() && teamColor == Piece.Black) {
             for (int i = 1; i < 4; i++) {
                 if (Piece.getType(board.getPieceAt(startSquare - i)) != Piece.None) {
@@ -256,6 +261,7 @@ public class MoveGenerator {
         } else {
             isPossible[0] = false;
         }
+        // check if no pieces to the right of king except the rook
         if (board.isCastlingA8Possible() && teamColor == Piece.White || board.isCastlingH8Possible() && teamColor == Piece.Black) {
             for (int i = 1; i < 3; i++) {
                 if (Piece.getType(board.getPieceAt(startSquare + i)) != Piece.None) {
@@ -271,17 +277,18 @@ public class MoveGenerator {
         return isPossible;
     }
 
+
     /**
      * Generate moves for the king
      * @param startSquare the position of the king
      * @return ArrayList of Move objects
      */
     public ArrayList<Move> generateKingMoves(int startSquare) {
+        // normal movement
         ArrayList<Move> generatedMoves = new ArrayList<>();
         ArrayList<Integer> directions = generateStartingDirectionsAcross(startSquare);
         directions.addAll(generateStartingDirectionsDiagonal(startSquare));
 
-        // normal movement
         int targetSquare, piece;
         for (int direction : directions) {
             targetSquare = startSquare + direction;
@@ -306,10 +313,10 @@ public class MoveGenerator {
 
 
     /**
-     * Generate a list of all possible moves
+     * Generate possible moves for current color
+     * @return ArrayList of Move objects
      */
     public ArrayList<Move> generateMoves() {
-        // TODO write tests (king, knight)
         ArrayList<Move> generatedMoves = new ArrayList<>();
         ArrayList<Integer> teamPositions = teamColor == Piece.Black ? blackPiecePositions : whitePiecePositions;
 
@@ -321,26 +328,12 @@ public class MoveGenerator {
 
 
     /**
-     * Returns true if the move is legal according to the rules of chess
-     * @param move the move to check
-     */
-    public boolean isValid(Move move) {
-        // TODO write tests
-        // TODO write function
-        return false;
-    }
-
-
-    /**
-     * Generate a list of all possible moves starting on a given square
+     * Generate a list of all possible moves for any piece standing on a given square
      * @param startSquare the starting square
      * @return ArrayList of Move objects
      */
     public ArrayList<Move> generateMovesFrom(int startSquare) {
-        // gets tested via generateMoves()
-        // TODO write function
-
-        switch (board.getPieceAt(startSquare)) {
+        switch (Piece.getType(board.getPieceAt(startSquare))) {
             case Piece.Pawn:
                 return generatePawnMoves(startSquare);
             case Piece.Queen:
@@ -348,7 +341,9 @@ public class MoveGenerator {
             case Piece.Bishop:
                 return generateBishopMoves(startSquare);
             case Piece.Rook:
-                return generateRookMoves((startSquare));
+                return generateRookMoves(startSquare);
+            case Piece.Knight:
+                return generateKnightMoves(startSquare);
         }
         return new ArrayList<>();
     }
