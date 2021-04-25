@@ -45,7 +45,7 @@ public class MoveTest {
         };
 
         String[] expectedStrings = new String[] {
-                "a8-b8", "e7-e8Q", "e7-e8B", "e7-e8N", "e7-e8R", "a7-h8"
+                "a8-b8", "e7-e8Q", "e7-e8B", "e7-e8N", "e7-e8R", "a8-h1"
         };
         for (int i=0; i< testMoves.length; i++) {
             assertEquals(expectedStrings[i], testMoves[i].toString());
