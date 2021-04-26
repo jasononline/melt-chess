@@ -157,11 +157,11 @@ public class Board {
         int piece = newBoard.getPieceAt(move.getStartSquare());
         // capture piece
         if (Piece.getType(newBoard.getPieceAt(move.getTargetSquare())) != Piece.None) {
-            capturedPieces.add(newBoard.getPieceAt(move.getTargetSquare()));
+            newBoard.capturedPieces.add(newBoard.getPieceAt(move.getTargetSquare()));
         }
         // en passant capture
         if (0 < enPassantSquare && move.getFlag() == Move.EnPassantCapture) {
-            capturedPieces.add(newBoard.getPieceAt(enPassantSquare));
+            newBoard.capturedPieces.add(newBoard.getPieceAt(enPassantSquare));
             newBoard.squares[enPassantSquare] = Piece.None;
         }
         if (move.getFlag() == Move.PawnTwoForward) {
