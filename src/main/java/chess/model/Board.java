@@ -154,7 +154,6 @@ public class Board {
      */
     public Board makeMove(Move move) {
         Board newBoard = new Board(this);
-        int piece = newBoard.getPieceAt(move.getStartSquare());
         // capture piece
         if (Piece.getType(newBoard.getPieceAt(move.getTargetSquare())) != Piece.None) {
             newBoard.capturedPieces.add(newBoard.getPieceAt(move.getTargetSquare()));
@@ -267,16 +266,6 @@ public class Board {
      */
     public void setEnPassantSquare(int enPassantSquare) {
         this.enPassantSquare = enPassantSquare;
-    }
-
-    /**
-     * Returns the index in square array for position
-     * @param position position string e.g.: "e5"
-     */
-    public int positionToIndex(String position){
-        // TODO write tests
-        // TODO write function
-        return 0;
     }
 
 
