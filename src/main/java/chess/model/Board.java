@@ -266,19 +266,27 @@ public class Board {
 
 
     /**
-     * Returns the string representation of the board as used by the console client
+     * Returns the String representation of the board as used by the console client
+     * @return the String representing the board according to the sqares variable
      */
     public String toString() {
-        // TODO write tests
-        // TODO write function
-
-        // temporary solution to get any output:
-        StringBuilder s = new StringBuilder();
-        for (int i=0; i < 64; i++) {
-            if (0 < i && i % 8 == 0) s.append("\n");
-            s.append(Piece.toString(squares[i]));
+        String boardAsString = "";
+        // iterate through lines
+        for (int line = 0; line < 8; line++) {
+            boardAsString += String.valueOf(8 - line) + " ";
+            // iterate trough columns
+            for (int column = 0; column < 8; column++) {
+                boardAsString += Piece.toString(getPieceAt(column + (line * 8)));
+                // decide whether to add a space or begin new line
+                if (column < 7) {
+                    boardAsString += " ";
+                } else {
+                    boardAsString += "\n";
+                }
+            }
         }
-        return s.toString();
+        boardAsString += "  a b c d e f g h\n";
+        return boardAsString;
     }
 
 
