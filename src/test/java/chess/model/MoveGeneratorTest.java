@@ -4,6 +4,7 @@ package chess.model;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -92,7 +93,7 @@ public class MoveGeneratorTest {
         String fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
         Board board = new Board(fen);
         MoveGenerator generator = new MoveGenerator(board);
-        ArrayList<Move> moves = generator.generateMoves();
+        List<Move> moves = generator.generateMoves();
         // expect 16 possible pawn moves + 4 possible knight moves for white
         assertEquals(20, moves.size());
     }

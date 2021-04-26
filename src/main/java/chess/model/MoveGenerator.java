@@ -1,6 +1,7 @@
 package chess.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implements the rules for moving pieces on the chess board.
@@ -18,8 +19,8 @@ public class MoveGenerator {
     public static final int DOWNRIGHT = 9;
 
     private Board board;
-    private ArrayList<Integer> whitePiecePositions;
-    private ArrayList<Integer> blackPiecePositions;
+    private List<Integer> whitePiecePositions;
+    private List<Integer> blackPiecePositions;
 
     private int teamColor, opponentColor;
 
@@ -336,9 +337,9 @@ public class MoveGenerator {
      * Generate possible moves for current color
      * @return ArrayList of Move objects
      */
-    public ArrayList<Move> generateMoves() {
-        ArrayList<Move> generatedMoves = new ArrayList<>();
-        ArrayList<Integer> teamPositions = teamColor == Piece.Black ? blackPiecePositions : whitePiecePositions;
+    public List<Move> generateMoves() {
+        List<Move> generatedMoves = new ArrayList<>();
+        List<Integer> teamPositions = teamColor == Piece.Black ? blackPiecePositions : whitePiecePositions;
 
         for (int position : teamPositions) {
             generatedMoves.addAll(generateMovesStartingAt(position));

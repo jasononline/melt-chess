@@ -1,7 +1,7 @@
 package chess.model;
 
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Checks if a move is legal
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class MoveValidator {
 
     private static int findKing(Board board, int color) {
-        ArrayList<Integer> positions = board.getPiecePositionsFor(color);
+        List<Integer> positions = board.getPiecePositionsFor(color);
         for (int squarePosition : positions) {
             if (Piece.getType(board.getPieceAt(squarePosition)) == Piece.King)
                 return squarePosition;
@@ -22,11 +22,10 @@ public class MoveValidator {
      * Checks for check
      * @param board the current position
      * @param teamColor which piece color to check
-     * @return number of pieces that attack the king
+     * @return 0: no check, 1: check, 2: double check
      */
     public static int checkCheck(Board board, int teamColor) {
         int numChecks = 0;
-        int opponentColor = (teamColor == Piece.Black) ? Piece.White : Piece.Black;
         MoveGenerator generator = new MoveGenerator(board);
         int kingPosition = findKing(board, teamColor);
 
@@ -38,43 +37,25 @@ public class MoveValidator {
         for (Move move : generator.generateMoves()) {
             if (move.getTargetSquare() == kingPosition)
                 numChecks += 1;
+            if (numChecks == 2)
+                return numChecks;
         }
         return numChecks;
     }
 
 
-    /**
-     * Checks if a move is legal
-     * @param board the current position
-     * @param move what to check
-     * @return true if the move is legal
-     */
-    public static boolean validateMove(Board board, Move move) {
-        // check if move is any legal move found by the MoveGenerator
-        MoveGenerator generator = new MoveGenerator(board);
-        ArrayList<Move> generatedMoves = generator.generateMovesStartingAt(move.getStartSquare());
-        if (!generatedMoves.contains(move))
-            return false;
+    // check if move is any legal move found by the MoveGenerator
+    private static boolean isLegalMove(MoveGenerator generator, Move move) {
+        return generator.generateMovesStartingAt(move.getStartSquare()).contains(move);
+    }
 
-        Board boardAfterMove = board.makeMove(move);
 
-        // check if king is in check and stays in check after the move
-        int inCheck = checkCheck(board, board.getTurnColor());
-        if (0 < inCheck) {
-            if (0 < checkCheck(boardAfterMove, board.getTurnColor()))
-                return false;
-        }
-
-        // check if move puts own king in chess
-        if (0 < checkCheck(boardAfterMove, board.getTurnColor()))
-            return false;
-
-        // if king is in check or any square between the king and the pawn is under attack he cannot castle
-        if (move.getFlag() == Move.Castling) {
+    // if king is in check or any square between the king and the pawn is under attack he cannot castle
+    private static boolean canCastle(MoveGenerator generator, Move move, int inCheck) {
             if (0 < inCheck)
                 return false;
             generator.swapColors();
-            ArrayList<Move> opponentMoves = generator.generateMoves();
+            List<Move> opponentMoves = generator.generateMoves();
             // check left side
             if (move.getTargetSquare() < move.getStartSquare()) {
                 for (int i=1;i<4;i++) {
@@ -88,8 +69,36 @@ public class MoveValidator {
                         return false;
                 }
             }
-        }
         return true;
+    }
+
+
+    /**
+     * Checks if a move is legal
+     * @param board the current position
+     * @param move what to check
+     * @return true if the move is legal
+     */
+    public static boolean validateMove(Board board, Move move) {
+        MoveGenerator generator = new MoveGenerator(board);
+        if (!isLegalMove(generator, move))
+            return false;
+
+        Board boardAfterMove = board.makeMove(move);
+
+        int inCheck = checkCheck(board, board.getTurnColor());
+        /*
+        // check if king is in check and stays in check after the move
+
+        if (0 < inCheck && 0 < checkCheck(boardAfterMove, board.getTurnColor())) {
+            return false;
+        }
+        */
+        // check if move puts own king in chess
+        if (0 < checkCheck(boardAfterMove, board.getTurnColor()))
+            return false;
+
+        return move.getFlag() != Move.Castling || canCastle(generator, move, inCheck);
     }
 
 
@@ -99,7 +108,7 @@ public class MoveValidator {
      * @param moves ArrayList of moves to check
      * @return true if any move contains squarePosition as target
      */
-    private static boolean isTarget(int squarePosition, ArrayList<Move> moves) {
+    private static boolean isTarget(int squarePosition, List<Move> moves) {
         for (Move m : moves) {
             if (m.getTargetSquare() == squarePosition)
                 return true;

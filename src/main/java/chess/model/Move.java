@@ -68,6 +68,7 @@ public class Move {
     /**
      * @return the string representation of the Move instance as used by the console client
      */
+    @Override
     public String toString() {
         // TODO write tests
         // TODO write function
@@ -96,6 +97,7 @@ public class Move {
      * @param other the other Move object
      * @return true if objects have same fields else false
      */
+    @Override
     public boolean equals(Object other) {
         if (other instanceof Move) {
             Move o = (Move) other;
@@ -105,4 +107,12 @@ public class Move {
         }
     }
 
+    /**
+     * Calculates arbitrary hash code to accommodate pmd rules
+     * @return sum of start-, targetSquare and the flag
+     */
+    @Override
+    public int hashCode() {
+        return startSquare + targetSquare + flag;
+    }
 }

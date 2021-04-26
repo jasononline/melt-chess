@@ -2,7 +2,7 @@ package chess.model;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -150,7 +150,7 @@ public class BoardTest {
         String fen = "kqr5/8/8/8/8/8/8/5RQK";
         Board b = new Board(fen);
 
-        ArrayList<Integer> positions = b.getPiecePositionsFor(Piece.Black);
+        List<Integer> positions = b.getPiecePositionsFor(Piece.Black);
         for (int i=0;i<3;i++) assertTrue(positions.contains(i));
 
         positions = b.getPiecePositionsFor(Piece.White);
