@@ -1,13 +1,37 @@
 package chess.model;
 
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MoveGeneratorTest {
+
+
+    /**
+     * Swap colors test
+     */
+    @Test
+    public void swapColors() {
+        Board b = new Board();
+        MoveGenerator g = new MoveGenerator(b);
+        g.swapColors();
+        assertEquals(Piece.Black, g.getTeamColor());
+    }
+
+
+    /**
+     * Test teamColor getter
+     */
+    @Test
+    public void getTeamColor() {
+        Board b = new Board();
+        MoveGenerator g = new MoveGenerator(b);
+        assertEquals(Piece.White, g.getTeamColor());
+    }
 
     /**
      * Tests for the rules of the pawn
