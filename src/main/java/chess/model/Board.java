@@ -280,7 +280,7 @@ public class Board {
 
     /**
      * Returns the String representation of the board as used by the console client
-     * @return the String representing the board according to the sqares variable
+     * @return the String representing the board according to the squares variable
      */
     @Override
     public String toString() {

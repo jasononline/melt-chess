@@ -4,8 +4,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Contains methods to test the methods of the Piece class
+ */
 public class PieceTest {
 
+    /**
+     * Method to test the expected behavior of the Method Piece.isColor()
+     */
     @Test
     public void isColor() {
         assertFalse(Piece.isColor(Piece.None, Piece.Black));
@@ -18,6 +24,9 @@ public class PieceTest {
         }
     }
 
+    /**
+     * Method to test the expected behavior of the Method Piece.getColor()
+     */
     @Test
     public void getColor() {
         assertEquals(Piece.getColor(Piece.None), 0);
@@ -27,6 +36,9 @@ public class PieceTest {
         assertEquals(Piece.getColor(Piece.Queen + Piece.Black), Piece.Black);
     }
 
+    /**
+     * Method to test the expected behavior of the Method Piece.getType()
+     */
     @Test
     public void getType() {
         assertEquals(Piece.getType(Piece.None), 0);
@@ -36,6 +48,9 @@ public class PieceTest {
         assertEquals(Piece.getType(Piece.Queen + Piece.Black), Piece.Queen);
     }
 
+    /**
+     * Method to test the expected behavior of the Method Piece.testToString()
+     */
     @Test
     public void testToString() {
         assertEquals(Piece.toString(Piece.King + Piece.Black), Piece.UTFSymbolKingBlack);

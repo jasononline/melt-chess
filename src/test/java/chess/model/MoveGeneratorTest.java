@@ -48,13 +48,14 @@ public class MoveGeneratorTest {
 
         MoveGenerator generator = new MoveGenerator(board);
         List<Move> generatedMoves = new ArrayList<>();
-        for (int position : new int[]{27, 28, 14})
-            generatedMoves.addAll(generator.generatePawnMoves(position));
+        generatedMoves.addAll(generator.generatePawnMoves(27));
+        generatedMoves.addAll(generator.generatePawnMoves(28));
+        generatedMoves.addAll(generator.generatePawnMoves(14));
 
         board.setTurnColor(Piece.Black);
         generator = new MoveGenerator(board);
-        for (int position : new int[]{13, 19})
-            generatedMoves.addAll(generator.generatePawnMoves(position));
+        generatedMoves.addAll(generator.generatePawnMoves(13));
+        generatedMoves.addAll(generator.generatePawnMoves(19));
 
         List<Move> expectedMoves = new ArrayList<>();
         // valid black piece moves
@@ -136,8 +137,9 @@ public class MoveGeneratorTest {
 
 
         List<Move> expectedMoves = new ArrayList<>();
-        for (int expectedTarget : new int[]{1,3,8,12,24,28,33,35})
+        for (int expectedTarget : new int[]{1,3,8,12,24,28,33,35}) {
             expectedMoves.add(new Move(startSquare, expectedTarget));
+        }
 
         MoveGenerator generator = new MoveGenerator(board);
         List<Move> generatedMoves = generator.generateKnightMoves(startSquare);

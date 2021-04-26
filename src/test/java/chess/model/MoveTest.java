@@ -4,8 +4,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Contains methods to test the methods of the Move class
+ */
 public class MoveTest {
 
+    /**
+     * Method to test the expected behavior of the Method Move.getStartSquare()
+     */
     @Test
     public void getStartSquare() {
         int start = 0;
@@ -14,6 +20,9 @@ public class MoveTest {
         assertEquals(m.getStartSquare(), start);
     }
 
+    /**
+     * Method to test the expected behavior of the Method Move.getTargetSquare()
+     */
     @Test
     public void getTargetSquare() {
         int start = 0;
@@ -22,6 +31,9 @@ public class MoveTest {
         assertEquals(m.getTargetSquare(), target);
     }
 
+    /**
+     * Method to test the expected behavior of the Method Move.equals()
+     */
     @Test
     public void equals() {
         Move m1 = new Move(1, 2, 1);
@@ -32,6 +44,9 @@ public class MoveTest {
         assertNotEquals(m1, m3);
     }
 
+    /**
+     * Method to test the expected behavior of the Method Move.toString()
+     */
     @Test
     public void testToString() {
         Move[] testMoves = new Move[] {
