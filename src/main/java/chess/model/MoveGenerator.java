@@ -20,6 +20,7 @@ public class MoveGenerator {
     private Board board;
     private ArrayList<Integer> whitePiecePositions;
     private ArrayList<Integer> blackPiecePositions;
+
     private int teamColor, opponentColor;
 
     MoveGenerator(Board board) {
@@ -28,6 +29,26 @@ public class MoveGenerator {
         blackPiecePositions = board.getPiecePositionsFor(Piece.Black);
         teamColor = board.getTurnColor();
         opponentColor = teamColor == Piece.White ? Piece.Black : Piece.White;
+    }
+
+    /**
+     * swap the current turn color
+     * @return the new teamColor
+     */
+    public int swapColors() {
+        int tmp = teamColor;
+        teamColor = opponentColor;
+        opponentColor = tmp;
+        return teamColor;
+    }
+
+
+    /**
+     *
+     * @return the current turn teamColor
+     */
+    public int getTeamColor() {
+        return teamColor;
     }
 
 
