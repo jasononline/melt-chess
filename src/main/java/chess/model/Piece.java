@@ -36,9 +36,9 @@ public class Piece {
 
 
     /**
-     * Returns true if piece is color
      * @param piece Integer representation of the piece
      * @param color Integer representation of the color
+     * @return Returns true if piece is color
      */
     public static Boolean isColor(int piece, int color) {
         return (piece & colorMask) == color;
@@ -46,8 +46,8 @@ public class Piece {
 
 
     /**
-     * Returns the Integer value of color of the piece
      * @param piece Integer representation of the piece
+     * @return the Integer value of color of the piece
      */
     public static Integer getColor(int piece) {
         return piece & colorMask;
@@ -55,8 +55,8 @@ public class Piece {
 
 
     /**
-     * Returns the Integer value of the type of the piece
      * @param piece Integer representation of the piece
+     * @return the Integer value of the type of the piece
      */
     public static Integer getType(int piece) {
         return piece & typeMask;
@@ -64,8 +64,8 @@ public class Piece {
 
 
     /**
-     * Returns String representation of a piece as used by FEN strings and the console client
      * @param piece Integer representation of the piece
+     * @return String representation of a piece as used by FEN strings and the console client
      */
     public static String toString(int piece) {
         switch (getType(piece)) {
@@ -85,5 +85,4 @@ public class Piece {
                 return UTFSymbolNone;
         }
     }
-
 }

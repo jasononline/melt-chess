@@ -44,7 +44,6 @@ public class MoveGenerator {
 
 
     /**
-     *
      * @return the current turn teamColor
      */
     public int getTeamColor() {

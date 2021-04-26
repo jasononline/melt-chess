@@ -20,8 +20,8 @@ public class Coordinate {
     }
 
     /**
-     * Returns true if index lies on the "a" file
      * @param index the position in the board.squares array
+     * @return Returns true if index lies on the "a" file
      */
     public static boolean isLeftMost(int index) {
         return fromIndex(index)[0] == 0;
@@ -29,8 +29,8 @@ public class Coordinate {
 
 
     /**
-     * Returns true if index lies on the "h" file
      * @param index the position in the board.squares array
+     * @return Returns true if index lies on the "h" file
      */
     public static boolean isRightMost(int index) {
         return fromIndex(index)[0] == 7;
@@ -38,8 +38,8 @@ public class Coordinate {
 
 
     /**
-     * Returns true if index lies on the "8" rank
      * @param index the position in the board.squares array
+     * @return Returns true if index lies on the "8" rank
      */
     public static boolean isUpMost(int index) {
         return fromIndex(index)[1] == 0;
@@ -47,8 +47,8 @@ public class Coordinate {
 
 
     /**
-     * Returns true if index lies on the "1" rank
      * @param index the position in the board.squares array
+     * @return Returns true if index lies on the "1" rank
      */
     public static boolean isDownMost(int index) {
         return fromIndex(index)[1] == 7;
@@ -56,8 +56,8 @@ public class Coordinate {
 
 
     /**
-     * Returns True if index is any of the border squares
      * @param index the position in the board.squares array
+     * @return Returns True if index is any of the border squares
      */
     public static boolean isOnBorder(int index) {
         return isUpMost(index) || isDownMost(index) || isLeftMost(index) || isRightMost(index);

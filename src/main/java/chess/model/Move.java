@@ -66,7 +66,7 @@ public class Move {
 
 
     /**
-     * Returns the string representation of the Move instance as used by the console client
+     * @return the string representation of the Move instance as used by the console client
      */
     public String toString() {
         // TODO write tests

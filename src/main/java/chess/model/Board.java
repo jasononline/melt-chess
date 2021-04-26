@@ -151,6 +151,7 @@ public class Board {
     /**
      * Returns copy of self and applying move
      * @param move The move to be made.
+     * @return returns new Board instance
      */
     public Board makeMove(Move move) {
         Board newBoard = new Board(this);
@@ -307,6 +308,7 @@ public class Board {
     /**
      * Returns the indices for all pieces of a certain color
      * @param color of the pieces
+     * @return returns List of positions
      */
     public ArrayList<Integer> getPiecePositionsFor(int color){
         // TODO write tests
