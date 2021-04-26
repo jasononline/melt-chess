@@ -70,8 +70,7 @@ public class Move {
      */
     @Override
     public String toString() {
-        // TODO write tests
-        // TODO write function
+        // TODO write tests for Move.toString
         String promotion;
         switch (flag) {
             case Move.PromoteToQueen:

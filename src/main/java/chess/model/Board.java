@@ -237,7 +237,6 @@ public class Board {
 
 
     /**
-     *
      * @return all captured pieces
      */
     public List<Integer> getCapturedPieces() { return capturedPieces; }
@@ -253,7 +252,8 @@ public class Board {
 
 
     /**
-     * Set who's turn is it
+     * Set who's turn it is
+     * @param turnColor what piece color to set
      */
     public void setTurnColor(int turnColor) {
         this.turnColor = turnColor;
