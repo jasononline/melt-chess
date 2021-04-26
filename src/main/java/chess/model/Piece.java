@@ -27,7 +27,7 @@ public class Piece {
     public static final String UTFSymbolBishopWhite = "♗";
     public static final String UTFSymbolRookWhite   = "♖";
     public static final String UTFSymbolQueenWhite  = "♕";
-    public static final String UTFSymbolKingBlack   = "♟︎";
+    public static final String UTFSymbolKingBlack   = "♚";
     public static final String UTFSymbolPawnBlack   = "♟";
     public static final String UTFSymbolKnightBlack = "♞";
     public static final String UTFSymbolBishopBlack = "♝";
