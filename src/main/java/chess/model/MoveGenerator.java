@@ -57,9 +57,9 @@ public class MoveGenerator {
      * @param startSquare the position of the pawn
      * @return ArrayList of Move objects
      */
-    public ArrayList<Move> generatePawnMoves(int startSquare) {
+    public List<Move> generatePawnMoves(int startSquare) {
 
-        ArrayList<Move> generatedMoves = new ArrayList<>();
+        List<Move> generatedMoves = new ArrayList<>();
         int direction = teamColor == Piece.Black ? DOWN : UP;
 
         // move forward if possible
@@ -104,9 +104,9 @@ public class MoveGenerator {
      * @param startSquare the position of the knight
      * @return ArrayList of Move objects
      */
-    public ArrayList<Move> generateKnightMoves(int startSquare) {
-        ArrayList<Move>  generatedMoves = new ArrayList<>();
-        ArrayList<Integer> directions = new ArrayList<>();
+    public List<Move> generateKnightMoves(int startSquare) {
+        List<Move>  generatedMoves = new ArrayList<>();
+        List<Integer> directions = new ArrayList<>();
         int[] startCoordinates = Coordinate.fromIndex(startSquare);
 
         // make sure to not fall off the board
@@ -153,8 +153,8 @@ public class MoveGenerator {
      * @param directions ArrayList of {UP, DOWNRIGHT, ...}
      * @return ArrayList of Move objects
      */
-    private ArrayList<Move> generateDirectionalMoves(int startSquare, ArrayList<Integer> directions) {
-        ArrayList<Move> generatedMoves = new ArrayList<>();
+    private List<Move> generateDirectionalMoves(int startSquare, List<Integer> directions) {
+        List<Move> generatedMoves = new ArrayList<>();
         int currentSquare;
         int piece;
         for (int direction : directions) {
@@ -175,8 +175,8 @@ public class MoveGenerator {
     }
 
 
-    private ArrayList<Integer> generateStartingDirectionsAcross(int startSquare) {
-        ArrayList<Integer> directions = new ArrayList<>();
+    private List<Integer> generateStartingDirectionsAcross(int startSquare) {
+        List<Integer> directions = new ArrayList<>();
         // do not walk off the board
         if (!Coordinate.isLeftMost(startSquare))
             directions.add(LEFT);
@@ -190,8 +190,8 @@ public class MoveGenerator {
     }
 
 
-    private ArrayList<Integer> generateStartingDirectionsDiagonal(int startSquare) {
-        ArrayList<Integer> directions = new ArrayList<>();
+    private List<Integer> generateStartingDirectionsDiagonal(int startSquare) {
+        List<Integer> directions = new ArrayList<>();
         // do not walk off the board
         if (!Coordinate.isLeftMost(startSquare) && !Coordinate.isUpMost(startSquare))
             directions.add(UPLEFT);
@@ -210,8 +210,8 @@ public class MoveGenerator {
      * @param startSquare the position of the piece
      * @return ArrayList of Move objects
      */
-    public ArrayList<Move> generateAcrossMoves(int startSquare) {
-        ArrayList<Integer> directions = generateStartingDirectionsAcross(startSquare);
+    public List<Move> generateAcrossMoves(int startSquare) {
+        List<Integer> directions = generateStartingDirectionsAcross(startSquare);
         return generateDirectionalMoves(startSquare, directions);
     }
 
@@ -221,8 +221,8 @@ public class MoveGenerator {
      * @param startSquare the position of the piece
      * @return ArrayList of Move objects
      */
-    public ArrayList<Move> generateDiagonalMoves(int startSquare) {
-        ArrayList<Integer> directions = generateStartingDirectionsDiagonal(startSquare);
+    public List<Move> generateDiagonalMoves(int startSquare) {
+        List<Integer> directions = generateStartingDirectionsDiagonal(startSquare);
         return generateDirectionalMoves(startSquare, directions);
     }
 
@@ -232,7 +232,7 @@ public class MoveGenerator {
      * @param startSquare the position of the rook
      * @return ArrayList of Move objects
      */
-    public ArrayList<Move> generateRookMoves(int startSquare) {
+    public List<Move> generateRookMoves(int startSquare) {
         return generateAcrossMoves(startSquare);
     }
 
@@ -242,7 +242,7 @@ public class MoveGenerator {
      * @param startSquare the position of the rook
      * @return ArrayList of Move objects
      */
-    public ArrayList<Move> generateBishopMoves(int startSquare) {
+    public List<Move> generateBishopMoves(int startSquare) {
         return generateDiagonalMoves(startSquare);
     }
 
@@ -252,8 +252,8 @@ public class MoveGenerator {
      * @param startSquare the position of the queen
      * @return ArrayList of Move objects
      */
-    public ArrayList<Move> generateQueenMoves(int startSquare) {
-        ArrayList<Move> moves = generateDiagonalMoves(startSquare);
+    public List<Move> generateQueenMoves(int startSquare) {
+        List<Move> moves = generateDiagonalMoves(startSquare);
         moves.addAll(generateAcrossMoves(startSquare));
         return moves;
     }
@@ -304,10 +304,10 @@ public class MoveGenerator {
      * @param startSquare the position of the king
      * @return ArrayList of Move objects
      */
-    public ArrayList<Move> generateKingMoves(int startSquare) {
+    public List<Move> generateKingMoves(int startSquare) {
         // normal movement
-        ArrayList<Move> generatedMoves = new ArrayList<>();
-        ArrayList<Integer> directions = generateStartingDirectionsAcross(startSquare);
+        List<Move> generatedMoves = new ArrayList<>();
+        List<Integer> directions = generateStartingDirectionsAcross(startSquare);
         directions.addAll(generateStartingDirectionsDiagonal(startSquare));
 
         int targetSquare, piece;
@@ -353,7 +353,7 @@ public class MoveGenerator {
      * @param startSquare the starting square
      * @return ArrayList of Move objects
      */
-    public ArrayList<Move> generateMovesStartingAt(int startSquare) {
+    public List<Move> generateMovesStartingAt(int startSquare) {
         switch (Piece.getType(board.getPieceAt(startSquare))) {
             case Piece.Pawn:
                 return generatePawnMoves(startSquare);

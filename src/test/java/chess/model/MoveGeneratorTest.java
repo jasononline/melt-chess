@@ -9,6 +9,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Tests for the MoveGenerator class.
+ * Mostly tests on piece movement, neglecting rules for check
+ */
 public class MoveGeneratorTest {
 
 
@@ -43,7 +47,7 @@ public class MoveGeneratorTest {
         Board board = new Board(fen);
 
         MoveGenerator generator = new MoveGenerator(board);
-        ArrayList<Move> generatedMoves = new ArrayList<>();
+        List<Move> generatedMoves = new ArrayList<>();
         for (int position : new int[]{27, 28, 14})
             generatedMoves.addAll(generator.generatePawnMoves(position));
 
@@ -52,7 +56,7 @@ public class MoveGeneratorTest {
         for (int position : new int[]{13, 19})
             generatedMoves.addAll(generator.generatePawnMoves(position));
 
-        ArrayList<Move> expectedMoves = new ArrayList<>();
+        List<Move> expectedMoves = new ArrayList<>();
         // valid black piece moves
         expectedMoves.add(new Move(13, 21));
         expectedMoves.add(new Move(13, 29, Move.PawnTwoForward));
@@ -78,7 +82,7 @@ public class MoveGeneratorTest {
         Move expectedMove = new Move(28, 19, Move.EnPassantCapture);
 
         MoveGenerator generator = new MoveGenerator(board);
-        ArrayList<Move> generatedMoves = new ArrayList<>();
+        List<Move> generatedMoves = new ArrayList<>();
         generatedMoves.addAll(generator.generatePawnMoves(28));
         generatedMoves.addAll(generator.generatePawnMoves(53));
         assertTrue(generatedMoves.contains(expectedMove));
@@ -107,7 +111,7 @@ public class MoveGeneratorTest {
         String fen = "N7/8/8/8/8/8/8/7N";
         Board board = new Board(fen);
 
-        ArrayList<Move> expectedMoves = new ArrayList<>();
+        List<Move> expectedMoves = new ArrayList<>();
         expectedMoves.add(new Move(63, 46));
         expectedMoves.add(new Move(63, 53));
         expectedMoves.add(new Move(0, 10));
@@ -115,7 +119,7 @@ public class MoveGeneratorTest {
 
 
         MoveGenerator generator = new MoveGenerator(board);
-        ArrayList<Move> generatedMoves = generator.generateKnightMoves(63);
+        List<Move> generatedMoves = generator.generateKnightMoves(63);
         generatedMoves.addAll(generator.generateKnightMoves(0));
         assertTrue(generatedMoves.containsAll(expectedMoves));
     }
@@ -131,12 +135,12 @@ public class MoveGeneratorTest {
         Board board = new Board(fen);
 
 
-        ArrayList<Move> expectedMoves = new ArrayList<>();
+        List<Move> expectedMoves = new ArrayList<>();
         for (int expectedTarget : new int[]{1,3,8,12,24,28,33,35})
             expectedMoves.add(new Move(startSquare, expectedTarget));
 
         MoveGenerator generator = new MoveGenerator(board);
-        ArrayList<Move> generatedMoves = generator.generateKnightMoves(startSquare);
+        List<Move> generatedMoves = generator.generateKnightMoves(startSquare);
         assertTrue(generatedMoves.containsAll(expectedMoves));
     }
 
@@ -153,7 +157,7 @@ public class MoveGeneratorTest {
         Move expectedMove = new Move(startSquare, 1);
 
         MoveGenerator generator = new MoveGenerator(board);
-        ArrayList<Move> generatedMoves = generator.generateKnightMoves(startSquare);
+        List<Move> generatedMoves = generator.generateKnightMoves(startSquare);
         assertTrue(generatedMoves.contains(expectedMove));
         assertEquals(generatedMoves.size(), 1);
     }
@@ -168,8 +172,8 @@ public class MoveGeneratorTest {
         String fen = "8/3R4/8/1Q6/8/3r4/8/8";
         Board board = new Board(fen);
         MoveGenerator generator = new MoveGenerator(board);
-        ArrayList<Move> generatedMoves;
-        ArrayList<Move> expectedMoves = new ArrayList<>();
+        List<Move> generatedMoves;
+        List<Move> expectedMoves = new ArrayList<>();
         for (int expectedTarget : new int[]{16, 32, 18, 34, 43}) {
             expectedMoves.add(new Move(startSquare, expectedTarget));
         }
@@ -188,8 +192,8 @@ public class MoveGeneratorTest {
         String fen = "8/8/1R6/8/8/1Q2r3/8/8";
         Board board = new Board(fen);
         MoveGenerator generator = new MoveGenerator(board);
-        ArrayList<Move> generatedMoves;
-        ArrayList<Move> expectedMoves = new ArrayList<>();
+        List<Move> generatedMoves;
+        List<Move> expectedMoves = new ArrayList<>();
         for (int expectedTarget : new int[]{40, 49, 57, 42, 43, 44, 33, 25}) {
             expectedMoves.add(new Move(startSquare, expectedTarget));
         }
@@ -208,8 +212,8 @@ public class MoveGeneratorTest {
         String fen = "8/8/1R6/8/K1b5/1Q2r3/8/3B4";
         Board board = new Board(fen);
         MoveGenerator generator = new MoveGenerator(board);
-        ArrayList<Move> generatedMoves;
-        ArrayList<Move> expectedMoves = new ArrayList<>();
+        List<Move> generatedMoves;
+        List<Move> expectedMoves = new ArrayList<>();
         for (int expectedTarget : new int[]{25,33, 34, 40, 42, 43, 44, 48, 49, 50, 57}) {
             expectedMoves.add(new Move(startSquare, expectedTarget));
         }
@@ -230,8 +234,8 @@ public class MoveGeneratorTest {
         // test white King first
         Board board = new Board(fen);
         MoveGenerator generator = new MoveGenerator(board);
-        ArrayList<Move> generatedMoves;
-        ArrayList<Move> expectedMoves = new ArrayList<>();
+        List<Move> generatedMoves;
+        List<Move> expectedMoves = new ArrayList<>();
         for (int expectedTarget : new int[]{51, 52, 53, 59, 61}) {
             expectedMoves.add(new Move(startSquare, expectedTarget));
         }
@@ -258,8 +262,8 @@ public class MoveGeneratorTest {
         Board board = new Board(fen);
         board.forbidCastlingA1();
         MoveGenerator generator = new MoveGenerator(board);
-        ArrayList<Move> generatedMoves;
-        ArrayList<Move> expectedMoves = new ArrayList<>();
+        List<Move> generatedMoves;
+        List<Move> expectedMoves = new ArrayList<>();
         // expected moves for white
         int startSquare = 60;
         for (int expectedTarget : new int[]{51, 52, 53, 59, 61}) {
