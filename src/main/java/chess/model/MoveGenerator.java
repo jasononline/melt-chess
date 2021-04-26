@@ -365,6 +365,8 @@ public class MoveGenerator {
                 return generateRookMoves(startSquare);
             case Piece.Knight:
                 return generateKnightMoves(startSquare);
+            case Piece.King:
+                return generateKingMoves(startSquare);
         }
         return new ArrayList<>();
     }
