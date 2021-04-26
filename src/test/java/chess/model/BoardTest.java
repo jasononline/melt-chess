@@ -11,7 +11,18 @@ public class BoardTest {
     @Test
     public void squaresFromFENString() {
         String fen = "kqrbnp2/8/7p/4p2N/3p3B/2P1P2R/7Q/7K";
-        Board b = new Board(fen);
+        Board board = new Board(fen);
+
+        assertEquals(Piece.King+Piece.Black, board.getPieceAt(0));
+        assertEquals(Piece.Queen+Piece.Black, board.getPieceAt(1));
+        assertEquals(Piece.Rook+Piece.Black, board.getPieceAt(2));
+        assertEquals(Piece.Bishop+Piece.Black, board.getPieceAt(3));
+        assertEquals(Piece.Knight+Piece.Black, board.getPieceAt(4));
+        assertEquals(Piece.Pawn+Piece.Black, board.getPieceAt(5));
+
+        fen = "2kqrbnp/8/7p/4p2N/3p3B/2P1P2R/7Q/7K";
+        board = new Board(fen);
+        System.out.println(board);
     }
 
     /**
