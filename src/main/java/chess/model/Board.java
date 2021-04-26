@@ -134,8 +134,9 @@ public class Board {
      */
     public Board(Board board) {
         this();
-        squares = board.squares;
-        capturedPieces = board.getCapturedPieces();
+        squares = board.squares.clone();
+        capturedPieces = new ArrayList<>();
+        capturedPieces.addAll(board.getCapturedPieces());
         // En passant capture only within next move possible
         enPassantSquare = -1;
         turnColor = board.getTurnColor();
@@ -191,6 +192,20 @@ public class Board {
         // move piece
         newBoard.squares[move.getTargetSquare()] = newBoard.getPieceAt(move.getStartSquare());
         newBoard.squares[move.getStartSquare()] = Piece.None;
+        // move the rook when castling
+        if (move.getFlag() == Move.Castling) {
+            int rookCurrentPosition, rookNewPosition;
+            if (move.getTargetSquare() < move.getStartSquare()) {
+                rookCurrentPosition = move.getTargetSquare() - 2;
+                rookNewPosition = move.getTargetSquare() + 1;
+            } else {
+                rookCurrentPosition = move.getTargetSquare() + 1;
+                rookNewPosition = move.getTargetSquare() - 1;
+            }
+            newBoard.squares[rookNewPosition] = newBoard.getPieceAt(rookCurrentPosition);
+            newBoard.squares[rookCurrentPosition] = Piece.None;
+        }
+
 
         // promote pawn
         switch (move.getFlag()) {
@@ -270,23 +285,23 @@ public class Board {
      * @return the String representing the board according to the sqares variable
      */
     public String toString() {
-        String boardAsString = "";
+        StringBuilder boardAsString = new StringBuilder();
         // iterate through lines
         for (int line = 0; line < 8; line++) {
-            boardAsString += String.valueOf(8 - line) + " ";
+            boardAsString.append(8 - line).append(" ");
             // iterate trough columns
             for (int column = 0; column < 8; column++) {
-                boardAsString += Piece.toString(getPieceAt(column + (line * 8)));
+                boardAsString.append(Piece.toString(getPieceAt(column + (line * 8))));
                 // decide whether to add a space or begin new line
                 if (column < 7) {
-                    boardAsString += " ";
+                    boardAsString.append(" ");
                 } else {
-                    boardAsString += "\n";
+                    boardAsString.append("\n");
                 }
             }
         }
-        boardAsString += "  a b c d e f g h\n";
-        return boardAsString;
+        boardAsString.append("  a b c d e f g h\n");
+        return boardAsString.toString();
     }
 
 

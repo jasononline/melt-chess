@@ -53,6 +53,27 @@ public class BoardTest {
         assertFalse(board.isCastlingH1Possible());
     }
 
+    /**
+     * Test the castling moves
+     */
+    @Test
+    public void makeMoveCastling() {
+        String fen = "8/2p3p1/8/8/8/8/8/R3K2R";
+        Board board = new Board(fen);
+
+        Move castlingLeft = new Move(60, 58, Move.Castling);
+        Move castlingRight = new Move(60, 62, Move.Castling);
+
+        Board boardAfterCastlingLeft = board.makeMove(castlingLeft);
+        Board boardAfterCastlingRight = board.makeMove(castlingRight);
+
+        assertEquals(Piece.King, Piece.getType(boardAfterCastlingLeft.getPieceAt(58)));
+        assertEquals(Piece.Rook, Piece.getType(boardAfterCastlingLeft.getPieceAt(59)));
+
+        assertEquals(Piece.King, Piece.getType(boardAfterCastlingRight.getPieceAt(62)));
+        assertEquals(Piece.Rook, Piece.getType(boardAfterCastlingRight.getPieceAt(61)));
+    }
+
 
     /**
      * Test en passant capture move
