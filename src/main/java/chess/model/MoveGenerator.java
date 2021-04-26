@@ -342,7 +342,7 @@ public class MoveGenerator {
         ArrayList<Integer> teamPositions = teamColor == Piece.Black ? blackPiecePositions : whitePiecePositions;
 
         for (int position : teamPositions) {
-            generatedMoves.addAll(generateMovesFrom(position));
+            generatedMoves.addAll(generateMovesStartingAt(position));
         }
         return generatedMoves;
     }
@@ -353,7 +353,7 @@ public class MoveGenerator {
      * @param startSquare the starting square
      * @return ArrayList of Move objects
      */
-    public ArrayList<Move> generateMovesFrom(int startSquare) {
+    public ArrayList<Move> generateMovesStartingAt(int startSquare) {
         switch (Piece.getType(board.getPieceAt(startSquare))) {
             case Piece.Pawn:
                 return generatePawnMoves(startSquare);

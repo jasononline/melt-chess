@@ -47,7 +47,7 @@ public class MoveValidator {
     public static boolean validateMove(Board board, Move move) {
         // check if move is any legal move found by the MoveGenerator
         MoveGenerator generator = new MoveGenerator(board);
-        ArrayList<Move> generatedMoves = generator.generateMovesFrom(move.getStartSquare());
+        ArrayList<Move> generatedMoves = generator.generateMovesStartingAt(move.getStartSquare());
         if (!generatedMoves.contains(move))
             return false;
 
