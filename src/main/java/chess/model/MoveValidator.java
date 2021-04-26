@@ -51,7 +51,7 @@ public class MoveValidator {
         if (!generatedMoves.contains(move))
             return false;
 
-        // TODO check if king is in chess and stays in chess after the move
+        // TODO check if king is in check and stays in chess after the move
 
         // TODO check if move puts own king in chess
 

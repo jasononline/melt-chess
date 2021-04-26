@@ -44,17 +44,24 @@ public class Move {
 
 
     /**
-     * Returns the starting square
+     * @return the starting square
      */
     public int getStartSquare() {
         return startSquare;
     }
 
     /**
-     * Returns the target square
+     * @return the target square
      */
     public int getTargetSquare() {
         return targetSquare;
+    }
+
+    /**
+     * @return returns the move flag
+     */
+    public int getFlag() {
+        return flag;
     }
 
 

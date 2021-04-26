@@ -10,6 +10,7 @@ public class Board {
 
     // representing the chess board where squares[0] is "a1" and squares[63] is "h8"
     private int[] squares;
+    private ArrayList<Integer> capturedPieces;
     // if a pawn moved two spaces when this board was created, it is possible to capture the pawn at this position:
     private int enPassantSquare;
     private int turnColor;
@@ -35,6 +36,7 @@ public class Board {
         squares = new int[64];
         turnColor = Piece.White;
         enPassantSquare = -1;
+        capturedPieces = new ArrayList<>();
     }
 
 
@@ -46,6 +48,7 @@ public class Board {
         this();
         squares = Board.squaresFromFENString(fenString);
     }
+
 
     /**
      * Used to init the squares field
@@ -121,20 +124,102 @@ public class Board {
      * @param turnColor which color is next turn
      */
     public Board(String fenString, int turnColor) {
-        // TODO write tests
-        // TODO write function
+        this(fenString);
+        this.turnColor = turnColor;
+    }
+
+    /**
+     * Clone Board instance
+     * @param board another Board instance
+     */
+    public Board(Board board) {
+        this();
+        squares = board.squares;
+        capturedPieces = board.getCapturedPieces();
+        // En passant capture only within next move possible
+        enPassantSquare = -1;
+        turnColor = board.getTurnColor();
+        // is castling with one of the four rooks still possible?
+        CastlingA1Possible = board.isCastlingA1Possible();
+        CastlingA8Possible = board.isCastlingA8Possible();
+        CastlingH1Possible = board.isCastlingH1Possible();
+        CastlingH8Possible = board.isCastlingH8Possible();
     }
 
 
     /**
-     * Returns new Board instance after making move
+     * Returns copy of self and applying move
      * @param move The move to be made.
      */
     public Board makeMove(Move move) {
-        // TODO write tests
-        // TODO write function
-        return this;
+        Board newBoard = new Board(this);
+        int piece = newBoard.getPieceAt(move.getStartSquare());
+        // capture piece
+        if (Piece.getType(newBoard.getPieceAt(move.getTargetSquare())) != Piece.None) {
+            capturedPieces.add(newBoard.getPieceAt(move.getTargetSquare()));
+        }
+        // en passant capture
+        if (0 < enPassantSquare && move.getFlag() == Move.EnPassantCapture) {
+            capturedPieces.add(newBoard.getPieceAt(enPassantSquare));
+            newBoard.squares[enPassantSquare] = Piece.None;
+        }
+        if (move.getFlag() == Move.PawnTwoForward) {
+            int stepBackDirection = (turnColor == Piece.Black) ? MoveGenerator.UP : MoveGenerator.DOWN;
+            newBoard.enPassantSquare = move.getTargetSquare() + stepBackDirection;
+        }
+
+        // forbid castling if needed
+        switch (move.getStartSquare()) {
+            // rook moved
+            case 0: newBoard.forbidCastlingA8(); break;
+            case 7: newBoard.forbidCastlingH8(); break;
+            case 56: newBoard.forbidCastlingA1(); break;
+            case 63: newBoard.forbidCastlingH1(); break;
+            // king moved
+            case 4: {
+                newBoard.forbidCastlingA8();
+                newBoard.forbidCastlingH8();
+                break;
+            }
+            case 60: {
+                newBoard.forbidCastlingA1();
+                newBoard.forbidCastlingH1();
+                break;
+            }
+        }
+
+        // move piece
+        newBoard.squares[move.getTargetSquare()] = newBoard.getPieceAt(move.getStartSquare());
+        newBoard.squares[move.getStartSquare()] = Piece.None;
+
+        // promote pawn
+        switch (move.getFlag()) {
+            case Move.PromoteToBishop:
+                newBoard.squares[move.getTargetSquare()] = Piece.Bishop + turnColor;
+                break;
+            case Move.PromoteToKnight:
+                newBoard.squares[move.getTargetSquare()] = Piece.Knight + turnColor;
+                break;
+            case Move.PromoteToQueen:
+                newBoard.squares[move.getTargetSquare()] = Piece.Queen + turnColor;
+                break;
+            case Move.PromoteToRook:
+                newBoard.squares[move.getTargetSquare()] = Piece.Rook + turnColor;
+                break;
+        }
+
+        int nextTurnColor = (newBoard.getTurnColor() == Piece.Black) ? Piece.White : Piece.Black;
+        newBoard.setTurnColor(nextTurnColor);
+
+        return newBoard;
     }
+
+
+    /**
+     *
+     * @return all captured pieces
+     */
+    public ArrayList<Integer> getCapturedPieces() { return capturedPieces; }
 
 
     /**
