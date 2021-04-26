@@ -1,6 +1,7 @@
 package chess.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Board class contains all information about the current state of the game.
@@ -10,7 +11,7 @@ public class Board {
 
     // representing the chess board where squares[0] is "a1" and squares[63] is "h8"
     private int[] squares;
-    private ArrayList<Integer> capturedPieces;
+    private List<Integer> capturedPieces;
     // if a pawn moved two spaces when this board was created, it is possible to capture the pawn at this position:
     private int enPassantSquare;
     private int turnColor;
@@ -20,14 +21,23 @@ public class Board {
     private boolean CastlingH1Possible = true;
     private boolean CastlingH8Possible = true;
 
+    /** @return true if castling with A1 rook is possible */
     public boolean isCastlingA1Possible(){return CastlingA1Possible;}
+    /** @return true if castling with A8 rook is possible */
     public boolean isCastlingA8Possible(){return CastlingA8Possible;}
+    /** @return true if castling with H1 rook is possible */
     public boolean isCastlingH1Possible(){return CastlingH1Possible;}
+    /** @return true if castling with H8 rook is possible */
     public boolean isCastlingH8Possible(){return CastlingH8Possible;}
+    /** forbid castling **/
     public void forbidCastlingA1(){CastlingA1Possible =false;}
+    /** forbid castling **/
     public void forbidCastlingA8(){CastlingA8Possible =false;}
+    /** forbid castling **/
     public void forbidCastlingH1(){CastlingH1Possible =false;}
+    /** forbid castling **/
     public void forbidCastlingH8(){CastlingH8Possible =false;}
+
 
     /**
      * Construct empty Board instance
@@ -59,61 +69,41 @@ public class Board {
 
         int[] squares = new int[64];
         int position = 0;
+        String pieceChars = "kKpPnNbBrRqQ";
+        int[] pieceRepresentations = new int[]{
+                Piece.King + Piece.Black,
+                Piece.King + Piece.White,
+                Piece.Pawn + Piece.Black,
+                Piece.Pawn + Piece.White,
+                Piece.Knight + Piece.Black,
+                Piece.Knight + Piece.White,
+                Piece.Bishop + Piece.Black,
+                Piece.Bishop + Piece.White,
+                Piece.Rook + Piece.Black,
+                Piece.Rook + Piece.White,
+                Piece.Queen + Piece.Black,
+                Piece.Queen + Piece.White,
+        };
+
         for (Character s: fenString.toCharArray()) {
+            // move s squares forward
             if (Character.isDigit(s)) {
                 position += Character.getNumericValue(s);
                 continue;
             }
-
-            switch (s) {
-                case 'k':
-                    squares[position] = Piece.King + Piece.Black;
-                    break;
-                case 'K':
-                    squares[position] = Piece.King + Piece.White;
-                    break;
-                case 'p':
-                    squares[position] = Piece.Pawn + Piece.Black;
-                    break;
-                case 'P':
-                    squares[position] = Piece.Pawn + Piece.White;
-                    break;
-                case 'n':
-                    squares[position] = Piece.Knight + Piece.Black;
-                    break;
-                case 'N':
-                    squares[position] = Piece.Knight + Piece.White;
-                    break;
-                case 'b':
-                    squares[position] = Piece.Bishop + Piece.Black;
-                    break;
-                case 'B':
-                    squares[position] = Piece.Bishop + Piece.White;
-                    break;
-                case 'r':
-                    squares[position] = Piece.Rook + Piece.Black;
-                    break;
-                case 'R':
-                    squares[position] = Piece.Rook + Piece.White;
-                    break;
-                case 'q':
-                    squares[position] = Piece.Queen + Piece.Black;
-                    break;
-                case 'Q':
-                    squares[position] = Piece.Queen + Piece.White;
-                    break;
-                case '/':
-                    // increase position until nextline
-                    if (position % 8 == 0) {
-                        position -= 1;
-                    } else {
-                        position += 8 - position % 8;
-                    }
-                    break;
+            // increase position until next line
+            if (s == '/') {
+                if (position % 8 != 0) {
+                    position += 8 - position % 8;
+                }
+                continue;
             }
-            position += 1;
+            // add piece to the position
+            if (0 <= pieceChars.indexOf(s)) {
+                squares[position] = pieceRepresentations[pieceChars.indexOf(s)];
+                position += 1;
+            }
         }
-
         return squares;
     }
 
@@ -127,6 +117,7 @@ public class Board {
         this(fenString);
         this.turnColor = turnColor;
     }
+
 
     /**
      * Clone Board instance
@@ -148,28 +139,7 @@ public class Board {
     }
 
 
-    /**
-     * Returns copy of self and applying move
-     * @param move The move to be made.
-     * @return returns new Board instance
-     */
-    public Board makeMove(Move move) {
-        Board newBoard = new Board(this);
-        // capture piece
-        if (Piece.getType(newBoard.getPieceAt(move.getTargetSquare())) != Piece.None) {
-            newBoard.capturedPieces.add(newBoard.getPieceAt(move.getTargetSquare()));
-        }
-        // en passant capture
-        if (0 < enPassantSquare && move.getFlag() == Move.EnPassantCapture) {
-            newBoard.capturedPieces.add(newBoard.getPieceAt(enPassantSquare));
-            newBoard.squares[enPassantSquare] = Piece.None;
-        }
-        if (move.getFlag() == Move.PawnTwoForward) {
-            int stepBackDirection = (turnColor == Piece.Black) ? MoveGenerator.UP : MoveGenerator.DOWN;
-            newBoard.enPassantSquare = move.getTargetSquare() + stepBackDirection;
-        }
-
-        // forbid castling if needed
+    private void forbidCastling(Board newBoard, Move move) {
         switch (move.getStartSquare()) {
             // rook moved
             case 0: newBoard.forbidCastlingA8(); break;
@@ -188,8 +158,10 @@ public class Board {
                 break;
             }
         }
+    }
 
-        // move piece
+
+    private void movePiece(Board newBoard, Move move) {
         newBoard.squares[move.getTargetSquare()] = newBoard.getPieceAt(move.getStartSquare());
         newBoard.squares[move.getStartSquare()] = Piece.None;
         // move the rook when castling
@@ -206,8 +178,10 @@ public class Board {
             newBoard.squares[rookCurrentPosition] = Piece.None;
         }
 
+    }
 
-        // promote pawn
+
+    private void promotePawn(Board newBoard, Move move) {
         switch (move.getFlag()) {
             case Move.PromoteToBishop:
                 newBoard.squares[move.getTargetSquare()] = Piece.Bishop + turnColor;
@@ -222,6 +196,38 @@ public class Board {
                 newBoard.squares[move.getTargetSquare()] = Piece.Rook + turnColor;
                 break;
         }
+    }
+
+
+    private void enPassantCapture(Board newBoard, Move move) {
+        if (0 < enPassantSquare && move.getFlag() == Move.EnPassantCapture) {
+            newBoard.capturedPieces.add(newBoard.getPieceAt(enPassantSquare));
+            newBoard.squares[enPassantSquare] = Piece.None;
+        }
+        if (move.getFlag() == Move.PawnTwoForward) {
+            int stepBackDirection = (turnColor == Piece.Black) ? MoveGenerator.UP : MoveGenerator.DOWN;
+            newBoard.enPassantSquare = move.getTargetSquare() + stepBackDirection;
+        }
+    }
+
+
+    /**
+     * Returns copy of self and applying move
+     * @param move The move to be made.
+     * @return returns new Board instance
+     */
+    public Board makeMove(Move move) {
+        Board newBoard = new Board(this);
+        // capture piece
+        if (Piece.getType(newBoard.getPieceAt(move.getTargetSquare())) != Piece.None) {
+            newBoard.capturedPieces.add(newBoard.getPieceAt(move.getTargetSquare()));
+        }
+
+        enPassantCapture(newBoard, move);
+        forbidCastling(newBoard, move);
+        movePiece(newBoard, move);
+        if (0 < move.getFlag())
+            promotePawn(newBoard, move);
 
         int nextTurnColor = (newBoard.getTurnColor() == Piece.Black) ? Piece.White : Piece.Black;
         newBoard.setTurnColor(nextTurnColor);
@@ -234,7 +240,7 @@ public class Board {
      *
      * @return all captured pieces
      */
-    public ArrayList<Integer> getCapturedPieces() { return capturedPieces; }
+    public List<Integer> getCapturedPieces() { return capturedPieces; }
 
 
     /**
@@ -253,6 +259,7 @@ public class Board {
         this.turnColor = turnColor;
     }
 
+
     /**
      * If a pawn moved two spaces when this board was created, it is possible to capture the pawn at this position
      * @return position of the enPassantSquare
@@ -260,6 +267,7 @@ public class Board {
     public int getEnPassantSquare() {
         return enPassantSquare;
     }
+
 
     /**
      * If a pawn moved two spaces when this board was created, it is possible to capture the pawn at this position
@@ -274,6 +282,7 @@ public class Board {
      * Returns the String representation of the board as used by the console client
      * @return the String representing the board according to the sqares variable
      */
+    @Override
     public String toString() {
         StringBuilder boardAsString = new StringBuilder();
         // iterate through lines
@@ -310,7 +319,7 @@ public class Board {
      * @param color of the pieces
      * @return returns List of positions
      */
-    public ArrayList<Integer> getPiecePositionsFor(int color){
+    public List<Integer> getPiecePositionsFor(int color){
         // TODO write tests
         // TODO write function
         ArrayList<Integer> positions = new ArrayList<>();
@@ -319,5 +328,4 @@ public class Board {
         }
         return positions;
     }
-
 }
