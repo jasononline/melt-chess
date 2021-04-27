@@ -46,16 +46,14 @@ public class MoveGeneratorTest {
         String fen = "8/5pP1/3p4/3PP3/8/8/8/8";
         Board board = new Board(fen);
 
-        MoveGenerator generator = new MoveGenerator(board);
         List<Move> generatedMoves = new ArrayList<>();
         for (int position : new int[]{27, 28, 14}) {
-            generatedMoves.addAll(generator.generatePawnMoves(position));
+            generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board, position));
         }
 
         board.setTurnColor(Piece.Black);
-        generator = new MoveGenerator(board);
         for (int position : new int[]{13, 19}) {
-            generatedMoves.addAll(generator.generatePawnMoves(position));
+            generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board, position));
         }
 
         List<Move> expectedMoves = new ArrayList<>();
@@ -89,8 +87,8 @@ public class MoveGeneratorTest {
 
         MoveGenerator generator = new MoveGenerator(board);
         List<Move> generatedMoves = new ArrayList<>();
-        generatedMoves.addAll(generator.generatePawnMoves(28));
-        generatedMoves.addAll(generator.generatePawnMoves(53));
+        generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board,28));
+        generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board,53));
         assertTrue(generatedMoves.contains(expectedMove));
     }
 

@@ -52,18 +52,8 @@ public class MoveGenerator {
     }
 
 
-    /**
-     * Generate list of possible pawn moves
-     * @param startSquare the position of the pawn
-     * @return ArrayList of Move objects
-     */
-    public List<Move> generatePawnMoves(int startSquare) {
-        return MoveGeneratorPawn.generatePawnMoves(board, startSquare);
-    }
-
-
     // make sure to not fall off the board
-    private List<Integer> generateKnightDirections(int startSquare) {
+    private List<Integer> generateKnightDirectionsLeftRight(int startSquare) {
         int[] startCoordinates = Coordinate.fromIndex(startSquare);
         List<Integer> directions = new ArrayList<>();
         if (1 < startCoordinates[0]) {
@@ -78,6 +68,12 @@ public class MoveGenerator {
             if (startCoordinates[1] < 7)
                 directions.add(RIGHT + DOWNRIGHT);
         }
+        return directions;
+    }
+
+    private List<Integer> generateKnightDirectionsUpDown(int startSquare) {
+        int[] startCoordinates = Coordinate.fromIndex(startSquare);
+        List<Integer> directions = new ArrayList<>();
         if (1 < startCoordinates[1]) {
             if (0 < startCoordinates[0])
                 directions.add(UP + UPLEFT);
@@ -101,7 +97,8 @@ public class MoveGenerator {
      */
     public List<Move> generateKnightMoves(int startSquare) {
         List<Move>  generatedMoves = new ArrayList<>();
-        List<Integer> directions = generateKnightDirections(startSquare);
+        List<Integer> directions = generateKnightDirectionsLeftRight(startSquare);
+        directions.addAll(generateKnightDirectionsUpDown(startSquare));
 
         int targetSquare;
         for (int direction : directions) {
