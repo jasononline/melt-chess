@@ -10,15 +10,17 @@ public class Piece {
     public static final int King       = 1;
     public static final int Pawn       = 2;
     public static final int Knight     = 3;
-    public static final int Bishop     = 5;
-    public static final int Rook       = 6;
-    public static final int Queen      = 7;
+    public static final int Bishop     = 4;
+    public static final int Rook       = 5;
+    public static final int Queen      = 6;
     public static final int White      = 8;
     public static final int Black      = 16;
     public static final int typeMask   = 0b00111;
     public static final int blackMask  = 0b10000;
     public static final int whiteMask  = 0b01000;
     public static final int colorMask = whiteMask | blackMask;
+
+    public static final String UTFSymbols = " ♔♙♘♗♖♕♚♟♞♝♜♛";
 
     public static final String UTFSymbolNone        = " ";
     public static final String UTFSymbolKingWhite   = "♔";
@@ -33,6 +35,7 @@ public class Piece {
     public static final String UTFSymbolBishopBlack = "♝";
     public static final String UTFSymbolRookBlack   = "♜";
     public static final String UTFSymbolQueenBlack  = "♛";
+
 
 
     /**
@@ -68,21 +71,9 @@ public class Piece {
      * @return String representation of a piece as used by FEN strings and the console client
      */
     public static String toString(int piece) {
-        switch (getType(piece)) {
-            case Piece.King:
-                return isColor(piece, Piece.Black) ? UTFSymbolKingBlack : UTFSymbolKingWhite;
-            case Piece.Pawn:
-                return isColor(piece, Piece.Black) ? UTFSymbolPawnBlack : UTFSymbolPawnWhite;
-            case Piece.Knight:
-                return isColor(piece, Piece.Black) ? UTFSymbolKnightBlack : UTFSymbolKnightWhite;
-            case Piece.Bishop:
-                return isColor(piece, Piece.Black) ? UTFSymbolBishopBlack : UTFSymbolBishopWhite;
-            case Piece.Rook:
-                return isColor(piece, Piece.Black) ? UTFSymbolRookBlack : UTFSymbolRookWhite;
-            case Piece.Queen:
-                return isColor(piece, Piece.Black) ? UTFSymbolQueenBlack : UTFSymbolQueenWhite;
-            default:
-                return UTFSymbolNone;
-        }
+        int type = getType(piece);
+        int position = getColor(piece) == White || type == 0 ? 0 : 6;
+        position += type;
+        return UTFSymbols.substring(position, position+1);
     }
 }

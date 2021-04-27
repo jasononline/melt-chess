@@ -46,16 +46,15 @@ public class MoveGeneratorTest {
         String fen = "8/5pP1/3p4/3PP3/8/8/8/8";
         Board board = new Board(fen);
 
-        MoveGenerator generator = new MoveGenerator(board);
         List<Move> generatedMoves = new ArrayList<>();
-        generatedMoves.addAll(generator.generatePawnMoves(27));
-        generatedMoves.addAll(generator.generatePawnMoves(28));
-        generatedMoves.addAll(generator.generatePawnMoves(14));
+        for (int position : new int[]{27, 28, 14}) {
+            generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board, position));
+        }
 
         board.setTurnColor(Piece.Black);
-        generator = new MoveGenerator(board);
-        generatedMoves.addAll(generator.generatePawnMoves(13));
-        generatedMoves.addAll(generator.generatePawnMoves(19));
+        for (int position : new int[]{13, 19}) {
+            generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board, position));
+        }
 
         List<Move> expectedMoves = new ArrayList<>();
         // valid black piece moves
@@ -64,6 +63,9 @@ public class MoveGeneratorTest {
         expectedMoves.add(new Move(19, 28));
         // valid white piece moves
         expectedMoves.add(new Move(14, 6, Move.PromoteToQueen));
+        expectedMoves.add(new Move(14, 6, Move.PromoteToRook));
+        expectedMoves.add(new Move(14, 6, Move.PromoteToBishop));
+        expectedMoves.add(new Move(14, 6, Move.PromoteToKnight));
         expectedMoves.add(new Move(28, 19));
         expectedMoves.add(new Move(28, 20));
         // check generated vs expected
@@ -134,7 +136,6 @@ public class MoveGeneratorTest {
         String fen = "8/8/2N5/8/8/8/8/8";
         int startSquare = 18;
         Board board = new Board(fen);
-
 
         List<Move> expectedMoves = new ArrayList<>();
         for (int expectedTarget : new int[]{1,3,8,12,24,28,33,35}) {
