@@ -84,9 +84,8 @@ public class MoveGeneratorTest {
         board.setEnPassantSquare(19);
         Move expectedMove = new Move(28, 19, Move.EnPassantCapture);
 
-        MoveGenerator generator = new MoveGenerator(board);
         List<Move> generatedMoves = new ArrayList<>();
-        generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board, 28));
+        generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board,28));
         generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board,53));
         assertTrue(generatedMoves.contains(expectedMove));
     }
@@ -285,6 +284,7 @@ public class MoveGeneratorTest {
         }
         expectedMoves.add(new Move(startSquare, 2, Move.Castling));
         generatedMoves.addAll(generator.generateKingMoves(startSquare));
+
         assertTrue(generatedMoves.containsAll(expectedMoves));
     }
 }

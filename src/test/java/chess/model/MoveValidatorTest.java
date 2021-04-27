@@ -75,12 +75,13 @@ public class MoveValidatorTest {
      * Expects white king to *NOT* be able to castle any direction.
      * @param fen initial board position for test
      */
-    private void validateMoveCastling(String fen) {
+    private boolean validateMoveCastling(String fen) {
         Board board = new Board(fen);
         Move castlingLeft = new Move(60, 58, Move.Castling);
         Move castlingRight = new Move(60, 62, Move.Castling);
-        assertFalse(MoveValidator.validateMove(board, castlingLeft));
-        assertFalse(MoveValidator.validateMove(board, castlingRight));
+        if (MoveValidator.validateMove(board, castlingLeft))
+            return false;
+        return !MoveValidator.validateMove(board, castlingRight);
     }
 
 
@@ -92,7 +93,8 @@ public class MoveValidatorTest {
     @Test
     public void validateMoveCastlingWhileKingInCheck() {
         String fen = "8/4q3/8/8/8/8/8/R3K2R";
-        validateMoveCastling(fen);
+
+        assertTrue(validateMoveCastling(fen));
     }
 
 
@@ -104,7 +106,7 @@ public class MoveValidatorTest {
     @Test
     public void validateMoveCastlingWhileSquareUnderAttack() {
         String fen = "8/1q3q2/8/8/8/8/8/R3K2R";
-        validateMoveCastling(fen);
+        assertTrue(validateMoveCastling(fen));
     }
 
 
@@ -116,7 +118,7 @@ public class MoveValidatorTest {
     @Test
     public void validateMoveCastlingKingInCheckAfterwards() {
         String fen = "8/b1p3p1/8/8/8/b7/8/R3K2R";
-        validateMoveCastling(fen);
+        assertTrue(validateMoveCastling(fen));
     }
 
 

@@ -18,13 +18,17 @@ public class BoardTest {
     public void squaresFromFENString() {
         String fen = "kqrbnp2/8/7p/4p2N/3p3B/2P1P2R/7Q/7K";
         Board board = new Board(fen);
-
-        assertEquals(Piece.King+Piece.Black, board.getPieceAt(0));
-        assertEquals(Piece.Queen+Piece.Black, board.getPieceAt(1));
-        assertEquals(Piece.Rook+Piece.Black, board.getPieceAt(2));
-        assertEquals(Piece.Bishop+Piece.Black, board.getPieceAt(3));
-        assertEquals(Piece.Knight+Piece.Black, board.getPieceAt(4));
-        assertEquals(Piece.Pawn+Piece.Black, board.getPieceAt(5));
+        int[] expectedPieces = new int[]{
+                Piece.King+Piece.Black,
+                Piece.Queen+Piece.Black,
+                Piece.Rook+Piece.Black,
+                Piece.Bishop+Piece.Black,
+                Piece.Knight+Piece.Black,
+                Piece.Pawn+Piece.Black,
+        };
+        for (int i=0;i<6;i++) {
+            assertEquals(expectedPieces[i], board.getPieceAt(i));
+        }
     }
 
     /**
@@ -47,7 +51,7 @@ public class BoardTest {
      * Test the different moves that forbid castling
      */
     @Test
-    public void makeMoveForbidCastling() {
+    public void makeMoveForbidCastlingOnRookMovement() {
         Board board = new Board();
         board = board.makeMove(new Move(0, 1));
         assertFalse(board.isCastlingA8Possible());
@@ -57,7 +61,14 @@ public class BoardTest {
         assertFalse(board.isCastlingA1Possible());
         board = board.makeMove(new Move(63, 1));
         assertFalse(board.isCastlingH1Possible());
-        board = new Board();
+    }
+
+    /**
+     *  Test the different moves that forbid castling
+     */
+    @Test
+    public void makeMoveForbidCastlingOnKingMovement() {
+        Board board = new Board();
         board = board.makeMove(new Move(4, 1));
         assertFalse(board.isCastlingA8Possible());
         assertFalse(board.isCastlingH8Possible());
@@ -126,13 +137,6 @@ public class BoardTest {
         assertEquals(Piece.Knight, Piece.getType(board.getPieceAt(3)));
     }
 
-    /**
-     * Method to test the expected behavior of the Method Model.positionToIndex()
-     */
-    @Test
-    public void positionToIndex() {
-        // TODO do we need this method?
-    }
 
     /**
      * Method to test the expected behavior of the Method Model.toString()
