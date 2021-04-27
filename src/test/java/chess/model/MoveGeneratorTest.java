@@ -86,8 +86,8 @@ public class MoveGeneratorTest {
 
         MoveGenerator generator = new MoveGenerator(board);
         List<Move> generatedMoves = new ArrayList<>();
-        generatedMoves.addAll(generator.generatePawnMoves(28));
-        generatedMoves.addAll(generator.generatePawnMoves(53));
+        generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board, 28));
+        generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board,53));
         assertTrue(generatedMoves.contains(expectedMove));
     }
 
