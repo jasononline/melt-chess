@@ -65,9 +65,13 @@ public class MoveGeneratorTest {
         expectedMoves.add(new Move(19, 28));
         // valid white piece moves
         expectedMoves.add(new Move(14, 6, Move.PromoteToQueen));
+        expectedMoves.add(new Move(14, 6, Move.PromoteToRook));
+        expectedMoves.add(new Move(14, 6, Move.PromoteToBishop));
+        expectedMoves.add(new Move(14, 6, Move.PromoteToKnight));
         expectedMoves.add(new Move(28, 19));
         expectedMoves.add(new Move(28, 20));
         // check generated vs expected
+
         assertTrue(expectedMoves.containsAll(generatedMoves));
     }
 
@@ -284,6 +288,28 @@ public class MoveGeneratorTest {
         }
         expectedMoves.add(new Move(startSquare, 2, Move.Castling));
         generatedMoves.addAll(generator.generateKingMoves(startSquare));
+
+        System.out.println("Position:");
+        System.out.println(board);
+
+        Board test = new Board();
+        for (Move m : expectedMoves){
+            test.squares[m.getTargetSquare()] = Piece.Pawn + Piece.White;
+            test.squares[m.getStartSquare()] = Piece.King + Piece.Black;
+        }
+        System.out.println("Expected");
+        System.out.println(test);
+
+        test = new Board();
+        for (Move m : generatedMoves){
+            test.squares[m.getTargetSquare()] = Piece.Pawn + Piece.White;
+            test.squares[m.getStartSquare()] = Piece.King + Piece.Black;
+        }
+        System.out.println("Actual");
+        System.out.println(test);
+
+
+
         assertTrue(generatedMoves.containsAll(expectedMoves));
     }
 }
