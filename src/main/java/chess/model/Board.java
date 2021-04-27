@@ -86,6 +86,8 @@ public class Board {
         };
 
         for (Character s: fenString.toCharArray()) {
+            if (s == ' ')
+                break;
             // move s squares forward
             if (Character.isDigit(s)) {
                 position += Character.getNumericValue(s);
