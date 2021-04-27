@@ -6,23 +6,29 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Contains methods to test the methods of the Board class
+ */
 public class BoardTest {
 
+    /**
+     * Method to test the expected behavior of the Method Model.squaresFromFENString()
+     */
     @Test
     public void squaresFromFENString() {
         String fen = "kqrbnp2/8/7p/4p2N/3p3B/2P1P2R/7Q/7K";
         Board board = new Board(fen);
-
-        assertEquals(Piece.King+Piece.Black, board.getPieceAt(0));
-        assertEquals(Piece.Queen+Piece.Black, board.getPieceAt(1));
-        assertEquals(Piece.Rook+Piece.Black, board.getPieceAt(2));
-        assertEquals(Piece.Bishop+Piece.Black, board.getPieceAt(3));
-        assertEquals(Piece.Knight+Piece.Black, board.getPieceAt(4));
-        assertEquals(Piece.Pawn+Piece.Black, board.getPieceAt(5));
-
-        fen = "2kqrbnp/8/7p/4p2N/3p3B/2P1P2R/7Q/7K";
-        board = new Board(fen);
-        System.out.println(board);
+        int[] expectedPieces = new int[]{
+                Piece.King+Piece.Black,
+                Piece.Queen+Piece.Black,
+                Piece.Rook+Piece.Black,
+                Piece.Bishop+Piece.Black,
+                Piece.Knight+Piece.Black,
+                Piece.Pawn+Piece.Black,
+        };
+        for (int i=0;i<6;i++) {
+            assertEquals(expectedPieces[i], board.getPieceAt(i));
+        }
     }
 
     /**
@@ -45,7 +51,7 @@ public class BoardTest {
      * Test the different moves that forbid castling
      */
     @Test
-    public void makeMoveForbidCastling() {
+    public void makeMoveForbidCastlingOnRookMovement() {
         Board board = new Board();
         board = board.makeMove(new Move(0, 1));
         assertFalse(board.isCastlingA8Possible());
@@ -55,7 +61,14 @@ public class BoardTest {
         assertFalse(board.isCastlingA1Possible());
         board = board.makeMove(new Move(63, 1));
         assertFalse(board.isCastlingH1Possible());
-        board = new Board();
+    }
+
+    /**
+     *  Test the different moves that forbid castling
+     */
+    @Test
+    public void makeMoveForbidCastlingOnKingMovement() {
+        Board board = new Board();
         board = board.makeMove(new Move(4, 1));
         assertFalse(board.isCastlingA8Possible());
         assertFalse(board.isCastlingH8Possible());
@@ -114,8 +127,9 @@ public class BoardTest {
                 new Move(10, 2, Move.PromoteToBishop),
                 new Move(11, 3, Move.PromoteToKnight)
         };
-        for (Move m : promoMoves)
+        for (Move m : promoMoves) {
             board = board.makeMove(m);
+        }
 
         assertEquals(Piece.Rook, Piece.getType(board.getPieceAt(0)));
         assertEquals(Piece.Queen, Piece.getType(board.getPieceAt(1)));
@@ -123,10 +137,10 @@ public class BoardTest {
         assertEquals(Piece.Knight, Piece.getType(board.getPieceAt(3)));
     }
 
-    @Test
-    public void positionToIndex() {
-    }
 
+    /**
+     * Method to test the expected behavior of the Method Model.toString()
+     */
     @Test
     public void testToString() {
         String fen = "rn1qkb1r/ppppp1pp/4b3/1N1P2p1/5P2/2n1Q3/PPPP2PP/R1B1KBNR";
@@ -140,20 +154,22 @@ public class BoardTest {
                 "2 ♙ ♙ ♙ ♙     ♙ ♙\n" +
                 "1 ♖   ♗   ♔ ♗ ♘ ♖\n" +
                 "  a b c d e f g h\n";
-        String actual = b.toString();
 
         assertEquals(goal, b.toString());
     }
 
+    /**
+     * Method to test the expected behavior of the Method Model.getPiecePositionsFor()
+     */
     @Test
     public void getPiecePositionsFor() {
         String fen = "kqr5/8/8/8/8/8/8/5RQK";
         Board b = new Board(fen);
 
         List<Integer> positions = b.getPiecePositionsFor(Piece.Black);
-        for (int i=0;i<3;i++) assertTrue(positions.contains(i));
+        for (int i=0;i<3;i++) {assertTrue(positions.contains(i));}
 
         positions = b.getPiecePositionsFor(Piece.White);
-        for (int i=61;i<64;i++) assertTrue(positions.contains(i));
+        for (int i=61;i<64;i++) {assertTrue(positions.contains(i));}
     }
 }

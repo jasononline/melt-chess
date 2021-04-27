@@ -85,7 +85,6 @@ public class MoveGeneratorTest {
         board.setEnPassantSquare(19);
         Move expectedMove = new Move(28, 19, Move.EnPassantCapture);
 
-        MoveGenerator generator = new MoveGenerator(board);
         List<Move> generatedMoves = new ArrayList<>();
         generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board,28));
         generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board,53));
@@ -286,27 +285,6 @@ public class MoveGeneratorTest {
         }
         expectedMoves.add(new Move(startSquare, 2, Move.Castling));
         generatedMoves.addAll(generator.generateKingMoves(startSquare));
-
-        System.out.println("Position:");
-        System.out.println(board);
-
-        Board test = new Board();
-        for (Move m : expectedMoves){
-            test.squares[m.getTargetSquare()] = Piece.Pawn + Piece.White;
-            test.squares[m.getStartSquare()] = Piece.King + Piece.Black;
-        }
-        System.out.println("Expected");
-        System.out.println(test);
-
-        test = new Board();
-        for (Move m : generatedMoves){
-            test.squares[m.getTargetSquare()] = Piece.Pawn + Piece.White;
-            test.squares[m.getStartSquare()] = Piece.King + Piece.Black;
-        }
-        System.out.println("Actual");
-        System.out.println(test);
-
-
 
         assertTrue(generatedMoves.containsAll(expectedMoves));
     }
