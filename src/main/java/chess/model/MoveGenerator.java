@@ -32,6 +32,7 @@ public class MoveGenerator {
         opponentColor = teamColor == Piece.White ? Piece.Black : Piece.White;
     }
 
+
     /**
      * swap the current turn color
      * @return the new teamColor
@@ -52,62 +53,13 @@ public class MoveGenerator {
     }
 
 
-    // make sure to not fall off the board
-    private List<Integer> generateKnightDirectionsLeftRight(int startSquare) {
-        int[] startCoordinates = Coordinate.fromIndex(startSquare);
-        List<Integer> directions = new ArrayList<>();
-        if (1 < startCoordinates[0]) {
-            if (0 < startCoordinates[1])
-                directions.add(LEFT + UPLEFT);
-            if (startCoordinates[1] < 7)
-                directions.add(LEFT + DOWNLEFT);
-        }
-        if (startCoordinates[0] < 6) {
-            if (0 < startCoordinates[1])
-                directions.add(RIGHT + UPRIGHT);
-            if (startCoordinates[1] < 7)
-                directions.add(RIGHT + DOWNRIGHT);
-        }
-        return directions;
-    }
-
-    private List<Integer> generateKnightDirectionsUpDown(int startSquare) {
-        int[] startCoordinates = Coordinate.fromIndex(startSquare);
-        List<Integer> directions = new ArrayList<>();
-        if (1 < startCoordinates[1]) {
-            if (0 < startCoordinates[0])
-                directions.add(UP + UPLEFT);
-            if (startCoordinates[0] < 7)
-                directions.add(UP + UPRIGHT);
-        }
-        if (startCoordinates[1] < 6) {
-            if (0 < startCoordinates[0])
-                directions.add(DOWN + DOWNLEFT);
-            if (startCoordinates[0] < 7)
-                directions.add(DOWN + DOWNRIGHT);
-        }
-        return directions;
-    }
-
-
     /**
      * Generates list of possible knight moves
      * @param startSquare the position of the knight
      * @return ArrayList of Move objects
      */
     public List<Move> generateKnightMoves(int startSquare) {
-        List<Move>  generatedMoves = new ArrayList<>();
-        List<Integer> directions = generateKnightDirectionsLeftRight(startSquare);
-        directions.addAll(generateKnightDirectionsUpDown(startSquare));
-
-        int targetSquare;
-        for (int direction : directions) {
-            targetSquare = startSquare + direction;
-            if (Piece.isColor(board.getPieceAt(targetSquare), teamColor))
-                continue;
-            generatedMoves.add(new Move(startSquare, targetSquare));
-        }
-        return generatedMoves;
+        return MoveGeneratorKnight.generateKnightMoves(board, startSquare, teamColor);
     }
 
 
