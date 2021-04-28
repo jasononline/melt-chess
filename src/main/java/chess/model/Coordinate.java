@@ -64,6 +64,26 @@ public class Coordinate {
     }
 
     /**
+     * Return true if index is any of the border squares towards direction
+     * @param index the position in the board.squares array
+     * @param direction in which the piece is currently moving
+     * @return True if index is any of the border squares towards direction
+     */
+    public static boolean isOnBorderTowards(int index, int direction) {
+        switch (direction) {
+            case MoveGenerator.UP:
+                return isUpMost(index);
+            case MoveGenerator.RIGHT:
+                return isRightMost(index);
+            case MoveGenerator.DOWN:
+                return isDownMost(index);
+            case MoveGenerator.LEFT:
+                return isLeftMost(index);
+        }
+        return isOnBorder(index);
+    }
+
+    /**
      * Converts square index to String representation of the coordinate
      * @param index position of the square
      * @return String representation of the coordinate
