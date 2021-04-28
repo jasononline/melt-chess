@@ -19,6 +19,17 @@ public class MoveValidator {
 
 
     /**
+     * Filters a list of moves
+     * @param moves a list of moves
+     * @return a list of valid moves
+     */
+    public static List<Move> filter(Board board, List<Move> moves) {
+        moves.removeIf(m -> !validateMove(board, m));
+        return moves;
+    }
+
+
+    /**
      * Checks for check
      * @param board the current position
      * @param teamColor which piece color to check
