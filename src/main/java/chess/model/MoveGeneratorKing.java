@@ -8,35 +8,6 @@ import java.util.List;
  */
 public class MoveGeneratorKing {
 
-    private static List<Integer> generateStartingDirectionsAcross(int startSquare) {
-        List<Integer> directions = new ArrayList<>();
-        // do not walk off the board
-        if (!Coordinate.isLeftMost(startSquare))
-            directions.add(MoveGenerator.LEFT);
-        if (!Coordinate.isRightMost(startSquare))
-            directions.add(MoveGenerator.RIGHT);
-        if (!Coordinate.isUpMost(startSquare))
-            directions.add(MoveGenerator.UP);
-        if (!Coordinate.isDownMost(startSquare))
-            directions.add(MoveGenerator.DOWN);
-        return directions;
-    }
-
-
-    static private List<Integer> generateStartingDirectionsDiagonal(int startSquare) {
-        List<Integer> directions = new ArrayList<>();
-        // do not walk off the board
-        if (!Coordinate.isLeftMost(startSquare) && !Coordinate.isUpMost(startSquare))
-            directions.add(MoveGenerator.UPLEFT);
-        if (!Coordinate.isRightMost(startSquare) && !Coordinate.isUpMost(startSquare))
-            directions.add(MoveGenerator.UPRIGHT);
-        if (!Coordinate.isLeftMost(startSquare) && !Coordinate.isDownMost(startSquare))
-            directions.add(MoveGenerator.DOWNLEFT);
-        if (!Coordinate.isRightMost(startSquare) && !Coordinate.isDownMost(startSquare))
-            directions.add(MoveGenerator.DOWNRIGHT);
-        return directions;
-    }
-
 
     private static boolean[] castlingWalker(Board board, int[] stops, boolean[] boardFlags, int startSquare) {
         boolean[] result = new boolean[]{true, true};
@@ -99,8 +70,8 @@ public class MoveGeneratorKing {
     public static List<Move> generateKingMoves(Board board, int startSquare) {
         // normal movement
         List<Move> generatedMoves = new ArrayList<>();
-        List<Integer> directions = generateStartingDirectionsAcross(startSquare);
-        directions.addAll(generateStartingDirectionsDiagonal(startSquare));
+        List<Integer> directions = MoveGeneratorDirectional.generateStartingDirectionsAcross(startSquare);
+        directions.addAll(MoveGeneratorDirectional.generateStartingDirectionsDiagonal(startSquare));
 
         int targetSquare, piece;
         for (int direction : directions) {

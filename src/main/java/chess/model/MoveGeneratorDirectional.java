@@ -62,7 +62,12 @@ public class MoveGeneratorDirectional {
     }
 
 
-    private static List<Integer> generateStartingDirectionsAcross(int startSquare) {
+    /**
+     * Make shure to not walk off the board
+     * @param startSquare position of the piece
+     * @return returns suitable directions
+     */
+    public static List<Integer> generateStartingDirectionsAcross(int startSquare) {
         List<Integer> directions = new ArrayList<>();
         // do not walk off the board
         if (!Coordinate.isLeftMost(startSquare))
@@ -77,7 +82,13 @@ public class MoveGeneratorDirectional {
     }
 
 
-    private static List<Integer> generateStartingDirectionsDiagonal(int startSquare) {
+
+    /**
+     * Make shure to not walk off the board
+     * @param startSquare position of the piece
+     * @return returns suitable directions
+     */
+    public static List<Integer> generateStartingDirectionsDiagonal(int startSquare) {
         List<Integer> directions = new ArrayList<>();
         // do not walk off the board
         if (!Coordinate.isLeftMost(startSquare) && !Coordinate.isUpMost(startSquare))
