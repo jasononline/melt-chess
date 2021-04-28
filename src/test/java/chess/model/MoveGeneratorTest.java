@@ -70,6 +70,7 @@ public class MoveGeneratorTest {
         expectedMoves.add(new Move(28, 20));
         // check generated vs expected
         assertTrue(expectedMoves.containsAll(generatedMoves));
+        assertTrue(generatedMoves.containsAll(expectedMoves));
     }
 
 
@@ -124,6 +125,7 @@ public class MoveGeneratorTest {
         List<Move> generatedMoves = generator.generateKnightMoves(63);
         generatedMoves.addAll(generator.generateKnightMoves(0));
         assertTrue(generatedMoves.containsAll(expectedMoves));
+        assertTrue(expectedMoves.containsAll(generatedMoves));
     }
 
 
@@ -144,6 +146,7 @@ public class MoveGeneratorTest {
         MoveGenerator generator = new MoveGenerator(board);
         List<Move> generatedMoves = generator.generateKnightMoves(startSquare);
         assertTrue(generatedMoves.containsAll(expectedMoves));
+        assertTrue(expectedMoves.containsAll(generatedMoves));
     }
 
 
@@ -170,17 +173,18 @@ public class MoveGeneratorTest {
      */
     @Test
     public void generateBishopMoves() {
-        int startSquare = 25;
-        String fen = "8/3R4/8/1Q6/8/3r4/8/8";
+        int startSquare = 51;
+        String fen = "8/8/8/6Q1/1r6/8/3B4/8";
         Board board = new Board(fen);
         MoveGenerator generator = new MoveGenerator(board);
         List<Move> generatedMoves;
         List<Move> expectedMoves = new ArrayList<>();
-        for (int expectedTarget : new int[]{16, 32, 18, 34, 43}) {
+        for (int expectedTarget : new int[]{58,60,42,33,44,37}) {
             expectedMoves.add(new Move(startSquare, expectedTarget));
         }
 
         generatedMoves = generator.generateBishopMoves(startSquare);
+        assertTrue(generatedMoves.containsAll(expectedMoves));
         assertTrue(expectedMoves.containsAll(generatedMoves));
     }
 
@@ -190,17 +194,18 @@ public class MoveGeneratorTest {
      */
     @Test
     public void generateRookMoves() {
-        int startSquare = 41;
+        int startSquare = 17;
         String fen = "8/8/1R6/8/8/1Q2r3/8/8";
         Board board = new Board(fen);
         MoveGenerator generator = new MoveGenerator(board);
         List<Move> generatedMoves;
         List<Move> expectedMoves = new ArrayList<>();
-        for (int expectedTarget : new int[]{40, 49, 57, 42, 43, 44, 33, 25}) {
+        for (int expectedTarget : new int[]{1,9,16,18,19,20,21,22,23,25,33}) {
             expectedMoves.add(new Move(startSquare, expectedTarget));
         }
 
         generatedMoves = generator.generateRookMoves(startSquare);
+        assertTrue(generatedMoves.containsAll(expectedMoves));
         assertTrue(expectedMoves.containsAll(generatedMoves));
     }
 
@@ -219,10 +224,28 @@ public class MoveGeneratorTest {
         for (int expectedTarget : new int[]{25,33, 34, 40, 42, 43, 44, 48, 49, 50, 57}) {
             expectedMoves.add(new Move(startSquare, expectedTarget));
         }
-
         generatedMoves = generator.generateQueenMoves(startSquare);
         assertTrue(generatedMoves.containsAll(expectedMoves));
+        assertTrue(expectedMoves.containsAll(generatedMoves));
+    }
 
+
+    /**
+     * Test queen move generation
+     */
+    @Test
+    public void generateQueenMovesAlongBorder() {
+        int startSquare = 59;
+        Board board = new Board("8/8/8/8/8/3R4/2P1P3/k2Q4");
+        MoveGenerator generator = new MoveGenerator(board);
+        List<Move> generatedMoves;
+        List<Move> expectedMoves = new ArrayList<>();
+        for (int expectedTarget : new int[]{51,56,57,58,60,61,62,63}) {
+            expectedMoves.add(new Move(startSquare, expectedTarget));
+        }
+        generatedMoves = generator.generateQueenMoves(startSquare);
+        assertTrue(generatedMoves.containsAll(expectedMoves));
+        assertTrue(expectedMoves.containsAll(generatedMoves));
     }
 
 
@@ -238,20 +261,28 @@ public class MoveGeneratorTest {
         MoveGenerator generator = new MoveGenerator(board);
         List<Move> generatedMoves;
         List<Move> expectedMoves = new ArrayList<>();
+        // reminder: castling moves are also found, even though there are no rooks
+        // that's because we don't validate the moves
+        expectedMoves.add(new Move(60, 58, Move.Castling));
+        expectedMoves.add(new Move(60, 62, Move.Castling));
         for (int expectedTarget : new int[]{51, 52, 53, 59, 61}) {
             expectedMoves.add(new Move(startSquare, expectedTarget));
         }
         generatedMoves = generator.generateKingMoves(startSquare);
+        assertTrue(generatedMoves.containsAll(expectedMoves));
+        assertTrue(expectedMoves.containsAll(generatedMoves));
 
         // test black King
         board.setTurnColor(Piece.Black);
         startSquare = 11;
         generator = new MoveGenerator(board);
+        expectedMoves = new ArrayList<>();
         for (int expectedTarget : new int[]{2, 3, 4, 10, 12, 18, 19, 20}) {
             expectedMoves.add(new Move(startSquare, expectedTarget));
         }
-        generatedMoves.addAll(generator.generateKingMoves(startSquare));
+        generatedMoves = generator.generateKingMoves(startSquare);
         assertTrue(generatedMoves.containsAll(expectedMoves));
+        assertTrue(expectedMoves.containsAll(generatedMoves));
     }
 
     /**
@@ -286,5 +317,6 @@ public class MoveGeneratorTest {
         generatedMoves.addAll(generator.generateKingMoves(startSquare));
 
         assertTrue(generatedMoves.containsAll(expectedMoves));
+        assertTrue(expectedMoves.containsAll(generatedMoves));
     }
 }

@@ -56,7 +56,7 @@ public class MoveGeneratorDirectional {
                 }
                 if (Piece.isColor(piece, teamColor))
                     break;
-            } while (!Coordinate.isOnBorder(currentSquare));
+            } while (!Coordinate.isOnBorderTowards(currentSquare, direction));
         }
         return generatedMoves;
     }
