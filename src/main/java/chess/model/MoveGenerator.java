@@ -24,7 +24,7 @@ public class MoveGenerator {
 
     private int teamColor, opponentColor;
 
-    MoveGenerator(Board board) {
+    public MoveGenerator(Board board) {
         this.board = board;
         whitePiecePositions = board.getPiecePositionsFor(Piece.White);
         blackPiecePositions = board.getPiecePositionsFor(Piece.Black);
