@@ -8,28 +8,17 @@ import java.util.List;
  */
 public class MoveGeneratorKing {
 
-    // constants for directions: newPosition = currentPosition + <direction> + <direction> + ...
-    public static final int UP = -8;
-    public static final int DOWN = 8;
-    public static final int LEFT = -1;
-    public static final int RIGHT = 1;
-    public static final int UPLEFT = -9;
-    public static final int UPRIGHT = -7;
-    public static final int DOWNLEFT = 7;
-    public static final int DOWNRIGHT = 9;
-
-
     private static List<Integer> generateStartingDirectionsAcross(int startSquare) {
         List<Integer> directions = new ArrayList<>();
         // do not walk off the board
         if (!Coordinate.isLeftMost(startSquare))
-            directions.add(LEFT);
+            directions.add(MoveGenerator.LEFT);
         if (!Coordinate.isRightMost(startSquare))
-            directions.add(RIGHT);
+            directions.add(MoveGenerator.RIGHT);
         if (!Coordinate.isUpMost(startSquare))
-            directions.add(UP);
+            directions.add(MoveGenerator.UP);
         if (!Coordinate.isDownMost(startSquare))
-            directions.add(DOWN);
+            directions.add(MoveGenerator.DOWN);
         return directions;
     }
 
@@ -38,13 +27,13 @@ public class MoveGeneratorKing {
         List<Integer> directions = new ArrayList<>();
         // do not walk off the board
         if (!Coordinate.isLeftMost(startSquare) && !Coordinate.isUpMost(startSquare))
-            directions.add(UPLEFT);
+            directions.add(MoveGenerator.UPLEFT);
         if (!Coordinate.isRightMost(startSquare) && !Coordinate.isUpMost(startSquare))
-            directions.add(UPRIGHT);
+            directions.add(MoveGenerator.UPRIGHT);
         if (!Coordinate.isLeftMost(startSquare) && !Coordinate.isDownMost(startSquare))
-            directions.add(DOWNLEFT);
+            directions.add(MoveGenerator.DOWNLEFT);
         if (!Coordinate.isRightMost(startSquare) && !Coordinate.isDownMost(startSquare))
-            directions.add(DOWNRIGHT);
+            directions.add(MoveGenerator.DOWNRIGHT);
         return directions;
     }
 

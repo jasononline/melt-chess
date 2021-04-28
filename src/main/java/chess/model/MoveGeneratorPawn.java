@@ -10,15 +10,6 @@ import java.util.List;
  */
 public class MoveGeneratorPawn {
 
-    public static final int UP = -8;
-    public static final int DOWN = 8;
-    public static final int LEFT = -1;
-    public static final int RIGHT = 1;
-    public static final int UPLEFT = -9;
-    public static final int UPRIGHT = -7;
-    public static final int DOWNLEFT = 7;
-    public static final int DOWNRIGHT = 9;
-
     /**
      * Generate list of possible pawn moves
      * @param startSquare the position of the pawn
@@ -26,7 +17,7 @@ public class MoveGeneratorPawn {
      */
     public static List<Move> generatePawnMoves(Board board, int startSquare) {
         List<Move> generatedMoves = new ArrayList<>();
-        int direction = board.getTurnColor() == Piece.Black ? DOWN : UP;
+        int direction = board.getTurnColor() == Piece.Black ? MoveGenerator.DOWN : MoveGenerator.UP;
 
         // move forward if possible
         moveForward(board, generatedMoves, direction, startSquare);
@@ -59,7 +50,7 @@ public class MoveGeneratorPawn {
     private static void moveTwoForward(Board board, List<Move> generatedMoves, int direction, int startSquare) {
         int forwardPosition = startSquare + 2 * direction;
         int rank = Coordinate.fromIndex(startSquare)[1];
-        if ((rank == 1 && direction == DOWN || rank == 6 && direction == UP)
+        if ((rank == 1 && direction == MoveGenerator.DOWN || rank == 6 && direction == MoveGenerator.UP)
                 && board.getPieceAt(forwardPosition) == Piece.None) {
             generatedMoves.add(new Move(startSquare, forwardPosition, Move.PawnTwoForward));
         }
@@ -67,7 +58,7 @@ public class MoveGeneratorPawn {
 
     private static void captureDiagonal(Board board, List<Move> generatedMoves, int direction, int startSquare) {
         int opponentColor = board.getTurnColor() == Piece.Black ? Piece.White : Piece.Black;
-        for (int diagonalPosition : new int[]{startSquare+direction+LEFT, startSquare+direction+RIGHT}) {
+        for (int diagonalPosition : new int[]{startSquare+direction+MoveGenerator.LEFT, startSquare+direction+MoveGenerator.RIGHT}) {
             if (!Coordinate.isOnBorder(startSquare)) {
                 if (Piece.isColor(board.getPieceAt(diagonalPosition), opponentColor))
                     generatedMoves.add(new Move(startSquare, diagonalPosition));
