@@ -39,7 +39,7 @@ public class MoveGeneratorDirectional {
      * @return ArrayList of Move objects
      */
     private static List<Move> generateDirectionalMoves(Board board, int startSquare, List<Integer> directions) {
-        int teamColor = board.getTurnColor();
+        int teamColor = Piece.getColor(board.getPieceAt(startSquare));
         int opponentColor = (teamColor == Piece.White) ? Piece.Black : Piece.White;
         List<Move> generatedMoves = new ArrayList<>();
         int currentSquare;
