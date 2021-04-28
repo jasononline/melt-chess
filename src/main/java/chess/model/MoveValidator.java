@@ -46,10 +46,11 @@ public class MoveValidator {
 
         // find opponent moves and count if king is in check
         for (Move move : generator.generateMoves()) {
-            if (move.getTargetSquare() == kingPosition)
+            if (move.getTargetSquare() == kingPosition) {
                 numChecks += 1;
-            if (numChecks == 2)
-                return numChecks;
+                if (numChecks == 2)
+                    return numChecks;
+            }
         }
         return numChecks;
     }
@@ -98,13 +99,11 @@ public class MoveValidator {
         Board boardAfterMove = board.makeMove(move);
 
         int inCheck = checkCheck(board, board.getTurnColor());
-        /*
-        // check if king is in check and stays in check after the move
-
-        if (0 < inCheck && 0 < checkCheck(boardAfterMove, board.getTurnColor())) {
+        // check if king is inCheck and tries to castle
+        if (0 < inCheck && move.getFlag() == Move.Castling) {
             return false;
         }
-        */
+
         // check if move puts own king in chess
         if (0 < checkCheck(boardAfterMove, board.getTurnColor()))
             return false;
