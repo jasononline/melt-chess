@@ -85,7 +85,7 @@ public class MoveValidatorTest {
     private boolean validateMoveCastlingLeft(String fen) {
         Board board = new Board(fen);
         Move castlingLeft = new Move(60, 58, Move.Castling);
-        return (MoveValidator.validateMove(board, castlingLeft));
+        return MoveValidator.validateMove(board, castlingLeft);
     }
 
 

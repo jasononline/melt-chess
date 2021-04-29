@@ -8,15 +8,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 /**
  *  Tests for the Game class
  */
-class GameTest {
+public class GameTest {
 
     /**
      * Test undo move
      */
     @Test
-    void undoMove() {
+    public void undoMove() {
         Game game = new Game();
-        Board startingPosition = game.getCurrentPosition();
         Move movePawn = new Move(52, 36, Move.PawnTwoForward);
         game.attemptMove(movePawn);
         game.undoMove();
@@ -31,7 +30,7 @@ class GameTest {
      * It should check for *all* rules!
      */
     @Test
-    void attemptMove() {
+    public void attemptMove() {
         Game game = new Game();
         Board startingPosition = game.getCurrentPosition();
         Move movePawn = new Move(52, 37, Move.PawnTwoForward);
@@ -43,7 +42,7 @@ class GameTest {
      * Test the check for checkmate
      */
     @Test
-    void checkWinConditionCheckmate() {
+    public void checkWinConditionCheckmate() {
         Board checkmatePosition = new Board("8/8/8/8/8/4q3/8/1q2K3");
         Board notCheckmatePosition = new Board("8/8/8/8/8/4r3/3Q4/1q2K3");
 
@@ -60,7 +59,7 @@ class GameTest {
      * Test the check for remis
      */
     @Test
-    void checkWinConditionRemis() {
+    public void checkWinConditionRemis() {
         Board simpleRemisPosition = new Board("8/8/8/8/8/3q1q2/8/4K3");
         Game game = new Game();
         System.out.println("Test win condition (remis):");

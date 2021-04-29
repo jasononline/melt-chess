@@ -24,6 +24,10 @@ public class MoveGenerator {
 
     private int teamColor, opponentColor;
 
+    /**
+     * Create new MoveGeneraton instance of
+     * @param board the current position
+     */
     public MoveGenerator(Board board) {
         this.board = board;
         whitePiecePositions = board.getPiecePositionsFor(Piece.White);
