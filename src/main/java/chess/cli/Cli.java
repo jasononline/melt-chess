@@ -31,12 +31,11 @@ public class Cli {
 
 		} else {
 			// Ask the user to choose an opponent
-			String opponent = getUserInput("Choose an opponent: Person, Computer or Network").toLowerCase();
+			String opponent = getUserInput("Choose an opponent: Person, Computer or Network");
 
 			// Check if opponent is valid
 			while (!opponent.matches("^person$|^computer$|^network$")) {
-				opponent = getUserInput("There is no such opponent. Enter one of these opponents: Person, Computer or Network")
-						.toLowerCase();
+				opponent = getUserInput("There is no such opponent. Enter one of these opponents: Person, Computer or Network");
 			}
 
 			switch (opponent) {
@@ -79,10 +78,13 @@ public class Cli {
 		String input = "";
 		while (runningPvP) {
 			System.out.println(game.getCurrentPosition().toString());
+			// Request input until there is defined input
 			input = getUserInput();
-			if (testUserInputSyntax(input)) {
-				performAction(input);
+			while (!testUserInputSyntax(input)) {
+				input = getUserInput("!Invalid move");
 			}
+			// use the input
+			performAction(input);
 		}
 	}
 
@@ -117,18 +119,17 @@ public class Cli {
 	 * @return The user input as a String
 	 */
 	public static String getUserInput(String messageToUser) {
-		Scanner scan = new Scanner(System.in);
 		System.out.println(messageToUser);
-		return scan.next();
+		return getUserInput();
 	}
 
 	/**
 	 * Request input from the User
 	 * 
-	 * @return The user input as a String
+	 * @return The user input as a String (lowercase)
 	 */
 	public static String getUserInput() {
 		Scanner scan = new Scanner(System.in);
-		return scan.next();
+		return scan.next().toLowerCase();
 	}
 }
