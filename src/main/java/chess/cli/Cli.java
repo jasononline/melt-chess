@@ -2,7 +2,7 @@ package chess.cli;
 
 import chess.model.*;
 import java.util.Scanner;
-import java.util.regex.Pattern;
+import java.util.Arrays;
 
 /**
  * Starting point of the command line interface
@@ -19,8 +19,39 @@ public class Cli {
 	 * @param args The command line arguments passed to the application
 	 */
 	public static void main(String[] args) {
-		System.out.println("Hello World");
-		// TODO (Miklos) write function
+
+		boolean simpleRun = Arrays.asList(args).contains("--simple");
+
+		if (simpleRun) {
+
+			// Start game person vs person
+			runningPvP = true;
+
+		} else {
+			// Ask the user to choose an opponent
+			String opponent = getUserInput("Choose an opponent: Person, Computer or Network").toLowerCase();
+
+			// Check if opponent is valid
+			while (!opponent.matches("^person$|^computer$|^network$")) {
+				System.out.println("There is no such opponent. Enter one of these opponents: Person, Computer or Network");
+				opponent = getUserInput();
+			}
+
+			switch (opponent) {
+			case "person":
+				// Start game against another player
+				runningPvP = true;
+				break;
+			case "computer":
+				// Start game against computer
+				runningPvPC = true;
+				break;
+			case "network":
+				// Start network game
+				break;
+			}
+		}
+
 		runGame();
 	}
 
@@ -66,7 +97,7 @@ public class Cli {
 	 * @return whether the user input will have a defined effect
 	 */
 	public static boolean testUserInputSyntax(String userInput) {
-		if (!Pattern.matches("/^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[QRBN]?$/", userInput)) {
+		while (!userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[QRBN]?$")) {
 			System.out.println("!Invalid move");
 			return false;
 		}
