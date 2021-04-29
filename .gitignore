@@ -4,3 +4,8 @@ target/
 .attach_pid*
 *~
 #*#
+.DS_Store
+**/*.project
+**/*.factorypath
+**/*.settings
+**/*.classpath
