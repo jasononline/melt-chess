@@ -73,10 +73,13 @@ public class Cli {
 		String input = "";
 		while (runningPvP) {
 			System.out.println(game.getCurrentPosition().toString());
+			// Request input until there is defined input
 			input = getUserInput();
-			if (testUserInputSyntax(input)) {
-				performAction(input);
+			while (!testUserInputSyntax(input)) {
+				input = getUserInput("!Invalid move");
 			}
+			// use the input
+			performAction(input);
 		}
 	}
 
@@ -98,7 +101,6 @@ public class Cli {
 	 */
 	public static boolean testUserInputSyntax(String userInput) {
 		while (!userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[QRBN]?$")) {
-			System.out.println("!Invalid move");
 			return false;
 		}
 		return true;
@@ -108,21 +110,20 @@ public class Cli {
 	 * Request input from the User
 	 * 
 	 * @param messageToUser
-	 * @return The user input as a String
+	 * @return The user input as a String (lowercase)
 	 */
 	public static String getUserInput(String messageToUser) {
-		Scanner scan = new Scanner(System.in);
 		System.out.println(messageToUser);
-		return scan.next();
+		return getUserInput();
 	}
 
 	/**
 	 * Request input from the User
 	 * 
-	 * @return The user input as a String
+	 * @return The user input as a String (lowercase)
 	 */
 	public static String getUserInput() {
 		Scanner scan = new Scanner(System.in);
-		return scan.next();
+		return scan.next().toLowerCase();
 	}
 }
