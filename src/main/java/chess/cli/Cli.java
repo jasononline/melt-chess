@@ -26,6 +26,8 @@ public class Cli {
 
 			// Start game person vs person
 			runningPvP = true;
+			runningPvPC = false;
+			runningSimple = true;
 
 		} else {
 			// Ask the user to choose an opponent
@@ -33,18 +35,22 @@ public class Cli {
 
 			// Check if opponent is valid
 			while (!opponent.matches("^person$|^computer$|^network$")) {
-				System.out.println("There is no such opponent. Enter one of these opponents: Person, Computer or Network");
-				opponent = getUserInput();
+				opponent = getUserInput("There is no such opponent. Enter one of these opponents: Person, Computer or Network")
+						.toLowerCase();
 			}
 
 			switch (opponent) {
 			case "person":
 				// Start game against another player
 				runningPvP = true;
+				runningPvPC = false;
+				runningSimple = false;
 				break;
 			case "computer":
 				// Start game against computer
+				runningPvP = false;
 				runningPvPC = true;
+				runningSimple = false;
 				break;
 			case "network":
 				// Start network game
@@ -97,8 +103,8 @@ public class Cli {
 	 * @return whether the user input will have a defined effect
 	 */
 	public static boolean testUserInputSyntax(String userInput) {
-		while (!userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[QRBN]?$")) {
-			System.out.println("!Invalid move");
+		// Checks if input matches one of valid inputs: move(e7-e8), beaten, help, quit
+		if (!userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[QRBN]?$|^beaten$|^help$|^quit$")) {
 			return false;
 		}
 		return true;
