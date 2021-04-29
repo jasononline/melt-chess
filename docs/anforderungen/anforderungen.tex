@@ -26,7 +26,52 @@ Weinknecht, Lucas \\},                     % author
 %\title{%
 
 %}
+
+\newcommand{\lstinlinejava}[1]{\lstinline[language=java]{#1}}
+\newcommand{\lstj}[1]{\lstinlinejava{#1}}
+
+
+\lstset{language=Java,
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  commentstyle=\color{pgreen},
+  keywordstyle=\color{pblue},
+  stringstyle=\color{pred},
+  basicstyle=\ttfamily,
+  moredelim=[il][\textcolor{pgrey}]{$$},
+  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+}
+
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\usepackage{color}
+
+\definecolor{pblue}{rgb}{0.13,0.13,0.7}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
 \usepackage{hyperref}
+
+\usepackage{enumitem,amssymb}
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\newcommand{\done}{\rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\cmark}}%
+\hspace{-2.5pt}}
+\newcommand{\wontfix}{\rlap{$\square$}{\large\hspace{1pt}\xmark}}
+
+
 \begin{document}
 
 \begin{flushright}
@@ -100,6 +145,13 @@ Anforderungen der zweiten Iteration genügt mit Zwischenpräsentation
 
 \subsection{Abgabeformat}
 An den Schlusstagen der Iterationen, inklusive Endabgabe, muss der zu überprüfende/bewertende Stand mittels Tags (it1,it2,...) im git-Repository gekennzeichnet werden.
+
+
+
+
+\include{vorgehensplanchapter.tex}
+\include{storycards.tex}
+
 
 \chapter{Anhang}
 \section{Tabellarische Anforderungsanalyse}

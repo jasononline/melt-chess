@@ -1,0 +1,94 @@
+\documentclass{scrreprt}
+\usepackage{listings}
+\usepackage{underscore}
+\usepackage{graphicx}
+\usepackage[bookmarks=true]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\hypersetup{
+    bookmarks=false,    % show bookmarks bar?
+    pdftitle={Storycard Template},    % title
+    pdfauthor={Tobias Fischer, Miklós Libak, Eva Norkunas, Lucas Weinknecht}, % author
+    pdfsubject={TeX and LaTeX},                        % subject of the document
+    pdfkeywords={TeX, LaTeX, graphics, images}, % list of keywords
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=blue,       % color of internal links
+    citecolor=black,       % color of links to bibliography
+    filecolor=black,        % color of file links
+    urlcolor=purple,        % color of external links
+    linktoc=page            % only page is linked
+}%
+\def\myversion{0.1 }
+\date{}
+%\title{%
+
+%}
+\usepackage{hyperref}
+
+\newcommand{\lstinlinejava}[1]{\lstinline[language=java]{#1}}
+\newcommand{\lstj}[1]{\lstinlinejava{#1}}
+
+\usepackage{color}
+
+\definecolor{pblue}{rgb}{0.13,0.13,0.7}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+
+\lstset{language=Java,
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  commentstyle=\color{pgreen},
+  keywordstyle=\color{pblue},
+  stringstyle=\color{pred},
+  basicstyle=\ttfamily,
+  moredelim=[il][\textcolor{pgrey}]{$$},
+  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+}
+
+\begin{document}
+
+\begin{flushright}
+    \rule{16cm}{5pt}\vskip1cm
+    \begin{bfseries}
+        \Huge{STORYCARD TEMPLATE EXPLORATION}\\
+        \vspace{1.5cm}
+        for\\
+        \vspace{1.5cm}
+        MELT Chess\\
+        \vspace{1.5cm}
+        \LARGE{Version \myversion}\\
+        \vspace{1.5cm}
+        \vspace{1.5cm}
+        \today\\
+    \end{bfseries}
+\end{flushright}
+
+\newpage
+\section{Storycard Issues}
+\subsection*{\#2 Erstellen der Game Klasse}
+Milestone: 1. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] B
+\item[Storypoints] 3
+\item[Risiko] 0
+\end{itemize}
+
+Die ``Game`` Klasse soll den Gesamtzustand einer Partie kapseln, aber hauptsächlich für die beiden GUI Module relevant sein.
+
+\textbf{Abgeschlossen wenn}
+\begin{itemize}
+\item $[x]$ Funktion für "neues Spiel starten"
+\item $[ ]$ Verwaltet alle nötigen Objekte einer Partie und bietet ein einfaches Interface für die GUI Module
+\item $[ ]$ Erkennt Schachmatt und Patt (\#13 )
+\item $[x]$ ``Board`` Objekte in einer Liste als Gamehistory merken (BONUS)
+\item $[ ]$ Funktionen zum zurück oder vorwärs gehen in der Gamehistory
+\item $[ ]$ Verwaltung der Schachuhren?
+\item $[ ]$ Sichern und Laden des Spielzustands
+\end{itemize}
+
+\end{document}

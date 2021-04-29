@@ -1,0 +1,176 @@
+
+\subsection*{Schnittstelle Konsole}
+id: \#3 Milestone: 1. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] 
+\item[Storypoints] 5
+\item[Risiko] 0
+\end{itemize}
+
+Der Benutzer hat die Möglichkeit das Schachspiel gegen einen anderen Benutzer zu spielen. Dazu werden die Züge in der Konsole eingegeben.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item  Die Benutzereingabe wird korrekt geparsed (Tests für ``parseUserMoveInput`` bestanden)
+  \item  Gameloop ist etabliert (User Input einlesen, Schachbrettposition ausgeben, ...)
+  \item  Ausgabe der geschlagenen Figuren auf den Befehl ``beaten``
+  \item  Ausgabe wenn ein Spieler im Schach steht
+  \item  Die Anforderungen an die Ausgabe bei gesetztem ``
+  \item  Fehleingabe wird mit ``!Invalid move`` quittiert
+  \item  Gültige Eingabe wird mit ``!<Eingabe>``quittiert
+  \item  Ein ungültiger Zug wird mit ``!Move not allowed``quittiert
+  \item  Schachbrett wird nach jedem Zug geprintet
+
+\end{todolist}
+
+\subsection*{Erstellen der Models}
+id: \#4 Milestone: 1. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] 
+\item[Storypoints] 
+\item[Risiko] 
+\end{itemize}
+
+Erstellen der Klassen im Paket \lstj{models} welche von den anderen Paketen \lstj{cli}, \lstj{engine} und \lstj{gui} benutzt werden
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item  Alle blockierenden Storycards sind abgeschlossen
+
+\end{todolist}
+
+\subsection*{Erstellen Board Klasse}
+id: \#5 Milestone: 1. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] 
+\item[Storypoints] 2
+\item[Risiko] 
+\end{itemize}
+
+Die \lstj{Board} Klasse im Paket \lstj{model} kapselt eine Position auf dem Brett, sowie die Information welcher Spieler am Zug ist. Die Position wird dabei als Array mit 64 Integerwerten zwischen 0 und 23 kodiert.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Die Klasse repräsentiert eine Position auf dem Brett
+  \item[\done]  Ein neues Objekt kann durch übergeben eines FEN
+  \item[\done]  Ein neues Objekt kann durch die ``makeMove`` Methode aus einem bestehenden Objekt erzeugt werden
+  \item[\done]  Die Methoden ``getPiecePositionsFor`` und ``getPieceAt`` bestehen alle mithilfe von FEN
+
+\end{todolist}
+
+\subsection*{Erstellen Move Klasse}
+id: \#6 Milestone: 1. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] 
+\item[Storypoints] 1
+\item[Risiko] 0
+\end{itemize}
+
+Die \lstj{Move} Klasse im Paket \lstj{model} soll einen Container für einen Spielzug verwirklichen. Sie merkt sich dazu von und zu welchem Feld der Zug gemacht wird, sowie eine Flag die besondere Umstände des Zugs (Rochade, Figurentausch, ...) beschreibt.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Die Informationen zu einem Zug werden erfolgreich kodiert
+  \item[\done]  Die toString Methode gibt eine String repräsentation des Zuges gemäß den Anforderungen des Konsolen Clients zurück
+
+\end{todolist}
+
+\subsection*{Erstellen der MoveGenerator Klasse}
+id: \#7 Milestone: 1. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] 
+\item[Storypoints] 13
+\item[Risiko] 1
+\end{itemize}
+
+Die \lstj{MoveGenerator} Klasse im Paket \lstj{model} soll mögliche Züge zu einer gegebenen Position unter berücksichtigung der Schachregeln generieren. Die werden sowohl von der GUI zum hervorheben der möglichen Felder beim bewegen einer Figur, als auch von der Engine bei der Suche nach dem nächsten Zug verwendet.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Der Generator kann die verschiedenen Laufrichtungen zu den unterschiedlichen Schachfiguren berechnen
+  \item[\done]  Die ``generate`` Methoden bestehen sinnvolle Tests (Siehe die Flags in der Klasse ``Move``: werden auch diese Züge gefunden?)
+
+\end{todolist}
+
+\subsection*{Erstellen der Piece Klasse}
+id: \#8 Milestone: 1. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] 
+\item[Storypoints] 2
+\item[Risiko] 0
+\end{itemize}
+
+Die Klasse \lstj{Piece}im Paket \lstj{model} soll die geplanten statischen Methoden zur Extraktion der kodierten Informationen zur Verfügung stellen. Typ und Farbe einer Schachfigur wird dabei als Integer zwischen 0 und 23 kodiert.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Die statischen Methoden zur Rückgabe der in einem Integer Wert codierten Informationen bestehen alle Tests.
+  \item[\done]  Die toString Methode gibt die vorher festgelegten Symbole korrekt wieder
+
+\end{todolist}
+
+\subsection*{Erstellen MoveValidator Klasse}
+id: \#11 Milestone: 1. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] 1
+\item[Storypoints] 8
+\item[Risiko] 2
+\end{itemize}
+
+Der \lstj{MoveValidator} soll die vom \lstj{MoveGenerator} berechneten Züge auf gültigkeit überprüfen. Da die erlaubten Bewegungsrichtungen bereits in \lstj{MoveGenerator} korrekt implementiert sind, müssen hauptsächlich die Sonderregeln die zu schach des Königs führen beachtet werden. 
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Der König kann nicht in schach bewegt werden
+  \item[\done]  Gefesselte eigene Figuren können den König nicht in Schach setzen
+  \item[\done]  Ist "im schach" implementiert, wurde das generieren von Rochadezügen in ``MoveGenerator`` verhindert. Edit: Die Züge werden zwar generiert, aber vom ``MoveValidator`` abgelehnt.
+
+\end{todolist}
+
+\subsection*{Erstellen der Game Klasse}
+id: \#12 Milestone: 1. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] 
+\item[Storypoints] 3
+\item[Risiko] 0
+\end{itemize}
+
+Die \lstj{Game} Klasse soll den Gesamtzustand einer Partie kapseln, aber hauptsächlich für die beiden GUI Module relevant sein.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Funktion für "neues Spiel starten"
+  \item  Verwaltet alle nötigen Objekte einer Partie und bietet ein einfaches Interface für die GUI Module
+  \item  Erkennt Schachmatt und Patt (\#13 )Bonus
+  \item[\done]  ``Board`` Objekte in einer Liste als Gamehistory merken (BONUS)
+  \item  Funktionen zum zurück oder vorwärs gehen in der Gamehistory
+  \item  Verwaltung der Schachuhren?
+  \item  Sichern und Laden des Spielzustands
+
+\end{todolist}
+
+\subsection*{Schachmatt und Patt}
+id: \#13 Milestone: 1. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] 
+\item[Storypoints] 
+\item[Risiko] 
+\end{itemize}
+
+Es müssen die Fälle Patt (ein Spieler hat keine möglichen Züge) und Schachmatt (ein Spieler hat keine möglichen Züge und steht im Schach) implementiert werden
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item  Partie kann in Patt enden
+  \item  Partie kann durch schachmatt gewonnen/verloren werden
+
+\end{todolist}
