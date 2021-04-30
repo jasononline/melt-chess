@@ -20,7 +20,13 @@ public class Board {
     private boolean CastlingA8Possible = true;
     private boolean CastlingH1Possible = true;
     private boolean CastlingH8Possible = true;
+    // cache for possible moves in this position:
+    private List<Move> possibleMoves = null;
 
+    /** @return possible moves in this position **/
+    public List<Move> getPossibleMoves(){return possibleMoves;}
+    /** @param moves set possible moves in this position **/
+    public void setPossibleMoves(List<Move> moves){ possibleMoves = moves;}
     /** @return true if castling with A1 rook is possible */
     public boolean isCastlingA1Possible(){return CastlingA1Possible;}
     /** @return true if castling with A8 rook is possible */
@@ -131,41 +137,72 @@ public class Board {
         capturedPieces = new ArrayList<>();
         capturedPieces.addAll(board.getCapturedPieces());
         // En passant capture only within next move possible
-        enPassantSquare = -1;
+        enPassantSquare = board.getEnPassantSquare();
         turnColor = board.getTurnColor();
         // is castling with one of the four rooks still possible?
         CastlingA1Possible = board.isCastlingA1Possible();
         CastlingA8Possible = board.isCastlingA8Possible();
         CastlingH1Possible = board.isCastlingH1Possible();
         CastlingH8Possible = board.isCastlingH8Possible();
+        // assume 
+        possibleMoves = board.getPossibleMoves();
     }
 
 
-    private void forbidCastling(Board newBoard, Move move) {
+    /**
+     * Copy board and apply move
+     *
+     * @param board previous position
+     * @param move the move to generate this position
+     */
+    public Board(Board board, Move move) {
+        this(board);
+        // capture piece if needed
+        if (Piece.getType(getPieceAt(move.getTargetSquare())) != Piece.None) {
+            capturedPieces.add(getPieceAt(move.getTargetSquare()));
+        }
+
+        enPassantCapture(move);
+        forbidCastling(move);
+        movePiece(move);
+        if (0 < move.getFlag())
+            promotePawn(move);
+
+        // reset fields for the next move
+        if (move.getFlag() == Move.EnPassantCapture)
+            setEnPassantSquare(-1);
+        setPossibleMoves(null);
+
+        int nextTurnColor = (getTurnColor() == Piece.Black) ? Piece.White : Piece.Black;
+        setTurnColor(nextTurnColor);
+    }
+
+
+    private void forbidCastling(Move move) {
         switch (move.getStartSquare()) {
             // rook moved
-            case 0: newBoard.forbidCastlingA8(); break;
-            case 7: newBoard.forbidCastlingH8(); break;
-            case 56: newBoard.forbidCastlingA1(); break;
-            case 63: newBoard.forbidCastlingH1(); break;
+            case 0: forbidCastlingA8(); break;
+            case 7: forbidCastlingH8(); break;
+            case 56: forbidCastlingA1(); break;
+            case 63: forbidCastlingH1(); break;
             // king moved
             case 4: {
-                newBoard.forbidCastlingA8();
-                newBoard.forbidCastlingH8();
+                forbidCastlingA8();
+                forbidCastlingH8();
                 break;
             }
             case 60: {
-                newBoard.forbidCastlingA1();
-                newBoard.forbidCastlingH1();
+                forbidCastlingA1();
+                forbidCastlingH1();
                 break;
             }
         }
     }
 
 
-    private void movePiece(Board newBoard, Move move) {
-        newBoard.squares[move.getTargetSquare()] = newBoard.getPieceAt(move.getStartSquare());
-        newBoard.squares[move.getStartSquare()] = Piece.None;
+    private void movePiece(Move move) {
+        squares[move.getTargetSquare()] = getPieceAt(move.getStartSquare());
+        squares[move.getStartSquare()] = Piece.None;
         // move the rook when castling
         if (move.getFlag() == Move.Castling) {
             int rookCurrentPosition, rookNewPosition;
@@ -176,39 +213,52 @@ public class Board {
                 rookCurrentPosition = move.getTargetSquare() + 1;
                 rookNewPosition = move.getTargetSquare() - 1;
             }
-            newBoard.squares[rookNewPosition] = newBoard.getPieceAt(rookCurrentPosition);
-            newBoard.squares[rookCurrentPosition] = Piece.None;
+            squares[rookNewPosition] = getPieceAt(rookCurrentPosition);
+            squares[rookCurrentPosition] = Piece.None;
         }
 
     }
 
 
-    private void promotePawn(Board newBoard, Move move) {
+    /**
+     * Implements promoting the pawn
+     *
+     * @param move the current move
+     * **/
+    private void promotePawn(Move move) {
         switch (move.getFlag()) {
             case Move.PromoteToBishop:
-                newBoard.squares[move.getTargetSquare()] = Piece.Bishop + turnColor;
+                squares[move.getTargetSquare()] = Piece.Bishop + turnColor;
                 break;
             case Move.PromoteToKnight:
-                newBoard.squares[move.getTargetSquare()] = Piece.Knight + turnColor;
+                squares[move.getTargetSquare()] = Piece.Knight + turnColor;
                 break;
             case Move.PromoteToQueen:
-                newBoard.squares[move.getTargetSquare()] = Piece.Queen + turnColor;
+                squares[move.getTargetSquare()] = Piece.Queen + turnColor;
                 break;
             case Move.PromoteToRook:
-                newBoard.squares[move.getTargetSquare()] = Piece.Rook + turnColor;
+                squares[move.getTargetSquare()] = Piece.Rook + turnColor;
                 break;
         }
     }
 
 
-    private void enPassantCapture(Board newBoard, Move move) {
+    /**
+     * Implements en passant capture rule
+     *
+     * @param move the current move
+     * **/
+    private void enPassantCapture(Move move) {
         if (0 < enPassantSquare && move.getFlag() == Move.EnPassantCapture) {
-            newBoard.capturedPieces.add(newBoard.getPieceAt(enPassantSquare));
-            newBoard.squares[enPassantSquare] = Piece.None;
+            int stepForwardDirection = (turnColor == Piece.White) ? MoveGenerator.UP : MoveGenerator.DOWN;
+            enPassantSquare += stepForwardDirection;
+            capturedPieces.add(getPieceAt(enPassantSquare));
+            squares[enPassantSquare] = Piece.None;
+            enPassantSquare = -1;
         }
         if (move.getFlag() == Move.PawnTwoForward) {
-            int stepBackDirection = (turnColor == Piece.Black) ? MoveGenerator.UP : MoveGenerator.DOWN;
-            newBoard.enPassantSquare = move.getTargetSquare() + stepBackDirection;
+            int stepBackDirection = (turnColor == Piece.White) ? MoveGenerator.UP : MoveGenerator.DOWN;
+            setEnPassantSquare(move.getTargetSquare() + stepBackDirection);
         }
     }
 
@@ -219,22 +269,7 @@ public class Board {
      * @return returns new Board instance
      */
     public Board makeMove(Move move) {
-        Board newBoard = new Board(this);
-        // capture piece
-        if (Piece.getType(newBoard.getPieceAt(move.getTargetSquare())) != Piece.None) {
-            newBoard.capturedPieces.add(newBoard.getPieceAt(move.getTargetSquare()));
-        }
-
-        enPassantCapture(newBoard, move);
-        forbidCastling(newBoard, move);
-        movePiece(newBoard, move);
-        if (0 < move.getFlag())
-            promotePawn(newBoard, move);
-
-        int nextTurnColor = (newBoard.getTurnColor() == Piece.Black) ? Piece.White : Piece.Black;
-        newBoard.setTurnColor(nextTurnColor);
-
-        return newBoard;
+        return new Board(this, move);
     }
 
 

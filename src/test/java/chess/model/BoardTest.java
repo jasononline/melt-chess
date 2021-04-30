@@ -108,9 +108,15 @@ public class BoardTest {
         Board board = new Board(fen);
         Move m1 = new Move(49, 33, Move.PawnTwoForward);
         Move m2 = new Move(32, 41, Move.EnPassantCapture);
+        System.out.println("Test En Passant Capture:");
+        System.out.println(board);
         board = board.makeMove(m1);
+        System.out.println(board);
         board = board.makeMove(m2);
+        System.out.println(board);
         assertEquals(1, board.getCapturedPieces().size());
+        assertEquals(Piece.Pawn, Piece.getType(board.getPieceAt(Coordinate.toIntex("b3"))));
+        assertEquals(Piece.None, Piece.getType(board.getPieceAt(Coordinate.toIntex("b4"))));
     }
 
 
