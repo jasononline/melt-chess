@@ -226,20 +226,9 @@ public class Board {
      * @param move the current move
      * **/
     private void promotePawn(Move move) {
-        switch (move.getFlag()) {
-            case Move.PromoteToBishop:
-                squares[move.getTargetSquare()] = Piece.Bishop + turnColor;
-                break;
-            case Move.PromoteToKnight:
-                squares[move.getTargetSquare()] = Piece.Knight + turnColor;
-                break;
-            case Move.PromoteToQueen:
-                squares[move.getTargetSquare()] = Piece.Queen + turnColor;
-                break;
-            case Move.PromoteToRook:
-                squares[move.getTargetSquare()] = Piece.Rook + turnColor;
-                break;
-        }
+        int flag = move.getFlag();
+        if (3 <= flag && flag <= 6)
+            squares[move.getTargetSquare()] = flag + turnColor;
     }
 
 

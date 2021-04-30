@@ -8,12 +8,12 @@ public class Move {
 
     public static final int None = 0;
     public static final int EnPassantCapture = 1;
-    public static final int Castling = 2;
-    public static final int PromoteToQueen = 3;
-    public static final int PromoteToKnight = 4;
-    public static final int PromoteToRook = 5;
-    public static final int PromoteToBishop = 6;
-    public static final int PawnTwoForward = 7;
+    public static final int PawnTwoForward = 2;
+    public static final int PromoteToKnight = Piece.Knight; // 3
+    public static final int PromoteToBishop = Piece.Bishop; // 4
+    public static final int PromoteToRook = Piece.Rook;     // 5
+    public static final int PromoteToQueen = Piece.Queen;   // 6
+    public static final int Castling = 7;
 
 
     private int startSquare;
