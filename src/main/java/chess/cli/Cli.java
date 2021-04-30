@@ -20,6 +20,8 @@ public class Cli {
 	 */
 	public static void main(String[] args) {
 
+		// System.out.println(parseUserMoveInput("a5-h1").toString());
+
 		boolean simpleRun = Arrays.asList(args).contains("--simple");
 
 		if (simpleRun) {
@@ -64,11 +66,35 @@ public class Cli {
 	 * Parse the user input string and return Move object
 	 *
 	 * @param input User input like "e7-e8[Q]"
+	 * @return parsed move object from user input
 	 */
 	public static Move parseUserMoveInput(String input) {
-		// TODO write tests
-		// TODO write function
-		return null;
+		String squares[] = input.split("-"); // Split input by '-'
+		int startSquare = Coordinate.toIntex(squares[0]); // start position in the board.squares array
+		int targetSquare = Coordinate.toIntex(squares[1].substring(0, 2)); // target position in the board.squares array
+		String flagString = squares[1].length() > 2 ? "" + squares[1].charAt(2) : "";
+		int flag = 0;
+
+		switch (flagString) {
+		case "Q":
+			flag = 3;
+			break;
+		case "K":
+			flag = 4;
+			break;
+		case "R":
+			flag = 5;
+			break;
+		case "B":
+			flag = 6;
+			break;
+		default:
+			flag = 0;
+			break;
+		}
+		// assign another flag values
+
+		return new Move(startSquare, targetSquare, flag);
 	}
 
 	/**
@@ -105,10 +131,10 @@ public class Cli {
 	 * @return whether the user input will have a defined effect
 	 */
 	public static boolean testUserInputSyntax(String userInput) {
-		// Checks if input matches one of valid inputs: move(e7-e8), beaten, help, quit
-		if (!userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[QRBN]?$|^beaten$|^help$|^quit$")) {
+		// Checks if input matches one of valid inputs: move(e7-e8[Q]), beaten, help,
+		// quit
+		if (!userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[qrbn]?$|^beaten$|^help$|^quit$"))
 			return false;
-		}
 		return true;
 	}
 

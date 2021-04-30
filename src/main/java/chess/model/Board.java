@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Board {
 
-    // representing the chess board where squares[0] is "a1" and squares[63] is "h8"
+    // representing the chess board where squares[0] is "a8" and squares[63] is "h1"
     private int[] squares;
     private List<Integer> capturedPieces;
     // if a pawn moved two spaces when this board was created, it is possible to capture the pawn at this position:
