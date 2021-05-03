@@ -107,7 +107,8 @@ public class Cli {
 			// Request input until there is defined input
 			input = getUserInput();
 			while (!testUserInputSyntax(input)) {
-				input = getUserInput("!Invalid move");
+				//input = getUserInput("!Invalid move");
+				performAction(input);
 			}
 			// use the input
 			performAction(input);
@@ -120,6 +121,11 @@ public class Cli {
 	 * @param userInput
 	 */
 	public static void performAction(String userInput) {
+
+		switch(userInput){
+			case"-q":
+				runGame();
+		}
 		// TODO (Eva) implement function
 		assert true; // delete this line as soon as there is real code in this method
 	}
