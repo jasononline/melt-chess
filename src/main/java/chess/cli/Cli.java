@@ -12,7 +12,7 @@ public class Cli {
 	private static boolean runningPvP = false;
 	private static boolean runningPvPC = false; // for Iteration2
 	private static boolean runningSimple = false; // for Test, maybe implement this differently?
-
+	private static Board board = new Board();
 	/**
 	 * The entry point of the CLI application.
 	 *
@@ -107,11 +107,11 @@ public class Cli {
 			// Request input until there is defined input
 			input = getUserInput();
 			while (!testUserInputSyntax(input)) {
-				//input = getUserInput("!Invalid move");
 				performAction(input);
+				input = getUserInput("!Invalid move");
 			}
 			// use the input
-			performAction(input);
+
 		}
 	}
 
@@ -122,10 +122,20 @@ public class Cli {
 	 */
 	public static void performAction(String userInput) {
 
-		switch(userInput){
-			case"-q":
-				runGame();
+		switch (userInput){
+			case "reset":
+			runGame();
+			case "exit":
+			System.exit(0);
+			default:
+				game.attemptMove(parseUserMoveInput(userInput));
+				System.out.println(game.getCurrentPosition().toString());
+
+
 		}
+
+
+
 		// TODO (Eva) implement function
 		assert true; // delete this line as soon as there is real code in this method
 	}
