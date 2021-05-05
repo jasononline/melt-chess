@@ -180,8 +180,9 @@ public class Cli {
 	public static boolean testUserInputSyntax(String userInput) {
 		// Checks if input matches one of valid inputs: move(e7-e8[Q]), beaten, help,
 		// quit, reset
-		if (!userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[qrbn]?$|^beaten$|^help$|^quit$|^reset$"))
+		if (!userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[qrbn]?$|^beaten$|^help$|^quit$|^reset$")) {
 			return false;
+		}
 		return true;
 	}
 
@@ -203,7 +204,7 @@ public class Cli {
 	 */
 	public static String getUserInput() {
 		Scanner scan = new Scanner(System.in);
-		return scan.next().toLowerCase();
+		return scan.nextLine().toLowerCase();
 	}
 
 	/**
