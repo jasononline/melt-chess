@@ -11,7 +11,6 @@ public class Cli {
 	private static Game game = new Game();
 	private static boolean runningPVP = false;
 	private static boolean runningPVPC = false; // for Iteration2
-	private static Piece piece = new Piece();
 
 	/**
 	 * The entry point of the CLI application.
@@ -141,36 +140,35 @@ public class Cli {
 			case "quit":
 				System.exit(0);
 				break;
+
 			case "help":
 				System.out.println("quit = Exit the game");
 				System.out.println("beaten = Displays all captured pieces");
 				System.out.println("reset = Reset the game");
 				break;
+
 			case "beaten":
 
 				for (int i : game.getCurrentPosition().getCapturedPieces()) {
 					System.out.print(Piece.toString(i));
+					System.out.println("");
 				}
 				break;
 
 			case "reset":
 				game = new Game();
+				System.out.println(game.getCurrentPosition().toString());
 				break;
+
 			default:
 				if (!game.attemptMove(parseUserMoveInput(userInput))) {
 					System.out.println("!Move not allowed");
-				}else{
-					game.attemptMove(parseUserMoveInput(userInput));
+				} else {
+					System.out.println("!" + userInput);
 					System.out.println(game.getCurrentPosition().toString());
 				}
 				break;
-
 		}
-
-
-
-
-
 	}
 
 	/**
