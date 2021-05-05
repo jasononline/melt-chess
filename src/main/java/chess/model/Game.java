@@ -46,9 +46,13 @@ public class Game {
      * @return true if the move was legal and was applied successfully
      */
     public boolean attemptMove(Move move) {
-        if (!MoveValidator.validateMove(history.peek(), move))
+        Board board = history.peek();
+        // directly return false if user tries to move opponent piece
+        if (!Piece.isColor(board.getPieceAt(move.getStartSquare()), board.getTurnColor()))
             return false;
-        history.push(history.peek().makeMove(move));
+        if (!MoveValidator.validateMove(board, move))
+            return false;
+        history.push(board.makeMove(move));
         return true;
     }
 
