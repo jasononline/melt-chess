@@ -13,7 +13,6 @@ public class Cli {
 	private static boolean runningPVPC = false; // for Iteration2
 	private static Board board = new Board();
 
-
 	/**
 	 * The entry point of the CLI application.
 	 *
@@ -40,19 +39,19 @@ public class Cli {
 			}
 
 			switch (opponent) {
-			case "person":
-				// Start game against another player
-				runningPVP = true;
-				runningPVPC = false;
-				break;
-			case "computer":
-				// Start game against computer
-				runningPVP = false;
-				runningPVPC = true;
-				break;
-			case "network":
-				// Start network game
-				break;
+				case "person":
+					// Start game against another player
+					runningPVP = true;
+					runningPVPC = false;
+					break;
+				case "computer":
+					// Start game against computer
+					runningPVP = false;
+					runningPVPC = true;
+					break;
+				case "network":
+					// Start network game
+					break;
 			}
 		}
 
@@ -73,21 +72,21 @@ public class Cli {
 		int flag = 0;
 
 		switch (flagString) {
-		case "Q":
-			flag = 3;
-			break;
-		case "K":
-			flag = 4;
-			break;
-		case "R":
-			flag = 5;
-			break;
-		case "B":
-			flag = 6;
-			break;
-		default:
-			flag = 0;
-			break;
+			case "Q":
+				flag = 3;
+				break;
+			case "K":
+				flag = 4;
+				break;
+			case "R":
+				flag = 5;
+				break;
+			case "B":
+				flag = 6;
+				break;
+			default:
+				flag = 0;
+				break;
 		}
 		// assign another flag values
 
@@ -106,7 +105,6 @@ public class Cli {
 		}
 	}
 
-
 	/**
 	 * Start a Player versus Player game
 	 */
@@ -116,7 +114,6 @@ public class Cli {
 			// TODO find out if the game is over
 		}
 	}
-
 
 	/**
 	 * Start a Player versus Computer game
@@ -131,7 +128,6 @@ public class Cli {
 		}
 	}
 
-
 	/**
 	 * Perform the Action according to the user input
 	 * 
@@ -139,21 +135,18 @@ public class Cli {
 	 */
 	public static void performAction(String userInput) {
 
-		switch (userInput){
+		switch (userInput) {
 			case "reset":
-			runGame();
+				runGame();
 			case "exit":
-			System.exit(0);
+				System.exit(0);
 			default:
-				if(!game.attemptMove(parseUserMoveInput(userInput))) {
+				if (!game.attemptMove(parseUserMoveInput(userInput))) {
 					System.out.println("!Move not allowed");
-				};
+				}
+				;
 				System.out.println(game.getCurrentPosition().toString());
-
-
 		}
-
-
 
 		// TODO (Eva) implement function
 		assert true; // delete this line as soon as there is real code in this method
@@ -167,8 +160,8 @@ public class Cli {
 	 */
 	public static boolean testUserInputSyntax(String userInput) {
 		// Checks if input matches one of valid inputs: move(e7-e8[Q]), beaten, help,
-		// quit
-		if (!userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[qrbn]?$|^beaten$|^help$|^quit$"))
+		// exit, reset
+		if (!userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[qrbn]?$|^beaten$|^help$|^exit$|^reset$"))
 			return false;
 		return true;
 	}
@@ -194,9 +187,9 @@ public class Cli {
 		return scan.next().toLowerCase();
 	}
 
-
 	/**
 	 * Request valid input from the user until there ist valid input
+	 * 
 	 * @return user input that has a defined meaning
 	 */
 	private static String getValidUserInput() {
