@@ -88,9 +88,10 @@ public class Cli {
 				flag = 0;
 				break;
 		}
-		// assign another flag values
 
-		return new Move(startSquare, targetSquare, flag);
+		Move move = new Move(startSquare, targetSquare, flag);
+		game.addFlag(move);
+		return move;
 	}
 
 	/**
@@ -148,7 +149,7 @@ public class Cli {
 			case "beaten":
 
 				for (int i : game.getCurrentPosition().getCapturedPieces()) {
-					System.out.print(piece.toString(i));
+					System.out.print(Piece.toString(i));
 				}
 				break;
 
@@ -180,8 +181,8 @@ public class Cli {
 	 */
 	public static boolean testUserInputSyntax(String userInput) {
 		// Checks if input matches one of valid inputs: move(e7-e8[Q]), beaten, help,
-		// exit, reset
-		if (!userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[qrbn]?$|^beaten$|^help$|^exit$|^reset$"))
+		// quit, reset
+		if (!userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[qrbn]?$|^beaten$|^help$|^quit$|^reset$"))
 			return false;
 		return true;
 	}
