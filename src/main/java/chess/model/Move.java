@@ -64,6 +64,12 @@ public class Move {
         return flag;
     }
 
+    /**
+     * Set the flag field
+     * @param flag the flag value
+     */
+    public void setFlag(int flag) { this.flag = flag;}
+
 
     /**
      * @return the string representation of the Move instance as used by the console client

@@ -66,4 +66,45 @@ public class GameTest {
         System.out.println(simpleRemisPosition);
         assertEquals(Game.REMIS, game.checkWinCondition(simpleRemisPosition));
     }
+
+
+    /**
+     * Tests for the adding of flags for user input moves
+     */
+    @Test
+    public void addFlagEnPassantCapture() {
+
+        String fen = "8/8/8/8/p7/8/1P6/8";
+        Game game = new Game(fen);
+        Move m1 = new Move(49, 33, Move.PawnTwoForward);
+        Move m2 = new Move(32, 41);
+        // make move that triggers en passant possibility
+        System.out.println(game.getCurrentPosition());
+        System.out.println("Turn: " +game.getCurrentPosition().getTurnColor());
+        game.attemptMove(m1);
+        System.out.println(game.getCurrentPosition());
+        System.out.println("Turn: " +game.getCurrentPosition().getTurnColor());
+        System.out.println("En Passant Square: " + game.getCurrentPosition().getEnPassantSquare());
+        game.addFlag(m2);
+        assertEquals(Move.EnPassantCapture, m2.getFlag());
+    }
+
+
+    /**
+     * Tests for the adding of flags for user input moves
+     */
+    @Test
+    public void addFlagCastling() {
+
+        String fen = "rnbqkbnr/pppppppp/8/8/2P5/1QNPPN2/PP1BBPPP/R3K2R";
+        Game game = new Game(fen);
+        Move m1 = new Move(60, 62);
+        Move m2 = new Move(60, 58);
+        game.addFlag(m1);
+        game.addFlag(m2);
+
+        assertEquals(Move.Castling, m1.getFlag());
+        assertEquals(Move.Castling, m2.getFlag());
+    }
+
 }
