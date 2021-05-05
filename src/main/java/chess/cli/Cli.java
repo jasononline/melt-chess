@@ -11,7 +11,6 @@ public class Cli {
 	private static Game game = new Game();
 	private static boolean runningPVP = false;
 	private static boolean runningPVPC = false; // for Iteration2
-	private static Board board = new Board();
 	private static Piece piece = new Piece();
 
 	/**
@@ -157,8 +156,14 @@ public class Cli {
 				game = new Game();
 				break;
 			default:
-				game.attemptMove(parseUserMoveInput(userInput));
+				if (!game.attemptMove(parseUserMoveInput(userInput))) {
+					System.out.println("!Move not allowed");
+				}else{
+					game.attemptMove(parseUserMoveInput(userInput));
+					System.out.println(game.getCurrentPosition().toString());
+				}
 				break;
+
 		}
 
 
