@@ -17,7 +17,7 @@ public class MoveGeneratorPawn {
      */
     public static List<Move> generatePawnMoves(Board board, int startSquare) {
         List<Move> generatedMoves = new ArrayList<>();
-        int direction = board.getTurnColor() == Piece.Black ? MoveGenerator.DOWN : MoveGenerator.UP;
+        int direction = Piece.getColor(board.getPieceAt(startSquare)) == Piece.Black ? MoveGenerator.DOWN : MoveGenerator.UP;
 
         // move forward if possible
         moveForward(board, generatedMoves, direction, startSquare);
@@ -48,7 +48,11 @@ public class MoveGeneratorPawn {
     }
 
     private static void moveTwoForward(Board board, List<Move> generatedMoves, int direction, int startSquare) {
-        int forwardPosition = startSquare + 2 * direction;
+        // don't jump over a piece
+        int forwardPosition = startSquare + direction;
+        if (board.getPieceAt(forwardPosition) != 0)
+            return;
+        forwardPosition += direction;
         int rank = Coordinate.fromIndex(startSquare)[1];
         if ((rank == 1 && direction == MoveGenerator.DOWN || rank == 6 && direction == MoveGenerator.UP)
                 && board.getPieceAt(forwardPosition) == Piece.None) {
@@ -57,7 +61,7 @@ public class MoveGeneratorPawn {
     }
 
     private static void captureDiagonal(Board board, List<Move> generatedMoves, int direction, int startSquare) {
-        int opponentColor = board.getTurnColor() == Piece.Black ? Piece.White : Piece.Black;
+        int opponentColor = Piece.getColor(board.getPieceAt(startSquare)) == Piece.Black ? Piece.White : Piece.Black;
         int diagonalPosition = startSquare+direction+MoveGenerator.LEFT;
         if (!Coordinate.isLeftMost(startSquare)) {
             if (Piece.isColor(board.getPieceAt(diagonalPosition), opponentColor))
