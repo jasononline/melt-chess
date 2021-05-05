@@ -89,9 +89,10 @@ public class Cli {
 				flag = 0;
 				break;
 		}
-		// assign another flag values
 
-		return new Move(startSquare, targetSquare, flag);
+		Move move = new Move(startSquare, targetSquare, flag);
+		game.addFlag(move);
+		return move;
 	}
 
 	/**
