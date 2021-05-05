@@ -11,8 +11,9 @@ public class Cli {
 	private static Game game = new Game();
 	private static boolean runningPVP = false;
 	private static boolean runningPVPC = false; // for Iteration2
-	private static boolean runningSimple = false; // for Test, maybe implement this differently?
 	private static Board board = new Board();
+
+
 	/**
 	 * The entry point of the CLI application.
 	 *
@@ -25,11 +26,9 @@ public class Cli {
 		boolean simpleRun = Arrays.asList(args).contains("--simple");
 
 		if (simpleRun) {
-
 			// Start game person vs person
 			runningPVP = true;
 			runningPVPC = false;
-			runningSimple = true;
 
 		} else {
 			// Ask the user to choose an opponent
@@ -45,13 +44,11 @@ public class Cli {
 				// Start game against another player
 				runningPVP = true;
 				runningPVPC = false;
-				runningSimple = false;
 				break;
 			case "computer":
 				// Start game against computer
 				runningPVP = false;
 				runningPVPC = true;
-				runningSimple = false;
 				break;
 			case "network":
 				// Start network game
@@ -106,8 +103,6 @@ public class Cli {
 			gameLoopPVP();
 		} else if (runningPVPC) {
 			gameLoopPVPC();
-		} else if (runningSimple) {
-			gameLoopSimple();
 		}
 	}
 
@@ -136,14 +131,6 @@ public class Cli {
 		}
 	}
 
-	/**
-	 * Start a --simple test game which is PVP
-	 */
-	public static void gameLoopSimple() {
-		performAction(getValidUserInput());
-		// TODO only accept moves as input
-	}
-
 
 	/**
 	 * Perform the Action according to the user input
@@ -158,7 +145,9 @@ public class Cli {
 			case "exit":
 			System.exit(0);
 			default:
-				game.attemptMove(parseUserMoveInput(userInput));
+				if(!game.attemptMove(parseUserMoveInput(userInput))) {
+					System.out.println("!Move not allowed");
+				};
 				System.out.println(game.getCurrentPosition().toString());
 
 
