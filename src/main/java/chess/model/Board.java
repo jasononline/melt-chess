@@ -239,13 +239,6 @@ public class Board {
      * **/
     private void enPassantCapture(Move move) {
         if (0 < enPassantSquare && move.getFlag() == Move.EnPassantCapture) {
-            /*
-            int stepForwardDirection = (turnColor == Piece.White) ? MoveGenerator.UP : MoveGenerator.DOWN;
-            enPassantSquare += stepForwardDirection;
-            capturedPieces.add(getPieceAt(enPassantSquare));
-            squares[enPassantSquare] = Piece.None;
-            enPassantSquare = -1;
-            */
             int opponentPos = (Coordinate.fromIndex(move.getTargetSquare())[0] - Coordinate.fromIndex(move.getStartSquare())[0]);
             opponentPos += move.getStartSquare();
             capturedPieces.add(getPieceAt(opponentPos));
@@ -253,7 +246,7 @@ public class Board {
             enPassantSquare = -1;
         }
         if (move.getFlag() == Move.PawnTwoForward) {
-            int stepBackDirection = (turnColor == Piece.White) ? MoveGenerator.UP : MoveGenerator.DOWN;
+            int stepBackDirection = (turnColor == Piece.White) ? MoveGenerator.DOWN : MoveGenerator.UP;
             setEnPassantSquare(move.getTargetSquare() + stepBackDirection);
         }
     }

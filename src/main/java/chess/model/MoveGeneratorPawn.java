@@ -58,13 +58,19 @@ public class MoveGeneratorPawn {
 
     private static void captureDiagonal(Board board, List<Move> generatedMoves, int direction, int startSquare) {
         int opponentColor = board.getTurnColor() == Piece.Black ? Piece.White : Piece.Black;
-        for (int diagonalPosition : new int[]{startSquare+direction+MoveGenerator.LEFT, startSquare+direction+MoveGenerator.RIGHT}) {
-            if (!Coordinate.isOnBorder(startSquare)) {
-                if (Piece.isColor(board.getPieceAt(diagonalPosition), opponentColor))
-                    generatedMoves.add(new Move(startSquare, diagonalPosition));
-                if (board.getEnPassantSquare() == diagonalPosition)
-                    generatedMoves.add(new Move(startSquare, diagonalPosition, Move.EnPassantCapture));
-            }
+        int diagonalPosition = startSquare+direction+MoveGenerator.LEFT;
+        if (!Coordinate.isLeftMost(startSquare)) {
+            if (Piece.isColor(board.getPieceAt(diagonalPosition), opponentColor))
+                generatedMoves.add(new Move(startSquare, diagonalPosition));
+            if (board.getEnPassantSquare() == diagonalPosition)
+                generatedMoves.add(new Move(startSquare, diagonalPosition, Move.EnPassantCapture));
+        }
+        diagonalPosition = startSquare+direction+MoveGenerator.RIGHT;
+        if (!Coordinate.isRightMost(startSquare)) {
+            if (Piece.isColor(board.getPieceAt(diagonalPosition), opponentColor))
+                generatedMoves.add(new Move(startSquare, diagonalPosition));
+            if (board.getEnPassantSquare() == diagonalPosition)
+                generatedMoves.add(new Move(startSquare, diagonalPosition, Move.EnPassantCapture));
         }
     }
 }
