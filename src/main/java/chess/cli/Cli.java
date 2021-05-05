@@ -12,6 +12,7 @@ public class Cli {
 	private static boolean runningPVP = false;
 	private static boolean runningPVPC = false; // for Iteration2
 	private static Board board = new Board();
+	private static Piece piece = new Piece();
 
 	/**
 	 * The entry point of the CLI application.
@@ -136,20 +137,34 @@ public class Cli {
 	public static void performAction(String userInput) {
 
 		switch (userInput) {
-			case "reset":
-				runGame();
-			case "exit":
+
+			case "quit":
 				System.exit(0);
-			default:
-				if (!game.attemptMove(parseUserMoveInput(userInput))) {
-					System.out.println("!Move not allowed");
+				break;
+			case "help":
+				System.out.println("quit = Exit the game");
+				System.out.println("beaten = Displays all captured pieces");
+				System.out.println("reset = Reset the game");
+				break;
+			case "beaten":
+
+				for (int i : game.getCurrentPosition().getCapturedPieces()) {
+					System.out.print(piece.toString(i));
 				}
-				;
-				System.out.println(game.getCurrentPosition().toString());
+				break;
+
+			case "reset":
+				game = new Game();
+				break;
+			default:
+				game.attemptMove(parseUserMoveInput(userInput));
+				break;
 		}
 
-		// TODO (Eva) implement function
-		assert true; // delete this line as soon as there is real code in this method
+
+
+
+
 	}
 
 	/**
