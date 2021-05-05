@@ -216,7 +216,13 @@ public class Board {
             squares[rookNewPosition] = getPieceAt(rookCurrentPosition);
             squares[rookCurrentPosition] = Piece.None;
         }
-
+        // promote pawn if necessary
+        int flag = move.getFlag();
+        if (flag < 3 || 6 < flag )
+            return;
+        int newPiece;
+        int color = Piece.getColor(getPieceAt(move.getTargetSquare()));
+        squares[move.getTargetSquare()] = flag + color;
     }
 
 
