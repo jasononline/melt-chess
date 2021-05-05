@@ -32,6 +32,18 @@ public class Coordinate {
 		return rank * 8 + file;
 	}
 
+
+	/**
+	 * Convert 2d integer coordinate to square index
+	 * @param file the file of the coordinate (a:0, b:1, .., h:7)
+	 * @param rank the rank of the coordinate (7:0, 6:1, ..., 0:7)
+	 * @return the index for the Board.squares array
+	 */
+	public static int toIndex(int file, int rank) {
+		return rank * 8 + file;
+	}
+
+
 	/**
 	 * @param index the position in the board.squares array
 	 * @return Returns true if index lies on the "a" file

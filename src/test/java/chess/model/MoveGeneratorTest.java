@@ -89,6 +89,13 @@ public class MoveGeneratorTest {
         generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board,28));
         generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board,53));
         assertTrue(generatedMoves.contains(expectedMove));
+
+        System.out.println(board);
+        board = board.makeMove(expectedMove);
+        System.out.println("Board after " +expectedMove);
+        System.out.println(board);
+        assertEquals(Piece.None, board.getPieceAt(27));
+        assertEquals(Piece.Pawn+Piece.White, board.getPieceAt(19));
     }
 
 
