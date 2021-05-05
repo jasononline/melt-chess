@@ -9,8 +9,8 @@ import java.util.Arrays;
  */
 public class Cli {
 	private static Game game = new Game();
-	private static boolean runningPvP = false;
-	private static boolean runningPvPC = false; // for Iteration2
+	private static boolean runningPVP = false;
+	private static boolean runningPVPC = false; // for Iteration2
 	private static boolean runningSimple = false; // for Test, maybe implement this differently?
 	private static Board board = new Board();
 	/**
@@ -27,8 +27,8 @@ public class Cli {
 		if (simpleRun) {
 
 			// Start game person vs person
-			runningPvP = true;
-			runningPvPC = false;
+			runningPVP = true;
+			runningPVPC = false;
 			runningSimple = true;
 
 		} else {
@@ -43,14 +43,14 @@ public class Cli {
 			switch (opponent) {
 			case "person":
 				// Start game against another player
-				runningPvP = true;
-				runningPvPC = false;
+				runningPVP = true;
+				runningPVPC = false;
 				runningSimple = false;
 				break;
 			case "computer":
 				// Start game against computer
-				runningPvP = false;
-				runningPvPC = true;
+				runningPVP = false;
+				runningPVPC = true;
 				runningSimple = false;
 				break;
 			case "network":
@@ -98,25 +98,55 @@ public class Cli {
 	}
 
 	/**
-	 * Start a new game loop
+	 * Start the correct new game loop
 	 */
 	public static void runGame() {
-		String input = "";
-		while (runningPvP) {
-			System.out.println(game.getCurrentPosition().toString());
-			// Request input until there is defined input
-			input = getUserInput();
-			while (!testUserInputSyntax(input)) {
-				performAction(input);
-				input = getUserInput("!Invalid move");
-			}
-			// use the input
+		System.out.println(game.getCurrentPosition().toString());
+		if (runningPVP) {
+			gameLoopPVP();
+		} else if (runningPVPC) {
+			gameLoopPVPC();
+		} else if (runningSimple) {
+			gameLoopSimple();
+		}
+	}
 
+
+	/**
+	 * Start a Player versus Player game
+	 */
+	public static void gameLoopPVP() {
+		while (runningPVP) {
+			performAction(getValidUserInput());
+			// TODO find out if the game is over
+		}
+	}
+
+
+	/**
+	 * Start a Player versus Computer game
+	 */
+	public static void gameLoopPVPC() {
+		while (runningPVPC) {
+			performAction(getValidUserInput());
+			// TODO let the PC make a move
+			// TODO print the move of the PC
+			// TODO print the new Position after the PCs move, maybe implement elsewhere?
+			// TODO find out if the game is over
 		}
 	}
 
 	/**
-	 * Perform the Action according to
+	 * Start a --simple test game which is PVP
+	 */
+	public static void gameLoopSimple() {
+		performAction(getValidUserInput());
+		// TODO only accept moves as input
+	}
+
+
+	/**
+	 * Perform the Action according to the user input
 	 * 
 	 * @param userInput
 	 */
@@ -173,5 +203,19 @@ public class Cli {
 	public static String getUserInput() {
 		Scanner scan = new Scanner(System.in);
 		return scan.next().toLowerCase();
+	}
+
+
+	/**
+	 * Request valid input from the user until there ist valid input
+	 * @return user input that has a defined meaning
+	 */
+	private static String getValidUserInput() {
+		String input = "";
+		input = getUserInput();
+		while (!testUserInputSyntax(input)) {
+			input = getUserInput("!Invalid move");
+		}
+		return input;
 	}
 }
