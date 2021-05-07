@@ -95,9 +95,9 @@ public class MoveGeneratorPawn {
                 } else {
                     generatedMoves.add(new Move(startSquare, diagonalPosition));
                 }
-                if (board.getEnPassantSquare() == diagonalPosition)
-                    generatedMoves.add(new Move(startSquare, diagonalPosition, Move.EnPassantCapture));
             }
+            if (board.getEnPassantSquare() == diagonalPosition)
+                generatedMoves.add(new Move(startSquare, diagonalPosition, Move.EnPassantCapture));
         }
     }
 
