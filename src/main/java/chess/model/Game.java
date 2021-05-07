@@ -14,7 +14,7 @@ public class Game {
     public static final int CHECKMATE = 1;
     public static final int REMIS = 2;
 
-    private Stack<Board> history;
+    private final Stack<Board> history;
 
 
     /**
@@ -67,6 +67,7 @@ public class Game {
         history.pop();
         return history.peek();
     }
+
 
     /**
      * Returns Checkmate or Remis for current player.

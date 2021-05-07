@@ -18,9 +18,9 @@ public class MoveGenerator {
     public static final int DOWNLEFT = 7;
     public static final int DOWNRIGHT = 9;
 
-    private Board board;
-    private List<Integer> whitePiecePositions;
-    private List<Integer> blackPiecePositions;
+    private final Board board;
+    private final List<Integer> whitePiecePositions;
+    private final List<Integer> blackPiecePositions;
 
     private int teamColor, opponentColor;
 

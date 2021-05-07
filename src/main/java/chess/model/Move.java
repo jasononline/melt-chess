@@ -6,7 +6,6 @@ package chess.model;
  */
 public class Move {
 
-    public static final int None = 0;
     public static final int EnPassantCapture = 1;
     public static final int PawnTwoForward = 2;
     public static final int PromoteToKnight = Piece.Knight; // 3
@@ -16,9 +15,10 @@ public class Move {
     public static final int Castling = 7;
 
 
-    private int startSquare;
-    private int targetSquare;
+    private final int startSquare;
+    private final int targetSquare;
     private int flag;
+
 
     /**
      * Construct Move
@@ -30,6 +30,7 @@ public class Move {
         this.targetSquare = targetSquare;
         this.flag = 0;
     }
+
 
     /**
      * Construct Move setting a flag
@@ -97,6 +98,7 @@ public class Move {
         return Coordinate.toString(startSquare) + "-" + Coordinate.toString(targetSquare) + promotion;
     }
 
+
     /**
      * Checks whether this is the same as other move
      * @param other the other Move object
@@ -111,6 +113,7 @@ public class Move {
             return super.equals(other);
         }
     }
+
 
     /**
      * Calculates arbitrary hash code to accommodate pmd rules
