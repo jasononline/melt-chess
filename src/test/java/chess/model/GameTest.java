@@ -2,8 +2,7 @@ package chess.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *  Tests for the Game class
@@ -105,6 +104,39 @@ public class GameTest {
 
         assertEquals(Move.Castling, m1.getFlag());
         assertEquals(Move.Castling, m2.getFlag());
+    }
+
+
+    /*
+     *
+     *   BEGIN tests for bugs found by checker app
+     *
+     */
+
+
+    /**
+     * ERROR:
+     * O 8
+     * O 7         ♗
+     * O 6
+     * O 5 ♚ ♙       ♙
+     * O 4     ♙
+     * O 3         ♟
+     * O 2             ♟
+     * O 1     ♔ ♗       ♖
+     * O   a b c d e f g h
+     * X On input "g2-h1" expected "!g2-h1" but got "!Move not allowed"!
+     */
+    @Test void pawnDiagonalCaptureAndPromote() {
+        Game game = new Game("4B3/8/7R/kP4P1/2P5/4p3/6p1/2KB4");
+        Move moveRook = new Move(Coordinate.toIntex("h6"), Coordinate.toIntex("h1"));
+        game.attemptMove(moveRook);
+
+        Move captRook = new Move(Coordinate.toIntex("g2"), Coordinate.toIntex("h1"));
+        // game not adding promotion flag seems to be the bug:
+        game.addFlag(captRook);
+        assertEquals(Move.PromoteToQueen, captRook.getFlag());
+        assertTrue(game.attemptMove(captRook));
     }
 
 }

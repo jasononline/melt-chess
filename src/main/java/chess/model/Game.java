@@ -121,7 +121,8 @@ public class Game {
             if (generator.generateMovesStartingAt(startSquare).contains(enPassantMove)) {
                 move.setFlag(Move.EnPassantCapture);
             }
-        } else if (Coordinate.isUpMost(targetSquare) || Coordinate.isDownMost(targetSquare)) {
+        }
+        if (Coordinate.isUpMost(targetSquare) || Coordinate.isDownMost(targetSquare)) {
             // pawn reached last rank and no flag was set
             // hence promote to Queen by default
             move.setFlag(Move.PromoteToQueen);
