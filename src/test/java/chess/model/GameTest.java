@@ -139,4 +139,35 @@ public class GameTest {
         assertTrue(game.attemptMove(captRook));
     }
 
+
+    /**
+     * ERROR:
+     * O 8 ♜ ♞ ♝   ♚ ♝   ♜
+     * O 7     ♟ ♟ ♛ ♟ ♟ ♟
+     * O 6   ♟         ♙ ♞
+     * O 5 ♟
+     * O 4 ♘       ♙ ♟
+     * O 3 ♙ ♙
+     * O 2     ♙ ♙       ♙
+     * O 1 ♖   ♗ ♕ ♔ ♗ ♘ ♖
+     * O   a b c d e f g h
+     *
+     * X On input "f4-e3" expected "!f4-e3" but got "!Move not allowed"!
+     **/
+    @Test
+    public void enPassantBug() {
+        Game game = new Game("rnb1kb1r/2ppqppp/1p4Pn/p7/N4p2/PP6/2PPP2P/R1BQKBNR");
+        // create en passant situation
+        Move twoForward = new Move(Coordinate.toIntex("e2"), Coordinate.toIntex("e4"));
+        game.addFlag(twoForward);
+        game.attemptMove(twoForward);
+        assertEquals(Move.PawnTwoForward, twoForward.getFlag());
+
+        // capture en passant
+        Move enPassantCapture = new Move(Coordinate.toIntex("f4"), Coordinate.toIntex("e3"));
+        game.addFlag(enPassantCapture);
+        assertEquals(Move.EnPassantCapture, enPassantCapture.getFlag());
+        assertTrue(game.attemptMove(enPassantCapture));
+    }
+
 }
