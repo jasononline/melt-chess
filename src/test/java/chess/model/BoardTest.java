@@ -115,8 +115,8 @@ public class BoardTest {
         board = board.makeMove(m2);
         System.out.println(board);
         assertEquals(1, board.getCapturedPieces().size());
-        assertEquals(Piece.Pawn, Piece.getType(board.getPieceAt(Coordinate.toIntex("b3"))));
-        assertEquals(Piece.None, Piece.getType(board.getPieceAt(Coordinate.toIntex("b4"))));
+        assertEquals(Piece.Pawn, Piece.getType(board.getPieceAt(Coordinate.toIndex("b3"))));
+        assertEquals(Piece.None, Piece.getType(board.getPieceAt(Coordinate.toIndex("b4"))));
     }
 
 

@@ -5,8 +5,10 @@ package chess.model;
  * positions
  */
 public class Coordinate {
+	
 	public static final String fileNames = "abcdefgh";
 	public static final String rankNames = "87654321";
+
 
 	/**
 	 * Convert squares index to 2d coordinate
@@ -20,13 +22,14 @@ public class Coordinate {
 		return new int[] { file, rank };
 	}
 
+
 	/**
 	 * Convert 2d coordinate ot squares index
 	 * 
 	 * @param position the position in the 2d coordinates (e7)
 	 * @return the position in the board.squares array
 	 */
-	public static int toIntex(String position) {
+	public static int toIndex(String position) {
 		int file = fileNames.indexOf(String.valueOf(position.charAt(0)));
 		int rank = 8 - Integer.parseInt(String.valueOf(position.charAt(1)));
 		return rank * 8 + file;
@@ -52,6 +55,7 @@ public class Coordinate {
 		return fromIndex(index)[0] == 0;
 	}
 
+
 	/**
 	 * @param index the position in the board.squares array
 	 * @return Returns true if index lies on the "h" file
@@ -59,6 +63,7 @@ public class Coordinate {
 	public static boolean isOnRightBorder(int index) {
 		return fromIndex(index)[0] == 7;
 	}
+
 
 	/**
 	 * @param index the position in the board.squares array
@@ -68,6 +73,7 @@ public class Coordinate {
 		return fromIndex(index)[1] == 0;
 	}
 
+
 	/**
 	 * @param index the position in the board.squares array
 	 * @return Returns true if index lies on the "1" rank
@@ -76,6 +82,7 @@ public class Coordinate {
 		return fromIndex(index)[1] == 7;
 	}
 
+
 	/**
 	 * @param index the position in the board.squares array
 	 * @return Returns True if index is any of the border squares
@@ -83,6 +90,7 @@ public class Coordinate {
 	public static boolean isOnBorder(int index) {
 		return isOnUpperBorder(index) || isOnLowerBorder(index) || isOnLeftBorder(index) || isOnRightBorder(index);
 	}
+
 
 	/**
 	 * Return true if index is any of the border squares towards direction
@@ -104,6 +112,7 @@ public class Coordinate {
 		}
 		return isOnBorder(index);
 	}
+
 
 	/**
 	 * Converts square index to String representation of the coordinate

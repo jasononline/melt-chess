@@ -69,8 +69,8 @@ public class Cli {
 	 */
 	public static Move parseUserMoveInput(String input) {
 		String squares[] = input.split("-"); // Split input by '-'
-		int startSquare = Coordinate.toIntex(squares[0]); // start position in the board.squares array
-		int targetSquare = Coordinate.toIntex(squares[1].substring(0, 2)); // target position in the board.squares array
+		int startSquare = Coordinate.toIndex(squares[0]); // start position in the board.squares array
+		int targetSquare = Coordinate.toIndex(squares[1].substring(0, 2)); // target position in the board.squares array
 		String flagString = squares[1].length() > 2 ? "" + squares[1].charAt(2) : "";
 		int flag = 0;
 

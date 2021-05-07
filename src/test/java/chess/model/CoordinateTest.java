@@ -34,9 +34,9 @@ public class CoordinateTest {
 	 */
 	@Test
 	public void CoordinateToIndex() {
-		assertEquals(Coordinate.toIntex("a8"), 0);
-		assertEquals(Coordinate.toIntex("h1"), 63);
-		assertEquals(Coordinate.toIntex("b4"), 33);
+		assertEquals(Coordinate.toIndex("a8"), 0);
+		assertEquals(Coordinate.toIndex("h1"), 63);
+		assertEquals(Coordinate.toIndex("b4"), 33);
 	}
 
 	/**

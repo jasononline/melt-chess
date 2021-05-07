@@ -129,10 +129,10 @@ public class GameTest {
      */
     @Test void pawnDiagonalCaptureAndPromote() {
         Game game = new Game("4B3/8/7R/kP4P1/2P5/4p3/6p1/2KB4");
-        Move moveRook = new Move(Coordinate.toIntex("h6"), Coordinate.toIntex("h1"));
+        Move moveRook = new Move(Coordinate.toIndex("h6"), Coordinate.toIndex("h1"));
         game.attemptMove(moveRook);
 
-        Move captRook = new Move(Coordinate.toIntex("g2"), Coordinate.toIntex("h1"));
+        Move captRook = new Move(Coordinate.toIndex("g2"), Coordinate.toIndex("h1"));
         // game not adding promotion flag seems to be the bug:
         game.addFlag(captRook);
         assertEquals(Move.PromoteToQueen, captRook.getFlag());
@@ -158,13 +158,13 @@ public class GameTest {
     public void enPassantBug() {
         Game game = new Game("rnb1kb1r/2ppqppp/1p4Pn/p7/N4p2/PP6/2PPP2P/R1BQKBNR");
         // create en passant situation
-        Move twoForward = new Move(Coordinate.toIntex("e2"), Coordinate.toIntex("e4"));
+        Move twoForward = new Move(Coordinate.toIndex("e2"), Coordinate.toIndex("e4"));
         game.addFlag(twoForward);
         game.attemptMove(twoForward);
         assertEquals(Move.PawnTwoForward, twoForward.getFlag());
 
         // capture en passant
-        Move enPassantCapture = new Move(Coordinate.toIntex("f4"), Coordinate.toIntex("e3"));
+        Move enPassantCapture = new Move(Coordinate.toIndex("f4"), Coordinate.toIndex("e3"));
         game.addFlag(enPassantCapture);
         assertEquals(Move.EnPassantCapture, enPassantCapture.getFlag());
         assertTrue(game.attemptMove(enPassantCapture));
