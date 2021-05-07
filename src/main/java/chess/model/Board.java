@@ -243,7 +243,7 @@ public class Board {
      * **/
     private void enPassantCapture(Move move) {
         if (0 < enPassantSquare && move.getFlag() == Move.EnPassantCapture) {
-            int opponentPos = (Coordinate.fromIndex(move.getTargetSquare())[0] - Coordinate.fromIndex(move.getStartSquare())[0]);
+            int opponentPos = Coordinate.fromIndex(move.getTargetSquare())[0] - Coordinate.fromIndex(move.getStartSquare())[0];
             opponentPos += move.getStartSquare();
             capturedPieces.add(getPieceAt(opponentPos));
             squares[opponentPos] = Piece.None;

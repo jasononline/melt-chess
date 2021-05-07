@@ -54,12 +54,15 @@ public class MoveGeneratorKing {
      * @return array of two booleans {leftCastlingPossible, rightCastlingPossible}
      */
     private static boolean[] isCastlingPossible(Board board, int startSquare) {
-        if (startSquare == Board.blackKingPosition)
+        if (startSquare == Board.blackKingPosition) {
             return isBlackCastlingPossible(board);
-        else if (startSquare == Board.whiteKingPosition)
+        }
+        else if (startSquare == Board.whiteKingPosition) {
             return isWhiteCastlingPossible(board);
-        else
+        }
+        else {
             return new boolean[]{false, false};
+        }
     }
 
 
