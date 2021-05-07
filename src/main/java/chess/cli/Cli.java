@@ -1,8 +1,12 @@
 package chess.cli;
 
-import chess.model.*;
-import java.util.Scanner;
+import chess.model.Coordinate;
+import chess.model.Game;
+import chess.model.Move;
+import chess.model.Piece;
+
 import java.util.Arrays;
+import java.util.Scanner;
 
 /**
  * Starting point of the command line interface
@@ -72,16 +76,16 @@ public class Cli {
 
 		switch (flagString) {
 			case "Q":
-				flag = 3;
+				flag = Move.PromoteToQueen;
 				break;
 			case "K":
-				flag = 4;
+				flag = Move.PromoteToKnight;
 				break;
 			case "R":
-				flag = 5;
+				flag = Move.PromoteToRook;
 				break;
 			case "B":
-				flag = 6;
+				flag = Move.PromoteToBishop;
 				break;
 			default:
 				flag = 0;
