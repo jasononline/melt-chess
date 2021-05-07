@@ -70,13 +70,13 @@ public class MoveGeneratorDirectional {
     public static List<Integer> generateStartingDirectionsAcross(int startSquare) {
         List<Integer> directions = new ArrayList<>();
         // do not walk off the board
-        if (!Coordinate.isLeftMost(startSquare))
+        if (!Coordinate.isOnLeftBorder(startSquare))
             directions.add(MoveGenerator.LEFT);
-        if (!Coordinate.isRightMost(startSquare))
+        if (!Coordinate.isOnRightBorder(startSquare))
             directions.add(MoveGenerator.RIGHT);
-        if (!Coordinate.isUpMost(startSquare))
+        if (!Coordinate.isOnUpperBorder(startSquare))
             directions.add(MoveGenerator.UP);
-        if (!Coordinate.isDownMost(startSquare))
+        if (!Coordinate.isOnLowerBorder(startSquare))
             directions.add(MoveGenerator.DOWN);
         return directions;
     }
@@ -91,13 +91,13 @@ public class MoveGeneratorDirectional {
     public static List<Integer> generateStartingDirectionsDiagonal(int startSquare) {
         List<Integer> directions = new ArrayList<>();
         // do not walk off the board
-        if (!Coordinate.isLeftMost(startSquare) && !Coordinate.isUpMost(startSquare))
+        if (!Coordinate.isOnLeftBorder(startSquare) && !Coordinate.isOnUpperBorder(startSquare))
             directions.add(MoveGenerator.UPLEFT);
-        if (!Coordinate.isRightMost(startSquare) && !Coordinate.isUpMost(startSquare))
+        if (!Coordinate.isOnRightBorder(startSquare) && !Coordinate.isOnUpperBorder(startSquare))
             directions.add(MoveGenerator.UPRIGHT);
-        if (!Coordinate.isLeftMost(startSquare) && !Coordinate.isDownMost(startSquare))
+        if (!Coordinate.isOnLeftBorder(startSquare) && !Coordinate.isOnLowerBorder(startSquare))
             directions.add(MoveGenerator.DOWNLEFT);
-        if (!Coordinate.isRightMost(startSquare) && !Coordinate.isDownMost(startSquare))
+        if (!Coordinate.isOnRightBorder(startSquare) && !Coordinate.isOnLowerBorder(startSquare))
             directions.add(MoveGenerator.DOWNRIGHT);
         return directions;
     }

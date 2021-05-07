@@ -122,7 +122,7 @@ public class Game {
                 move.setFlag(Move.EnPassantCapture);
             }
         }
-        if (Coordinate.isUpMost(targetSquare) || Coordinate.isDownMost(targetSquare)) {
+        if (Coordinate.isOnUpperBorder(targetSquare) || Coordinate.isOnLowerBorder(targetSquare)) {
             // pawn reached last rank and no flag was set
             // hence promote to Queen by default
             move.setFlag(Move.PromoteToQueen);

@@ -44,10 +44,10 @@ public class CoordinateTest {
 	 */
 	@Test
 	public void isLeftMost() {
-		assertTrue(Coordinate.isLeftMost(0));
-		assertTrue(Coordinate.isLeftMost(32));
-		assertFalse(Coordinate.isLeftMost(1));
-		assertFalse(Coordinate.isLeftMost(23));
+		assertTrue(Coordinate.isOnLeftBorder(0));
+		assertTrue(Coordinate.isOnLeftBorder(32));
+		assertFalse(Coordinate.isOnLeftBorder(1));
+		assertFalse(Coordinate.isOnLeftBorder(23));
 	}
 
 	/**
@@ -55,10 +55,10 @@ public class CoordinateTest {
 	 */
 	@Test
 	public void isRightMost() {
-		assertFalse(Coordinate.isRightMost(0));
-		assertFalse(Coordinate.isRightMost(1));
-		assertTrue(Coordinate.isRightMost(7));
-		assertTrue(Coordinate.isRightMost(23));
+		assertFalse(Coordinate.isOnRightBorder(0));
+		assertFalse(Coordinate.isOnRightBorder(1));
+		assertTrue(Coordinate.isOnRightBorder(7));
+		assertTrue(Coordinate.isOnRightBorder(23));
 	}
 
 	/**
@@ -66,10 +66,10 @@ public class CoordinateTest {
 	 */
 	@Test
 	public void isUpMost() {
-		assertTrue(Coordinate.isUpMost(0));
-		assertTrue(Coordinate.isUpMost(1));
-		assertTrue(Coordinate.isUpMost(7));
-		assertFalse(Coordinate.isUpMost(23));
+		assertTrue(Coordinate.isOnUpperBorder(0));
+		assertTrue(Coordinate.isOnUpperBorder(1));
+		assertTrue(Coordinate.isOnUpperBorder(7));
+		assertFalse(Coordinate.isOnUpperBorder(23));
 	}
 
 	/**
@@ -77,9 +77,9 @@ public class CoordinateTest {
 	 */
 	@Test
 	public void isDownMost() {
-		assertFalse(Coordinate.isDownMost(0));
-		assertFalse(Coordinate.isDownMost(23));
-		assertTrue(Coordinate.isDownMost(57));
-		assertTrue(Coordinate.isDownMost(56));
+		assertFalse(Coordinate.isOnLowerBorder(0));
+		assertFalse(Coordinate.isOnLowerBorder(23));
+		assertTrue(Coordinate.isOnLowerBorder(57));
+		assertTrue(Coordinate.isOnLowerBorder(56));
 	}
 }

@@ -48,7 +48,7 @@ public class Coordinate {
 	 * @param index the position in the board.squares array
 	 * @return Returns true if index lies on the "a" file
 	 */
-	public static boolean isLeftMost(int index) {
+	public static boolean isOnLeftBorder(int index) {
 		return fromIndex(index)[0] == 0;
 	}
 
@@ -56,7 +56,7 @@ public class Coordinate {
 	 * @param index the position in the board.squares array
 	 * @return Returns true if index lies on the "h" file
 	 */
-	public static boolean isRightMost(int index) {
+	public static boolean isOnRightBorder(int index) {
 		return fromIndex(index)[0] == 7;
 	}
 
@@ -64,7 +64,7 @@ public class Coordinate {
 	 * @param index the position in the board.squares array
 	 * @return Returns true if index lies on the "8" rank
 	 */
-	public static boolean isUpMost(int index) {
+	public static boolean isOnUpperBorder(int index) {
 		return fromIndex(index)[1] == 0;
 	}
 
@@ -72,7 +72,7 @@ public class Coordinate {
 	 * @param index the position in the board.squares array
 	 * @return Returns true if index lies on the "1" rank
 	 */
-	public static boolean isDownMost(int index) {
+	public static boolean isOnLowerBorder(int index) {
 		return fromIndex(index)[1] == 7;
 	}
 
@@ -81,7 +81,7 @@ public class Coordinate {
 	 * @return Returns True if index is any of the border squares
 	 */
 	public static boolean isOnBorder(int index) {
-		return isUpMost(index) || isDownMost(index) || isLeftMost(index) || isRightMost(index);
+		return isOnUpperBorder(index) || isOnLowerBorder(index) || isOnLeftBorder(index) || isOnRightBorder(index);
 	}
 
 	/**
@@ -94,13 +94,13 @@ public class Coordinate {
 	public static boolean isOnBorderTowards(int index, int direction) {
 		switch (direction) {
 		case MoveGenerator.UP:
-			return isUpMost(index);
+			return isOnUpperBorder(index);
 		case MoveGenerator.RIGHT:
-			return isRightMost(index);
+			return isOnRightBorder(index);
 		case MoveGenerator.DOWN:
-			return isDownMost(index);
+			return isOnLowerBorder(index);
 		case MoveGenerator.LEFT:
-			return isLeftMost(index);
+			return isOnLeftBorder(index);
 		}
 		return isOnBorder(index);
 	}

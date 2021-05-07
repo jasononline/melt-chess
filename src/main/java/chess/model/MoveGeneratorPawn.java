@@ -32,14 +32,14 @@ public class MoveGeneratorPawn {
 
     private static void moveForward(Board board, List<Move> generatedMoves, int direction, int startSquare) {
         int forwardPosition = startSquare + direction;
-        if (!Coordinate.isUpMost(forwardPosition) && !Coordinate.isDownMost(forwardPosition)
+        if (!Coordinate.isOnUpperBorder(forwardPosition) && !Coordinate.isOnLowerBorder(forwardPosition)
                 && board.getPieceAt(forwardPosition) == Piece.None) {
             generatedMoves.add(new Move(startSquare, forwardPosition));
         }
 
         // if moving forward lead to the last square in the file, promoting the piece is possible
         if (board.getPieceAt(forwardPosition) == Piece.None
-                && (Coordinate.isUpMost(forwardPosition) || Coordinate.isDownMost(forwardPosition))) {
+                && (Coordinate.isOnUpperBorder(forwardPosition) || Coordinate.isOnLowerBorder(forwardPosition))) {
             generatedMoves.add(new Move(startSquare, forwardPosition, Move.PromoteToQueen));
             generatedMoves.add(new Move(startSquare, forwardPosition, Move.PromoteToKnight));
             generatedMoves.add(new Move(startSquare, forwardPosition, Move.PromoteToBishop));
@@ -61,9 +61,6 @@ public class MoveGeneratorPawn {
     }
 
     private static void captureDiagonal(Board board, List<Move> generatedMoves, int direction, int startSquare) {
-        // TODO Refactor Left and Right diagonal capturing
-        // check here if right or left most
-        // create one capture diagonal method with left/right as parameter
         captureDiagonalLeft(board, generatedMoves, direction, startSquare);
         captureDiagonalRight(board, generatedMoves, direction, startSquare);
     }
@@ -72,9 +69,9 @@ public class MoveGeneratorPawn {
         int opponentColor = Piece.getColor(board.getPieceAt(startSquare)) == Piece.Black ? Piece.White : Piece.Black;
         int diagonalPosition = startSquare + direction + MoveGenerator.LEFT;
 
-        if (!Coordinate.isLeftMost(startSquare)) {
+        if (!Coordinate.isOnLeftBorder(startSquare)) {
             if (Piece.isColor(board.getPieceAt(diagonalPosition), opponentColor)) {
-                if (Coordinate.isUpMost(diagonalPosition) || Coordinate.isDownMost(diagonalPosition)) {
+                if (Coordinate.isOnUpperBorder(diagonalPosition) || Coordinate.isOnLowerBorder(diagonalPosition)) {
                     addPromotionMoves(generatedMoves, startSquare, diagonalPosition);
                 } else {
                     generatedMoves.add(new Move(startSquare, diagonalPosition));
@@ -88,9 +85,9 @@ public class MoveGeneratorPawn {
     private static void captureDiagonalRight(Board board, List<Move> generatedMoves, int direction, int startSquare) {
         int diagonalPosition = startSquare+direction+MoveGenerator.RIGHT;
         int opponentColor = Piece.getColor(board.getPieceAt(startSquare)) == Piece.Black ? Piece.White : Piece.Black;
-        if (!Coordinate.isRightMost(startSquare)) {
+        if (!Coordinate.isOnRightBorder(startSquare)) {
             if (Piece.isColor(board.getPieceAt(diagonalPosition), opponentColor)) {
-                if (Coordinate.isUpMost(diagonalPosition) || Coordinate.isDownMost(diagonalPosition)) {
+                if (Coordinate.isOnUpperBorder(diagonalPosition) || Coordinate.isOnLowerBorder(diagonalPosition)) {
                     addPromotionMoves(generatedMoves, startSquare, diagonalPosition);
                 } else {
                     generatedMoves.add(new Move(startSquare, diagonalPosition));
