@@ -9,6 +9,14 @@ import java.util.List;
  */
 public class Board {
 
+    // positional constants
+    static final int whiteKingPosition = 60;
+    static final int blackKingPosition = 4;
+    static final int blackCastlingPositionLeft = 2;
+    static final int blackCastlingPositionRight = 6;
+    static final int whiteCastlingPositionLeft = 58;
+    static final int whiteCastlingPositionRight = 62;
+
     // representing the chess board where squares[0] is "a8" and squares[63] is "h1"
     private int[] squares;
     private List<Integer> capturedPieces;
@@ -20,13 +28,7 @@ public class Board {
     private boolean CastlingA8Possible = true;
     private boolean CastlingH1Possible = true;
     private boolean CastlingH8Possible = true;
-    // cache for possible moves in this position:
-    private List<Move> possibleMoves = null;
 
-    /** @return possible moves in this position **/
-    public List<Move> getPossibleMoves(){return possibleMoves;}
-    /** @param moves set possible moves in this position **/
-    public void setPossibleMoves(List<Move> moves){ possibleMoves = moves;}
     /** @return true if castling with A1 rook is possible */
     public boolean isCastlingA1Possible(){return CastlingA1Possible;}
     /** @return true if castling with A8 rook is possible */
@@ -144,8 +146,6 @@ public class Board {
         CastlingA8Possible = board.isCastlingA8Possible();
         CastlingH1Possible = board.isCastlingH1Possible();
         CastlingH8Possible = board.isCastlingH8Possible();
-        // assume 
-        possibleMoves = board.getPossibleMoves();
     }
 
 
@@ -171,7 +171,6 @@ public class Board {
         // reset fields for the next move
         if (move.getFlag() == Move.EnPassantCapture)
             setEnPassantSquare(-1);
-        setPossibleMoves(null);
 
         int nextTurnColor = (getTurnColor() == Piece.Black) ? Piece.White : Piece.Black;
         setTurnColor(nextTurnColor);
@@ -186,12 +185,12 @@ public class Board {
             case 56: forbidCastlingA1(); break;
             case 63: forbidCastlingH1(); break;
             // king moved
-            case 4: {
+            case blackKingPosition: {
                 forbidCastlingA8();
                 forbidCastlingH8();
                 break;
             }
-            case 60: {
+            case whiteKingPosition: {
                 forbidCastlingA1();
                 forbidCastlingH1();
                 break;
@@ -220,7 +219,6 @@ public class Board {
         int flag = move.getFlag();
         if (flag < 3 || 6 < flag )
             return;
-        int newPiece;
         int color = Piece.getColor(getPieceAt(move.getTargetSquare()));
         squares[move.getTargetSquare()] = flag + color;
     }

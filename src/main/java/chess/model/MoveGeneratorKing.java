@@ -8,14 +8,6 @@ import java.util.List;
  */
 public class MoveGeneratorKing {
 
-    static final int whiteKingPosition = 60;
-    static final int blackKingPosition = 4;
-    static final int blackCastlingPositionLeft = 2;
-    static final int blackCastlingPositionRight = 6;
-    static final int whiteCastlingPositionLeft = 58;
-    static final int whiteCastlingPositionRight = 62;
-
-
 
     // walk from king to rook checking for pieces in between
     private static boolean[] castlingWalker(Board board, int[] stops, boolean[] boardFlags, int startSquare) {
@@ -43,7 +35,7 @@ public class MoveGeneratorKing {
                 board.isCastlingA8Possible(),
                 board.isCastlingH8Possible()
         };
-        return castlingWalker(board, stops, boardFlags, blackKingPosition);
+        return castlingWalker(board, stops, boardFlags, Board.blackKingPosition);
     }
 
 
@@ -53,7 +45,7 @@ public class MoveGeneratorKing {
                 board.isCastlingA1Possible(),
                 board.isCastlingH1Possible()
         };
-        return castlingWalker(board, stops, boardFlags, whiteKingPosition);
+        return castlingWalker(board, stops, boardFlags, Board.whiteKingPosition);
     }
 
 
@@ -62,9 +54,9 @@ public class MoveGeneratorKing {
      * @return array of two booleans {leftCastlingPossible, rightCastlingPossible}
      */
     private static boolean[] isCastlingPossible(Board board, int startSquare) {
-        if (startSquare == blackKingPosition)
+        if (startSquare == Board.blackKingPosition)
             return isBlackCastlingPossible(board);
-        else if (startSquare == whiteKingPosition)
+        else if (startSquare == Board.whiteKingPosition)
             return isWhiteCastlingPossible(board);
         else
             return new boolean[]{false, false};
@@ -94,11 +86,11 @@ public class MoveGeneratorKing {
         // castling
         boolean[] castlingPossible = isCastlingPossible(board, startSquare);
         if (castlingPossible[0]) {
-            targetSquare = (Piece.isColor(board.getPieceAt(startSquare), Piece.Black)) ? blackCastlingPositionLeft : whiteCastlingPositionLeft;
+            targetSquare = Piece.isColor(board.getPieceAt(startSquare), Piece.Black) ? Board.blackCastlingPositionLeft : Board.whiteCastlingPositionLeft;
             generatedMoves.add(new Move(startSquare, targetSquare, Move.Castling));
         }
         if (castlingPossible[1]) {
-            targetSquare = (Piece.isColor(board.getPieceAt(startSquare), Piece.Black)) ? blackCastlingPositionRight : whiteCastlingPositionRight;
+            targetSquare = Piece.isColor(board.getPieceAt(startSquare), Piece.Black) ? Board.blackCastlingPositionRight : Board.whiteCastlingPositionRight;
             generatedMoves.add(new Move(startSquare, targetSquare, Move.Castling));
         }
         return generatedMoves;
