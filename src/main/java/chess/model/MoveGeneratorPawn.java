@@ -93,9 +93,10 @@ public class MoveGeneratorPawn {
                     generatedMoves.add(new Move(startSquare, diagonalPosition));
                 }
             }
-            if (board.getEnPassantSquare() == diagonalPosition)
+            if (board.getEnPassantSquare() == diagonalPosition && Piece.isColor(board.getPieceAt(diagonalPosition - direction), opponentColor))
                 generatedMoves.add(new Move(startSquare, diagonalPosition, Move.EnPassantCapture));
         }
+
     }
 
     private static void addPromotionMoves(List<Move> generatedMoves, int startSquare, int targetSquare) {
