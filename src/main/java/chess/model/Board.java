@@ -161,15 +161,16 @@ public class Board {
         if (!Piece.isType(getPieceAt(move.getTargetSquare()), Piece.None)) {
             capturedPieces.add(getPieceAt(move.getTargetSquare()));
         }
+        if (Piece.isType(getPieceAt(move.getStartSquare()), Piece.Pawn))
+            enPassantCapture(move);
 
-        enPassantCapture(move);
         forbidCastling(move);
         movePiece(move);
         if (0 < move.getFlag())
             promotePawn(move);
 
         // reset fields for the next move
-        if (move.getFlag() == Move.EnPassantCapture)
+        if (move.getFlag() != Move.PawnTwoForward)
             setEnPassantSquare(-1);
 
         int nextTurnColor = (getTurnColor() == Piece.Black) ? Piece.White : Piece.Black;
