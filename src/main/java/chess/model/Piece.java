@@ -68,6 +68,16 @@ public class Piece {
 
     /**
      * @param piece Integer representation of the piece
+     * @param type  Integer value of the type of the piece
+     * @return true if piece is of type type
+     */
+    public static boolean isType(int piece, int type) {
+        return getType(piece) == type;
+    }
+
+
+    /**
+     * @param piece Integer representation of the piece
      * @return String representation of a piece as used by FEN strings and the console client
      */
     public static String toString(int piece) {

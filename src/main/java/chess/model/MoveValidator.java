@@ -11,7 +11,7 @@ public class MoveValidator {
     private static int findKing(Board board, int color) {
         List<Integer> positions = board.getPiecePositionsFor(color);
         for (int squarePosition : positions) {
-            if (Piece.getType(board.getPieceAt(squarePosition)) == Piece.King)
+            if (Piece.isType(board.getPieceAt(squarePosition), Piece.King))
                 return squarePosition;
         }
         return -1;

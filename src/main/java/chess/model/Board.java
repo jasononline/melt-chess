@@ -158,7 +158,7 @@ public class Board {
     public Board(Board board, Move move) {
         this(board);
         // capture piece if needed
-        if (Piece.getType(getPieceAt(move.getTargetSquare())) != Piece.None) {
+        if (!Piece.isType(getPieceAt(move.getTargetSquare()), Piece.None)) {
             capturedPieces.add(getPieceAt(move.getTargetSquare()));
         }
 

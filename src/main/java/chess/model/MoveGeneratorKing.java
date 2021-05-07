@@ -19,7 +19,7 @@ public class MoveGeneratorKing {
             }
             direction = 2*i-1;
             for (int step=1; step<stops[i]; step++) {
-                if (Piece.getType(board.getPieceAt(startSquare + direction * step)) != Piece.None) {
+                if (!Piece.isType(board.getPieceAt(startSquare + direction * step), Piece.None)) {
                     result[i] = false;
                 }
             }

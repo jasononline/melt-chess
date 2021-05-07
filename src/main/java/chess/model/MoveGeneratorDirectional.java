@@ -49,7 +49,7 @@ public class MoveGeneratorDirectional {
             do {
                 currentSquare += direction;
                 piece = board.getPieceAt(currentSquare);
-                if (Piece.getType(piece) == Piece.None || Piece.isColor(piece, opponentColor)) {
+                if (Piece.isType(piece, Piece.None) || Piece.isColor(piece, opponentColor)) {
                     generatedMoves.add(new Move(startSquare, currentSquare));
                     if (Piece.isColor(piece, opponentColor))
                         break;
