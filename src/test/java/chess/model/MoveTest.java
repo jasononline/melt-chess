@@ -2,12 +2,32 @@ package chess.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
  * Contains methods to test the methods of the Move class
  */
 public class MoveTest {
+
+    /**
+     * Method to test equals and hash
+     */
+    @Test
+    public void getEqualsHash() {
+
+        Move m1 = new Move(0, 1, 2);
+        Move m2 = new Move(0, 1, 2);
+        Move m3 = new Move(1, 1, 2);
+        assertEquals(m1, m2);
+        assertEquals(m1.hashCode(), m2.hashCode());
+        assertNotEquals(m1, m3);
+        assertNotEquals(m1.hashCode(), m3.hashCode());
+        assertNotEquals(m1, "wad");
+
+    }
+
+
 
     /**
      * Method to test the expected behavior of the Method Move.getStartSquare()

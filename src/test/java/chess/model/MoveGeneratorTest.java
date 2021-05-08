@@ -15,6 +15,29 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class MoveGeneratorTest {
 
+    /**
+     * useless test for the coverage (class is static)
+     */
+    @Test
+    public void createObjects(){
+        MoveGeneratorPawn g = new MoveGeneratorPawn();
+        MoveGeneratorDirectional d = new MoveGeneratorDirectional();
+        MoveGeneratorKnight n = new MoveGeneratorKnight();
+        MoveGeneratorKing k = new MoveGeneratorKing();
+        assertEquals(k, k);
+    }
+
+
+    @Test
+    public void pawnPromotion() {
+        Board board = new Board("3r1r2/4P3/8/8/8/8/4p3/8");
+        MoveGenerator generator = new MoveGenerator(board);
+        List<Move> moves = generator.generateMovesStartingAt(12);
+        generator.swapColors();
+        moves.addAll(generator.generateMovesStartingAt(52));
+        assertEquals(16, moves.size());
+    }
+
 
     /**
      * Swap colors test
@@ -37,6 +60,17 @@ public class MoveGeneratorTest {
         MoveGenerator g = new MoveGenerator(b);
         assertEquals(Piece.White, g.getTeamColor());
     }
+
+    /**
+     * Tests move generation on empty square
+     */
+    @Test
+    public void emptySquareGeneration() {
+        Board b = new Board();
+        MoveGenerator g = new MoveGenerator(b);
+        assertEquals(0, g.generateMovesStartingAt(0).size());
+    }
+
 
     /**
      * Tests for the rules of the pawn

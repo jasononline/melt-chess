@@ -10,6 +10,15 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PieceTest {
 
     /**
+     * useless test for the coverage (class is static)
+     */
+    @Test
+    public void createPiece(){
+        Piece piece = new Piece();
+        assertEquals(piece, piece);
+    }
+
+    /**
      * Method to test the expected behavior of the Method Piece.isColor()
      */
     @Test
