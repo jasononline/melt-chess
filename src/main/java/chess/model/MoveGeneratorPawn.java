@@ -40,10 +40,7 @@ public class MoveGeneratorPawn {
         // if moving forward lead to the last square in the file, promoting the piece is possible
         if (board.getPieceAt(forwardPosition) == Piece.None
                 && (Coordinate.isOnUpperBorder(forwardPosition) || Coordinate.isOnLowerBorder(forwardPosition))) {
-            generatedMoves.add(new Move(startSquare, forwardPosition, Move.PromoteToQueen));
-            generatedMoves.add(new Move(startSquare, forwardPosition, Move.PromoteToKnight));
-            generatedMoves.add(new Move(startSquare, forwardPosition, Move.PromoteToBishop));
-            generatedMoves.add(new Move(startSquare, forwardPosition, Move.PromoteToRook));
+            addPromotionMoves(generatedMoves, startSquare, forwardPosition);
         }
     }
 
