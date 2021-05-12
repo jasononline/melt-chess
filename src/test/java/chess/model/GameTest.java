@@ -107,6 +107,17 @@ public class GameTest {
     }
 
 
+    /**
+     * Tests for current checkCheck and Checkmate
+     */
+    @Test
+    public void checkCheckCheckmateOfCurrentPlayer() {
+        Game game = new Game();
+        assertFalse(game.checkCheck());
+        assertEquals(0, game.checkWinCondition());
+    }
+
+
     /*
      *
      *   BEGIN tests for bugs found by checker app
