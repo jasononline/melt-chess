@@ -37,8 +37,13 @@ public class Cli {
 			String opponent = getUserInput("Choose an opponent: Person, Computer or Network");
 
 			// Check if opponent is valid
-			while (!opponent.matches("^person$|^computer$|^network$")) {
-				opponent = getUserInput("There is no such opponent. Enter one of these opponents: Person, Computer or Network");
+			while (!opponent.matches("^person$|^computer$|^network$|^quit$")) {
+				if (opponent.equals("help")) {
+					opponent = getUserInput(getHelpOutput());
+				} else {
+					opponent = getUserInput(
+							"There is no such opponent. Enter one of these opponents: Person, Computer or Network");
+				}
 			}
 
 			switch (opponent) {
@@ -54,6 +59,9 @@ public class Cli {
 					break;
 				case "network":
 					// Start network game
+					break;
+				case "quit":
+					System.exit(0);
 					break;
 			}
 		}
@@ -146,9 +154,7 @@ public class Cli {
 				break;
 
 			case "help":
-				System.out.println("quit = Exit the game");
-				System.out.println("beaten = Displays all captured pieces");
-				System.out.println("reset = Reset the game");
+				System.out.println(getHelpOutput());
 				break;
 
 			case "beaten":
@@ -188,6 +194,16 @@ public class Cli {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Getter for valid commands
+	 * 
+	 * @param messageToUser
+	 * @return The list of valid commands as a String
+	 */
+	public static String getHelpOutput() {
+		return "\nquit		Exit the game\nbeaten		Displays all captured pieces\nreset		Reset the game\n";
 	}
 
 	/**
