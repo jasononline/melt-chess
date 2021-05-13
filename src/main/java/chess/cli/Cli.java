@@ -157,11 +157,7 @@ public class Cli {
 				break;
 
 			case "beaten":
-
-				for (int i : game.getCurrentPosition().getCapturedPieces()) {
-					System.out.print(Piece.toString(i));
-					System.out.println();
-				}
+				printBeatenPieces();
 				break;
 
 			case "reset":
@@ -178,19 +174,8 @@ public class Cli {
 					if (game.checkCheck()) {
 						System.out.println("You are in check.");
 					}
-					int winCondition = game.checkWinCondition();
-					if (winCondition == 1) {
-						System.out.println("CHECKMATE, game over.");
-					} else if (winCondition == 2) {
-						System.out.println("REMIS, game over.");
-					}
-					if (winCondition != 0) {
-						System.out.println("Beaten pieces:");
-						for (int i : game.getCurrentPosition().getCapturedPieces()) {
-							System.out.print(Piece.toString(i));
-							System.out.println();
-						}
-						System.exit(0);
+					if (game.checkWinCondition() != 0) {
+						endGame();
 					}
 				}
 				break;
@@ -206,10 +191,7 @@ public class Cli {
 	public static boolean testUserInputSyntax(String userInput) {
 		// Checks if input matches one of valid inputs: move(e7-e8[Q]), beaten, help,
 		// quit, reset
-		if (!userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[qrbn]?$|^beaten$|^help$|^quit$|^reset$")) {
-			return false;
-		}
-		return true;
+		return userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[qrbn]?$|^beaten$|^help$|^quit$|^reset$");
 	}
 
 	/**
@@ -253,5 +235,35 @@ public class Cli {
 			input = getUserInput("!Invalid move");
 		}
 		return input;
+	}
+
+	/**
+	 * Print the list of beaten pieces
+	 */
+	private static void printBeatenPieces() {
+		for (int i : game.getCurrentPosition().getCapturedPieces()) {
+			System.out.print(Piece.toString(i));
+			System.out.println();
+		}
+	}
+
+	/**
+	 * End the game according to win conditions
+	 */
+	private static void endGame() {
+		int winCondition = game.checkWinCondition();
+		if (winCondition == 1) {
+			System.out.println("CHECKMATE, game over.");
+		} else if (winCondition == 2) {
+			System.out.println("REMIS, game over.");
+		}
+		if (winCondition != 0) {
+			System.out.println("Beaten pieces:");
+			for (int i : game.getCurrentPosition().getCapturedPieces()) {
+				System.out.print(Piece.toString(i));
+				System.out.println();
+			}
+			System.exit(0);
+		}
 	}
 }
