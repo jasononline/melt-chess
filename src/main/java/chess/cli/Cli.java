@@ -76,7 +76,7 @@ public class Cli {
 	 * @return parsed move object from user input
 	 */
 	public static Move parseUserMoveInput(String input) {
-		String squares[] = input.split("-"); // Split input by '-'
+		String[] squares = input.split("-"); // Split input by '-'
 		int startSquare = Coordinate.toIndex(squares[0]); // start position in the board.squares array
 		int targetSquare = Coordinate.toIndex(squares[1].substring(0, 2)); // target position in the board.squares array
 		String flagString = squares[1].length() > 2 ? "" + squares[1].charAt(2) : "";
@@ -96,7 +96,6 @@ public class Cli {
 				flag = Move.PromoteToBishop;
 				break;
 			default:
-				flag = 0;
 				break;
 		}
 
@@ -143,7 +142,7 @@ public class Cli {
 	/**
 	 * Perform the Action according to the user input
 	 * 
-	 * @param userInput
+	 * @param userInput The user input
 	 */
 	public static void performAction(String userInput) {
 
@@ -161,7 +160,7 @@ public class Cli {
 
 				for (int i : game.getCurrentPosition().getCapturedPieces()) {
 					System.out.print(Piece.toString(i));
-					System.out.println("");
+					System.out.println();
 				}
 				break;
 
@@ -176,6 +175,23 @@ public class Cli {
 				} else {
 					System.out.println("!" + userInput);
 					System.out.println(game.getCurrentPosition().toString());
+					if (game.checkCheck()) {
+						System.out.println("You are in check.");
+					}
+					int winCondition = game.checkWinCondition();
+					if (winCondition == 1) {
+						System.out.println("CHECKMATE, game over.");
+					} else if (winCondition == 2) {
+						System.out.println("REMIS, game over.");
+					}
+					if (winCondition != 0) {
+						System.out.println("Beaten pieces:");
+						for (int i : game.getCurrentPosition().getCapturedPieces()) {
+							System.out.print(Piece.toString(i));
+							System.out.println();
+						}
+						System.exit(0);
+					}
 				}
 				break;
 		}
@@ -198,8 +214,7 @@ public class Cli {
 
 	/**
 	 * Getter for valid commands
-	 * 
-	 * @param messageToUser
+	 *
 	 * @return The list of valid commands as a String
 	 */
 	public static String getHelpOutput() {
@@ -209,7 +224,7 @@ public class Cli {
 	/**
 	 * Request input from the User
 	 * 
-	 * @param messageToUser
+	 * @param messageToUser The Message to print to ask for Input
 	 * @return The user input as a String
 	 */
 	public static String getUserInput(String messageToUser) {
@@ -233,8 +248,7 @@ public class Cli {
 	 * @return user input that has a defined meaning
 	 */
 	private static String getValidUserInput() {
-		String input = "";
-		input = getUserInput();
+		String input = getUserInput();
 		while (!testUserInputSyntax(input)) {
 			input = getUserInput("!Invalid move");
 		}
