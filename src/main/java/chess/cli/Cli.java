@@ -243,8 +243,8 @@ public class Cli {
 	private static void printBeatenPieces() {
 		for (int i : game.getCurrentPosition().getCapturedPieces()) {
 			System.out.print(Piece.toString(i));
-			System.out.println();
 		}
+		System.out.println();
 	}
 
 	/**
@@ -259,10 +259,7 @@ public class Cli {
 		}
 		if (winCondition != 0) {
 			System.out.println("Beaten pieces:");
-			for (int i : game.getCurrentPosition().getCapturedPieces()) {
-				System.out.print(Piece.toString(i));
-				System.out.println();
-			}
+			printBeatenPieces();
 			System.exit(0);
 		}
 	}
