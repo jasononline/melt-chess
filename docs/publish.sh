@@ -30,7 +30,7 @@ latexmk -pdf "."$architektur_tex
 latexmk -c
 
 cd $anforderungen_path
-latexmk -pdf "."$anforderungen_path
+latexmk -pdf "."$anforderungen_tex
 latexmk -c
 
 echo
