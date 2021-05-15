@@ -62,9 +62,9 @@ if __name__ == '__main__':
     # skip header
     csv.__next__()
 
-    regex_head = re.compile('- \*\*(\w+)\*\*: (\d+)')
+    regex_head = re.compile('- \*\*(\w+)\*\*: ?([A-Z]|\d+|low|high)')
     regex_closedif = re.compile('- \[([x ])\]([^-]+)')
-    regex_descr = re.compile('ko\*\*: ?\d*(.+)\*\*Abgeschlossen')
+    regex_descr = re.compile('ko\*\*: (?:low|high)?(.+)\*\*Abgeschlossen')
     
     tex = ''
     for row in csv:

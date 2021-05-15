@@ -3,51 +3,56 @@
 id: \#3 Milestone: 1. Iteration\\
 
 \begin{itemize}
-\item[Priorisierung] 
+\item[Priorisierung] A
 \item[Storypoints] 5
-\item[Risiko] 0
+\item[Risiko] high
 \end{itemize}
 
 Der Benutzer hat die Möglichkeit das Schachspiel gegen einen anderen Benutzer zu spielen. Dazu werden die Züge in der Konsole eingegeben.
 
 \textbf{Abgeschlossen wenn}
 \begin{todolist}
-    \item  Die Benutzereingabe wird korrekt geparsed (Tests für ``parseUserMoveInput`` bestanden)
-  \item  Gameloop ist etabliert (User Input einlesen, Schachbrettposition ausgeben, ...)
-  \item  Ausgabe der geschlagenen Figuren auf den Befehl ``beaten``
+    \item[\done]  Die Benutzereingabe wird korrekt geparsed (Tests für ``parseUserMoveInput`` bestanden)
+  \item[\done]  Gameloop ist etabliert (User Input einlesen, Schachbrettposition ausgeben, ...)
+  \item[\done]  Ausgabe der geschlagenen Figuren auf den Befehl ``beaten``
   \item  Ausgabe wenn ein Spieler im Schach steht
-  \item  Die Anforderungen an die Ausgabe bei gesetztem ``
-  \item  Fehleingabe wird mit ``!Invalid move`` quittiert
-  \item  Gültige Eingabe wird mit ``!<Eingabe>``quittiert
-  \item  Ein ungültiger Zug wird mit ``!Move not allowed``quittiert
-  \item  Schachbrett wird nach jedem Zug geprintet
+  \item[\done]  Die Anforderungen an die Ausgabe bei gesetztem ``
+  \item[\done]  Fehleingabe wird mit ``!Invalid move`` quittiert
+  \item[\done]  Gültige Eingabe wird mit ``!<Eingabe>``quittiert
+  \item[\done]  Ein ungültiger Zug wird mit ``!Move not allowed``quittiert
+  \item[\done]  Schachbrett wird nach jedem Zug geprintet
+  \item  Matt oder Unentschieden wird angezeigt und dadurch wird das Spiel beendet
+  \item[\done]  Es gibt einen Befehl, um das Spiel zu beenden
+  \item[\done]  Nach einer falschen Eingabe wird auf eine neue Eingabe gewartet
 
 \end{todolist}
+
 
 \subsection*{Erstellen der Models}
 id: \#4 Milestone: 1. Iteration\\
 
 \begin{itemize}
-\item[Priorisierung] 
-\item[Storypoints] 
-\item[Risiko] 
+\item[Priorisierung] A
+\item[Storypoints] 31
+\item[Risiko] high
 \end{itemize}
 
 Erstellen der Klassen im Paket \lstj{models} welche von den anderen Paketen \lstj{cli}, \lstj{engine} und \lstj{gui} benutzt werden
 
 \textbf{Abgeschlossen wenn}
 \begin{todolist}
-    \item  Alle blockierenden Storycards sind abgeschlossen
+    \item[\done]  Alle blockierenden Storycards sind abgeschlossen
 
 \end{todolist}
+
 
 \subsection*{Erstellen Board Klasse}
 id: \#5 Milestone: 1. Iteration\\
 
 \begin{itemize}
-\item[Priorisierung] 
+\item[Priorisierung] B
 \item[Storypoints] 2
-\item[Risiko] 
+\item[Risiko] low
 \end{itemize}
 
 Die \lstj{Board} Klasse im Paket \lstj{model} kapselt eine Position auf dem Brett, sowie die Information welcher Spieler am Zug ist. Die Position wird dabei als Array mit 64 Integerwerten zwischen 0 und 23 kodiert.
@@ -61,13 +66,14 @@ Die \lstj{Board} Klasse im Paket \lstj{model} kapselt eine Position auf dem Bret
 
 \end{todolist}
 
+
 \subsection*{Erstellen Move Klasse}
 id: \#6 Milestone: 1. Iteration\\
 
 \begin{itemize}
-\item[Priorisierung] 
+\item[Priorisierung] B
 \item[Storypoints] 1
-\item[Risiko] 0
+\item[Risiko] low
 \end{itemize}
 
 Die \lstj{Move} Klasse im Paket \lstj{model} soll einen Container für einen Spielzug verwirklichen. Sie merkt sich dazu von und zu welchem Feld der Zug gemacht wird, sowie eine Flag die besondere Umstände des Zugs (Rochade, Figurentausch, ...) beschreibt.
@@ -79,13 +85,14 @@ Die \lstj{Move} Klasse im Paket \lstj{model} soll einen Container für einen Spi
 
 \end{todolist}
 
+
 \subsection*{Erstellen der MoveGenerator Klasse}
 id: \#7 Milestone: 1. Iteration\\
 
 \begin{itemize}
-\item[Priorisierung] 
+\item[Priorisierung] C
 \item[Storypoints] 13
-\item[Risiko] 1
+\item[Risiko] high
 \end{itemize}
 
 Die \lstj{MoveGenerator} Klasse im Paket \lstj{model} soll mögliche Züge zu einer gegebenen Position unter berücksichtigung der Schachregeln generieren. Die werden sowohl von der GUI zum hervorheben der möglichen Felder beim bewegen einer Figur, als auch von der Engine bei der Suche nach dem nächsten Zug verwendet.
@@ -97,13 +104,14 @@ Die \lstj{MoveGenerator} Klasse im Paket \lstj{model} soll mögliche Züge zu ei
 
 \end{todolist}
 
+
 \subsection*{Erstellen der Piece Klasse}
 id: \#8 Milestone: 1. Iteration\\
 
 \begin{itemize}
-\item[Priorisierung] 
+\item[Priorisierung] B
 \item[Storypoints] 2
-\item[Risiko] 0
+\item[Risiko] low
 \end{itemize}
 
 Die Klasse \lstj{Piece}im Paket \lstj{model} soll die geplanten statischen Methoden zur Extraktion der kodierten Informationen zur Verfügung stellen. Typ und Farbe einer Schachfigur wird dabei als Integer zwischen 0 und 23 kodiert.
@@ -115,13 +123,33 @@ Die Klasse \lstj{Piece}im Paket \lstj{model} soll die geplanten statischen Metho
 
 \end{todolist}
 
+
+\subsection*{Erstellen der Engine}
+id: \#10 Milestone: 2. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] A
+\item[Storypoints] 13
+\item[Risiko] high
+\end{itemize}
+
+Erstellen der Klasse \lstj{Engine} im Paket \lstj{engine}. Die Engine berechnet zu einer \lstj{Board}-Instanz einen neuen Zug.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item  Die Engine ist in der Lage ein paar einfache ausgewählte Schachprobleme zu lösen
+  \item  Die Engine kann sinnvolle nächste Züge für ein PVPC Spiel generieren
+
+\end{todolist}
+
+
 \subsection*{Erstellen MoveValidator Klasse}
 id: \#11 Milestone: 1. Iteration\\
 
 \begin{itemize}
-\item[Priorisierung] 1
+\item[Priorisierung] D
 \item[Storypoints] 8
-\item[Risiko] 2
+\item[Risiko] high
 \end{itemize}
 
 Der \lstj{MoveValidator} soll die vom \lstj{MoveGenerator} berechneten Züge auf gültigkeit überprüfen. Da die erlaubten Bewegungsrichtungen bereits in \lstj{MoveGenerator} korrekt implementiert sind, müssen hauptsächlich die Sonderregeln die zu schach des Königs führen beachtet werden. 
@@ -134,13 +162,14 @@ Der \lstj{MoveValidator} soll die vom \lstj{MoveGenerator} berechneten Züge auf
 
 \end{todolist}
 
+
 \subsection*{Erstellen der Game Klasse}
 id: \#12 Milestone: 1. Iteration\\
 
 \begin{itemize}
-\item[Priorisierung] 
+\item[Priorisierung] E
 \item[Storypoints] 3
-\item[Risiko] 0
+\item[Risiko] low
 \end{itemize}
 
 Die \lstj{Game} Klasse soll den Gesamtzustand einer Partie kapseln, aber hauptsächlich für die beiden GUI Module relevant sein.
@@ -148,29 +177,46 @@ Die \lstj{Game} Klasse soll den Gesamtzustand einer Partie kapseln, aber haupts�
 \textbf{Abgeschlossen wenn}
 \begin{todolist}
     \item[\done]  Funktion für "neues Spiel starten"
-  \item  Verwaltet alle nötigen Objekte einer Partie und bietet ein einfaches Interface für die GUI Module
-  \item  Erkennt Schachmatt und Patt (\#13 )Bonus
-  \item[\done]  ``Board`` Objekte in einer Liste als Gamehistory merken (BONUS)
-  \item  Funktionen zum zurück oder vorwärs gehen in der Gamehistory
-  \item  Verwaltung der Schachuhren?
-  \item  Sichern und Laden des Spielzustands
+  \item[\done]  Verwaltet alle nötigen Objekte einer Partie und bietet ein einfaches Interface für die GUI Module
+  \item[\done]  Erkennt Schachmatt und Patt (\#13 )
 
 \end{todolist}
+
 
 \subsection*{Schachmatt und Patt}
 id: \#13 Milestone: 1. Iteration\\
 
 \begin{itemize}
-\item[Priorisierung] 
-\item[Storypoints] 
-\item[Risiko] 
+\item[Priorisierung] E
+\item[Storypoints] 2
+\item[Risiko] low
 \end{itemize}
 
 Es müssen die Fälle Patt (ein Spieler hat keine möglichen Züge) und Schachmatt (ein Spieler hat keine möglichen Züge und steht im Schach) implementiert werden
 
 \textbf{Abgeschlossen wenn}
 \begin{todolist}
-    \item  Partie kann in Patt enden
-  \item  Partie kann durch schachmatt gewonnen/verloren werden
+    \item[\done]  Partie kann in Patt enden
+  \item[\done]  Partie kann durch schachmatt gewonnen/verloren werden
 
 \end{todolist}
+
+
+\subsection*{Testen von model und cli}
+id: \#14 Milestone: 1. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] A
+\item[Storypoints] 8
+\item[Risiko] high
+\end{itemize}
+
+Testen der Konsolenschnittstelle und damit auch des \lstj{model} Pakets mittels der bereitgestellten checker App.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  checker App läuft und kann MELT Chess ausführen
+  \item[\done]  Bugs und nicht bestandene Tests sind behoben
+
+\end{todolist}
+
