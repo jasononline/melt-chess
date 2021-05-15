@@ -21,11 +21,18 @@ public class Engine {
      *
      */
 
+    // attacking these positions is benefitial in the early game
+    private static final int[] centerSquares = new int[]{
+            26, 27, 28, 29,
+            34, 35, 36, 37,
+    };
+
+
     /*A pawn is worth one point,
       a knight or bishop is worth three points,
       a rook is worth five points and a queen is worth nine points.
      */
-    private Map<Integer, Integer> pieceValue = new HashMap<>(
+    private static final Map<Integer, Integer> pieceValue = new HashMap<>(
             Map.of(Piece.Pawn, 1,
                    Piece.Knight, 3,
                    Piece.Bishop, 3,
@@ -33,13 +40,13 @@ public class Engine {
                    Piece.Queen, 9 )
     );
 
-    private List<Integer> promotionFilter;
+    // only promote to queen
+    private static final List<Integer> promotionFilter = new ArrayList<>();;
 
     /**
      * Contructor of the engine
      */
     public Engine() {
-        promotionFilter = new ArrayList<>();
         promotionFilter.add(Move.PromoteToBishop);
         promotionFilter.add(Move.PromoteToKnight);
         promotionFilter.add(Move.PromoteToRook);
@@ -67,11 +74,11 @@ public class Engine {
         List<EngineBoard> nextQueue = new LinkedList<>();
 
         int moveCounter = queue.size();
-        System.out.println("1: " + moveCounter);
+        System.out.println("Level 1: " + moveCounter);
 
         int sizeCheck;
 
-        for (int i=0; i<max_depth-1; i++) {
+        for (int i=1; i<max_depth; i++) {
             for (EngineBoard board : queue) {
                 sizeCheck = nextQueue.size();
                 nextQueue.addAll(getNextPositions(board));
@@ -80,7 +87,7 @@ public class Engine {
             }
             queue = nextQueue;
             moveCounter += queue.size();
-            System.out.println("Level " + (i+2) + ": " + moveCounter +" nodes");
+            System.out.println("Level " + (i+1) + ": " + moveCounter +" nodes");
             nextQueue = new LinkedList<>();
             Collections.sort(queue);
             System.out.println("Best Position of run :");
@@ -130,5 +137,23 @@ public class Engine {
             score += sign * pieceValue.get(Piece.getType(piece));
         }
         return score;
+    }
+
+
+    /**
+     * Calculates a score based on how many center squares are under attack
+     * @param board current position
+     * @param moves precomputed moves in this board position
+     * @return score value
+     */
+    private int scoreCenterAttack(EngineBoard board, List<Move> moves) {
+        for (Move move : moves) {
+            for (int square : centerSquares) {
+                if (move.getTargetSquare() == square) {
+                    // TODO
+                }
+            }
+        }
+        return 0;
     }
 }
