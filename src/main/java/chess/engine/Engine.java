@@ -176,18 +176,14 @@ public class Engine {
 
     /**
      * Calculates a score based on how many center squares are under attack
-     * @param board current position
-     * @param moves precomputed moves in this board position
+     * @param scoredSquares precomputed score Values for all squares
      * @return score value
      */
-    private int scoreCenterAttack(EngineBoard board, List<Move> moves) {
-        for (Move move : moves) {
-            for (int square : centerSquares) {
-                if (move.getTargetSquare() == square) {
-                    // TODO
-                }
-            }
+    private int scoreCenterAttack(int[] scoredSquares) {
+        int sum = 0;
+        for (int square : centerSquares) {
+            sum += scoredSquares[square];
         }
-        return 0;
+        return sum;
     }
 }
