@@ -1,11 +1,7 @@
 package chess.engine;
 
-import chess.model.Move;
 import chess.model.Piece;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -26,20 +22,5 @@ public class EngineTest {
         System.out.println("Running test position 1:");
         System.out.println(board1);
         assertEquals(Piece.White, engine.solve(board1));
-    }
-
-    /**
-     * Test scoring which squares are under attack
-     */
-    @Test
-    public void scoreSquaresUnderAttack() {
-        EngineBoard board = new EngineBoard(problem1);
-        Engine engine = new Engine();
-        System.out.println(board);
-        List<Move> whiteMoves = engine.getMoves(board, Piece.White);
-        List<Move> blackMoves = engine.getMoves(board, Piece.Black);
-        int[] score = engine.scoreSquaresUnderAttack(board, whiteMoves, blackMoves);
-        int s = Arrays.stream(score).sum();
-        assertEquals(0, s);
     }
 }

@@ -1,8 +1,14 @@
 package chess.engine;
 
-import chess.model.*;
+import chess.model.Board;
+import chess.model.Move;
+import chess.model.MoveGenerator;
+import chess.model.MoveValidator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Engine class for choosing next moves
@@ -21,24 +27,8 @@ public class Engine {
      *
      */
 
-    // attacking these positions is benefitial in the early game
-    private static final int[] centerSquares = new int[]{
-            26, 27, 28, 29,
-            34, 35, 36, 37,
-    };
 
 
-    /*A pawn is worth one point,
-      a knight or bishop is worth three points,
-      a rook is worth five points and a queen is worth nine points.
-     */
-    private static final Map<Integer, Integer> pieceValue = new HashMap<>(
-            Map.of(Piece.Pawn, 1,
-                   Piece.Knight, 3,
-                   Piece.Bishop, 3,
-                   Piece.Rook, 5,
-                   Piece.Queen, 9 )
-    );
 
     // only promote to queen
     private static final List<Integer> promotionFilter = new ArrayList<>();
@@ -106,16 +96,12 @@ public class Engine {
      * @return List of scored positions
      */
     private List<EngineBoard> getNextPositions(EngineBoard board) {
-        MoveGenerator generator = new MoveGenerator(board);
-        List<Move> moves;
-        moves = MoveValidator.filter(board, generator.generateMoves());
-        // filter promotions other than queen
-        moves.removeIf(m -> promotionFilter.contains(m.getFlag()));
+        List<Move> moves = getMoves(board, board.getTurnColor());
         // make moves
         List<EngineBoard> positions = new LinkedList<>();
         for (Move move : moves) {
             EngineBoard newBoard = new EngineBoard(board.makeMove(move));
-            newBoard.setScore(scoreBoard(newBoard));
+            //newBoard.setScore(scoreBoard(newBoard));
             positions.add(newBoard);
         }
         return positions;
@@ -126,64 +112,12 @@ public class Engine {
         MoveGenerator generator = new MoveGenerator(board);
         if (generator.getTeamColor() != color)
             generator.swapColors();
-        return MoveValidator.filter(board, generator.generateMoves());
+        List<Move> moves = MoveValidator.filter(board, generator.generateMoves());
+        // filter promotions other than queen
+        moves.removeIf(m -> promotionFilter.contains(m.getFlag()));
+        return moves;
     }
 
 
-    /**
-     * @param board Score this position
-     * @return positive good for whate, negative good for black.
-     */
-    private int scoreBoard(EngineBoard board) {
-        return scorePieceValue(board);
-    }
 
-    private int scorePieceValue(EngineBoard board) {
-        int score = 0;
-        int sign;
-        for (int piece : board.getCapturedPieces()) {
-            sign = Piece.isColor(piece, Piece.White) ? 1: -1;
-            score += sign * pieceValue.get(Piece.getType(piece));
-        }
-        return score;
-    }
-
-
-    protected int[] scoreSquaresUnderAttack(EngineBoard board, List<Move> whiteMoves, List<Move> blackMoves) {
-        int[] squaresScore = new int[64];
-
-        for (Move move : whiteMoves)
-            scoreSquareUnderAttackFor(squaresScore, board, move);
-        for (Move move : blackMoves)
-            scoreSquareUnderAttackFor(squaresScore, board, move);
-
-        return squaresScore;
-    }
-
-
-    private void scoreSquareUnderAttackFor(int[] squareScore, EngineBoard board, Move move) {
-        int piece = board.getPieceAt(move.getStartSquare());
-        int targetSquare = move.getTargetSquare();
-        int startSquare = move.getStartSquare();
-        // check diagonal movement for pawn
-        if (Piece.isType(piece, Piece.Pawn) && Coordinate.fromIndex(targetSquare)[0] == Coordinate.fromIndex(startSquare)[0]) {
-                return;
-        }
-        int sign = Piece.isColor(piece, Piece.White) ? 1 : -1;
-        squareScore[targetSquare] += sign;
-    }
-
-
-    /**
-     * Calculates a score based on how many center squares are under attack
-     * @param scoredSquares precomputed score Values for all squares
-     * @return score value
-     */
-    private int scoreCenterAttack(int[] scoredSquares) {
-        int sum = 0;
-        for (int square : centerSquares) {
-            sum += scoredSquares[square];
-        }
-        return sum;
-    }
 }
