@@ -41,7 +41,7 @@ public class Engine {
     );
 
     // only promote to queen
-    private static final List<Integer> promotionFilter = new ArrayList<>();;
+    private static final List<Integer> promotionFilter = new ArrayList<>();
 
     /**
      * Contructor of the engine
@@ -121,6 +121,15 @@ public class Engine {
         return positions;
     }
 
+
+    protected List<Move> getMoves(EngineBoard board, int color) {
+        MoveGenerator generator = new MoveGenerator(board);
+        if (generator.getTeamColor() != color)
+            generator.swapColors();
+        return MoveValidator.filter(board, generator.generateMoves());
+    }
+
+
     /**
      * @param board Score this position
      * @return positive good for whate, negative good for black.
@@ -137,6 +146,31 @@ public class Engine {
             score += sign * pieceValue.get(Piece.getType(piece));
         }
         return score;
+    }
+
+
+    protected int[] scoreSquaresUnderAttack(EngineBoard board, List<Move> whiteMoves, List<Move> blackMoves) {
+        int[] squaresScore = new int[64];
+
+        for (Move move : whiteMoves)
+            scoreSquareUnderAttackFor(squaresScore, board, move);
+        for (Move move : blackMoves)
+            scoreSquareUnderAttackFor(squaresScore, board, move);
+
+        return squaresScore;
+    }
+
+
+    private void scoreSquareUnderAttackFor(int[] squareScore, EngineBoard board, Move move) {
+        int piece = board.getPieceAt(move.getStartSquare());
+        int targetSquare = move.getTargetSquare();
+        int startSquare = move.getStartSquare();
+        // check diagonal movement for pawn
+        if (Piece.isType(piece, Piece.Pawn) && Coordinate.fromIndex(targetSquare)[0] == Coordinate.fromIndex(startSquare)[0]) {
+                return;
+        }
+        int sign = Piece.isColor(piece, Piece.White) ? 1 : -1;
+        squareScore[targetSquare] += sign;
     }
 
 
