@@ -10,7 +10,7 @@
     <!-- the id of the artifact (project) -->
     <artifactId>chess</artifactId>
     <!-- the version of the artifact under the specified group -->
-    <version>0.1-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
 
     <properties>
         <!-- Set file encoding for all source files. This avoids warnings about Maven copying files without knowing their encoding. -->
@@ -36,6 +36,11 @@
             <!-- JavaFX - see https://openjfx.io/openjfx-docs/#maven -->
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
+            <version>16</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
             <version>16</version>
         </dependency>
     </dependencies>
