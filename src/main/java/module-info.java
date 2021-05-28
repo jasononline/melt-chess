@@ -7,9 +7,10 @@ module chess {
     requires transitive javafx.graphics;
     
     exports chess.gui;
+    exports chess.gui.settings;
     exports chess.cli;
     exports chess.model;
     exports chess.engine;
 
-    opens chess;
+    opens chess.gui.settings;
 }
