@@ -1,9 +1,6 @@
 package chess.engine;
 
-import chess.model.Board;
-import chess.model.Move;
-import chess.model.MoveGenerator;
-import chess.model.MoveValidator;
+import chess.model.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,7 +46,13 @@ public class Engine {
      * @return the move the engine thinks is the best
      */
     public Move generateBestMove(Board board){
-        return null;
+        List<EngineBoard> possibleMoves = getNextPositions(new EngineBoard(board));
+        if (possibleMoves.isEmpty())
+            return null;
+        Collections.sort(possibleMoves);
+        if (board.getTurnColor() == Piece.White)
+            return possibleMoves.get(possibleMoves.size() - 1).getLastMove();
+        return possibleMoves.get(0).getLastMove();
     }
 
 
@@ -101,7 +104,7 @@ public class Engine {
         List<EngineBoard> positions = new LinkedList<>();
         for (Move move : moves) {
             EngineBoard newBoard = new EngineBoard(board.makeMove(move));
-            //newBoard.setScore(scoreBoard(newBoard));
+            ScoreGenerator scoreGen = new ScoreGenerator(newBoard);
             positions.add(newBoard);
         }
         return positions;

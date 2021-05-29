@@ -1,6 +1,5 @@
 package chess.engine;
 
-import chess.model.Piece;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,11 +15,10 @@ public class EngineTest {
      */
     @Test
     public void solve() {
-
         EngineBoard board1 = new EngineBoard(problem1);
         Engine engine = new Engine();
         System.out.println("Running test position 1:");
         System.out.println(board1);
-        assertEquals(Piece.White, engine.solve(board1));
+        assertEquals(6884, engine.solve(board1));
     }
 }

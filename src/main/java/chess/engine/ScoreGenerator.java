@@ -62,6 +62,7 @@ public class ScoreGenerator {
         score = 0;
         score += scorePieceValue();
         score += scoreCenterAttack();
+        board.setScore(score);
     }
 
     private int scorePieceValue() {
