@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class Cli {
 	private static Game game = new Game();
 	private static boolean runningPVP = false;
-	private static boolean runningPVPC = false; // for Iteration2
+	private static boolean runningPVPC = false;
 
 	/**
 	 * The entry point of the CLI application.
@@ -23,7 +23,6 @@ public class Cli {
 	 */
 	public static void main(String[] args) {
 
-		// System.out.println(parseUserMoveInput("a5-h1").toString());
 
 		boolean simpleRun = Arrays.asList(args).contains("--simple");
 
@@ -34,15 +33,15 @@ public class Cli {
 
 		} else {
 			// Ask the user to choose an opponent
-			String opponent = getUserInput("Choose an opponent: Person, Computer or Network");
+			String opponent = getUserInput("Choose an opponent: Person or Computer");
 
 			// Check if opponent is valid
-			while (!opponent.matches("^person$|^computer$|^network$|^quit$")) {
+			while (!opponent.matches("^person$|^computer$|^quit$")) {
 				if (opponent.equals("help")) {
 					opponent = getUserInput(getHelpOutput());
 				} else {
 					opponent = getUserInput(
-							"There is no such opponent. Enter one of these opponents: Person, Computer or Network");
+							"There is no such opponent. Enter one of these opponents: Person or Computer");
 				}
 			}
 
@@ -56,9 +55,6 @@ public class Cli {
 					// Start game against computer
 					runningPVP = false;
 					runningPVPC = true;
-					break;
-				case "network":
-					// Start network game
 					break;
 				case "quit":
 					System.exit(0);
@@ -122,7 +118,6 @@ public class Cli {
 	public static void gameLoopPVP() {
 		while (runningPVP) {
 			performAction(getValidUserInput());
-			// TODO find out if the game is over
 		}
 	}
 

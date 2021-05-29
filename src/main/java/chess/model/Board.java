@@ -19,6 +19,7 @@ public class Board {
 
     // representing the chess board where squares[0] is "a8" and squares[63] is "h1"
     private int[] squares;
+
     private List<Integer> capturedPieces;
     // if a pawn moved two spaces when this board was created, it is possible to capture the pawn at this position:
     private int enPassantSquare;
@@ -316,14 +317,17 @@ public class Board {
     @Override
     public String toString() {
         StringBuilder boardAsString = new StringBuilder();
+
         // iterate through lines
         for (int line = 0; line < 8; line++) {
             boardAsString.append(8 - line).append(" ");
             // iterate trough columns
             for (int column = 0; column < 8; column++) {
                 boardAsString.append(Piece.toString(getPieceAt(column + (line * 8))));
+
                 // decide whether to add a space or begin new line
                 if (column < 7) {
+
                     boardAsString.append(" ");
                 } else {
                     boardAsString.append("\n");

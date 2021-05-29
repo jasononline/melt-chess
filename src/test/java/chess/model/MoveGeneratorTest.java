@@ -360,4 +360,25 @@ public class MoveGeneratorTest {
         assertTrue(generatedMoves.containsAll(expectedMoves));
         assertTrue(expectedMoves.containsAll(generatedMoves));
     }
+
+
+
+    @Test
+    public void testKingStartMovesGeneration() {
+        String fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+        Board board = new Board(fen);
+        MoveGenerator generator = new MoveGenerator(board);
+
+        System.out.println(board);
+        System.out.println("Expect no moves for the kings..");
+        if (generator.getTeamColor() != Piece.Black)
+            generator.swapColors();
+        List<Move> moves = generator.generateMovesStartingAt(4);
+        assertEquals(0, moves.size());
+        if (generator.getTeamColor() != Piece.White)
+            generator.swapColors();
+        moves = generator.generateMovesStartingAt(60);
+        assertEquals(0, moves.size());
+
+    }
 }

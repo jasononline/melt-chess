@@ -1,5 +1,6 @@
 package chess.cli;
 
+import chess.model.Game;
 import chess.model.Move;
 import org.junit.jupiter.api.Test;
 
@@ -36,5 +37,7 @@ public class CliTests {
 		assertEquals(Cli.parseUserMoveInput("a8-h1Q"), new Move(0, 63, Move.PromoteToQueen));
 		assertEquals(Cli.parseUserMoveInput("h1-a8R"), new Move(63, 0, Move.PromoteToRook));
 	}
+
+
 
 }

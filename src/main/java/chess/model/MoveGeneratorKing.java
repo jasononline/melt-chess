@@ -81,7 +81,7 @@ public class MoveGeneratorKing {
         for (int direction : directions) {
             targetSquare = startSquare + direction;
             piece = board.getPieceAt(targetSquare);
-            if (Piece.getColor(piece) == board.getTurnColor())
+            if (Piece.getColor(piece).equals(Piece.getColor(board.getPieceAt(startSquare))))
                 continue;
             generatedMoves.add(new Move(startSquare, targetSquare));
         }
