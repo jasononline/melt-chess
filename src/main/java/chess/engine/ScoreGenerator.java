@@ -12,7 +12,7 @@ public class ScoreGenerator {
 
 
 
-    // attacking these positions is benefitial in the early game
+    // attacking these positions is beneficial in the early game
     private static final int[] centerSquares = new int[]{
             26, 27, 28, 29,
             34, 35, 36, 37,
@@ -24,30 +24,44 @@ public class ScoreGenerator {
       a rook is worth five points and a queen is worth nine points.
      */
     private static final Map<Integer, Integer> pieceValue = new HashMap<>(
-            Map.of(Piece.Pawn, 1,
-                    Piece.Knight, 3,
-                    Piece.Bishop, 3,
-                    Piece.Rook, 5,
-                    Piece.Queen, 9 )
+            Map.of(Piece.Pawn, 100,
+                    Piece.Knight, 300,
+                    Piece.Bishop, 300,
+                    Piece.Rook, 500,
+                    Piece.Queen, 900 )
     );
 
 
     protected int[] squaresScore;
     private EngineBoard board;
+    // positive score value is good for white, negative good for black.
+    private int score;
+
+    /**
+     * @return computed score for this position
+     */
+    public int getScore() { return score; }
 
 
     public ScoreGenerator(EngineBoard board) {
         this.board = board;
         squaresScore = new int[64];
+        scoreSquaresUnderAttack(
+                Engine.getMoves(board, Piece.White),
+                Engine.getMoves(board, Piece.Black)
+        );
+        scoreBoard();
     }
 
 
 
     /**
-     * @return positive good for whate, negative good for black.
+     * positive score value is good for white, negative good for black.
      */
-    private int scoreBoard() {
-        return scorePieceValue();
+    private void scoreBoard() {
+        score = 0;
+        score += scorePieceValue();
+        score += scoreCenterAttack();
     }
 
     private int scorePieceValue() {

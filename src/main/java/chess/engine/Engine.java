@@ -108,7 +108,7 @@ public class Engine {
     }
 
 
-    protected List<Move> getMoves(EngineBoard board, int color) {
+    protected static List<Move> getMoves(EngineBoard board, int color) {
         MoveGenerator generator = new MoveGenerator(board);
         if (generator.getTeamColor() != color)
             generator.swapColors();

@@ -19,14 +19,19 @@ class ScoreGeneratorTest {
     public void scoreSquaresUnderAttack() {
 
         EngineBoard board = new EngineBoard(startposition);
-        Engine engine = new Engine();
         System.out.println(board);
-        List<Move> whiteMoves = engine.getMoves(board, Piece.White);
-        List<Move> blackMoves = engine.getMoves(board, Piece.Black);
+        List<Move> whiteMoves = Engine.getMoves(board, Piece.White);
+        List<Move> blackMoves = Engine.getMoves(board, Piece.Black);
 
         ScoreGenerator scoreGenerator = new ScoreGenerator(board);
         scoreGenerator.scoreSquaresUnderAttack(whiteMoves, blackMoves);
         int s = Arrays.stream(scoreGenerator.squaresScore).sum();
+        for (int row=0;row<8;row++) {
+            for (int col=0;col<8;col++) {
+                System.out.print(scoreGenerator.squaresScore[row*8+col] + "\t");
+            }
+            System.out.println();
+        }
         assertEquals(0, s);
     }
 }
