@@ -12,4 +12,15 @@ public class SettingsController {
         // TODO set all new values in the settings model
         System.out.println("User clicked on Save Button");
     }
+
+    @FXML
+    private void handleCheckboxFlipBoardOnAction() {
+        System.out.println("User clicked on Flip-Rule Checkbox");
+        SettingsModel.setFlipBoard(!SettingsModel.isFlipBoard());
+        if(SettingsModel.isFlipBoard()) {
+            System.out.println("Flip is now activated");
+        } else {
+            System.out.println("Flip is now deactivated");
+        }
+    }
 }
