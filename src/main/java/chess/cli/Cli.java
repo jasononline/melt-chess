@@ -1,5 +1,6 @@
 package chess.cli;
 
+import chess.engine.Engine;
 import chess.model.Coordinate;
 import chess.model.Game;
 import chess.model.Move;
@@ -15,6 +16,7 @@ public class Cli {
 	private static Game game = new Game();
 	private static boolean runningPVP = false;
 	private static boolean runningPVPC = false;
+	private static Engine engine = new Engine();
 
 	/**
 	 * The entry point of the CLI application.
@@ -126,11 +128,12 @@ public class Cli {
 	 */
 	public static void gameLoopPVPC() {
 		while (runningPVPC) {
-			performAction(getValidUserInput());
-			// TODO let the PC make a move
-			// TODO print the move of the PC
-			// TODO print the new Position after the PCs move, maybe implement elsewhere?
-			// TODO find out if the game is over
+			if(game.getCurrentPosition().getTurnColor() == Piece.White) {
+				performAction(getValidUserInput());
+			} else {
+				// let the Engine make a move
+				performEngineMove();
+			}
 		}
 	}
 
@@ -187,6 +190,24 @@ public class Cli {
 		// Checks if input matches one of valid inputs: move(e7-e8[Q]), beaten, help,
 		// quit, reset
 		return userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[qrbn]?$|^beaten$|^help$|^quit$|^reset$");
+	}
+
+	/**
+	 * Uses the engine to generate the next PC-move and executes that move.
+	 */
+	public static void performEngineMove() {
+		Move next = engine.generateBestMove(game.getCurrentPosition());
+		System.out.println("The computers move: !" + next.toString());
+		game.attemptMove(next);
+		// print the new Position after the PCs move
+		System.out.println(game.getCurrentPosition().toString());
+		// find out if the game is over
+		if (game.checkCheck()) {
+			System.out.println("You are in check.");
+		}
+		if (game.checkWinCondition() != 0) {
+			endGame();
+		}
 	}
 
 	/**
