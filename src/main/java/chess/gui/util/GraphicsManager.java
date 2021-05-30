@@ -1,6 +1,9 @@
 package chess.gui.util;
 
+import chess.Main;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,47 +12,78 @@ import java.util.Map;
  */
 public class GraphicsManager {
 
-    private static GraphicsManager instance;
-
-    private Map<String, Image> imgs = new HashMap<String, Image>();
-
     /**
-     * Constructor of the GraphicsManager. Can only be called using the getInstance()-function.
+     * Holds all graphics that were loaded by the loadGraphic()-function.
      */
-    private GraphicsManager() {
+    private static Map<String, Image> imgs = new HashMap<String, Image>();
 
-    }
-
-    /**
-     * Ensures that only one instance of GraphicsManager exist.
-     * @return the one and only instance of GraphicsManager.
-     */
-    public static GraphicsManager getInstance() {
-        if (instance == null) {
-            instance = new GraphicsManager();
-        }
-        return instance;
-    }
 
     /**
      * Adds a graphic (must be .png format) to the imgs-map so that it can be used using the getGraphic()-function.
+     *
      * @param name the name of the graphic.
      */
-    private void loadGraphic(String name) {
-        Image image = new Image(GraphicsManager.class.getResource(name + ".png").toExternalForm(), true);
-        imgs.put(name, image);
+    private static void loadGraphic(String name) {
+        if(!(name == null) && imgs.get(name) == null){
+            Image image = new Image(Main.class.getResourceAsStream(name + ".png"));
+            imgs.put(name, image);
+        }
     }
+
 
     /**
      * Returns the specified graphic as an Image object.
+     *
      * @param name the name of the wanted graphic.
-     * @return the graphic according to the parameter name from the imgs-HashMap.
+     * @return the graphic as an Image object according to name from the imgs-HashMap.
      */
-    public Image getGraphic(String name) {
+    public static Image getGraphicAsImage(String name) {
         if (imgs.get(name) == null) {
             loadGraphic(name);
         }
         return imgs.get(name);
     }
 
+
+    /**
+     * Returns the specified graphic as an ImgaeView object.
+     *
+     * @param name the name of the wanted graphic.
+     * @return the graphic as an ImameView object according to name.
+     */
+    public static ImageView getGraphicAsImageView(String name) {
+        return new ImageView(getGraphicAsImage(name));
+    }
+
+
+    /**
+     * Returns the specified graphic as an ImgaeView object with specified coordinates.
+     *
+     * @param name the name of the wanted graphic.
+     * @param x the wanted x coordinate.
+     * @param y the wanted y coordinate.
+     * @return the graphic as an ImageView object with non-default coordinate values.
+     */
+    public static ImageView getGraphicAsImageView(String name, double x, double y) {
+        ImageView result = getGraphicAsImageView(name);
+        result.setX(x);
+        result.setY(y);
+        return result;
+    }
+
+    /**
+     * Returns the specified graphic as an ImgaeView object with specified coordinates and size
+     *
+     * @param name the name of the wanted graphic.
+     * @param x the wanted x coordinate.
+     * @param y the wanted y coordinate.
+     * @param size the wanted size.
+     * @return the graphic as an ImageView object with non-default coordinate values and specific size.
+     */
+    public static ImageView getGraphicAsImageView(String name, double x, double y, int size) {
+        ImageView result = getGraphicAsImageView(name, x, y);
+        result.setFitHeight(size);
+        result.setFitWidth(size);
+        return result;
+    }
 }
