@@ -22,10 +22,10 @@ public class SettingsController {
         if(SettingsModel.isFlipBoard()) {
             System.out.println("Flip is now activated");
 
-            // 3 lines of garbage code for testing
+            // 3 lines of garbage code for testing (can be deleted)
             ImageView a = GraphicsManager.getGraphicAsImageView("Tobias-Chess-Symbols-Marking");
             ImageView b = GraphicsManager.getGraphicAsImageView("Tobias-Chess-Symbols-Marking", 10, 20);
-            System.out.println("a.x = " + a.getX() +"\nb.x = " + b.getX());
+            System.out.println("a.x = " + a.getX() + "\nb.x = " + b.getX());
 
         } else {
             System.out.println("Flip is now deactivated");
