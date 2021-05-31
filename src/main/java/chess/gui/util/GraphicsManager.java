@@ -25,7 +25,7 @@ public class GraphicsManager {
      */
     private static void loadGraphic(String name) {
         if(!(name == null) && imgs.get(name) == null){
-            Image image = new Image(Main.class.getResourceAsStream(name + ".png"));
+            Image image = new Image(Main.class.getResourceAsStream("/chess/gui/util/graphics/" + name + ".png"));
             imgs.put(name, image);
         }
     }
