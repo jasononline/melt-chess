@@ -1,5 +1,6 @@
 package chess.gui.menu;
 
+import chess.gui.Gui;
 import chess.gui.settings.SettingsModel;
 import javafx.fxml.FXML;
 
@@ -91,7 +92,7 @@ public class MenuController {
     private void handleButtonSettingsOnAction() {
         System.out.println("User clicked on settings in the Main Menu");
         SettingsModel.setLastSceneName(SettingsModel.LastScene.Menu);
-        // TODO change scene to SettingsView
+        Gui.switchToSettings();
     }
 
 }

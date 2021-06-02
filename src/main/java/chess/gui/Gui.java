@@ -1,7 +1,9 @@
 package chess.gui;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -12,6 +14,14 @@ import java.io.IOException;
  * Starting point of the JavaFX GUI
  */
 public class Gui extends Application {
+
+    /**
+     * The SettingsView - Scene
+     */
+    private static Scene settingsScene;
+
+    private static Stage stage;
+
     /**
      * This method is called by the Application to start the GUI.
      *
@@ -31,18 +41,42 @@ public class Gui extends Application {
         primaryStage.show();
 
          */
+        /*
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MenuView.fxml"));
+
         Parent root = null;
         try {
             root = (Parent)fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
+         */
 
-        Scene scene = new Scene(root, 500, 500);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        try{
+            // Generate Scenes
+            Parent root;
+
+            // SettingsView - Scene
+            root = FXMLLoader.load(getClass().getResource("SettingsView.fxml"));
+            settingsScene = new Scene(root);
+
+            // GameView - Scene
+            // root = FXMLLoader.load(getClass().getResource("GameView.fxml"));
+
+            root = FXMLLoader.load(getClass().getResource("MenuView.fxml"));
+            Scene scene = new Scene(root, 500, 500);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
     }
+
+    public static void switchToSettings() {
+        stage.setScene(settingsScene);
+    }
+
 
     /**
      * The entry point of the GUI application.
