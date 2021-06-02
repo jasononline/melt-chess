@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.mvc.View?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -29,7 +29,7 @@
       </ImageView>
       <GridPane layoutY="110.0" prefHeight="163.0" prefWidth="600.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="0.0" prefWidth="400.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="0.0" prefWidth="370.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="355.0" />
         </columnConstraints>
         <rowConstraints>
@@ -42,11 +42,19 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="506.0" GridPane.columnIndex="1">
                <children>
-                  <ChoiceBox fx:id="ChoiceboxLang" onDragDetected="#handleChoiceboxLangOnAction" prefWidth="150.0">
+                  <RadioButton fx:id="EnglishRadioButton" mnemonicParsing="false" onAction="#handleEnglishRadioButtonOnAction" text="Englisch">
                      <HBox.margin>
-                        <Insets left="40.0" />
+                        <Insets left="10.0" right="10.0" />
                      </HBox.margin>
-                  </ChoiceBox>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="LanguageSelection" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="GermanRadioButton" mnemonicParsing="false" onAction="#handleGermanRadioButtonOnAction" text="Deutsch" toggleGroup="$LanguageSelection">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </RadioButton>
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="80.0" prefWidth="217.0">
@@ -175,6 +183,5 @@
             </Label>
          </children>
       </HBox>
-      <View layoutX="55.0" layoutY="40.0" />
    </children>
 </Pane>
