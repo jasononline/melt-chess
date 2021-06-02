@@ -39,6 +39,12 @@
             <version>16</version>
         </dependency>
     </dependencies>
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-fxml</artifactId>
+        <version>16</version>
+    </dependency>
+
 
     <build>
         <plugins>
@@ -177,3 +183,5 @@
         </plugins>
     </reporting>
 </project>
+
+
