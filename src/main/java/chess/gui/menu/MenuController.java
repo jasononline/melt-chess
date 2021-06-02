@@ -69,7 +69,7 @@ public class MenuController {
      * The color variable will be set by this function.
      */
     @FXML
-    private void handleRadioButtonWhiteOnAction() {
+    private void handleRadioButtonColorWhiteOnAction() {
         System.out.println("User clicked on choose white in the Main Menu");
         this.color = true;
     }
