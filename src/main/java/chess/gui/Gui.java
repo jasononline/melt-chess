@@ -17,6 +17,9 @@ public class Gui extends Application {
      * The SettingsView - Scene
      */
     private static Scene settingsScene;
+    private static Scene gameScene;
+    private static Scene networkConnectScene;
+    private static Scene menuScene;
 
     private static Stage stage;
 
@@ -27,54 +30,76 @@ public class Gui extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-        /*
-        primaryStage.setTitle("Hello World!");
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(event -> System.out.println("Hello World!"));
-
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        primaryStage.setScene(new Scene(root, 300, 250));
-        primaryStage.show();
-
-         */
-        /*
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MenuView.fxml"));
-
-        Parent root = null;
-        try {
-            root = (Parent)fxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-         */
-
         try{
-            // Generate Scenes
+            stage = primaryStage;
             Parent root;
+            // Generate Scenes
 
+            // GameView - Scene
+            /*
+            root = FXMLLoader.load(getClass().getResource("GameView.fxml"));
+            gameViewScene = new Scene(root);
+             */
+
+            // NetworkConnect - Scene
+            /*
+            root = FXMLLoader.load(getClass().getResource("NetworkConnectView.fxml"));
+            gameViewScene = new Scene(root);
+             */
             // SettingsView - Scene
             root = FXMLLoader.load(getClass().getResource("SettingsView.fxml"));
             settingsScene = new Scene(root);
-
-            // GameView - Scene
-            // root = FXMLLoader.load(getClass().getResource("GameView.fxml"));
-
+            // MenuView - Scene
             root = FXMLLoader.load(getClass().getResource("MenuView.fxml"));
-            Scene scene = new Scene(root, 500, 500);
-            primaryStage.setScene(scene);
+            menuScene = new Scene(root);
+
+            // activate the menuScene (MenuView) as default entry scene
+            primaryStage.setScene(menuScene);
             primaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public static void switchToSettings() {
-        stage.setScene(settingsScene);
+        System.out.println("The switchToSettings function was called.");
+        if (!(settingsScene == null)) {
+            stage.setScene(settingsScene);
+            stage.show();
+        } else {
+            System.out.println("setingsScene not set yet.");
+        }
     }
 
+    public static void switchToGame() {
+        System.out.println("The switchToGame function was called.");
+        if(!(gameScene == null)) {
+            stage.setScene(gameScene);
+            stage.show();
+        } else {
+            System.out.println("gameScene not set yet.");
+        }
+    }
+
+    public static void switchToNetworkConnect() {
+        System.out.println("The switchToNetworkConnect function was called.");
+        if(!(networkConnectScene == null)) {
+            stage.setScene(networkConnectScene);
+            stage.show();
+        } else {
+            System.out.println("networkConnectScene not set yet.");
+        }
+    }
+
+    public static void switchToMenu() {
+        System.out.println("The switchToMenu function was called.");
+        if(!(menuScene == null)) {
+            stage.setScene(menuScene);
+            stage.show();
+        } else {
+            System.out.println("menuScene not set yet.");
+        }
+    }
 
     /**
      * The entry point of the GUI application.
