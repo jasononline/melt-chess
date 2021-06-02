@@ -31,7 +31,7 @@ public class Gui extends Application {
         primaryStage.show();
 
          */
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("settings.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MenuView.fxml"));
         Parent root = null;
         try {
             root = (Parent)fxmlLoader.load();
