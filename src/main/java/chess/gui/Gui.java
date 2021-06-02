@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 
 /**
  * Starting point of the JavaFX GUI
@@ -61,6 +60,10 @@ public class Gui extends Application {
         }
     }
 
+
+    /**
+     * Switches the current scene to the Settings - scene
+     */
     public static void switchToSettings() {
         System.out.println("The switchToSettings function was called.");
         if (!(settingsScene == null)) {
@@ -71,6 +74,10 @@ public class Gui extends Application {
         }
     }
 
+
+    /**
+     * Switches the current scene to the Game - scene
+     */
     public static void switchToGame() {
         System.out.println("The switchToGame function was called.");
         if(!(gameScene == null)) {
@@ -81,6 +88,10 @@ public class Gui extends Application {
         }
     }
 
+
+    /**
+     * Switches the current scene to the NetworkConnect - scene
+     */
     public static void switchToNetworkConnect() {
         System.out.println("The switchToNetworkConnect function was called.");
         if(!(networkConnectScene == null)) {
@@ -91,6 +102,10 @@ public class Gui extends Application {
         }
     }
 
+
+    /**
+     * Switches the current scene to the Menu - scene
+     */
     public static void switchToMenu() {
         System.out.println("The switchToMenu function was called.");
         if(!(menuScene == null)) {

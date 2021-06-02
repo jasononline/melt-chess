@@ -1,10 +1,8 @@
 package chess.gui.settings;
 
 import chess.gui.Gui;
-import chess.gui.settings.SettingsModel.*;
+import chess.gui.settings.SettingsModel.Language;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 
 /**
  * Controls the behaviour and actions of the UI elements in the settings scene
