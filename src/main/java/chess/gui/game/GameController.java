@@ -2,6 +2,7 @@ package chess.gui.game;
 
 import chess.gui.Gui;
 import javafx.fxml.FXML;
+import javafx.scene.input.MouseEvent;
 
 /**
  * Controls behaviour of GUI elements except the chessboard (see BoardController).
@@ -29,5 +30,11 @@ public class GameController {
     private void handleButtonMenueOnAction() {
         System.out.println("User clicked on Menue in GameView");
         Gui.switchToMenu();
+    }
+
+    @FXML
+    private void handleCanvasOnMouseClicked(MouseEvent event) {
+        System.out.println("User clicked on the Canvas in GameView");
+        System.out.println(event.toString());
     }
 }
