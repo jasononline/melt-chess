@@ -74,20 +74,24 @@ public class MenuController {
         this.color = true;
     }
 
-
+    /**
+     * Controls the effect when clicking the startButton.
+     */
     @FXML
     private void handleButtonStartOnAction() {
         System.out.println("User clicked on start in the Main Menu");
-        // TODO chage scene to GameView
+        // TODO change scene to GameView
     }
 
 
+    /**
+     * Controls the effect when clicking the settingsButton.
+     */
     @FXML
     private void handleButtonSettingsOnAction() {
         System.out.println("User clicked on settings in the Main Menu");
-        // SettingsModel.setLastSceneName();
-        // TODO chage scene to SettingsView
-        // TODO does Settings know that previewous view was Main Menu?
+        SettingsModel.setLastSceneName(SettingsModel.LastScene.Menu);
+        // TODO change scene to SettingsView
     }
 
 }
