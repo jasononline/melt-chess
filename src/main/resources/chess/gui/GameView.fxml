@@ -23,7 +23,7 @@
       <Canvas height="300.0" layoutX="250.0" layoutY="50.0" width="300.0" />
       <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="25.0" prefHeight="50.0" prefWidth="120.0">
          <children>
-            <Button maxWidth="100.0" mnemonicParsing="false" onAction="#handleButtonSettingsOnAction" prefHeight="30.0" prefWidth="100.0" text="Optionen">
+            <Button fx:id="ButtonSettings" maxWidth="100.0" mnemonicParsing="false" onAction="#handleButtonSettingsOnAction" prefHeight="30.0" prefWidth="100.0" text="Optionen">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>
@@ -32,7 +32,7 @@
       </HBox>
       <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="75.0" prefHeight="50.0" prefWidth="120.0">
          <children>
-            <Button maxWidth="100.0" mnemonicParsing="false" onAction="#handleButtonSurrenderOnAction" prefHeight="30.0" prefWidth="100.0" text="Aufgeben">
+            <Button fx:id="ButtonSurrender" maxWidth="100.0" mnemonicParsing="false" onAction="#handleButtonSurrenderOnAction" prefHeight="30.0" prefWidth="100.0" text="Aufgeben">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>
@@ -41,7 +41,7 @@
       </HBox>
       <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="125.0" prefHeight="50.0" prefWidth="120.0">
          <children>
-            <Button maxWidth="100.0" mnemonicParsing="false" onAction="#handleButtonResetOnAction" prefHeight="30.0" prefWidth="100.0" text="Neustart">
+            <Button fx:id="ButtonReset" maxWidth="100.0" mnemonicParsing="false" onAction="#handleButtonResetOnAction" prefHeight="30.0" prefWidth="100.0" text="Neustart">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>
@@ -50,7 +50,7 @@
       </HBox>
       <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="175.0" prefHeight="50.0" prefWidth="120.0">
          <children>
-            <Button maxWidth="100.0" mnemonicParsing="false" onAction="#handleButtonMenueOnAction" prefHeight="30.0" prefWidth="100.0" text="Hauptmenü">
+            <Button fx:id="ButtonMenue" maxWidth="100.0" mnemonicParsing="false" onAction="#handleButtonMenueOnAction" prefHeight="30.0" prefWidth="100.0" text="Hauptmenü">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>

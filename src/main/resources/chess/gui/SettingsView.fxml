@@ -42,7 +42,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="506.0" GridPane.columnIndex="1">
                <children>
-                  <ChoiceBox onDragDetected="#handleChoiceboxLangOnAction" prefWidth="150.0">
+                  <ChoiceBox fx:id="ChoiceboxLang" onDragDetected="#handleChoiceboxLangOnAction" prefWidth="150.0">
                      <HBox.margin>
                         <Insets left="40.0" />
                      </HBox.margin>
@@ -75,7 +75,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="506.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <CheckBox mnemonicParsing="false" onAction="#handleCheckboxFlipBoardOnAction" prefHeight="26.0" prefWidth="149.0" text="Aktivieren">
+                  <CheckBox fx:id="CheckboxFlipBoard" mnemonicParsing="false" onAction="#handleCheckboxFlipBoardOnAction" prefHeight="26.0" prefWidth="149.0" text="Aktivieren">
                      <HBox.margin>
                         <Insets left="40.0" />
                      </HBox.margin>
@@ -96,7 +96,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="506.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <CheckBox mnemonicParsing="false" onAction="#handleCheckboxOneTouchRuleOnAction" prefHeight="26.0" prefWidth="151.0" text="Aktivieren">
+                  <CheckBox fx:id="CheckboxOneTouchRule" mnemonicParsing="false" onAction="#handleCheckboxOneTouchRuleOnAction" prefHeight="26.0" prefWidth="151.0" text="Aktivieren">
                      <HBox.margin>
                         <Insets left="40.0" />
                      </HBox.margin>
@@ -117,7 +117,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="506.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
-                  <CheckBox mnemonicParsing="false" onAction="#handleCheckboxShowInCheckOnAction" prefHeight="26.0" prefWidth="151.0" text="Aktivieren">
+                  <CheckBox fx:id="CheckboxShowInCheck" mnemonicParsing="false" onAction="#handleCheckboxShowInCheckOnAction" prefHeight="26.0" prefWidth="151.0" text="Aktivieren">
                      <HBox.margin>
                         <Insets left="40.0" />
                      </HBox.margin>
@@ -138,7 +138,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="506.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
-                  <CheckBox mnemonicParsing="false" onAction="#handleCheckboxShowPossibleMovesOnAction" prefHeight="26.0" prefWidth="151.0" text="Aktivieren">
+                  <CheckBox fx:id="CheckboxShowPossibleMoves" mnemonicParsing="false" onAction="#handleCheckboxShowPossibleMovesOnAction" prefHeight="26.0" prefWidth="151.0" text="Aktivieren">
                      <HBox.margin>
                         <Insets left="40.0" />
                      </HBox.margin>

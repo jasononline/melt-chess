@@ -38,7 +38,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="77.0" prefWidth="428.0" GridPane.columnIndex="1">
                <children>
-                  <RadioButton mnemonicParsing="false" onAction="#handleRadioButtonAIOnAction" text="Person" textFill="WHITE">
+                  <RadioButton fx:id="RadioButtonAI" mnemonicParsing="false" onAction="#handleRadioButtonAIOnAction" text="Person" textFill="WHITE">
                      <toggleGroup>
                         <ToggleGroup fx:id="GameSelection" />
                      </toggleGroup>
@@ -46,12 +46,12 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" onAction="#handleRadioButtonPVPOnAction" text="Computer" textFill="WHITE" toggleGroup="$GameSelection">
+                  <RadioButton fx:id="RadioButtonPVP" mnemonicParsing="false" onAction="#handleRadioButtonPVPOnAction" text="Computer" textFill="WHITE" toggleGroup="$GameSelection">
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" onAction="#handleRadioButtonNetOnAction" text="Netzwerk" textFill="WHITE" toggleGroup="$GameSelection">
+                  <RadioButton fx:id="RadioButtonNet" mnemonicParsing="false" onAction="#handleRadioButtonNetOnAction" text="Netzwerk" textFill="WHITE" toggleGroup="$GameSelection">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -87,7 +87,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="506.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <RadioButton mnemonicParsing="false" onAction="#handleRadioButtonColorWhiteOnAction" text="Weiß" textFill="WHITE">
+                  <RadioButton fx:id="RadioButtonColorWhite" mnemonicParsing="false" onAction="#handleRadioButtonColorWhiteOnAction" text="Weiß" textFill="WHITE">
                      <padding>
                         <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                      </padding>
@@ -95,7 +95,7 @@
                         <ToggleGroup fx:id="Color" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" onAction="#handleRadioButtonColorBlackOnAction" text="Schwarz" textFill="WHITE" toggleGroup="$Color">
+                  <RadioButton fx:id="RadioButtonColorBlack" mnemonicParsing="false" onAction="#handleRadioButtonColorBlackOnAction" text="Schwarz" textFill="WHITE" toggleGroup="$Color">
                      <padding>
                         <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                      </padding>
@@ -106,12 +106,12 @@
       </GridPane>
       <HBox alignment="CENTER" layoutX="5.0" layoutY="243.0" prefHeight="60.0" prefWidth="600.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#handleButtonSettingsOnAction" prefHeight="40.0" prefWidth="100.0" text="Optionen" />
+            <Button fx:id="ButtonSettingsOn" mnemonicParsing="false" onAction="#handleButtonSettingsOnAction" prefHeight="40.0" prefWidth="100.0" text="Optionen" />
          </children>
       </HBox>
       <HBox alignment="CENTER" layoutX="5.0" layoutY="303.0" prefHeight="60.0" prefWidth="600.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#handleButtonStartOnAction" prefHeight="40.0" prefWidth="100.0" text="Neues Spiel" />
+            <Button fx:id="ButtonStart" mnemonicParsing="false" onAction="#handleButtonStartOnAction" prefHeight="40.0" prefWidth="100.0" text="Neues Spiel" />
          </children>
       </HBox>
       <HBox alignment="CENTER" layoutX="5.0" layoutY="33.0" prefHeight="60.0" prefWidth="600.0">
