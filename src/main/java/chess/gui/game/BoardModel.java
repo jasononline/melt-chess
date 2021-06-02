@@ -52,7 +52,7 @@ public class BoardModel {
 
     /**
      * Setter for the selectedIndex
-     * @param index the new selectedIndex, should be -1 <= index <= 63.
+     * @param index the new selectedIndex, should be -1 <- index <- 63.
      */
     public static void setSelectedIndex(int index) {
         if (-1 <= index && index <= 63) {
