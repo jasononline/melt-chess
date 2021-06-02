@@ -81,7 +81,8 @@ public class MenuController {
     @FXML
     private void handleButtonStartOnAction() {
         System.out.println("User clicked on start in the Main Menu");
-        // TODO change scene to GameView
+        // TODO start a new Game
+        Gui.switchToGame();
     }
 
 

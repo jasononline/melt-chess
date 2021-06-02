@@ -36,19 +36,19 @@ public class Gui extends Application {
             // Generate Scenes
 
             // GameView - Scene
-            /*
             root = FXMLLoader.load(getClass().getResource("GameView.fxml"));
-            gameViewScene = new Scene(root);
-             */
+            gameScene = new Scene(root);
 
             // NetworkConnect - Scene
             /*
             root = FXMLLoader.load(getClass().getResource("NetworkConnectView.fxml"));
             gameViewScene = new Scene(root);
              */
+
             // SettingsView - Scene
             root = FXMLLoader.load(getClass().getResource("SettingsView.fxml"));
             settingsScene = new Scene(root);
+
             // MenuView - Scene
             root = FXMLLoader.load(getClass().getResource("MenuView.fxml"));
             menuScene = new Scene(root);
