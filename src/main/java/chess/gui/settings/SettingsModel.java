@@ -3,54 +3,128 @@ package chess.gui.settings;
 import java.io.Serializable;
 
 /**
- * Data container for all the settings. Should implement Serializable to save the settings.
+ * Data container for all the settings. Should implement Serializable to save
+ * the settings.
  */
 // if this stays static may use Externalizable instead?
 public class SettingsModel implements Serializable {
 
-    private static boolean flipBoard = false;
-    private static boolean oneTouchRule = false;
-    private static boolean showInCheck = false;
-    private static boolean showPossibleMoves = false;
-    private static String currentLanguage = "default";
+	/**
+	 * Enumeration of supported languages
+	 */
+	public enum Language {
+		EN, DE;
+	}
 
-    public static boolean isFlipBoard() {
-        return flipBoard;
-    }
+	/**
+	 * Enumeration of scenes from which the settings view can be called
+	 */
+	public enum LastScene {
+		Menu, Game;
+	}
 
-    public static void setFlipBoard(boolean flipBoard) {
-        SettingsModel.flipBoard = flipBoard;
-    }
+	private static boolean flipBoard = false;
+	private static boolean oneTouchRule = false;
+	private static boolean showInCheck = false;
+	private static boolean showPossibleMoves = false;
+	private static Language currentLanguage = Language.DE;
+	private static LastScene lastSceneName = LastScene.Menu;
 
-    public static boolean isOneTouchRule() {
-        return oneTouchRule;
-    }
+	/**
+	 * @return boolean value whether the board flips after each move
+	 */
+	public static boolean isFlipBoard() {
+		return flipBoard;
+	}
 
-    public static void setOneTouchRule(boolean oneTouchRule) {
-        SettingsModel.oneTouchRule = oneTouchRule;
-    }
+	/**
+	 * Set whether the board flips after each move
+	 * 
+	 * @param flipBoard boolean value whether the board flips after each move
+	 */
+	public static void setFlipBoard(boolean flipBoard) {
+		SettingsModel.flipBoard = flipBoard;
+	}
 
-    public static boolean isShowInCheck() {
-        return showInCheck;
-    }
+	/**
+	 * @return boolean value whether the one-touch rule applies
+	 */
+	public static boolean isOneTouchRule() {
+		return oneTouchRule;
+	}
 
-    public static void setShowInCheck(boolean showInCheck) {
-        SettingsModel.showInCheck = showInCheck;
-    }
+	/**
+	 * Set whether the one-touch rule applies
+	 * 
+	 * @param oneTouchRule boolean value whether the one-touch rule applies
+	 */
+	public static void setOneTouchRule(boolean oneTouchRule) {
+		SettingsModel.oneTouchRule = oneTouchRule;
+	}
 
-    public static boolean isShowPossibleMoves() {
-        return showPossibleMoves;
-    }
+	/**
+	 * @return boolean value whether to show the user a warning that he is in check
+	 */
+	public static boolean isShowInCheck() {
+		return showInCheck;
+	}
 
-    public static void setShowPossibleMoves(boolean showPossibleMoves) {
-        SettingsModel.showPossibleMoves = showPossibleMoves;
-    }
+	/**
+	 * Set whether to show the user a warning that he is in check
+	 * 
+	 * @param showInCheck boolean value whether to show the user a warning that he
+	 *                    is in check
+	 */
+	public static void setShowInCheck(boolean showInCheck) {
+		SettingsModel.showInCheck = showInCheck;
+	}
 
-    public static String getCurrentLanguage() {
-        return currentLanguage;
-    }
+	/**
+	 * @return boolean value whether to show the user his possible moves
+	 */
+	public static boolean isShowPossibleMoves() {
+		return showPossibleMoves;
+	}
 
-    public static void setCurrentLanguage(String currentLanguage) {
-        SettingsModel.currentLanguage = currentLanguage;
-    }
+	/**
+	 * Set whether to show the user his possible moves
+	 * 
+	 * @param showPossibleMoves boolean value whether to show the user his possible
+	 *                          moves
+	 */
+	public static void setShowPossibleMoves(boolean showPossibleMoves) {
+		SettingsModel.showPossibleMoves = showPossibleMoves;
+	}
+
+	/**
+	 * @return current interface language
+	 */
+	public static Language getCurrentLanguage() {
+		return currentLanguage;
+	}
+
+	/**
+	 * Set current interface language
+	 * 
+	 * @param currentLanguage current interface language
+	 */
+	public static void setCurrentLanguage(Language currentLanguage) {
+		SettingsModel.currentLanguage = currentLanguage;
+	}
+
+	/**
+	 * @return scene from which the settings view was called
+	 */
+	public static LastScene getLastSceneName() {
+		return lastSceneName;
+	}
+
+	/**
+	 * Set scene from which the settings view was called
+	 * 
+	 * @param lastSceneName scene from which the settings view was called
+	 */
+	public static void setLastSceneName(LastScene lastSceneName) {
+		SettingsModel.lastSceneName = lastSceneName;
+	}
 }
