@@ -90,10 +90,20 @@ public class MenuController {
      * Controls the effect when clicking the settingsButton.
      */
     @FXML
-    private void handleButtonSettingsOnAction() {
+    private void hadleButtonSettingsOnAction() {
         System.out.println("User clicked on settings in the Main Menu");
         SettingsModel.setLastScene(SettingsModel.LastScene.Menu);
         Gui.switchToSettings();
+    }
+
+
+    /**
+     * Controls the effect when clicking the settingsButton.
+     */
+    @FXML
+    private void handleButtonQuitOnAction() {
+        System.out.println("User clicked on Quit in the Main Menu");
+        System.exit(0);
     }
 
 }
