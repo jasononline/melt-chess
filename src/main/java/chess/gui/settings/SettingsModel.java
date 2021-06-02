@@ -28,7 +28,7 @@ public class SettingsModel implements Serializable {
 	private static boolean showInCheck = false;
 	private static boolean showPossibleMoves = false;
 	private static Language currentLanguage = Language.DE;
-	private static LastScene lastSceneName = LastScene.Menu;
+	private static LastScene lastScene = LastScene.Menu;
 
 	/**
 	 * @return boolean value whether the board flips after each move
@@ -115,16 +115,16 @@ public class SettingsModel implements Serializable {
 	/**
 	 * @return scene from which the settings view was called
 	 */
-	public static LastScene getLastSceneName() {
-		return lastSceneName;
+	public static LastScene getLastScene() {
+		return lastScene;
 	}
 
 	/**
 	 * Set scene from which the settings view was called
 	 * 
-	 * @param lastSceneName scene from which the settings view was called
+	 * @param lastScene scene from which the settings view was called
 	 */
-	public static void setLastSceneName(LastScene lastSceneName) {
-		SettingsModel.lastSceneName = lastSceneName;
+	public static void setLastScene(LastScene lastScene) {
+		SettingsModel.lastScene = lastScene;
 	}
 }

@@ -91,7 +91,7 @@ public class MenuController {
     @FXML
     private void handleButtonSettingsOnAction() {
         System.out.println("User clicked on settings in the Main Menu");
-        SettingsModel.setLastSceneName(SettingsModel.LastScene.Menu);
+        SettingsModel.setLastScene(SettingsModel.LastScene.Menu);
         Gui.switchToSettings();
     }
 

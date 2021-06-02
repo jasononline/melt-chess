@@ -1,7 +1,10 @@
 package chess.gui.settings;
 
+import chess.gui.Gui;
 import chess.gui.settings.SettingsModel.*;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 
 /**
  * Controls the behaviour and actions of the UI elements in the settings scene
@@ -27,6 +30,7 @@ public class SettingsController {
 		SettingsModel.setShowPossibleMoves(showPossibleMoves);
 		SettingsModel.setCurrentLanguage(currentLanguage);
 
+		System.out.println("-----------------------------------");
 		System.out.println("Flip Board: " + SettingsModel.isFlipBoard());
 		System.out.println("One Touch Rule: " + SettingsModel.isOneTouchRule());
 		System.out.println("Show In Check: " + SettingsModel.isShowInCheck());
@@ -34,6 +38,13 @@ public class SettingsController {
 		System.out.println("Current Language: " + SettingsModel.getCurrentLanguage());
 		System.out.println("Settings saved");
 		System.out.println("-----------------------------------");
+
+		switch (SettingsModel.getLastScene()) {
+			case Menu:
+				Gui.switchToMenu();
+			case Game:
+				Gui.switchToGame();
+		}
 
 	}
 
@@ -43,7 +54,12 @@ public class SettingsController {
 	 */
 	@FXML
 	private void handleButtonCancelOnAction() {
-		// TODO: change the scene to the previous one
+		switch (SettingsModel.getLastScene()) {
+			case Menu:
+				Gui.switchToMenu();
+			case Game:
+				Gui.switchToGame();
+		}
 	}
 
 	/**
