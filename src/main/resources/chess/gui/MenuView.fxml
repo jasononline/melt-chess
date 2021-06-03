@@ -157,6 +157,14 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Button fx:id="ButtonQuit" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#handleButtonQuitOnAction" prefHeight="40.0" prefWidth="110.0" text="Beenden" textAlignment="CENTER">
+               <font>
+                  <Font name="Avenir Next Bold" size="13.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </HBox>
    </children>
