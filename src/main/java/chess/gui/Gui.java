@@ -54,6 +54,8 @@ public class Gui extends Application {
 
             // activate the menuScene (MenuView) as default entry scene
             primaryStage.setScene(menuScene);
+						primaryStage.setMinHeight(400);
+						primaryStage.setMinWidth(600);
             primaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();

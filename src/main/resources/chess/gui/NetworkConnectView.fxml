@@ -25,10 +25,15 @@
             <Image url="@images/Black.jpg" />
          </image>
       </ImageView>
-      <GridPane layoutX="2.0" layoutY="134.0" prefHeight="103.0" prefWidth="600.0">
+      <Label fx:id="titleLabel" alignment="CENTER" layoutX="50.0" layoutY="40.0" prefHeight="55.0" prefWidth="500.0" text="Netzwerkspiel" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Avenir Next Bold" size="38.0" />
+         </font>
+      </Label>
+      <GridPane layoutX="50.0" layoutY="149.0" prefHeight="103.0" prefWidth="500.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="0.0" prefWidth="300.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="302.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="250.0" percentWidth="50.0" prefWidth="250.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="250.0" percentWidth="50.0" prefWidth="250.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="50.0" minHeight="2.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -37,66 +42,64 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="506.0" GridPane.columnIndex="1">
                <children>
-                  <TextField fx:id="IPAddresstxtf" />
+                  <TextField fx:id="ipTextField">
+                     <font>
+                        <Font name="Avenir Book" size="13.0" />
+                     </font></TextField>
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="80.0" prefWidth="217.0">
                <children>
-                  <Label prefHeight="30.0" prefWidth="119.0" text="IP-Adresse:" textAlignment="CENTER" textFill="WHITE">
+                  <Label fx:id="ipLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="119.0" text="IP-Adresse:" textAlignment="RIGHT" textFill="WHITE">
                      <padding>
                         <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                      </padding>
                      <font>
-                        <Font name="Arial Bold" size="16.0" />
+                        <Font name="Avenir Next Bold" size="16.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Label prefHeight="30.0" prefWidth="67.0" text="Port:" textAlignment="RIGHT" textFill="WHITE">
+                  <Label fx:id="portLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="67.0" text="Port:" textAlignment="RIGHT" textFill="WHITE">
                      <padding>
                         <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                      </padding>
                      <font>
-                        <Font name="Arial Bold" size="16.0" />
+                        <Font name="Avenir Next Bold" size="16.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="506.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <TextField fx:id="Porttxtf" />
+                  <TextField fx:id="portTextField">
+                     <font>
+                        <Font name="Avenir Book" size="13.0" />
+                     </font></TextField>
                </children>
             </HBox>
          </children>
       </GridPane>
-      <HBox alignment="CENTER" layoutX="2.0" layoutY="273.0" prefHeight="60.0" prefWidth="600.0">
+      <HBox alignment="CENTER" layoutX="50.0" layoutY="300.0" prefHeight="60.0" prefWidth="500.0" spacing="20.0">
          <children>
-            <Button fx:id="ConnectSaveOn" mnemonicParsing="false" onAction="#handleConnectSaveOnAction" prefHeight="40.0" prefWidth="100.0" text="Verbinden">
-               <padding>
-                  <Insets bottom="5.0" right="10.0" top="5.0" />
-               </padding>
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin></Button>
-            <Button fx:id="ButtonCancelOn" mnemonicParsing="false" onAction="#handleButtonCancelOnAction" prefHeight="40.0" prefWidth="100.0" text="Abbrechen">
-               <padding>
-                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-               </padding>
+            <Button fx:id="cancelButton" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#handleButtonCancelOnAction" prefHeight="40.0" prefWidth="110.0" text="Abbrechen" textAlignment="CENTER">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" layoutY="39.0" prefHeight="60.0" prefWidth="600.0">
-         <children>
-            <Label text="Netzwerkspiel" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="38.0" />
+                  <Font name="Avenir Next Bold" size="13.0" />
                </font>
-            </Label>
+            </Button>
+            <Button fx:id="connectButton" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#handleConnectSaveOnAction" prefHeight="40.0" prefWidth="110.0" text="Verbinden" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="Avenir Next Bold" size="13.0" />
+               </font>
+            </Button>
          </children>
       </HBox>
    </children>

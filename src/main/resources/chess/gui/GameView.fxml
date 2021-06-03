@@ -7,6 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.gui.game.GameController">
    <children>
@@ -23,37 +24,50 @@
       <Canvas height="300.0" layoutX="255.0" layoutY="50.0" onMouseClicked="#handleCanvasOnMouseClicked" width="300.0" />
       <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="25.0" prefHeight="50.0" prefWidth="120.0">
          <children>
-            <Button fx:id="ButtonSettings" maxWidth="100.0" mnemonicParsing="false" onAction="#handleButtonSettingsOnAction" prefHeight="30.0" prefWidth="100.0" text="Optionen">
+            <Button fx:id="settingsButton" alignment="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonSettingsOnAction" prefHeight="40.0" prefWidth="110.0" text="Optionen" textAlignment="CENTER">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>
+               <font>
+                  <Font name="Avenir Next Bold" size="13.0" />
+               </font>
             </Button>
          </children>
       </HBox>
       <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="75.0" prefHeight="50.0" prefWidth="120.0">
          <children>
-            <Button fx:id="ButtonSurrender" maxWidth="100.0" mnemonicParsing="false" onAction="#handleButtonSurrenderOnAction" prefHeight="30.0" prefWidth="100.0" text="Aufgeben">
+            <Button fx:id="surrenderButton" alignment="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonSurrenderOnAction" prefHeight="40.0" prefWidth="110.0" text="Aufgeben" textAlignment="CENTER">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>
+               <font>
+                  <Font name="Avenir Next Bold" size="13.0" />
+               </font>
             </Button>
          </children>
       </HBox>
       <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="125.0" prefHeight="50.0" prefWidth="120.0">
          <children>
-            <Button fx:id="ButtonReset" maxWidth="100.0" mnemonicParsing="false" onAction="#handleButtonResetOnAction" prefHeight="30.0" prefWidth="100.0" text="Neustart">
+            <Button fx:id="resetButton" alignment="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonResetOnAction" prefHeight="40.0" prefWidth="110.0" text="Neustart" textAlignment="CENTER">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>
+               <font>
+                  <Font name="Avenir Next Bold" size="13.0" />
+               </font>
             </Button>
          </children>
       </HBox>
       <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="175.0" prefHeight="50.0" prefWidth="120.0">
          <children>
-            <Button fx:id="ButtonMenue" maxWidth="100.0" mnemonicParsing="false" onAction="#handleButtonMenueOnAction" prefHeight="30.0" prefWidth="100.0" text="Hauptmenü">
+
+					<Button fx:id="menuButton" alignment="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonMenueOnAction" prefHeight="40.0" prefWidth="110.0" text="Hauptmenü" textAlignment="CENTER">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>
+               <font>
+                  <Font name="Avenir Next Bold" size="13.0" />
+               </font>
             </Button>
          </children>
       </HBox>
