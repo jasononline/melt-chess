@@ -3,7 +3,6 @@ package chess.gui.settings;
 import java.util.Locale;
 
 import chess.gui.Gui;
-import chess.gui.settings.SettingsModel.Language;
 import chess.gui.util.TextManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -66,8 +65,8 @@ public class SettingsController {
 		String diactivate = TextManager.get("settings.diactivate");
 		String activate = TextManager.get("settings.activate");
 
-		deRadioButton.setSelected(SettingsModel.getCurrentLanguage() == Language.DE);
-		enRadioButton.setSelected(SettingsModel.getCurrentLanguage() == Language.EN);
+		deRadioButton.setSelected(SettingsModel.getCurrentLocale() == Locale.GERMAN);
+		enRadioButton.setSelected(SettingsModel.getCurrentLocale() == Locale.ENGLISH);
 		flipBoardCheckbox.setSelected(SettingsModel.isFlipBoard());
 		flipBoardCheckbox.setText(flipBoardCheckbox.isSelected() ? diactivate : activate);
 		oneTouchRuleCheckbox.setSelected(SettingsModel.isOneTouchRule());
@@ -89,13 +88,8 @@ public class SettingsController {
 		SettingsModel.setOneTouchRule(oneTouchRuleCheckbox.isSelected());
 		SettingsModel.setShowInCheck(showInCheckCheckbox.isSelected());
 		SettingsModel.setShowPossibleMoves(showPossibleMovesCheckbox.isSelected());
-		if (enRadioButton.isSelected()) {
-			SettingsModel.setCurrentLanguage(Language.EN);
-			TextManager.setLocale(Locale.ENGLISH);
-		} else if (deRadioButton.isSelected()) {
-			SettingsModel.setCurrentLanguage(Language.DE);
-			TextManager.setLocale(Locale.GERMAN);
-		}
+		SettingsModel.setCurrentLocale(enRadioButton.isSelected() ? Locale.ENGLISH : Locale.GERMAN);
+		TextManager.setLocale(SettingsModel.getCurrentLocale());
 		initialize();
 		exitSettings();
 	}

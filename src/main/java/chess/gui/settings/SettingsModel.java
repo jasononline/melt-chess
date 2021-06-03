@@ -1,6 +1,7 @@
 package chess.gui.settings;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 /**
  * Data container for all the settings. Should implement Serializable to save
@@ -8,13 +9,6 @@ import java.io.Serializable;
  */
 // if this stays static may use Externalizable instead?
 public class SettingsModel implements Serializable {
-
-	/**
-	 * Enumeration of supported languages
-	 */
-	public enum Language {
-		EN, DE;
-	}
 
 	/**
 	 * Enumeration of scenes from which the settings view can be called
@@ -27,7 +21,7 @@ public class SettingsModel implements Serializable {
 	private static boolean oneTouchRule = false;
 	private static boolean showInCheck = false;
 	private static boolean showPossibleMoves = false;
-	private static Language currentLanguage = Language.DE;
+	private static Locale currentLocale = Locale.GERMAN;
 	private static LastScene lastScene = LastScene.Menu;
 
 	/**
@@ -97,19 +91,19 @@ public class SettingsModel implements Serializable {
 	}
 
 	/**
-	 * @return current interface language
+	 * @return current interface locale
 	 */
-	public static Language getCurrentLanguage() {
-		return currentLanguage;
+	public static Locale getCurrentLocale() {
+		return currentLocale;
 	}
 
 	/**
-	 * Set current interface language
+	 * Set current interface locale
 	 * 
-	 * @param currentLanguage current interface language
+	 * @param currentLocale current interface locale
 	 */
-	public static void setCurrentLanguage(Language currentLanguage) {
-		SettingsModel.currentLanguage = currentLanguage;
+	public static void setCurrentLocale(Locale currentLocale) {
+		SettingsModel.currentLocale = currentLocale;
 	}
 
 	/**

@@ -59,7 +59,7 @@ public class MenuController {
 		TextManager.computeText(blackColorRadioButton, "menu.black");
 		TextManager.computeText(settingsButton, "menu.settings");
 		TextManager.computeText(startButton, "menu.start");
-		// TextManager.computeText(quitButton, "menu.quit");
+		TextManager.computeText(quitButton, "menu.quit");
 	}
 
 	/**

@@ -142,6 +142,14 @@
       </GridPane>
       <HBox alignment="CENTER" layoutX="50.0" layoutY="300.0" prefHeight="60.0" prefWidth="500.0" spacing="20.0">
          <children>
+					 <Button fx:id="quitButton" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#handleButtonQuitOnAction" prefHeight="40.0" prefWidth="110.0" text="Beenden" textAlignment="CENTER">
+							<font>
+								 <Font name="Avenir Next Bold" size="13.0" />
+							</font>
+							<cursor>
+								 <Cursor fx:constant="HAND" />
+							</cursor>
+					 </Button>
             <Button fx:id="settingsButton" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#handleButtonSettingsOnAction" prefHeight="40.0" prefWidth="110.0" text="Einstellungen" textAlignment="CENTER">
                <font>
                   <Font name="Avenir Next Bold" size="13.0" />
@@ -150,14 +158,6 @@
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
             <Button fx:id="startButton" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#handleButtonStartOnAction" prefHeight="40.0" prefWidth="110.0" text="Neues Spiel" textAlignment="CENTER">
-               <font>
-                  <Font name="Avenir Next Bold" size="13.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button fx:id="ButtonQuit" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#handleButtonQuitOnAction" prefHeight="40.0" prefWidth="110.0" text="Beenden" textAlignment="CENTER">
                <font>
                   <Font name="Avenir Next Bold" size="13.0" />
                </font>
