@@ -1,6 +1,7 @@
 package chess.gui.game;
 
 import chess.gui.Gui;
+import chess.gui.settings.SettingsModel;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
@@ -13,6 +14,7 @@ public class GameController {
     @FXML
     private void handleButtonSettingsOnAction() {
         System.out.println("User clicked on Settings in GameView.");
+				SettingsModel.setLastScene(SettingsModel.LastScene.Game);
         Gui.switchToSettings();
     }
 

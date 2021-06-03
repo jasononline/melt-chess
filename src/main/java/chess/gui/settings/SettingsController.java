@@ -3,17 +3,47 @@ package chess.gui.settings;
 import chess.gui.Gui;
 import chess.gui.settings.SettingsModel.Language;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Label;
 
 /**
  * Controls the behaviour and actions of the UI elements in the settings scene
  */
 public class SettingsController {
 
-	private boolean flipBoard = false;
-	private boolean oneTouchRule = false;
-	private boolean showInCheck = false;
-	private boolean showPossibleMoves = false;
-	private Language currentLanguage = Language.EN;
+	@FXML
+	private Label langLabel;
+	@FXML
+	private Label flipBoardLabel;
+	@FXML
+	private Label oneTouchRuleLabel;
+	@FXML
+	private Label showInCheckLabel;
+	@FXML
+	private Label showPossibleMovesLabel;
+	@FXML
+	private RadioButton enRadioButton;
+	@FXML
+	private RadioButton deRadioButton;
+	@FXML
+	private CheckBox flipBoardCheckbox;
+	@FXML
+	private CheckBox oneTouchRuleCheckbox;
+	@FXML
+	private CheckBox showInCheckCheckbox;
+	@FXML
+	private CheckBox showPossibleMovesCheckbox;
+
+	@FXML
+	private void initialize() {
+		deRadioButton.setSelected(SettingsModel.getCurrentLanguage() == Language.DE);
+		enRadioButton.setSelected(SettingsModel.getCurrentLanguage() == Language.EN);
+		flipBoardCheckbox.setSelected(SettingsModel.isFlipBoard());
+		oneTouchRuleCheckbox.setSelected(SettingsModel.isOneTouchRule());
+		showInCheckCheckbox.setSelected(SettingsModel.isShowInCheck());
+		showPossibleMovesCheckbox.setSelected(SettingsModel.isShowPossibleMoves());
+	}
 
 	/**
 	 * Controls the effect when clicking the saveButton. Current settings will be
@@ -22,28 +52,25 @@ public class SettingsController {
 	@FXML
 	private void handleButtonSaveOnAction() {
 
-		SettingsModel.setFlipBoard(flipBoard);
-		SettingsModel.setOneTouchRule(oneTouchRule);
-		SettingsModel.setShowInCheck(showInCheck);
-		SettingsModel.setShowPossibleMoves(showPossibleMoves);
-		SettingsModel.setCurrentLanguage(currentLanguage);
+		SettingsModel.setFlipBoard(flipBoardCheckbox.isSelected());
+		SettingsModel.setOneTouchRule(oneTouchRuleCheckbox.isSelected());
+		SettingsModel.setShowInCheck(showInCheckCheckbox.isSelected());
+		SettingsModel.setShowPossibleMoves(showPossibleMovesCheckbox.isSelected());
+		SettingsModel.setCurrentLanguage(enRadioButton.isSelected() ? Language.EN : Language.DE);
 
-		System.out.println("-----------------------------------");
-		System.out.println("Flip Board: " + SettingsModel.isFlipBoard());
-		System.out.println("One Touch Rule: " + SettingsModel.isOneTouchRule());
-		System.out.println("Show In Check: " + SettingsModel.isShowInCheck());
-		System.out.println("Show Possibli Moves: " + SettingsModel.isShowPossibleMoves());
-		System.out.println("Current Language: " + SettingsModel.getCurrentLanguage());
-		System.out.println("Settings saved");
-		System.out.println("-----------------------------------");
+		initialize();
+		exitSettings();
 
-		switch (SettingsModel.getLastScene()) {
-			case Menu:
-				Gui.switchToMenu();
-			case Game:
-				Gui.switchToGame();
-		}
-
+		// System.out.println("-----------------------------------");
+		// System.out.println("Flip Board: " + SettingsModel.isFlipBoard());
+		// System.out.println("One Touch Rule: " + SettingsModel.isOneTouchRule());
+		// System.out.println("Show In Check: " + SettingsModel.isShowInCheck());
+		// System.out.println("Show Possibli Moves: " +
+		// SettingsModel.isShowPossibleMoves());
+		// System.out.println("Current Language: " +
+		// SettingsModel.getCurrentLanguage());
+		// System.out.println("Settings saved");
+		// System.out.println("-----------------------------------");
 	}
 
 	/**
@@ -52,65 +79,19 @@ public class SettingsController {
 	 */
 	@FXML
 	private void handleButtonCancelOnAction() {
+		initialize();
+		exitSettings();
+	}
+
+	private void exitSettings() {
 		switch (SettingsModel.getLastScene()) {
 			case Menu:
 				Gui.switchToMenu();
+				break;
 			case Game:
 				Gui.switchToGame();
+				break;
 		}
 	}
 
-	/**
-	 * Controls the effect when clicking the radioButtonEn. The currentLanguage
-	 * variable will be set by this function.
-	 */
-	@FXML
-	private void handleRadioButtonEnOnAction() {
-		this.currentLanguage = Language.EN;
-	}
-
-	/**
-	 * Controls the effect when clicking the radioButtonDe. The currentLanguage
-	 * variable will be set by this function.
-	 */
-	@FXML
-	private void handleRadioButtonDeOnAction() {
-		this.currentLanguage = Language.DE;
-	}
-
-	/**
-	 * Controls the effect when clicking the checkboxFlipBoard. The flipBoard
-	 * variable will be set by this function.
-	 */
-	@FXML
-	private void handleCheckboxFlipBoardOnAction() {
-		this.flipBoard = !SettingsModel.isFlipBoard();
-	}
-
-	/**
-	 * Controls the effect when clicking the checkboxOneTouchRule. The oneTouchRule
-	 * variable will be set by this function.
-	 */
-	@FXML
-	private void handleCheckboxOneTouchRuleOnAction() {
-		this.oneTouchRule = !SettingsModel.isOneTouchRule();
-	}
-
-	/**
-	 * Controls the effect when clicking the checkboxShowInCheck. The showInCheck
-	 * variable will be set by this function.
-	 */
-	@FXML
-	private void handleCheckboxShowInCheckOnAction() {
-		this.showInCheck = !SettingsModel.isShowInCheck();
-	}
-
-	/**
-	 * Controls the effect when clicking the checkboxShowPossibleMoves. The
-	 * showPossibleMoves variable will be set by this function.
-	 */
-	@FXML
-	private void handleCheckboxShowPossibleMovesOnAction() {
-		this.showPossibleMoves = !SettingsModel.isShowPossibleMoves();
-	}
 }
