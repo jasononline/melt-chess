@@ -14,16 +14,6 @@ import javafx.scene.control.RadioButton;
  */
 public class MenuController {
 
-	/**
-	 * Stores the chosen enemy: 1 = PC, 2 = PVP, 3 = NetworkPVP, 0 = not chosen yet.
-	 */
-	private int enemyChoice = 0;
-
-	/**
-	 * Stroes the chosen color: true = white, false = black, null = not chosen yet.
-	 */
-	private boolean color;
-
 	@FXML
 	private Label titleLabel;
 	@FXML
@@ -69,7 +59,6 @@ public class MenuController {
 	@FXML
 	private void handleRadioButtonAIOnAction() {
 		System.out.println("User clicked on Game against AI Button in the Main Menu");
-		this.enemyChoice = 1;
 	}
 
 	/**
@@ -79,7 +68,6 @@ public class MenuController {
 	@FXML
 	private void handleRadioButtonPVPOnAction() {
 		System.out.println("User clicked on Game against PVP Button in the Main Menu");
-		this.enemyChoice = 2;
 	}
 
 	/**
@@ -89,7 +77,6 @@ public class MenuController {
 	@FXML
 	private void handleRadioButtonNetOnAction() {
 		System.out.println("User clicked on Game against Network-PVP Button in the Main Menu");
-		this.enemyChoice = 3;
 	}
 
 	/**
@@ -99,7 +86,6 @@ public class MenuController {
 	@FXML
 	private void handleRadioButtonColorBlackOnAction() {
 		System.out.println("User clicked on choose black in the Main Menu");
-		this.color = false;
 	}
 
 	/**
@@ -109,7 +95,6 @@ public class MenuController {
 	@FXML
 	private void handleRadioButtonColorWhiteOnAction() {
 		System.out.println("User clicked on choose white in the Main Menu");
-		this.color = true;
 	}
 
 	/**
@@ -118,8 +103,12 @@ public class MenuController {
 	@FXML
 	private void handleButtonStartOnAction() {
 		System.out.println("User clicked on start in the Main Menu");
-		// TODO start a new Game
-		Gui.switchToGame();
+		if(netRadioButton.isSelected()) {
+			Gui.switchToNetworkConnect();
+		} else {
+			// TODO Start a new Game
+			Gui.switchToGame();
+		}
 	}
 
 	/**

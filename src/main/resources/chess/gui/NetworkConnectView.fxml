@@ -74,7 +74,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="506.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <TextField fx:id="portTextField">
+                  <TextField fx:id="portTextField" onKeyPressed="#handlePortTextfieldKeyPressed">
                      <font>
                         <Font name="Avenir Book" size="13.0" />
                      </font></TextField>

@@ -39,10 +39,8 @@ public class Gui extends Application {
             gameScene = new Scene(root);
 
             // NetworkConnect - Scene
-            /*
             root = FXMLLoader.load(getClass().getResource("NetworkConnectView.fxml"));
-            gameViewScene = new Scene(root);
-             */
+            networkConnectScene = new Scene(root);
 
             // SettingsView - Scene
             root = FXMLLoader.load(getClass().getResource("SettingsView.fxml"));
