@@ -89,17 +89,6 @@ public final class TextManager {
 	}
 
 	/**
-	 * Edits a bound Radio Button whose value is computed on language change
-	 * 
-	 * @param radioButton Radio Button that needs to be edited
-	 * @param key         ResourceBundle key
-	 * @param args        optional argument for message
-	 */
-	public static void computeText(RadioButton radioButton, final String key, final Object... args) {
-		radioButton.textProperty().bind(createStringBinding(key, args));
-	}
-
-	/**
 	 * Edits a bound Button whose value is computed on language change
 	 * 
 	 * @param button Button that needs to be edited
@@ -108,17 +97,6 @@ public final class TextManager {
 	 */
 	public static void computeText(Button button, final String key, final Object... args) {
 		button.textProperty().bind(createStringBinding(key, args));
-	}
-
-	/**
-	 * Edits a bound Checkbox whose value is computed on language change
-	 * 
-	 * @param checkbox Checkbox that needs to be edited
-	 * @param key      ResourceBundle key
-	 * @param args     optional argument for message
-	 */
-	public static void computeText(CheckBox checkbox, final String key, final Object... args) {
-		checkbox.textProperty().bind(createStringBinding(key, args));
 	}
 
 	/**

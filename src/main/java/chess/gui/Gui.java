@@ -6,122 +6,82 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
 /**
  * Starting point of the JavaFX GUI
  */
 public class Gui extends Application {
 
-    /**
-     * The SettingsView - Scene
-     */
-    private static Scene settingsScene;
-    private static Scene gameScene;
-    private static Scene networkConnectScene;
-    private static Scene menuScene;
+	/*
+	 * Enumeration of available scenes
+	 */
+	public enum ChessScene {
+		Menu, Settings, NetworkConnection, Game;
+	}
 
-    private static Stage stage;
+	private static Scene scene;
 
-    /**
-     * This method is called by the Application to start the GUI.
-     *
-     * @param primaryStage The initial root stage of the application.
-     */
-    @Override
-    public void start(Stage primaryStage) {
-        try{
-            stage = primaryStage;
-            Parent root;
-            // Generate Scenes
+	/**
+	 * This method is called by the Application to start the GUI.
+	 *
+	 * @param primaryStage The initial root stage of the application.
+	 */
+	@Override
+	public void start(Stage primaryStage) {
+		try {
+			Parent root = FXMLLoader.load(getClass().getResource("MenuView.fxml"));
+			scene = new Scene(root);
 
-            // GameView - Scene
-            root = FXMLLoader.load(getClass().getResource("GameView.fxml"));
-            gameScene = new Scene(root);
+			// activate the menuScene (MenuView) as default entry scene
+			primaryStage.setScene(scene);
+			primaryStage.show();
+			double titleBarHeight = primaryStage.getHeight() - primaryStage.getScene().getHeight();
+			primaryStage.setMinWidth(640);
+			primaryStage.setMinHeight(360 + titleBarHeight);
+			primaryStage.setTitle("Chess");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-            // NetworkConnect - Scene
-            root = FXMLLoader.load(getClass().getResource("NetworkConnectView.fxml"));
-            networkConnectScene = new Scene(root);
+	/**
+	 * Switches the current scene to the new scene
+	 * 
+	 * @param newScene new scene to switch to
+	 */
+	public static void switchTo(ChessScene toScene) {
+		try {
+			Parent root;
+			switch (toScene) {
+				case Menu:
+					root = FXMLLoader.load(Gui.class.getResource("MenuView.fxml"));
+					break;
+				case Settings:
+					root = FXMLLoader.load(Gui.class.getResource("SettingsView.fxml"));
+					break;
+				case NetworkConnection:
+					root = FXMLLoader.load(Gui.class.getResource("NetworkConnectionView.fxml"));
+					break;
+				case Game:
+					root = FXMLLoader.load(Gui.class.getResource("GameView.fxml"));
+					break;
+				default:
+					root = FXMLLoader.load(Gui.class.getResource("MenuView.fxml"));
+					break;
+			}
 
-            // SettingsView - Scene
-            root = FXMLLoader.load(getClass().getResource("SettingsView.fxml"));
-            settingsScene = new Scene(root);
+			scene.setRoot(root);
 
-            // MenuView - Scene
-            root = FXMLLoader.load(getClass().getResource("MenuView.fxml"));
-            menuScene = new Scene(root);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-            // activate the menuScene (MenuView) as default entry scene
-            primaryStage.setScene(menuScene);
-						primaryStage.setMinHeight(400);
-						primaryStage.setMinWidth(600);
-            primaryStage.show();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    /**
-     * Switches the current scene to the Settings - scene
-     */
-    public static void switchToSettings() {
-        System.out.println("The switchToSettings function was called.");
-        if (!(settingsScene == null)) {
-            stage.setScene(settingsScene);
-            stage.show();
-        } else {
-            System.out.println("setingsScene not set yet.");
-        }
-    }
-
-
-    /**
-     * Switches the current scene to the Game - scene
-     */
-    public static void switchToGame() {
-        System.out.println("The switchToGame function was called.");
-        if(!(gameScene == null)) {
-            stage.setScene(gameScene);
-            stage.show();
-        } else {
-            System.out.println("gameScene not set yet.");
-        }
-    }
-
-
-    /**
-     * Switches the current scene to the NetworkConnect - scene
-     */
-    public static void switchToNetworkConnect() {
-        System.out.println("The switchToNetworkConnect function was called.");
-        if(!(networkConnectScene == null)) {
-            stage.setScene(networkConnectScene);
-            stage.show();
-        } else {
-            System.out.println("networkConnectScene not set yet.");
-        }
-    }
-
-
-    /**
-     * Switches the current scene to the Menu - scene
-     */
-    public static void switchToMenu() {
-        System.out.println("The switchToMenu function was called.");
-        if(!(menuScene == null)) {
-            stage.setScene(menuScene);
-            stage.show();
-        } else {
-            System.out.println("menuScene not set yet.");
-        }
-    }
-
-    /**
-     * The entry point of the GUI application.
-     *
-     * @param args The command line arguments passed to the application
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
+	/**
+	 * The entry point of the GUI application.
+	 *
+	 * @param args The command line arguments passed to the application
+	 */
+	public static void main(String[] args) {
+		launch(args);
+	}
 }

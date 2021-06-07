@@ -1,0 +1,195 @@
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 400;
+  src: url(../fonts/MontserratRegular.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 500;
+  src: url(../fonts/MontserratMedium.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 600;
+  src: url(../fonts/MontserratSemiBold.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 700;
+  src: url(../fonts/MontserratBold.ttf);
+}
+
+.body {
+  -fx-pref-width: 1280;
+  -fx-pref-height: 720;
+  -fx-min-width: 640;
+  -fx-min-height: 360;
+  -fx-background-image: url(../images/bgImage.jpg);
+  -fx-background-size: 100% 100%;
+  -fx-font-family: Montserrat;
+}
+
+.bgLayer {
+  -fx-background-color: rgba(56, 56, 56, 0.7);
+}
+
+.titleLabel {
+  -fx-font-family: Montserrat;
+  -fx-font-weight: 700;
+  -fx-font-size: 60px;
+  -fx-text-fill: #fff;
+  -fx-alignment: center;
+}
+
+.box {
+  -fx-background-radius: 10;
+  -fx-background-color: rgba(92, 92, 92, 0.54);
+}
+
+.boxLabel {
+  -fx-font-family: Montserrat;
+  -fx-font-weight: 600;
+  -fx-font-size: 25px;
+  -fx-text-fill: #fff;
+  /* -fx-alignment: center; */
+}
+
+.boxNameLabel {
+  -fx-font-family: Montserrat;
+  -fx-font-weight: 600;
+  -fx-font-size: 40px;
+  -fx-text-fill: #fff;
+  -fx-alignment: center;
+}
+
+.button {
+  -fx-background-color: rgba(131, 131, 131, 0.3);
+  -fx-background-radius: 10;
+  -fx-border-radius: 10;
+  -fx-border-width: 3px;
+  -fx-font-family: Montserrat;
+  -fx-font-weight: 600;
+  -fx-font-size: 25px;
+  -fx-text-fill: #fff;
+  -fx-cursor: hand;
+}
+
+.button.selected {
+  -fx-border-color: #fff;
+  -fx-scale-x: 1.03;
+  -fx-scale-y: 1.03;
+}
+
+.button:hover {
+  -fx-border-color: #fff;
+}
+
+.modeButton {
+  -fx-pref-width: 237;
+  -fx-pref-height: 150;
+}
+
+.colorButton {
+  -fx-pref-width: 365;
+  -fx-pref-height: 150;
+}
+
+.menuButton {
+  -fx-pref-width: 360;
+  -fx-pref-height: 150;
+}
+
+.langButton {
+  -fx-background-radius: 5;
+  -fx-border-radius: 5;
+  -fx-border-width: 2;
+  -fx-font-size: 18px;
+}
+
+.historyButton {
+  -fx-font-weight: 500;
+  -fx-font-size: 18px;
+  -fx-background-radius: 5;
+  -fx-border-radius: 5;
+  -fx-border-width: 2;
+}
+
+.historyLabel {
+  -fx-font-weight: 600;
+  -fx-font-size: 20px;
+  -fx-text-fill: white;
+  -fx-alignment: center;
+}
+
+.textField {
+  -fx-background-color: rgba(131, 131, 131, 0.3);
+  -fx-background-radius: 10;
+  -fx-font-family: Montserrat;
+  -fx-font-size: 25px;
+  -fx-text-fill: #fff;
+  -fx-border-radius: 10px;
+  -fx-border-width: 2px;
+}
+
+.textField.error {
+  -fx-border-color: red;
+}
+
+.checkbox {
+  -fx-cursor: hand;
+  -fx-background-radius: 5px;
+  -fx-border-radius: 5px;
+  -fx-border-width: 2px;
+  -fx-border-color: rgba(131, 131, 131, 1);
+  -fx-padding: 0 0 0 23;
+  -fx-pref-width: 70;
+  -fx-font-size: 15;
+}
+
+.checkbox .box {
+  -fx-background-color: transparent;
+}
+
+.checkbox:hover {
+  -fx-border-color: #fff;
+}
+
+.checkbox:selected {
+  -fx-background-color: rgba(131, 131, 131, 0.3);
+  -fx-border-color: white;
+}
+
+.checkbox:selected .mark {
+  -fx-background-color: white;
+}
+
+.scrollPane,
+.scrollPane .viewport,
+.scrollPane .content,
+.scrollPane .scroll-bar {
+  -fx-background-color: transparent;
+}
+
+.square {
+  -fx-border-width: 4;
+  -fx-border-color: none;
+}
+
+.square.possible {
+  -fx-background-image: url(../util/graphics/possibleMoveIcon.png);
+  -fx-background-repeat: no-repeat;
+  -fx-background-size: 30%;
+  -fx-background-position: center center;
+}
+
+.square.focused {
+  -fx-border-color: rgba(214, 169, 22);
+}
+
+.lightSquare {
+  -fx-background-color: rgba(118, 118, 118, 0.7);
+}
+
+.darkSquare {
+  -fx-background-color: rgba(28, 20, 20, 0.7);
+}

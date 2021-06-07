@@ -3,6 +3,8 @@ package chess.gui.settings;
 import java.io.Serializable;
 import java.util.Locale;
 
+import chess.gui.Gui.ChessScene;
+
 /**
  * Data container for all the settings. Should implement Serializable to save
  * the settings.
@@ -10,19 +12,12 @@ import java.util.Locale;
 // if this stays static may use Externalizable instead?
 public class SettingsModel implements Serializable {
 
-	/**
-	 * Enumeration of scenes from which the settings view can be called
-	 */
-	public enum LastScene {
-		Menu, Game;
-	}
-
 	private static boolean flipBoard = false;
 	private static boolean oneTouchRule = false;
 	private static boolean showInCheck = false;
 	private static boolean showPossibleMoves = false;
 	private static Locale currentLocale = Locale.GERMAN;
-	private static LastScene lastScene = LastScene.Menu;
+	private static ChessScene lastScene = ChessScene.Menu;
 
 	/**
 	 * @return boolean value whether the board flips after each move
@@ -109,7 +104,7 @@ public class SettingsModel implements Serializable {
 	/**
 	 * @return scene from which the settings view was called
 	 */
-	public static LastScene getLastScene() {
+	public static ChessScene getLastScene() {
 		return lastScene;
 	}
 
@@ -118,7 +113,7 @@ public class SettingsModel implements Serializable {
 	 * 
 	 * @param lastScene scene from which the settings view was called
 	 */
-	public static void setLastScene(LastScene lastScene) {
+	public static void setLastScene(ChessScene lastScene) {
 		SettingsModel.lastScene = lastScene;
 	}
 }

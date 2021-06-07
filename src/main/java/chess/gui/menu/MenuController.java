@@ -3,10 +3,14 @@ package chess.gui.menu;
 import chess.gui.Gui;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.TextManager;
+import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * Controls the behaviour and actions of the UI elements in the menu scene,
@@ -14,26 +18,54 @@ import javafx.scene.control.RadioButton;
  */
 public class MenuController {
 
+	/*
+	 * Enumeration of available game modes
+	 */
+	private enum ChessMode {
+		None, Player, Computer, Network;
+	}
+
+	/*
+	 * Enumeration of available colors
+	 */
+	private enum ChessColor {
+		None, White, Black;
+	}
+
+	/**
+	 * Stores the chosen game mode
+	 */
+	private ChessMode gameMode = ChessMode.None;
+
+	/**
+	 * Stroes the chosen color
+	 */
+	private ChessColor color = ChessColor.None;
+
+	@FXML
+	private AnchorPane rootPane;
 	@FXML
 	private Label titleLabel;
 	@FXML
 	private Label modeLabel;
 	@FXML
-	private RadioButton pvpRadioButton;
+	private Button playerModeButton;
 	@FXML
-	private RadioButton aiRadioButton;
+	private Button aiModeButton;
 	@FXML
-	private RadioButton netRadioButton;
+	private Button networkModeButton;
+	@FXML
+	private AnchorPane colorPane;
 	@FXML
 	private Label colorLabel;
 	@FXML
-	private RadioButton whiteColorRadioButton;
+	private Button whiteColorButton;
 	@FXML
-	private RadioButton blackColorRadioButton;
-	@FXML
-	private Button settingsButton;
+	private Button blackColorButton;
 	@FXML
 	private Button startButton;
+	@FXML
+	private Button settingsButton;
 	@FXML
 	private Button quitButton;
 
@@ -41,93 +73,159 @@ public class MenuController {
 	private void initialize() {
 		TextManager.computeText(titleLabel, "menu.title");
 		TextManager.computeText(modeLabel, "menu.mode");
-		TextManager.computeText(pvpRadioButton, "menu.pvpMode");
-		TextManager.computeText(aiRadioButton, "menu.aiMode");
-		TextManager.computeText(netRadioButton, "menu.netMode");
+		TextManager.computeText(playerModeButton, "menu.pvpMode");
+		TextManager.computeText(aiModeButton, "menu.aiMode");
+		TextManager.computeText(networkModeButton, "menu.netMode");
 		TextManager.computeText(colorLabel, "menu.color");
-		TextManager.computeText(whiteColorRadioButton, "menu.white");
-		TextManager.computeText(blackColorRadioButton, "menu.black");
+		TextManager.computeText(whiteColorButton, "menu.white");
+		TextManager.computeText(blackColorButton, "menu.black");
 		TextManager.computeText(settingsButton, "menu.settings");
 		TextManager.computeText(startButton, "menu.start");
 		TextManager.computeText(quitButton, "menu.quit");
+		startButton.setDisable(true);
+		colorPane.setDisable(true);
+
+		ChangeListener<Number> rootPaneSizeListener = (observable, oldValue, newValue) -> {
+			resize();
+		};
+		rootPane.widthProperty().addListener(rootPaneSizeListener);
+		rootPane.heightProperty().addListener(rootPaneSizeListener);
 	}
 
 	/**
-	 * Controls the effect when clicking the radioButtonAI. The enemChoice variable
-	 * will be set by this function.
+	 * Controls the effect when clicking one of the mode buttons. The enemChoice
+	 * variable will be set by this function.
 	 */
 	@FXML
-	private void handleRadioButtonAIOnAction() {
-		System.out.println("User clicked on Game against AI Button in the Main Menu");
-	}
+	private void handleModeButtonOnAction(ActionEvent event) {
+		Node source = (Node) event.getSource();
+		playerModeButton.getStyleClass().remove("selected");
+		aiModeButton.getStyleClass().remove("selected");
+		networkModeButton.getStyleClass().remove("selected");
+		colorPane.setDisable(true);
+		source.getStyleClass().add("selected");
 
-	/**
-	 * Controls the effect when clicking the radioButtonPVP. The enemChoice variable
-	 * will be set by this function.
-	 */
-	@FXML
-	private void handleRadioButtonPVPOnAction() {
-		System.out.println("User clicked on Game against PVP Button in the Main Menu");
-	}
+		if (source == playerModeButton) {
+			whiteColorButton.getStyleClass().remove("selected");
+			blackColorButton.getStyleClass().remove("selected");
+			this.color = ChessColor.None;
+			this.gameMode = ChessMode.Player;
+		}
+		if (source == aiModeButton) {
+			colorPane.setDisable(false);
+			this.gameMode = ChessMode.Computer;
+		}
+		if (source == networkModeButton) {
+			whiteColorButton.getStyleClass().remove("selected");
+			blackColorButton.getStyleClass().remove("selected");
+			this.color = ChessColor.None;
+			this.gameMode = ChessMode.Network;
+		}
 
-	/**
-	 * Controls the effect when clicking the radioButtonNet. The enemChoice variable
-	 * will be set by this function.
-	 */
-	@FXML
-	private void handleRadioButtonNetOnAction() {
-		System.out.println("User clicked on Game against Network-PVP Button in the Main Menu");
-	}
-
-	/**
-	 * Controls the effect when clicking the radioButtonBlack. The color variable
-	 * will be set by this function.
-	 */
-	@FXML
-	private void handleRadioButtonColorBlackOnAction() {
-		System.out.println("User clicked on choose black in the Main Menu");
-	}
-
-	/**
-	 * Controls the effect when clicking the radioButtonWhite. The color variable
-	 * will be set by this function.
-	 */
-	@FXML
-	private void handleRadioButtonColorWhiteOnAction() {
-		System.out.println("User clicked on choose white in the Main Menu");
-	}
-
-	/**
-	 * Controls the effect when clicking the startButton.
-	 */
-	@FXML
-	private void handleButtonStartOnAction() {
-		System.out.println("User clicked on start in the Main Menu");
-		if(netRadioButton.isSelected()) {
-			Gui.switchToNetworkConnect();
+		if (this.gameMode != ChessMode.None && this.gameMode != ChessMode.Computer) {
+			startButton.setDisable(false);
 		} else {
-			// TODO Start a new Game
-			Gui.switchToGame();
+			startButton.setDisable(true);
+		}
+
+	}
+
+	/**
+	 * Controls the effect when clicking one of the color buttons. The color
+	 * variable will be set by this function.
+	 */
+	@FXML
+	private void handleColorButtonOnAction(ActionEvent event) {
+		Node source = (Node) event.getSource();
+		whiteColorButton.getStyleClass().remove("selected");
+		blackColorButton.getStyleClass().remove("selected");
+		source.getStyleClass().add("selected");
+
+		if (source == whiteColorButton)
+			this.color = ChessColor.White;
+		if (source == blackColorButton)
+			this.color = ChessColor.Black;
+
+		if (this.color != ChessColor.None) {
+			startButton.setDisable(false);
 		}
 	}
 
 	/**
-	 * Controls the effect when clicking the settingsButton.
+	 * Controls the effect when clicking one of the menu buttons.
 	 */
 	@FXML
-	private void handleButtonSettingsOnAction() {
-		System.out.println("User clicked on settings in the Main Menu");
-		SettingsModel.setLastScene(SettingsModel.LastScene.Menu);
-		Gui.switchToSettings();
+	private void handleMenuButtonOnAction(ActionEvent event) {
+		Node source = (Node) event.getSource();
+
+		if (source == startButton) {
+			if (this.gameMode == ChessMode.Network) {
+				Gui.switchTo(Gui.ChessScene.NetworkConnection);
+			} else {
+				// TODO start a new Game
+				Gui.switchTo(Gui.ChessScene.Game);
+			}
+
+		}
+
+		if (source == settingsButton) {
+			SettingsModel.setLastScene(Gui.ChessScene.Menu);
+			Gui.switchTo(Gui.ChessScene.Settings);
+		}
+
+		if (source == quitButton)
+			System.exit(0);
 	}
 
-	/**
-	 * Controls the effect when clicking the settingsButton.
-	 */
-	@FXML
-	private void handleButtonQuitOnAction() {
-		System.out.println("User clicked on Quit in the Main Menu");
-		System.exit(0);
+	private void resize() {
+		double rootHeight = rootPane.getHeight();
+		double rootWidth = rootPane.getWidth();
+		double titleFontSize = Math.min(rootHeight / 12, rootWidth / 21.33 * 1.2);
+		double boxNameFontSize = Math.min(rootHeight / 18, rootWidth / 32 * 1.2);
+		double iconSize = Math.min(rootHeight / 20.57, rootWidth / 36.57 * 1.2);
+		double borderRadius = Math.min(rootHeight / 72, rootWidth / 128 * 1.2);
+
+		titleLabel.setStyle("-fx-font-size: " + titleFontSize);
+		modeLabel.setStyle("-fx-font-size: " + boxNameFontSize);
+		colorLabel.setStyle("-fx-font-size: " + boxNameFontSize);
+		setButtonStyle(playerModeButton, new double[] { rootWidth, rootHeight }, rootHeight / 36);
+		setButtonStyle(aiModeButton, new double[] { rootWidth, rootHeight }, rootHeight / 36);
+		setButtonStyle(networkModeButton, new double[] { rootWidth, rootHeight }, rootHeight / 36);
+		setButtonStyle(whiteColorButton, new double[] { rootWidth, rootHeight }, rootHeight / 36);
+		setButtonStyle(blackColorButton, new double[] { rootWidth, rootHeight }, rootHeight / 36);
+		setButtonStyle(startButton, new double[] { rootWidth, rootHeight }, rootWidth / 42.66);
+		setButtonStyle(settingsButton, new double[] { rootWidth, rootHeight }, rootWidth / 42.66);
+		setButtonStyle(quitButton, new double[] { rootWidth, rootHeight }, rootWidth / 42.66);
+		ImageView playerModeIcon = (ImageView) playerModeButton.getGraphic();
+		ImageView aiModeIcon = (ImageView) aiModeButton.getGraphic();
+		ImageView networkModeIcon = (ImageView) networkModeButton.getGraphic();
+		ImageView whiteColorIcon = (ImageView) whiteColorButton.getGraphic();
+		ImageView blackColorIcon = (ImageView) blackColorButton.getGraphic();
+		ImageView startIcon = (ImageView) startButton.getGraphic();
+		ImageView settingsIcon = (ImageView) settingsButton.getGraphic();
+		ImageView quitIcon = (ImageView) quitButton.getGraphic();
+		playerModeIcon.setFitHeight(iconSize);
+		aiModeIcon.setFitHeight(iconSize);
+		networkModeIcon.setFitHeight(iconSize);
+		whiteColorIcon.setFitHeight(iconSize);
+		blackColorIcon.setFitHeight(iconSize);
+		startIcon.setFitHeight(iconSize);
+		settingsIcon.setFitHeight(iconSize);
+		quitIcon.setFitHeight(iconSize);
+		playerModeButton.getParent().getParent().getParent().getParent().getParent()
+				.setStyle("-fx-background-radius: " + borderRadius + "; -fx-border-radius: " + borderRadius);
+		whiteColorButton.getParent().getParent().getParent().getParent().getParent()
+				.setStyle("-fx-background-radius: " + borderRadius + "; -fx-border-radius: " + borderRadius);
+		startButton.getParent().getParent().getParent()
+				.setStyle("-fx-background-radius: " + borderRadius + "; -fx-border-radius: " + borderRadius);
 	}
 
+	private void setButtonStyle(Button button, double[] rootSize, double graphicTextGap) {
+		double fontSize = Math.min(rootSize[1] / 28.8, rootSize[0] / 51.2 * 1.2);
+		double borderRadius = Math.min(rootSize[1] / 72, rootSize[0] / 128 * 1.2);
+		double borderWidth = Math.min(rootSize[1] / 240, rootSize[0] / 426.66);
+		button.setStyle(
+				"-fx-font-size: " + fontSize + "; -fx-graphic-text-gap: " + graphicTextGap + "; -fx-background-radius: "
+						+ borderRadius + "; -fx-border-radius: " + borderRadius + "; -fx-border-width: " + borderWidth);
+	}
 }

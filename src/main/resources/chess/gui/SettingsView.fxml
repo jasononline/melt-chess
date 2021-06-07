@@ -1,233 +1,203 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.gui.settings.SettingsController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="body" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.gui.settings.SettingsController">
 	<children>
-		<ImageView fitHeight="578.0" fitWidth="603.0" layoutY="-175.0" opacity="0.63" pickOnBounds="true">
-			<image>
-				<Image url="@images/MenuViewLayout.jpg" />
-			</image>
-		</ImageView>
-		<ImageView fitHeight="350.0" fitWidth="500.0" layoutX="50.0" layoutY="25.0" opacity="0.85" pickOnBounds="true">
-			<image>
-				<Image url="@images/Black.jpg" />
-			</image>
-		</ImageView>
-		<Label fx:id="titleLabel" alignment="CENTER" layoutX="50.0" layoutY="40.0" prefHeight="55.0" prefWidth="500.0" text="Optionen" textAlignment="CENTER" textFill="WHITE">
-			<font>
-				<Font name="Avenir Next Bold" size="38.0" />
-			</font>
-		</Label>
-		<GridPane layoutX="55.0" layoutY="117.0" prefHeight="163.0" prefWidth="500.0">
-			<columnConstraints>
-				<ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="0.0" prefWidth="279.20770263671875" />
-				<ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="221.29229736328125" />
-			</columnConstraints>
-			<rowConstraints>
-				<RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-			</rowConstraints>
+		<AnchorPane layoutX="540.0" layoutY="289.0" prefHeight="720.0" prefWidth="1280.0" styleClass="bgLayer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<children>
-				<HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="506.0" GridPane.columnIndex="1">
+				<GridPane prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+					<columnConstraints>
+						<ColumnConstraints hgrow="SOMETIMES" minWidth="95.0" percentWidth="14.85" prefWidth="190.0" />
+						<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="900.0" minWidth="450.0" percentWidth="70.3" prefWidth="900.0" />
+						<ColumnConstraints hgrow="SOMETIMES" minWidth="95.0" percentWidth="14.85" prefWidth="190.0" />
+					</columnConstraints>
+					<rowConstraints>
+						<RowConstraints minHeight="25.0" percentHeight="6.9" prefHeight="50.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="30.0" percentHeight="8.3" prefHeight="60.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="25.0" percentHeight="6.9" prefHeight="50.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="157.5" percentHeight="43.75" prefHeight="315.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="22.5" percentHeight="13.25" prefHeight="95.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="50.0" percentHeight="13.95" prefHeight="100.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="25.0" percentHeight="6.9" prefHeight="50.0" vgrow="SOMETIMES" />
+					</rowConstraints>
 					<children>
-						<RadioButton fx:id="enRadioButton" focusTraversable="false" mnemonicParsing="false" text="Englisch" textFill="WHITE">
-							<HBox.margin>
-								<Insets left="10.0" right="10.0" />
-							</HBox.margin>
-							<toggleGroup>
-								<ToggleGroup fx:id="langTogleGroup" />
-							</toggleGroup>
-							<font>
-								<Font name="Avenir Book" size="13.0" />
-							</font>
-							<cursor>
-								<Cursor fx:constant="HAND" />
-							</cursor>
-						</RadioButton>
-						<RadioButton fx:id="deRadioButton" focusTraversable="false" mnemonicParsing="false" text="Deutsch" textFill="WHITE" toggleGroup="$langTogleGroup">
-							<HBox.margin>
-								<Insets left="10.0" right="10.0" />
-							</HBox.margin>
-							<font>
-								<Font name="Avenir Book" size="13.0" />
-							</font>
-							<cursor>
-								<Cursor fx:constant="HAND" />
-							</cursor>
-						</RadioButton>
+						<AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+							<children>
+								<Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="titleLabel" text="SETTINGS" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+							</children>
+						</AnchorPane>
+						<AnchorPane styleClass="box" GridPane.columnIndex="1" GridPane.rowIndex="3">
+							<children>
+								<GridPane maxWidth="900.0" prefHeight="227.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+									<columnConstraints>
+										<ColumnConstraints hgrow="SOMETIMES" minWidth="25.0" percentWidth="5.55" prefWidth="50.0" />
+										<ColumnConstraints hgrow="SOMETIMES" minWidth="230.0" percentWidth="51.11" prefWidth="460.0" />
+										<ColumnConstraints hgrow="SOMETIMES" minWidth="25.0" percentWidth="5.55" prefWidth="50.0" />
+										<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="145.0" percentWidth="32.22" prefWidth="290.0" />
+										<ColumnConstraints hgrow="SOMETIMES" minWidth="25.0" percentWidth="5.55" prefWidth="50.0" />
+									</columnConstraints>
+									<rowConstraints>
+										<RowConstraints minHeight="15.0" percentHeight="9.52" prefHeight="30.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="17.5" percentHeight="11.11" prefHeight="35.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" percentHeight="6.34" prefHeight="20.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="17.5" percentHeight="11.11" prefHeight="35.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" percentHeight="6.34" prefHeight="20.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="17.5" percentHeight="11.11" prefHeight="35.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" percentHeight="6.34" prefHeight="20.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="17.5" percentHeight="11.11" prefHeight="35.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" percentHeight="6.34" prefHeight="20.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="17.5" percentHeight="11.11" prefHeight="35.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="15.0" percentHeight="9.52" prefHeight="30.0" vgrow="SOMETIMES" />
+									</rowConstraints>
+									<children>
+										<AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+											<children>
+												<Label fx:id="flipBoardLabel" layoutX="57.0" layoutY="14.0" prefHeight="45.0" prefWidth="194.0" styleClass="boxLabel" text="Rotate the chessboard" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+											</children>
+										</AnchorPane>
+										<AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+											<children>
+												<Label fx:id="languageLabel" layoutX="57.0" layoutY="23.0" prefHeight="46.0" prefWidth="194.0" styleClass="boxLabel" text="Interface language" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+											</children>
+										</AnchorPane>
+										<AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+											<children>
+												<GridPane layoutX="45.0" layoutY="-23.0" prefHeight="45.0" prefWidth="290.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+													<columnConstraints>
+														<ColumnConstraints hgrow="SOMETIMES" minWidth="67.5" percentWidth="46.55" prefWidth="135.0" />
+														<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="6.89" prefWidth="20.0" />
+														<ColumnConstraints hgrow="SOMETIMES" minWidth="67.5" percentWidth="46.55" prefWidth="135.0" />
+													</columnConstraints>
+													<rowConstraints>
+														<RowConstraints minHeight="17.5" percentHeight="100.0" prefHeight="35.0" vgrow="SOMETIMES" />
+													</rowConstraints>
+													<children>
+														<AnchorPane prefHeight="200.0" prefWidth="200.0">
+															<children>
+																<Button fx:id="englishButton" layoutX="40.0" layoutY="5.0" mnemonicParsing="false" onAction="#handleLanguageButtonOnAction" prefHeight="54.0" prefWidth="162.0" text="English" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+																	<styleClass>
+																		<String fx:value="button" />
+																		<String fx:value="langButton" />
+																	</styleClass>
+																</Button>
+															</children>
+														</AnchorPane>
+														<AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+															<children>
+																<Button fx:id="germanButton" layoutX="40.0" layoutY="5.0" mnemonicParsing="false" onAction="#handleLanguageButtonOnAction" prefHeight="54.0" prefWidth="162.0" text="German" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+																	<styleClass>
+																		<String fx:value="button" />
+																		<String fx:value="langButton" />
+																	</styleClass>
+																</Button>
+															</children>
+														</AnchorPane>
+													</children>
+												</GridPane>
+											</children>
+										</AnchorPane>
+										<AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+											<children>
+												<Label fx:id="oneTouchRuleLabel" prefHeight="45.0" prefWidth="210.0" styleClass="boxLabel" text="One-touch rule" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+											</children>
+										</AnchorPane>
+										<AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+											<children>
+												<Label fx:id="showInCheckLabel" prefHeight="45.0" prefWidth="210.0" styleClass="boxLabel" text="Show check" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+											</children>
+										</AnchorPane>
+										<AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+											<children>
+												<Label fx:id="showPossibleMovesLabel" prefHeight="45.0" prefWidth="210.0" styleClass="boxLabel" text="Anzeige der Möglichen Züge" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+											</children>
+										</AnchorPane>
+                              <CheckBox fx:id="oneTouchRuleCheckbox" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" graphicTextGap="0.0" maxWidth="70.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" prefWidth="70.0" selected="true" styleClass="checkbox" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </CheckBox>
+                              <CheckBox fx:id="flipBoardCheckbox" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" graphicTextGap="0.0" maxWidth="70.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" prefWidth="70.0" selected="true" styleClass="checkbox" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </CheckBox>
+                              <CheckBox fx:id="showInCheckCheckbox" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" graphicTextGap="0.0" maxWidth="70.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" prefWidth="70.0" selected="true" styleClass="checkbox" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </CheckBox>
+                              <CheckBox fx:id="showPossibleMovesCheckbox" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" graphicTextGap="0.0" maxWidth="70.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" prefWidth="70.0" selected="true" styleClass="checkbox" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </CheckBox>
+									</children>
+								</GridPane>
+							</children>
+						</AnchorPane>
+						<AnchorPane styleClass="box" GridPane.columnIndex="1" GridPane.rowIndex="5">
+							<children>
+								<GridPane layoutX="242.0" layoutY="5.0" prefHeight="100.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+									<columnConstraints>
+										<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="2.22" prefWidth="20.0" />
+										<ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="210.0" percentWidth="46.66" prefWidth="420.0" />
+										<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="2.22" prefWidth="20.0" />
+										<ColumnConstraints hgrow="SOMETIMES" minWidth="210.0" percentWidth="46.66" prefWidth="420.0" />
+										<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="2.22" prefWidth="20.0" />
+									</columnConstraints>
+									<rowConstraints>
+										<RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="30.0" percentHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+										<RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+									</rowConstraints>
+									<children>
+										<AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+											<children>
+												<Button fx:id="cancelButton" alignment="CENTER" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleCancelButtonOnAction" prefHeight="60.0" prefWidth="420.0" text="Cancel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+													<graphic>
+														<ImageView fitHeight="35.0" pickOnBounds="true" preserveRatio="true">
+															<image>
+																<Image url="@images/icons/cancelIcon.png" />
+															</image>
+														</ImageView>
+													</graphic>
+												</Button>
+											</children>
+										</AnchorPane>
+										<AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+											<children>
+												<Button fx:id="saveButton" alignment="CENTER" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleSaveButtonOnAction" prefHeight="60.0" prefWidth="420.0" text="Save" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+													<graphic>
+														<ImageView fitHeight="35.0" pickOnBounds="true" preserveRatio="true">
+															<image>
+																<Image url="@images/icons/saveIcon.png" />
+															</image>
+														</ImageView>
+													</graphic>
+												</Button>
+											</children>
+										</AnchorPane>
+									</children>
+								</GridPane>
+							</children>
+						</AnchorPane>
 					</children>
-				</HBox>
-				<HBox alignment="CENTER_RIGHT" prefHeight="80.0" prefWidth="217.0">
-					<children>
-						<Label fx:id="langLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="257.0" text="Sprache:" textAlignment="RIGHT" textFill="WHITE">
-							<padding>
-								<Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-							</padding>
-							<font>
-								<Font name="Avenir Next Bold" size="16.0" />
-							</font>
-						</Label>
-					</children>
-				</HBox>
-				<HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
-					<children>
-						<Label fx:id="flipBoardLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="257.0" text="Spielfeld drehen:" textAlignment="CENTER" textFill="WHITE">
-							<padding>
-								<Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-							</padding>
-							<font>
-								<Font name="Avenir Next Bold" size="16.0" />
-							</font>
-						</Label>
-					</children>
-				</HBox>
-				<HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="506.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-					<children>
-						<CheckBox fx:id="flipBoardCheckbox" onAction="#handleCheckboxOnAction" focusTraversable="false" mnemonicParsing="false" prefHeight="26.0" prefWidth="149.0" text="Aktivieren" textFill="WHITE">
-							<HBox.margin>
-								<Insets left="40.0" />
-							</HBox.margin>
-							<font>
-								<Font name="Avenir Book" size="13.0" />
-							</font>
-							<cursor>
-								<Cursor fx:constant="HAND" />
-							</cursor>
-						</CheckBox>
-					</children>
-				</HBox>
-				<HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
-					<children>
-						<Label fx:id="oneTouchRuleLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="258.0" text="Berührt-Geführt-Regel:" textAlignment="CENTER" textFill="WHITE">
-							<padding>
-								<Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-							</padding>
-							<font>
-								<Font name="Avenir Next Bold" size="16.0" />
-							</font>
-						</Label>
-					</children>
-				</HBox>
-				<HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="506.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-					<children>
-						<CheckBox fx:id="oneTouchRuleCheckbox" onAction="#handleCheckboxOnAction" focusTraversable="false" mnemonicParsing="false" prefHeight="26.0" prefWidth="151.0" text="Aktivieren" textFill="WHITE">
-							<HBox.margin>
-								<Insets left="40.0" />
-							</HBox.margin>
-							<font>
-								<Font name="Avenir Book" size="13.0" />
-							</font>
-							<cursor>
-								<Cursor fx:constant="HAND" />
-							</cursor>
-						</CheckBox>
-					</children>
-				</HBox>
-				<HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
-					<children>
-						<Label fx:id="showInCheckLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="257.0" text="Schach anzeigen:" textAlignment="RIGHT" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
-							<padding>
-								<Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-							</padding>
-							<font>
-								<Font name="Avenir Next Bold" size="16.0" />
-							</font>
-						</Label>
-					</children>
-				</HBox>
-				<HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="506.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-					<children>
-						<CheckBox fx:id="showInCheckCheckbox" onAction="#handleCheckboxOnAction" focusTraversable="false" mnemonicParsing="false" prefHeight="26.0" prefWidth="151.0" text="Aktivieren" textFill="WHITE">
-							<HBox.margin>
-								<Insets left="40.0" />
-							</HBox.margin>
-							<font>
-								<Font name="Avenir Book" size="13.0" />
-							</font>
-							<cursor>
-								<Cursor fx:constant="HAND" />
-							</cursor>
-						</CheckBox>
-					</children>
-				</HBox>
-				<HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
-					<children>
-						<Label fx:id="showPossibleMovesLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="256.0" text="Anzeige der Möglichen Züge:" textAlignment="RIGHT" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
-							<padding>
-								<Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-							</padding>
-							<font>
-								<Font name="Avenir Next Bold" size="16.0" />
-							</font>
-						</Label>
-					</children>
-				</HBox>
-				<HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="506.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-					<children>
-						<CheckBox fx:id="showPossibleMovesCheckbox" onAction="#handleCheckboxOnAction" focusTraversable="false" mnemonicParsing="false" prefHeight="26.0" prefWidth="151.0" text="Aktivieren" textFill="WHITE">
-							<HBox.margin>
-								<Insets left="40.0" />
-							</HBox.margin>
-							<font>
-								<Font name="Avenir Book" size="13.0" />
-							</font>
-							<cursor>
-								<Cursor fx:constant="HAND" />
-							</cursor>
-						</CheckBox>
-					</children>
-				</HBox>
+				</GridPane>
 			</children>
-		</GridPane>
-		<HBox alignment="CENTER" layoutX="50.0" layoutY="300.0" prefHeight="60.0" prefWidth="500.0" spacing="20.0">
-			<children>
-				<Button fx:id="cancelButton" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#handleButtonCancelOnAction" prefHeight="40.0" prefWidth="110.0" text="Abbrechen" textAlignment="CENTER">
-					<padding>
-						<Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-					</padding>
-					<HBox.margin>
-						<Insets />
-					</HBox.margin>
-					<font>
-						<Font name="Avenir Next Bold" size="13.0" />
-					</font>
-					<cursor>
-						<Cursor fx:constant="HAND" />
-					</cursor>
-				</Button>
-				<Button fx:id="saveButton" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#handleButtonSaveOnAction" prefHeight="40.0" prefWidth="110.0" text="Speichern" textAlignment="CENTER">
-					<padding>
-						<Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-					</padding>
-					<HBox.margin>
-						<Insets />
-					</HBox.margin>
-					<font>
-						<Font name="Avenir Next Bold" size="13.0" />
-					</font>
-					<cursor>
-						<Cursor fx:constant="HAND" />
-					</cursor>
-				</Button>
-			</children>
-		</HBox>
+		</AnchorPane>
 	</children>
-</Pane>
+</AnchorPane>
