@@ -1,7 +1,6 @@
 package chess.gui.game;
 
 import java.util.ListIterator;
-import java.util.Stack;
 
 import chess.gui.Gui;
 import chess.gui.settings.SettingsModel;
