@@ -46,7 +46,7 @@ public class Gui extends Application {
 	/**
 	 * Switches the current scene to the new scene
 	 * 
-	 * @param newScene new scene to switch to
+	 * @param toScene new scene to switch to
 	 */
 	public static void switchTo(ChessScene toScene) {
 		try {
