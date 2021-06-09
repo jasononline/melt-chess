@@ -248,15 +248,15 @@ public class GameController {
 
 			if (GameModel.isSelected()) { // if a piece has already been selected (second press)
 
-				movePieceOnBoard(GameModel.getSelectedIndex(), Coordinate.toIndex(square.getId()));
+				if (!SettingsModel.isOneTouchRule() || GameModel.getSelectedIndex() != Coordinate.toIndex(square.getId())) {
+					movePieceOnBoard(GameModel.getSelectedIndex(), Coordinate.toIndex(square.getId()));
 
-				boardGrid.getChildren().forEach(s -> {
-					s.getStyleClass().removeAll("focused");
-				});
+					boardGrid.getChildren().forEach(s -> {
+						s.getStyleClass().removeAll("focused");
+					});
 
-				GameModel.setSelectedIndex(-1);
-
-				System.out.println("Target square: " + square.getId());
+					GameModel.setSelectedIndex(-1);
+				}
 
 			} else { // if a piece has not yet been selected (first press)
 
@@ -265,16 +265,11 @@ public class GameController {
 					GameModel.setSelectedIndex(Coordinate.toIndex(square.getId()));
 
 					square.getStyleClass().add("focused");
-
-					System.out.println("Start square: " + square.getId());
-
 				}
 
 			}
 
 		}
-
-		System.out.println("Mouse press");
 
 	}
 
