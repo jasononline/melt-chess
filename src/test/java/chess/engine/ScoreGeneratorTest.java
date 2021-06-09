@@ -4,10 +4,16 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Run some tests for scoring a position
+ */
 class ScoreGeneratorTest {
 
     String startposition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 
+    /**
+     * Run some tests for scoring a position
+     */
     @Test
     public void scoreGenerator() {
         ScoreGenerator sg = new ScoreGenerator(new EngineBoard(startposition));

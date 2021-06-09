@@ -105,12 +105,19 @@ public class Engine {
         for (Move move : moves) {
             EngineBoard newBoard = new EngineBoard(board.makeMove(move));
             ScoreGenerator scoreGen = new ScoreGenerator(newBoard);
+            newBoard.setScore(scoreGen.getScore());
             positions.add(newBoard);
         }
         return positions;
     }
 
 
+    /**
+     * Compute list of possible moves
+     * @param board the current position
+     * @param color the color to move
+     * @return a list of Move objects
+     */
     protected static List<Move> getMoves(EngineBoard board, int color) {
         MoveGenerator generator = new MoveGenerator(board);
         if (generator.getTeamColor() != color)

@@ -153,24 +153,6 @@ public class ScoreGenerator {
         End of piece position tables
      */
 
-    /**
-     * For black just use the square index. For white the index needs to be flipped vertically by this function.
-     * @param index square index
-     * @return flipped square index
-     */
-    private static int getTableIndex(int index, int color) {
-        if (color == Piece.Black) {
-            return index;
-        }
-        return index ^ 56;
-    }
-
-    // attacking these positions is beneficial in the early game
-    private static final int[] centerSquares = new int[]{
-            26, 27, 28, 29,
-            34, 35, 36, 37,
-    };
-
 
     /*A pawn is worth one point,
       a knight or bishop is worth three points,
@@ -184,10 +166,25 @@ public class ScoreGenerator {
                     Piece.Queen, 900 )
     );
 
+
     private final EngineBoard board;
     // positive score value is good for white, negative good for black.
     private int score;
     private int numOpponentPieces=0;
+
+
+    /**
+     * For black just use the square index. For white the index needs to be flipped vertically by this function.
+     * @param index square index
+     * @return flipped square index
+     */
+    private static int getTableIndex(int index, int color) {
+        if (color == Piece.Black) {
+            return index;
+        }
+        return index ^ 56;
+    }
+
 
     /**
      * Return score for this position
@@ -216,6 +213,7 @@ public class ScoreGenerator {
         board.setScore(score);
     }
 
+
     private int scorePieceValue() {
         int score = 0;
         int sign;
@@ -230,8 +228,9 @@ public class ScoreGenerator {
         return score;
     }
 
+
     private int scorePiecePositionValue() {
-        int piece, type, color, table_index, sign;
+        int piece, type, color, sign;
         int score = 0;
         for (int index=0;index < 64; index++) {
             piece = board.getPieceAt(index);
@@ -269,6 +268,7 @@ public class ScoreGenerator {
         }
         return 0;
     }
+
 
     private static int getPiecePositionValueEG(int tableIndex, int sign, int pieceType) {
         switch (pieceType) {
