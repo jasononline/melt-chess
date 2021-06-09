@@ -102,17 +102,23 @@ public class GameController {
 		Button button = (Button) event.getSource();
 
 		if (button == resignButton) {
-			System.out.println("Resign");
 			// TODO: End current game (leave game scene open)
+
+			if (GamePopup.showSurePopup(boardGrid, "game.sureResign")) {
+				System.out.println("Resign");
+			}
 		}
 
 		if (button == restartButton) {
-			System.out.println("Restart");
 			// TODO: End current game
 			// TODO: Start new game
 
-			GameModel.reset();
-			initialize();
+			if (GamePopup.showSurePopup(boardGrid, "game.sureRestart")) {
+				System.out.println("Restart");
+				GameModel.reset();
+				initialize();
+			}
+
 		}
 
 		if (button == settingsButton) {
@@ -123,8 +129,10 @@ public class GameController {
 		if (button == menuButton) {
 			// TODO: End current game
 
-			GameModel.reset();
-			Gui.switchTo(Gui.ChessScene.Menu);
+			if (GamePopup.showSurePopup(boardGrid, "game.sureQuit")) {
+				GameModel.reset();
+				Gui.switchTo(Gui.ChessScene.Menu);
+			}
 		}
 	}
 

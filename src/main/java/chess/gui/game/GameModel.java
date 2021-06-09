@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chess.model.Move;
+import chess.model.Piece;
 
 /**
  * Storage for information on the currently visible board position, like
@@ -25,6 +26,11 @@ public class GameModel {
 	public enum ChessColor {
 		None, White, Black;
 	}
+
+	/**
+	 * Stores the chosen piece for promotion
+	 */
+	private static int pieceForPromotion = Piece.None;
 
 	/**
 	 * Stores the chosen game mode
@@ -100,6 +106,15 @@ public class GameModel {
 	}
 
 	/**
+	 * Setter for the pieceForPromotion
+	 * 
+	 * @param piece the new choosen piece for promotion
+	 */
+	public static void setPieceForPromotion(int piece) {
+		GameModel.pieceForPromotion = piece;
+	}
+
+	/**
 	 * Setter for the selectedIndex
 	 * 
 	 * @param index the new selectedIndex, should be -1 smaller than or equal index
@@ -127,6 +142,15 @@ public class GameModel {
 	 */
 	public static ChessColor getColor() {
 		return color;
+	}
+
+	/**
+	 * Getter for the pieceForPromotion
+	 * 
+	 * @return current piece for promotion
+	 */
+	public static int getPieceForPromotion() {
+		return pieceForPromotion;
 	}
 
 	/**
