@@ -9,7 +9,6 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -62,10 +61,6 @@ public class GameController {
 	private Button settingsButton;
 	@FXML
 	private Button menuButton;
-
-	private boolean isSquareDragged = false;
-	private Point2D startPoint;
-	private Point2D dragDistance;
 	private boolean isRotated = false;
 
 	@FXML
@@ -266,10 +261,6 @@ public class GameController {
 			} else { // if a piece has not yet been selected (first press)
 
 				if (!square.getChildren().isEmpty()) {
-					ImageView piece = (ImageView) square.getChildren().get(0);
-
-					startPoint = new Point2D(event.getSceneX(), event.getSceneY());
-					dragDistance = startPoint.subtract(square.localToScene(new Point2D(piece.getX(), piece.getY())));
 
 					GameModel.setSelectedIndex(Coordinate.toIndex(square.getId()));
 
@@ -288,86 +279,9 @@ public class GameController {
 	}
 
 	@FXML
-	private void handleSquareMouseDrag(MouseEvent event) {
-		System.out.println("Mouse drag");
-		isSquareDragged = true;
-		GameModel.setSelectedIndex(-1);
-
-		Node source = (Node) event.getSource();
-		Node target = event.getPickResult().getIntersectedNode();
-
-		if (source instanceof AnchorPane) {
-			AnchorPane square = (AnchorPane) source;
-
-			if (!square.getChildren().isEmpty()) {
-				ImageView piece = (ImageView) square.getChildren().get(0);
-
-				Point2D px = new Point2D(event.getSceneX(), event.getSceneY());
-				px = square.sceneToLocal(px.subtract(dragDistance));
-
-				piece.toFront();
-				piece.setTranslateX(px.getX() - (piece.boundsInParentProperty().get().getWidth() / 2));
-				piece.setTranslateY(px.getY() - (piece.getFitHeight() / 2));
-
-				boardGrid.getChildren().forEach(s -> {
-					if (s != square)
-						s.getStyleClass().removeAll("focused");
-				});
-
-				if (target instanceof AnchorPane) {
-					((AnchorPane) target).getStyleClass().add("focused");
-				}
-
-				if (target instanceof ImageView) {
-					((ImageView) target).getParent().getStyleClass().add("focused");
-				}
-
-			}
-		}
-	}
-
-	@FXML
 	private void handleSquareMouseRelease(MouseEvent event) {
 
 		Node source = (Node) event.getSource();
-
-		if (isSquareDragged) {
-
-			Node target = event.getPickResult().getIntersectedNode();
-
-			if (source instanceof AnchorPane) {
-
-				AnchorPane startSquare = (AnchorPane) source;
-				AnchorPane targetSquare;
-
-				if (!startSquare.getChildren().isEmpty()) {
-					ImageView figure = (ImageView) startSquare.getChildren().get(0);
-
-					if (target instanceof AnchorPane) {
-						targetSquare = (AnchorPane) target;
-						movePieceOnBoard(Coordinate.toIndex(startSquare.getId()), Coordinate.toIndex(targetSquare.getId()));
-					}
-
-					if (target instanceof ImageView) {
-						targetSquare = (AnchorPane) ((ImageView) target).getParent();
-						movePieceOnBoard(Coordinate.toIndex(startSquare.getId()), Coordinate.toIndex(targetSquare.getId()));
-					}
-
-					figure.setTranslateX(0);
-					figure.setTranslateY(0);
-				}
-
-				boardGrid.getChildren().forEach(s -> {
-					s.getStyleClass().removeAll("focused");
-				});
-
-				isSquareDragged = false;
-				System.out.println("Mouse drag release");
-			}
-
-		} else {
-			System.out.println("Mouse press release");
-		}
 
 		if (SettingsModel.isFlipBoard() && !GameModel.isSelected() && !((AnchorPane) source).getChildren().isEmpty()) {
 
