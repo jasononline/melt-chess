@@ -1,6 +1,9 @@
 package chess.engine;
 
-import chess.model.*;
+import chess.model.Board;
+import chess.model.Move;
+import chess.model.MoveGenerator;
+import chess.model.MoveValidator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +32,7 @@ public class Engine {
 
     // only promote to queen
     private static final List<Integer> promotionFilter = new ArrayList<>();
+    private int maxDepth = 3; // only use odd values!
 
     /**
      * Contructor of the engine
@@ -46,13 +50,45 @@ public class Engine {
      * @return the move the engine thinks is the best
      */
     public Move generateBestMove(Board board){
-        List<EngineBoard> possibleMoves = getNextPositions(new EngineBoard(board));
-        if (possibleMoves.isEmpty())
+        int color = board.getTurnColor();
+
+        List<EngineBoard> possiblePositions = getNextPositions(new EngineBoard(board));
+        if (possiblePositions.isEmpty())
             return null;
-        Collections.sort(possibleMoves);
-        if (board.getTurnColor() == Piece.White)
-            return possibleMoves.get(possibleMoves.size() - 1).getLastMove();
-        return possibleMoves.get(0).getLastMove();
+
+        EngineBoard bestPosition = null;
+        int bestValue = Integer.MIN_VALUE;
+        int value;
+
+        for (EngineBoard position : possiblePositions) {
+            value = minimax(position, maxDepth, color);
+            if (bestValue < value) {
+                bestValue = value;
+                bestPosition = position;
+            }
+        }
+        assert bestPosition != null;
+        return bestPosition.getLastMove();
+    }
+
+
+    private int minimax(EngineBoard board, int depth, int maximizingColor) {
+        int value;
+        if (depth == 0) {
+            return board.getScore();
+        }
+        if (board.getTurnColor() == maximizingColor) {
+            value = Integer.MIN_VALUE;
+            for (EngineBoard newPosition : getNextPositions(board)) {
+                value = Math.max(value, minimax(newPosition, depth-1, maximizingColor));
+            }
+            return value;
+        }
+        value = Integer.MAX_VALUE;
+        for (EngineBoard newPosition : getNextPositions(board)) {
+            value = Math.min(value, minimax(newPosition, depth-1, maximizingColor));
+        }
+        return value;
     }
 
 
@@ -104,8 +140,6 @@ public class Engine {
         List<EngineBoard> positions = new LinkedList<>();
         for (Move move : moves) {
             EngineBoard newBoard = new EngineBoard(board.makeMove(move));
-            ScoreGenerator scoreGen = new ScoreGenerator(newBoard);
-            newBoard.setScore(scoreGen.getScore());
             positions.add(newBoard);
         }
         return positions;
