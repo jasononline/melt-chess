@@ -200,8 +200,13 @@
   -fx-background-position: center center;
 }
 
+.square.cursor {
+	-fx-cursor: hand;
+}
+
 .square.focused {
   -fx-border-color: #eee85b;
+  -fx-cursor: hand;
   /* -fx-border-color: rgba(214, 169, 22); */
 }
 

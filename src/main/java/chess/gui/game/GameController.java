@@ -65,6 +65,7 @@ public class GameController {
 
 	@FXML
 	private void initialize() {
+		TextManager.computeText(historyLabel, "game.history");
 		TextManager.computeText(currentMoveLabel, "game.whiteMove");
 		TextManager.computeText(checkLabel, "game.whiteInCheck");
 		TextManager.computeText(settingsButton, "game.settings");
@@ -218,6 +219,10 @@ public class GameController {
 		if (source instanceof AnchorPane) {
 			AnchorPane square = (AnchorPane) source;
 
+			if (!square.getChildren().isEmpty()) {
+				square.getStyleClass().add("cursor");
+			}
+
 			if (GameModel.isSelected()) {
 				square.getStyleClass().add("focused");
 			}
@@ -230,6 +235,10 @@ public class GameController {
 
 		if (source instanceof AnchorPane) {
 			AnchorPane square = (AnchorPane) source;
+
+			if (!square.getChildren().isEmpty()) {
+				square.getStyleClass().removeAll("cursor");
+			}
 
 			if (GameModel.isSelected() && square != boardGrid.getChildren().get(GameModel.getSelectedIndex())) {
 				square.getStyleClass().removeAll("focused");
@@ -255,6 +264,10 @@ public class GameController {
 						s.getStyleClass().removeAll("focused");
 					});
 
+					if (SettingsModel.isFlipBoard() && GameModel.getSelectedIndex() != Coordinate.toIndex(square.getId())) {
+						flipBoard();
+					}
+					settingsButton.setDisable(false);
 					GameModel.setSelectedIndex(-1);
 				}
 
@@ -265,6 +278,7 @@ public class GameController {
 					GameModel.setSelectedIndex(Coordinate.toIndex(square.getId()));
 
 					square.getStyleClass().add("focused");
+					settingsButton.setDisable(true);
 				}
 
 			}
@@ -273,35 +287,28 @@ public class GameController {
 
 	}
 
-	@FXML
-	private void handleSquareMouseRelease(MouseEvent event) {
-
-		Node source = (Node) event.getSource();
-
-		if (SettingsModel.isFlipBoard() && !GameModel.isSelected() && !((AnchorPane) source).getChildren().isEmpty()) {
-
-			String lines = "12345678";
-			String columns = "hgfedcba";
-			if (isRotated) { // rotate back
-				lines = "87654321";
-				columns = "abcdefgh";
-			}
-
-			for (int i = 0; i < 8; i++) {
-				((Label) lineNumbersPane.getChildren().get(i)).setText("" + lines.charAt(i));
-			}
-			for (int i = 0; i < 8; i++) {
-				((Label) columnLettersPane.getChildren().get(i)).setText("" + columns.charAt(i));
-			}
-
-			boardGrid.getTransforms().add(new Rotate(180, boardGrid.getWidth() / 2, boardGrid.getHeight() / 2));
-			for (Node squareNode : boardGrid.getChildren()) {
-				squareNode.getTransforms().add(
-						new Rotate(180, squareNode.getBoundsInLocal().getCenterX(), squareNode.getBoundsInLocal().getCenterY()));
-			}
-
-			isRotated = !isRotated;
+	private void flipBoard() {
+		String lines = "12345678";
+		String columns = "hgfedcba";
+		if (isRotated) { // rotate back
+			lines = "87654321";
+			columns = "abcdefgh";
 		}
+
+		for (int i = 0; i < 8; i++) {
+			((Label) lineNumbersPane.getChildren().get(i)).setText("" + lines.charAt(i));
+		}
+		for (int i = 0; i < 8; i++) {
+			((Label) columnLettersPane.getChildren().get(i)).setText("" + columns.charAt(i));
+		}
+
+		boardGrid.getTransforms().add(new Rotate(180, boardGrid.getWidth() / 2, boardGrid.getHeight() / 2));
+		for (Node squareNode : boardGrid.getChildren()) {
+			squareNode.getTransforms()
+					.add(new Rotate(180, squareNode.getBoundsInLocal().getCenterX(), squareNode.getBoundsInLocal().getCenterY()));
+		}
+		isRotated = !isRotated;
+		resize();
 	}
 
 	private void resize() {
@@ -353,14 +360,25 @@ public class GameController {
 			letter.setStyle("-fx-font-size: " + Math.min(rootHeight / 60, rootWidth / 106.66));
 		}
 
-		boardGrid.getChildren().get(0).setStyle("-fx-background-radius: " + borderRadius + " 0 0 0; -fx-border-radius: "
-				+ borderRadius + " 0 0 0; -fx-border-width: " + historyBorderWidth * 2);
-		boardGrid.getChildren().get(7).setStyle("-fx-background-radius: 0 " + borderRadius + " 0 0; -fx-border-radius: 0 "
-				+ borderRadius + " 0 0; -fx-border-width: " + historyBorderWidth * 2);
-		boardGrid.getChildren().get(63).setStyle("-fx-background-radius: 0 0 " + borderRadius
-				+ " 0; -fx-border-radius: 0 0 " + borderRadius + " 0; -fx-border-width: " + historyBorderWidth * 2);
-		boardGrid.getChildren().get(56).setStyle("-fx-background-radius: 0 0 0 " + borderRadius
-				+ "; -fx-border-radius: 0 0 0 " + borderRadius + "; -fx-border-width: " + historyBorderWidth * 2);
+		if (isRotated) {
+			boardGrid.getChildren().get(0).setStyle("-fx-background-radius: 0 0 " + borderRadius
+					+ " 0; -fx-border-radius: 0 0 " + borderRadius + " 0; -fx-border-width: " + historyBorderWidth * 2);
+			boardGrid.getChildren().get(7).setStyle("-fx-background-radius: " + borderRadius + " 0 0 0; -fx-border-radius: 0 "
+					+ borderRadius + " 0 0; -fx-border-width: " + historyBorderWidth * 2);
+			boardGrid.getChildren().get(63).setStyle("-fx-background-radius: 0 0 " + borderRadius
+					+ " 0; -fx-border-radius: 0 0 " + borderRadius + " 0; -fx-border-width: " + historyBorderWidth * 2);
+			boardGrid.getChildren().get(56).setStyle("-fx-background-radius: 0 " + borderRadius
+					+ " 0 0; -fx-border-radius: 0 " + borderRadius + " 0 0; -fx-border-width: " + historyBorderWidth * 2);
+		} else {
+			boardGrid.getChildren().get(0).setStyle("-fx-background-radius: " + borderRadius + " 0 0 0; -fx-border-radius: "
+					+ borderRadius + " 0 0 0; -fx-border-width: " + historyBorderWidth * 2);
+			boardGrid.getChildren().get(7).setStyle("-fx-background-radius: 0 " + borderRadius + " 0 0; -fx-border-radius: 0 "
+					+ borderRadius + " 0 0; -fx-border-width: " + historyBorderWidth * 2);
+			boardGrid.getChildren().get(63).setStyle("-fx-background-radius: 0 0 " + borderRadius
+					+ " 0; -fx-border-radius: 0 0 " + borderRadius + " 0; -fx-border-width: " + historyBorderWidth * 2);
+			boardGrid.getChildren().get(56).setStyle("-fx-background-radius: 0 0 0 " + borderRadius
+					+ "; -fx-border-radius: 0 0 0 " + borderRadius + "; -fx-border-width: " + historyBorderWidth * 2);
+		}
 
 		for (Node squareNode : boardGrid.getChildren()) {
 			AnchorPane square = (AnchorPane) squareNode;
