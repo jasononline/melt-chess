@@ -93,7 +93,7 @@ public class GameModel {
 	/**
 	 * Setter for the color
 	 * 
-	 * @param mode the new color
+	 * @param color the new color
 	 */
 	public static void setColor(ChessColor color) {
 		GameModel.color = color;
