@@ -7,7 +7,8 @@ import java.util.Map;
 
 
 /**
- * Assigns a score value to a given board position
+ * Assigns a score value to a given board position based on the value of captured pieces
+ * and the value of the position of the pieces.
  */
 public class ScoreGenerator {
 
@@ -157,7 +158,7 @@ public class ScoreGenerator {
      * @param index square index
      * @return flipped square index
      */
-    private static int getWhiteTableIndex(int index, int color) {
+    private static int getTableIndex(int index, int color) {
         if (color == Piece.Black) {
             return index;
         }
@@ -186,6 +187,7 @@ public class ScoreGenerator {
     private final EngineBoard board;
     // positive score value is good for white, negative good for black.
     private int score;
+    private int numOpponentPieces=0;
 
     /**
      * Return score for this position
@@ -210,16 +212,79 @@ public class ScoreGenerator {
     private void scoreBoard() {
         score = 0;
         score += scorePieceValue();
+        score += scorePiecePositionValue();
         board.setScore(score);
     }
 
     private int scorePieceValue() {
         int score = 0;
         int sign;
+        int oppColor = board.getTurnColor() == Piece.White ? Piece.Black : Piece.White;
         for (int piece : board.getCapturedPieces()) {
+            if (Piece.isColor(piece, oppColor)) {
+                numOpponentPieces += 1;
+            }
             sign = Piece.isColor(piece, Piece.White) ? 1: -1;
             score += sign * pieceValue.get(Piece.getType(piece));
         }
         return score;
+    }
+
+    private int scorePiecePositionValue() {
+        int piece, type, color, table_index, sign;
+        int score = 0;
+        for (int index=0;index < 64; index++) {
+            piece = board.getPieceAt(index);
+            type = Piece.getType(piece);
+            if (type == 0) {
+                continue;
+            }
+            color = Piece.getColor(piece);
+            sign = color == Piece.White ? 1: -1;
+
+            if (numOpponentPieces <= 4) {
+                score += getPiecePositionValueEG(getTableIndex(index, color), sign, type);
+            } else {
+                score += getPiecePositionValueMG(getTableIndex(index, color), sign, type);
+            }
+        }
+        return score;
+    }
+    
+    
+    private static int getPiecePositionValueMG(int tableIndex, int sign, int pieceType) {
+        switch (pieceType) {
+            case Piece.Pawn:
+                return sign * mg_pawn_table[tableIndex];
+            case Piece.Bishop:
+                return sign * mg_bishop_table[tableIndex];
+            case Piece.Rook:
+                return sign * mg_rook_table[tableIndex];
+            case Piece.Knight:
+                return sign * mg_knight_table[tableIndex];
+            case Piece.Queen:
+                return sign * mg_queen_table[tableIndex];
+            case Piece.King:
+                return sign * mg_king_table[tableIndex];
+        }
+        return 0;
+    }
+
+    private static int getPiecePositionValueEG(int tableIndex, int sign, int pieceType) {
+        switch (pieceType) {
+            case Piece.Pawn:
+                return sign * eg_pawn_table[tableIndex];
+            case Piece.Bishop:
+                return sign * eg_bishop_table[tableIndex];
+            case Piece.Rook:
+                return sign * eg_rook_table[tableIndex];
+            case Piece.Knight:
+                return sign * eg_knight_table[tableIndex];
+            case Piece.Queen:
+                return sign * eg_queen_table[tableIndex];
+            case Piece.King:
+                return sign * eg_king_table[tableIndex];
+        }
+        return 0;
     }
 }
