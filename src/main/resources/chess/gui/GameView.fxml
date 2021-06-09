@@ -98,7 +98,7 @@
                               <RowConstraints minHeight="41.25" prefHeight="82.5" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <AnchorPane fx:id="a8" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                              <AnchorPane fx:id="a8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -111,7 +111,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="b8" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                              <AnchorPane fx:id="b8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -124,7 +124,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="c8" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                              <AnchorPane fx:id="c8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -137,7 +137,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="d8" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
+                              <AnchorPane fx:id="d8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -150,7 +150,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="e8" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
+                              <AnchorPane fx:id="e8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -163,7 +163,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="f8" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5">
+                              <AnchorPane fx:id="f8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -176,7 +176,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="g8" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6">
+                              <AnchorPane fx:id="g8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -189,7 +189,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="h8" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7">
+                              <AnchorPane fx:id="h8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -202,7 +202,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="a7" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                              <AnchorPane fx:id="a7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -215,7 +215,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="b7" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <AnchorPane fx:id="b7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -228,7 +228,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="c7" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <AnchorPane fx:id="c7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -241,7 +241,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="d7" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                              <AnchorPane fx:id="d7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -254,7 +254,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="e7" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                              <AnchorPane fx:id="e7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -267,7 +267,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="f7" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                              <AnchorPane fx:id="f7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -280,7 +280,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="g7" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                              <AnchorPane fx:id="g7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -293,7 +293,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="h7" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                              <AnchorPane fx:id="h7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="1">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -306,167 +306,167 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="a6" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                              <AnchorPane fx:id="a6" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                                  <styleClass>
                                     <String fx:value="lightSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="b6" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <AnchorPane fx:id="b6" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <styleClass>
                                     <String fx:value="darkSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="c6" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                              <AnchorPane fx:id="c6" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                  <styleClass>
                                     <String fx:value="lightSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="d6" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                              <AnchorPane fx:id="d6" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
                                  <styleClass>
                                     <String fx:value="darkSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="e6" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                              <AnchorPane fx:id="e6" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
                                  <styleClass>
                                     <String fx:value="lightSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="f6" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                              <AnchorPane fx:id="f6" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
                                  <styleClass>
                                     <String fx:value="darkSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="g6" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                              <AnchorPane fx:id="g6" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
                                  <styleClass>
                                     <String fx:value="lightSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="h6" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                              <AnchorPane fx:id="h6" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="2">
                                  <styleClass>
                                     <String fx:value="darkSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="a5" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
+                              <AnchorPane fx:id="a5" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                                  <styleClass>
                                     <String fx:value="darkSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="b5" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                              <AnchorPane fx:id="b5" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                  <styleClass>
                                     <String fx:value="lightSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="c5" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                              <AnchorPane fx:id="c5" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                  <styleClass>
                                     <String fx:value="darkSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="d5" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                              <AnchorPane fx:id="d5" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                                  <styleClass>
                                     <String fx:value="lightSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="e5" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                              <AnchorPane fx:id="e5" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                                  <styleClass>
                                     <String fx:value="darkSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="f5" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                              <AnchorPane fx:id="f5" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
                                  <styleClass>
                                     <String fx:value="lightSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="g5" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                              <AnchorPane fx:id="g5" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
                                  <styleClass>
                                     <String fx:value="darkSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="h5" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="3">
+                              <AnchorPane fx:id="h5" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="3">
                                  <styleClass>
                                     <String fx:value="lightSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="a4" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
+                              <AnchorPane fx:id="a4" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
                                  <styleClass>
                                     <String fx:value="lightSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="b4" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                              <AnchorPane fx:id="b4" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <styleClass>
                                     <String fx:value="darkSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="c4" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                              <AnchorPane fx:id="c4" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                  <styleClass>
                                     <String fx:value="lightSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="d4" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                              <AnchorPane fx:id="d4" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
                                  <styleClass>
                                     <String fx:value="darkSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="e4" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                              <AnchorPane fx:id="e4" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
                                  <styleClass>
                                     <String fx:value="lightSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="f4" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                              <AnchorPane fx:id="f4" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
                                  <styleClass>
                                     <String fx:value="darkSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="g4" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                              <AnchorPane fx:id="g4" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
                                  <styleClass>
                                     <String fx:value="lightSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="h4" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
+                              <AnchorPane fx:id="h4" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
                                  <styleClass>
                                     <String fx:value="darkSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="a3" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
+                              <AnchorPane fx:id="a3" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
                                  <styleClass>
                                     <String fx:value="darkSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="b3" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                              <AnchorPane fx:id="b3" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <styleClass>
                                     <String fx:value="lightSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="c3" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                              <AnchorPane fx:id="c3" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                                  <styleClass>
                                     <String fx:value="darkSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="d3" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                              <AnchorPane fx:id="d3" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
                                  <styleClass>
                                     <String fx:value="lightSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="e3" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                              <AnchorPane fx:id="e3" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
                                  <styleClass>
                                     <String fx:value="darkSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="f3" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                              <AnchorPane fx:id="f3" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
                                  <styleClass>
                                     <String fx:value="lightSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="g3" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                              <AnchorPane fx:id="g3" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
                                  <styleClass>
                                     <String fx:value="darkSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="h3" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="5">
+                              <AnchorPane fx:id="h3" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="5">
                                  <styleClass>
                                     <String fx:value="lightSquare" />
                                     <String fx:value="square" />
                                  </styleClass></AnchorPane>
-                              <AnchorPane fx:id="a2" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="6">
+                              <AnchorPane fx:id="a2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="6">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -479,7 +479,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="b2" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                              <AnchorPane fx:id="b2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -492,7 +492,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="c2" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                              <AnchorPane fx:id="c2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -505,7 +505,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="d2" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                              <AnchorPane fx:id="d2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -518,7 +518,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="e2" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                              <AnchorPane fx:id="e2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -531,7 +531,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="f2" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                              <AnchorPane fx:id="f2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -544,7 +544,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="g2" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                              <AnchorPane fx:id="g2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -557,7 +557,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="h2" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
+                              <AnchorPane fx:id="h2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -570,7 +570,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="a1" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="7">
+                              <AnchorPane fx:id="a1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="7">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -583,7 +583,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="b1" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                              <AnchorPane fx:id="b1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -596,7 +596,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="c1" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                              <AnchorPane fx:id="c1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -609,7 +609,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="d1" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                              <AnchorPane fx:id="d1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -622,7 +622,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="e1" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
+                              <AnchorPane fx:id="e1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -635,7 +635,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="f1" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="7">
+                              <AnchorPane fx:id="f1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="7">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -648,7 +648,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="g1" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="7">
+                              <AnchorPane fx:id="g1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="7">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -661,7 +661,7 @@
                                     <String fx:value="square" />
                                  </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="h1" onMouseDragged="#handleSquareMouseDrag" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
+                              <AnchorPane fx:id="h1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" onMouseReleased="#handleSquareMouseRelease" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
                                  <children>
                                     <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
