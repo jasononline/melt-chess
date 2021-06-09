@@ -1,6 +1,8 @@
 package chess.gui.menu;
 
 import chess.gui.Gui;
+import chess.gui.game.GameModel;
+import chess.gui.game.GameModel.*;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.TextManager;
 import javafx.beans.value.ChangeListener;
@@ -17,30 +19,6 @@ import javafx.scene.layout.AnchorPane;
  * mainly switching to one of the other scenes and selecting game options.
  */
 public class MenuController {
-
-	/*
-	 * Enumeration of available game modes
-	 */
-	private enum ChessMode {
-		None, Player, Computer, Network;
-	}
-
-	/*
-	 * Enumeration of available colors
-	 */
-	private enum ChessColor {
-		None, White, Black;
-	}
-
-	/**
-	 * Stores the chosen game mode
-	 */
-	private ChessMode gameMode = ChessMode.None;
-
-	/**
-	 * Stroes the chosen color
-	 */
-	private ChessColor color = ChessColor.None;
 
 	@FXML
 	private AnchorPane rootPane;
@@ -108,21 +86,21 @@ public class MenuController {
 		if (source == playerModeButton) {
 			whiteColorButton.getStyleClass().remove("selected");
 			blackColorButton.getStyleClass().remove("selected");
-			this.color = ChessColor.None;
-			this.gameMode = ChessMode.Player;
+			GameModel.setColor(ChessColor.None);
+			GameModel.setGameMode(ChessMode.Player);
 		}
 		if (source == aiModeButton) {
 			colorPane.setDisable(false);
-			this.gameMode = ChessMode.Computer;
+			GameModel.setGameMode(ChessMode.Computer);
 		}
 		if (source == networkModeButton) {
 			whiteColorButton.getStyleClass().remove("selected");
 			blackColorButton.getStyleClass().remove("selected");
-			this.color = ChessColor.None;
-			this.gameMode = ChessMode.Network;
+			GameModel.setColor(ChessColor.None);
+			GameModel.setGameMode(ChessMode.Network);
 		}
 
-		if (this.gameMode != ChessMode.None && this.gameMode != ChessMode.Computer) {
+		if (GameModel.getGameMode() != ChessMode.None && GameModel.getGameMode() != ChessMode.Computer) {
 			startButton.setDisable(false);
 		} else {
 			startButton.setDisable(true);
@@ -142,11 +120,11 @@ public class MenuController {
 		source.getStyleClass().add("selected");
 
 		if (source == whiteColorButton)
-			this.color = ChessColor.White;
+			GameModel.setColor(ChessColor.White);
 		if (source == blackColorButton)
-			this.color = ChessColor.Black;
+			GameModel.setColor(ChessColor.Black);
 
-		if (this.color != ChessColor.None) {
+		if (GameModel.getColor() != ChessColor.None) {
 			startButton.setDisable(false);
 		}
 	}
@@ -159,7 +137,7 @@ public class MenuController {
 		Node source = (Node) event.getSource();
 
 		if (source == startButton) {
-			if (this.gameMode == ChessMode.Network) {
+			if (GameModel.getGameMode() == ChessMode.Network) {
 				Gui.switchTo(Gui.ChessScene.NetworkConnection);
 			} else {
 				// TODO start a new Game

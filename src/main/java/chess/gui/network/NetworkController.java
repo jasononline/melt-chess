@@ -32,18 +32,26 @@ public class NetworkController {
 	@FXML
 	private TextField portTextField;
 	@FXML
+	private AnchorPane errorPane;
+	@FXML
+	private Label errorLabel;
+	@FXML
 	private Button cancelButton;
 	@FXML
 	private Button connectButton;
-	private boolean[] connectButtonDisabled = { true, true };
+
+	private boolean isIpValid = false;
+	private boolean isPortValid = false;
 
 	@FXML
 	private void initialize() {
 		TextManager.computeText(titleLabel, "network.title");
 		TextManager.computeText(ipLabel, "network.ip");
 		TextManager.computeText(portLabel, "network.port");
+		TextManager.computeText(errorLabel, "network.error");
 		TextManager.computeText(cancelButton, "network.cancel");
 		TextManager.computeText(connectButton, "network.connect");
+		errorPane.setVisible(false);
 		connectButton.setDisable(true);
 
 		ChangeListener<Number> rootPaneSizeListener = (observable, oldValue, newValue) -> {
@@ -55,12 +63,12 @@ public class NetworkController {
 		// Check if input matched ip pattern
 		ipTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			ipTextField.getStyleClass().add("error");
-			connectButtonDisabled[0] = true;
+			isIpValid = false;
 			connectButton.setDisable(true);
 			if (newValue.matches("^(([01]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])(.(?!$)|$)){4}$")) {
 				ipTextField.getStyleClass().removeAll("error");
-				connectButtonDisabled[0] = false;
-				if (!connectButtonDisabled[0] && !connectButtonDisabled[1])
+				isIpValid = true;
+				if (isIpValid && isPortValid)
 					connectButton.setDisable(false);
 			}
 			if (newValue == "") {
@@ -71,13 +79,13 @@ public class NetworkController {
 		// Check if port is in range of [1-65535]
 		portTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			portTextField.getStyleClass().add("error");
-			connectButtonDisabled[1] = true;
+			isPortValid = false;
 			connectButton.setDisable(true);
 			if (newValue
 					.matches("^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$")) {
 				portTextField.getStyleClass().removeAll("error");
-				connectButtonDisabled[1] = false;
-				if (!connectButtonDisabled[0] && !connectButtonDisabled[1])
+				isPortValid = true;
+				if (isIpValid && isPortValid)
 					connectButton.setDisable(false);
 			}
 			if (newValue == "") {
@@ -93,10 +101,16 @@ public class NetworkController {
 		System.out.println("Connect to");
 		System.out.println("IP Address: " + IPAddress);
 		System.out.println("Port: " + PortAddress);
+		errorPane.setVisible(false);
 
 		// TODO: Establish connection
+
+		// if error
+		// errorPane.setVisible(true);
+		
+		// else
 		// TODO: Start new game
-		Gui.switchTo(Gui.ChessScene.Game);
+		// Gui.switchTo(Gui.ChessScene.Game);
 	}
 
 	@FXML
@@ -115,7 +129,7 @@ public class NetworkController {
 
 		if (field == portTextField) {
 			if (event.getCode().equals(KeyCode.ENTER)) {
-				if (!connectButtonDisabled[0] && !connectButtonDisabled[1])
+				if (isIpValid && isPortValid)
 					handleConnectButtonOnAction();
 			}
 		}
@@ -133,6 +147,7 @@ public class NetworkController {
 		titleLabel.setStyle("-fx-font-size: " + titleFontSize);
 		ipLabel.setStyle("-fx-font-size: " + fontSize);
 		portLabel.setStyle("-fx-font-size: " + fontSize);
+		errorLabel.setStyle("-fx-font-size: " + Math.min(rootHeight / 36, rootWidth / 64 * 1.5));
 		ipTextField.setStyle("-fx-font-size: " + fontSize + "; -fx-background-radius: " + borderRadius
 				+ "; -fx-border-radius: " + borderRadius + "; -fx-border-width: " + borderWidth / 1.5);
 		portTextField.setStyle("-fx-font-size: " + fontSize + "; -fx-background-radius: " + borderRadius

@@ -3,7 +3,6 @@ package chess.gui.game;
 import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 import chess.model.Move;
 
@@ -12,6 +11,30 @@ import chess.model.Move;
  * positions of image objects, which piece is selected, etc.
  */
 public class GameModel {
+
+	/*
+	 * Enumeration of available game modes
+	 */
+	public enum ChessMode {
+		None, Player, Computer, Network;
+	}
+
+	/*
+	 * Enumeration of available colors
+	 */
+	public enum ChessColor {
+		None, White, Black;
+	}
+
+	/**
+	 * Stores the chosen game mode
+	 */
+	private static ChessMode gameMode = ChessMode.None;
+
+	/**
+	 * Stroes the chosen color
+	 */
+	private static ChessColor color = ChessColor.None;
 
 	/**
 	 * Stores the Move objects that represent the history of the game.
@@ -59,6 +82,24 @@ public class GameModel {
 	}
 
 	/**
+	 * Setter for the gameMode
+	 * 
+	 * @param mode the new game mode
+	 */
+	public static void setGameMode(ChessMode mode) {
+		GameModel.gameMode = mode;
+	}
+
+	/**
+	 * Setter for the color
+	 * 
+	 * @param mode the new color
+	 */
+	public static void setColor(ChessColor color) {
+		GameModel.color = color;
+	}
+
+	/**
 	 * Setter for the selectedIndex
 	 * 
 	 * @param index the new selectedIndex, should be -1 smaller than or equal index
@@ -68,6 +109,24 @@ public class GameModel {
 		if (-1 <= index && index <= 63) {
 			GameModel.selectedIndex = index;
 		}
+	}
+
+	/**
+	 * Getter for the current game mode
+	 * 
+	 * @return current game mode
+	 */
+	public static ChessMode getGameMode() {
+		return gameMode;
+	}
+
+	/**
+	 * Getter for the current color
+	 * 
+	 * @return current color
+	 */
+	public static ChessColor getColor() {
+		return color;
 	}
 
 	/**

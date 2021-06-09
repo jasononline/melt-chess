@@ -10,7 +10,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
-import javafx.print.PrintColor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.transform.Rotate;
 
 /**
  * Controls behaviour of GUI elements except the chessboard (see
@@ -66,9 +66,12 @@ public class GameController {
 	private boolean isSquareDragged = false;
 	private Point2D startPoint;
 	private Point2D dragDistance;
+	private boolean isRotated = false;
 
 	@FXML
 	private void initialize() {
+		TextManager.computeText(currentMoveLabel, "game.whiteMove");
+		TextManager.computeText(checkLabel, "game.whiteInCheck");
 		TextManager.computeText(settingsButton, "game.settings");
 		TextManager.computeText(resignButton, "game.resign");
 		TextManager.computeText(restartButton, "game.restart");
@@ -326,9 +329,10 @@ public class GameController {
 	@FXML
 	private void handleSquareMouseRelease(MouseEvent event) {
 
+		Node source = (Node) event.getSource();
+
 		if (isSquareDragged) {
 
-			Node source = (Node) event.getSource();
 			Node target = event.getPickResult().getIntersectedNode();
 
 			if (source instanceof AnchorPane) {
@@ -365,6 +369,30 @@ public class GameController {
 			System.out.println("Mouse press release");
 		}
 
+		if (SettingsModel.isFlipBoard() && !GameModel.isSelected() && !((AnchorPane) source).getChildren().isEmpty()) {
+
+			String lines = "12345678";
+			String columns = "hgfedcba";
+			if (isRotated) { // rotate back
+				lines = "87654321";
+				columns = "abcdefgh";
+			}
+
+			for (int i = 0; i < 8; i++) {
+				((Label) lineNumbersPane.getChildren().get(i)).setText("" + lines.charAt(i));
+			}
+			for (int i = 0; i < 8; i++) {
+				((Label) columnLettersPane.getChildren().get(i)).setText("" + columns.charAt(i));
+			}
+
+			boardGrid.getTransforms().add(new Rotate(180, boardGrid.getWidth() / 2, boardGrid.getHeight() / 2));
+			for (Node squareNode : boardGrid.getChildren()) {
+				squareNode.getTransforms().add(
+						new Rotate(180, squareNode.getBoundsInLocal().getCenterX(), squareNode.getBoundsInLocal().getCenterY()));
+			}
+
+			isRotated = !isRotated;
+		}
 	}
 
 	private void resize() {

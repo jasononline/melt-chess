@@ -62,6 +62,12 @@
   -fx-alignment: center;
 }
 
+.errorLabel {
+  -fx-font-size: 20px;
+  -fx-text-fill: rgb(255, 0, 0);
+  -fx-font-weight: 600;
+}
+
 .button {
   -fx-background-color: rgba(131, 131, 131, 0.3);
   -fx-background-radius: 10;
