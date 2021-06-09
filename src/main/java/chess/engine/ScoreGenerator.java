@@ -1,13 +1,14 @@
 package chess.engine;
 
-import chess.model.Coordinate;
-import chess.model.Move;
 import chess.model.Piece;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+
+/**
+ * Assigns a score value to a given board position
+ */
 public class ScoreGenerator {
 
 
@@ -31,28 +32,25 @@ public class ScoreGenerator {
                     Piece.Queen, 900 )
     );
 
-
-    protected int[] squaresScore;
     private EngineBoard board;
     // positive score value is good for white, negative good for black.
     private int score;
 
     /**
+     * Return score for this position
      * @return computed score for this position
      */
     public int getScore() { return score; }
 
 
+    /**
+     * Initialize score generation for
+     * @param board the current position
+     */
     public ScoreGenerator(EngineBoard board) {
         this.board = board;
-        squaresScore = new int[64];
-        scoreSquaresUnderAttack(
-                Engine.getMoves(board, Piece.White),
-                Engine.getMoves(board, Piece.Black)
-        );
         scoreBoard();
     }
-
 
 
     /**
@@ -61,7 +59,6 @@ public class ScoreGenerator {
     private void scoreBoard() {
         score = 0;
         score += scorePieceValue();
-        score += scoreCenterAttack();
         board.setScore(score);
     }
 
@@ -73,39 +70,5 @@ public class ScoreGenerator {
             score += sign * pieceValue.get(Piece.getType(piece));
         }
         return score;
-    }
-
-
-    protected void scoreSquaresUnderAttack(List<Move> whiteMoves, List<Move> blackMoves) {
-        for (Move move : whiteMoves)
-            scoreSquareUnderAttackFor(move);
-        for (Move move : blackMoves)
-            scoreSquareUnderAttackFor(move);
-    }
-
-
-    private void scoreSquareUnderAttackFor(Move move) {
-        int piece = board.getPieceAt(move.getStartSquare());
-        int targetSquare = move.getTargetSquare();
-        int startSquare = move.getStartSquare();
-        // check diagonal movement for pawn
-        if (Piece.isType(piece, Piece.Pawn) && Coordinate.fromIndex(targetSquare)[0] == Coordinate.fromIndex(startSquare)[0]) {
-            return;
-        }
-        int sign = Piece.isColor(piece, Piece.White) ? 1 : -1;
-        squaresScore[targetSquare] += sign;
-    }
-
-
-    /**
-     * Calculates a score based on how many center squares are under attack
-     * @return score value
-     */
-    private int scoreCenterAttack() {
-        int sum = 0;
-        for (int square : centerSquares) {
-            sum += squaresScore[square];
-        }
-        return sum;
     }
 }
