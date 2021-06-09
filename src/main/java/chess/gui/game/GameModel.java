@@ -16,7 +16,7 @@ public class GameModel {
 	/**
 	 * Stores the Move objects that represent the history of the game.
 	 */
-	private static Stack<Move> movesHistory = new Stack<>();
+	private static List<Move> movesHistory = new ArrayList<>();
 
 	/**
 	 * Stores the ImageView objects that represent the pieces on the field.
@@ -24,9 +24,14 @@ public class GameModel {
 	private static List<ImageView> piecesGraphics = new ArrayList<>();
 
 	/**
-	 * Stores the ImageView objects that represent the beaten pieces.
+	 * Stores the ImageView objects that represent the beaten white pieces.
 	 */
-	private static List<ImageView> beatenPiecesGraphics = new ArrayList<>();
+	private static List<ImageView> beatenWhitePiecesGraphics = new ArrayList<>();
+
+	/**
+	 * Stores the ImageView objects that represent the beaten black pieces.
+	 */
+	private static List<ImageView> beatenBlackPiecesGraphics = new ArrayList<>();
 
 	/**
 	 * Stores the ImageView objects that represent the possible moves on the field.
@@ -50,7 +55,7 @@ public class GameModel {
 	 * @return true if a piece has been selected
 	 */
 	public static boolean isSelected() {
-		return selectedIndex == -1;
+		return selectedIndex != -1;
 	}
 
 	/**
@@ -66,11 +71,11 @@ public class GameModel {
 	}
 
 	/**
-	 * Getter for the movesHistory-Stack
+	 * Getter for the movesHistory-List
 	 * 
-	 * @return the movesHistory-Stack
+	 * @return the movesHistory-List
 	 */
-	public static Stack<Move> getMovesHistory() {
+	public static List<Move> getMovesHistory() {
 		return movesHistory;
 	}
 
@@ -88,8 +93,17 @@ public class GameModel {
 	 * 
 	 * @return the BeatenPiecesGraphics-List
 	 */
-	public static List<ImageView> getBeatenPiecesGraphics() {
-		return beatenPiecesGraphics;
+	public static List<ImageView> getBeatenWhitePiecesGraphics() {
+		return beatenWhitePiecesGraphics;
+	}
+
+	/**
+	 * Getter for the BeatenPiecesGraphics-List
+	 * 
+	 * @return the BeatenPiecesGraphics-List
+	 */
+	public static List<ImageView> getBeatenBlackPiecesGraphics() {
+		return beatenBlackPiecesGraphics;
 	}
 
 	/**
@@ -129,15 +143,6 @@ public class GameModel {
 	}
 
 	/**
-	 * Setter for the beatenPiecesGraphics-List
-	 * 
-	 * @param beatenPiecesGraphics the new beatenPiecesGraphics-List
-	 */
-	public static void setBeatenPiecesGraphics(List<ImageView> beatenPiecesGraphics) {
-		GameModel.beatenPiecesGraphics = beatenPiecesGraphics;
-	}
-
-	/**
 	 * Setter for the possibleMovesGraphics-List
 	 * 
 	 * @param possibleMovesGraphics the new possibleMovesGraphics-List
@@ -155,17 +160,10 @@ public class GameModel {
 		GameModel.selectedFieldGraphic = selectedFieldGraphic;
 	}
 
-	/**
-	 * Adds new move to movesHistory-Stack
-	 * 
-	 * @param move the new move
-	 */
-	public static void addMoveToHistory(Move move) {
-		GameModel.movesHistory.push(move);
-	}
-
 	public static void reset() {
 		// TODO: Reset all to default values
+		GameModel.beatenWhitePiecesGraphics.clear();
+		GameModel.beatenBlackPiecesGraphics.clear();
 		GameModel.movesHistory.clear();
 	}
 }

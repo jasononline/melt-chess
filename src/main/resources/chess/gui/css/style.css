@@ -121,6 +121,18 @@
   -fx-alignment: center;
 }
 
+.checkLabel {
+  -fx-font-weight: 700;
+  -fx-font-size: 20px;
+  -fx-text-fill: rgb(223, 38, 38);
+}
+
+.moveLabel {
+  -fx-font-weight: 700;
+  -fx-font-size: 25px;
+  -fx-text-fill: #fff;
+}
+
 .textField {
   -fx-background-color: rgba(131, 131, 131, 0.3);
   -fx-background-radius: 10;
@@ -183,7 +195,8 @@
 }
 
 .square.focused {
-  -fx-border-color: rgba(214, 169, 22);
+  -fx-border-color: #eee85b;
+  /* -fx-border-color: rgba(214, 169, 22); */
 }
 
 .lightSquare {
@@ -192,4 +205,10 @@
 
 .darkSquare {
   -fx-background-color: rgba(28, 20, 20, 0.7);
+}
+
+.squareLabel {
+  -fx-font-size: 12;
+  -fx-font-weight: 700;
+  -fx-text-fill: white;
 }
