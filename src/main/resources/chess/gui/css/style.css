@@ -46,6 +46,11 @@
   -fx-background-color: rgba(92, 92, 92, 0.54);
 }
 
+.popupBox {
+  -fx-background-radius: 10;
+  -fx-background-color: rgba(92, 92, 92, 0.9);
+}
+
 .boxLabel {
   -fx-font-family: Montserrat;
   -fx-font-weight: 600;
@@ -88,6 +93,14 @@
 
 .button:hover {
   -fx-border-color: #fff;
+}
+
+.popupButton {
+  -fx-background-color: rgba(131, 131, 131, 0.7);
+  -fx-font-size: 15;
+  -fx-background-radius: 5;
+  -fx-border-radius: 5;
+  -fx-border-width: 2;
 }
 
 .modeButton {
@@ -201,7 +214,7 @@
 }
 
 .square.cursor {
-	-fx-cursor: hand;
+  -fx-cursor: hand;
 }
 
 .square.focused {

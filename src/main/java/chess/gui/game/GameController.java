@@ -1,13 +1,17 @@
 package chess.gui.game;
 
 import chess.gui.Gui;
+import chess.gui.game.GameModel.ChessColor;
 import chess.gui.settings.SettingsModel;
+import chess.gui.util.GraphicsManager;
 import chess.gui.util.TextManager;
 import chess.model.Coordinate;
 import chess.model.Move;
+import chess.model.Piece;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -61,6 +65,20 @@ public class GameController {
 	private Button settingsButton;
 	@FXML
 	private Button menuButton;
+
+	@FXML
+	private AnchorPane promotionPopup;
+	@FXML
+	private Label promotionPopupLabel;
+	@FXML
+	private Button promotionPopupQueenButton;
+	@FXML
+	private Button promotionPopupRookButton;
+	@FXML
+	private Button promotionPopupBishopButton;
+	@FXML
+	private Button promotionPopupKnightButton;
+
 	private boolean isRotated = false;
 
 	@FXML
@@ -72,6 +90,11 @@ public class GameController {
 		TextManager.computeText(resignButton, "game.resign");
 		TextManager.computeText(restartButton, "game.restart");
 		TextManager.computeText(menuButton, "game.menu");
+		TextManager.computeText(promotionPopupLabel, "game.promotionTitle");
+		TextManager.computeText(promotionPopupQueenButton, "game.promotionQueen");
+		TextManager.computeText(promotionPopupRookButton, "game.promotionRook");
+		TextManager.computeText(promotionPopupBishopButton, "game.promotionBishop");
+		TextManager.computeText(promotionPopupKnightButton, "game.promotionKnight");
 
 		ChangeListener<Number> rootPaneSizeListener = (observable, oldValue, newValue) -> {
 			resize();
@@ -83,6 +106,13 @@ public class GameController {
 				.bind(Bindings.min(rootPane.widthProperty().divide(1.94), rootPane.heightProperty().divide(1.09)));
 		boardGrid.prefWidthProperty()
 				.bind(Bindings.min(rootPane.widthProperty().divide(1.94), rootPane.heightProperty().divide(1.09)));
+		boardGrid.maxHeightProperty().bind(boardGrid.prefHeightProperty());
+		boardGrid.maxWidthProperty().bind(boardGrid.prefWidthProperty());
+
+		promotionPopup.prefHeightProperty().bind(boardGrid.heightProperty().divide(4.4));
+		promotionPopup.prefWidthProperty().bind(boardGrid.widthProperty().divide(1.32));
+		promotionPopup.maxHeightProperty().bind(promotionPopup.prefHeightProperty());
+		promotionPopup.maxWidthProperty().bind(promotionPopup.prefWidthProperty());
 
 		lineNumbersPane.prefHeightProperty().bind(boardGrid.heightProperty());
 		lineNumbersPane.prefWidthProperty()
@@ -92,6 +122,7 @@ public class GameController {
 		columnLettersPane.prefWidthProperty().bind(boardGrid.widthProperty());
 
 		checkLabel.setVisible(false);
+		promotionPopup.setVisible(false);
 
 		updateMovesHistoryUI();
 		updateBeatenPiecesUI();
@@ -104,20 +135,16 @@ public class GameController {
 		if (button == resignButton) {
 			// TODO: End current game (leave game scene open)
 
-			if (GamePopup.showSurePopup(boardGrid, "game.sureResign")) {
-				System.out.println("Resign");
-			}
+			System.out.println("Resign");
 		}
 
 		if (button == restartButton) {
 			// TODO: End current game
 			// TODO: Start new game
 
-			if (GamePopup.showSurePopup(boardGrid, "game.sureRestart")) {
-				System.out.println("Restart");
-				GameModel.reset();
-				initialize();
-			}
+			System.out.println("Restart");
+			GameModel.reset();
+			initialize();
 
 		}
 
@@ -129,10 +156,8 @@ public class GameController {
 		if (button == menuButton) {
 			// TODO: End current game
 
-			if (GamePopup.showSurePopup(boardGrid, "game.sureQuit")) {
-				GameModel.reset();
-				Gui.switchTo(Gui.ChessScene.Menu);
-			}
+			GameModel.reset();
+			Gui.switchTo(Gui.ChessScene.Menu);
 		}
 	}
 
@@ -295,6 +320,57 @@ public class GameController {
 
 	}
 
+	public void showPromotionPopup(ChessColor forColor) {
+		ImageView queenIcon = GraphicsManager
+				.getGraphicAsImageView(forColor == ChessColor.White ? "queen_white" : "queen_black");
+		ImageView rookIcon = GraphicsManager
+				.getGraphicAsImageView(forColor == ChessColor.White ? "rook_white" : "rook_black");
+		ImageView bishopIcon = GraphicsManager
+				.getGraphicAsImageView(forColor == ChessColor.White ? "bishop_white" : "bishop_black");
+		ImageView knightIcon = GraphicsManager
+				.getGraphicAsImageView(forColor == ChessColor.White ? "knight_white" : "knight_black");
+		ImageView[] icons = { queenIcon, rookIcon, bishopIcon, knightIcon };
+		for (ImageView icon : icons) {
+			icon.setPreserveRatio(true);
+			icon.setFitHeight(20);
+		}
+		promotionPopupQueenButton.setGraphic(queenIcon);
+		promotionPopupRookButton.setGraphic(rookIcon);
+		promotionPopupBishopButton.setGraphic(bishopIcon);
+		promotionPopupKnightButton.setGraphic(knightIcon);
+		promotionPopup.setVisible(true);
+		boardGrid.setDisable(true);
+		historyPane.setDisable(true);
+		resignButton.setDisable(true);
+		restartButton.setDisable(true);
+		settingsButton.setDisable(true);
+		menuButton.setDisable(true);
+
+		EventHandler<ActionEvent> buttonActionHandler = (event) -> {
+			if (event.getSource() == promotionPopupQueenButton)
+				GameModel.setPieceForPromotion(Piece.Queen + (forColor == ChessColor.White ? Piece.White : Piece.Black));
+			if (event.getSource() == promotionPopupRookButton)
+				GameModel.setPieceForPromotion(Piece.Rook + (forColor == ChessColor.White ? Piece.White : Piece.Black));
+			if (event.getSource() == promotionPopupBishopButton)
+				GameModel.setPieceForPromotion(Piece.Bishop + (forColor == ChessColor.White ? Piece.White : Piece.Black));
+			if (event.getSource() == promotionPopupKnightButton)
+				GameModel.setPieceForPromotion(Piece.Knight + (forColor == ChessColor.White ? Piece.White : Piece.Black));
+
+			promotionPopup.setVisible(false);
+			boardGrid.setDisable(false);
+			historyPane.setDisable(false);
+			resignButton.setDisable(false);
+			restartButton.setDisable(false);
+			settingsButton.setDisable(false);
+			menuButton.setDisable(false);
+		};
+
+		promotionPopupQueenButton.setOnAction(buttonActionHandler);
+		promotionPopupRookButton.setOnAction(buttonActionHandler);
+		promotionPopupBishopButton.setOnAction(buttonActionHandler);
+		promotionPopupKnightButton.setOnAction(buttonActionHandler);
+	}
+
 	private void flipBoard() {
 		String lines = "12345678";
 		String columns = "hgfedcba";
@@ -338,6 +414,7 @@ public class GameController {
 		checkLabel.setStyle("-fx-font-size: " + historyFontSize);
 		timeLabel.setStyle("-fx-font-size: " + timeFontSize);
 		historyLabel.setStyle("-fx-font-size: " + historyFontSize);
+		promotionPopupLabel.setStyle("-fx-font-size: " + fontSize);
 
 		historyLabel.getParent().getParent().getParent()
 				.setStyle("-fx-background-radius: " + borderRadius + "; -fx-border-radius: " + borderRadius);
@@ -351,6 +428,26 @@ public class GameController {
 			historyButton.setStyle("-fx-font-size: " + historyButtonFontSize + "; -fx-background-radius: " + borderRadius / 2
 					+ "; -fx-border-radius: " + borderRadius / 2 + "; -fx-border-width: " + historyBorderWidth);
 			// historyButton.setMaxHeight(rootHeight / 20.57);
+		}
+
+		promotionPopupQueenButton.setStyle("-fx-font-size: " + fontSize / 1.66 + "; -fx-graphic-text-gap: " + fontSize / 5
+				+ "; -fx-background-radius: " + borderRadius / 2 + "; -fx-border-radius: " + borderRadius / 2
+				+ "; -fx-border-width: " + historyBorderWidth);
+		promotionPopupRookButton.setStyle("-fx-font-size: " + fontSize / 1.66 + "; -fx-graphic-text-gap: " + fontSize / 5
+				+ "; -fx-background-radius: " + borderRadius / 2 + "; -fx-border-radius: " + borderRadius / 2
+				+ "; -fx-border-width: " + historyBorderWidth);
+		promotionPopupBishopButton.setStyle("-fx-font-size: " + fontSize / 1.66 + "; -fx-graphic-text-gap: " + fontSize / 5
+				+ "; -fx-background-radius: " + borderRadius / 2 + "; -fx-border-radius: " + borderRadius / 2
+				+ "; -fx-border-width: " + historyBorderWidth);
+		promotionPopupKnightButton.setStyle("-fx-font-size: " + fontSize / 1.66 + "; -fx-graphic-text-gap: " + fontSize / 5
+				+ "; -fx-background-radius: " + borderRadius / 2 + "; -fx-border-radius: " + borderRadius / 2
+				+ "; -fx-border-width: " + historyBorderWidth);
+
+		ImageView[] promotionIcons = { (ImageView) promotionPopupQueenButton.getGraphic(),
+				(ImageView) promotionPopupRookButton.getGraphic(), (ImageView) promotionPopupBishopButton.getGraphic(),
+				(ImageView) promotionPopupKnightButton.getGraphic() };
+		for (ImageView icon : promotionIcons) {
+			icon.setFitHeight(historyFontSize);
 		}
 
 		ImageView[] icons = { (ImageView) resignButton.getGraphic(), (ImageView) restartButton.getGraphic(),
