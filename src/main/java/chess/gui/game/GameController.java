@@ -5,9 +5,7 @@ import chess.gui.game.GameModel.ChessColor;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.GraphicsManager;
 import chess.gui.util.TextManager;
-import chess.model.Coordinate;
-import chess.model.Move;
-import chess.model.Piece;
+import chess.model.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -140,8 +138,7 @@ public class GameController {
 		promotionPopup.setVisible(false);
 		surePopup.setVisible(false);
 
-		updateMovesHistoryUI();
-		updateBeatenPiecesUI();
+		updateUI();
 	}
 
 	@FXML
@@ -159,14 +156,10 @@ public class GameController {
 		}
 
 		if (button == restartButton && restartGame) {
-			// TODO: End current game
-			// TODO: Start new game
-
 			restartGame = false;
 			System.out.println("Restart");
-			GameModel.reset();
+			GameModel.beginNewGame();
 			initialize();
-
 		}
 
 		if (button == settingsButton) {
@@ -176,59 +169,50 @@ public class GameController {
 
 		if (button == menuButton && endGame) {
 			// TODO: End current game
-
-			GameModel.reset();
 			endGame = false;
 			Gui.switchTo(Gui.ChessScene.Menu);
 		}
 	}
 
-	private boolean movePieceOnBoard(int startIndex, int targetIndex) {
-		AnchorPane startSquare = (AnchorPane) boardGrid.getChildren().get(startIndex);
-		AnchorPane targetSquare = (AnchorPane) boardGrid.getChildren().get(targetIndex);
+	/**
+	 * Moves the selected Piece to the selected destination if allowed
+	 * @param startIndex the index of the selected piece
+	 * @param targetIndex the selected destination
+	 */
+	private void movePieceOnBoard(int startIndex, int targetIndex) {
+		Move move = new Move(startIndex, targetIndex);
 
-		if (!startSquare.getChildren().isEmpty()) {
-
-			ImageView piece = (ImageView) startSquare.getChildren().get(0);
-
-			if (startSquare != targetSquare) {
-
-				// Check if the move is valid or allowed
-				if (true) {
-					// check if target square has piece
-					if (!targetSquare.getChildren().isEmpty()) {
-						ImageView targetPiece = (ImageView) targetSquare.getChildren().get(0);
-						String targetPieceName = targetPiece.getImage().getUrl()
-								.substring(targetPiece.getImage().getUrl().lastIndexOf("/") + 1);
-						String targetPieceType = targetPieceName.split("_")[0];
-						String targetPieceColor = targetPieceName.split("_")[1];
-						targetPieceColor = targetPieceColor.substring(0, targetPieceColor.lastIndexOf("."));
-
-						if (targetPieceColor.equals("white"))
-							GameModel.getBeatenWhitePiecesGraphics().add(targetPiece);
-						if (targetPieceColor.equals("black"))
-							GameModel.getBeatenBlackPiecesGraphics().add(targetPiece);
-
-						updateBeatenPiecesUI();
-					}
-
-					targetSquare.getChildren().clear();
-					targetSquare.getChildren().add(piece);
-					GameModel.getMovesHistory().add(0, new Move(startIndex, targetIndex));
-					updateMovesHistoryUI();
-
-					return true;
-
-				}
-
+		// if promotion is possible
+		if (Coordinate.isOnUpperBorder(targetIndex) || Coordinate.isOnLowerBorder(targetIndex)) {
+			ChessColor currentColor;
+			if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.White) {
+				currentColor = ChessColor.White;
+			} else {
+				currentColor = ChessColor.Black;
 			}
-
+			// open the PopupMenu to choose promotion
+			showPromotionPopup(currentColor, move);
+			return;
 		}
-
-		return false;
+		finishMove(move);
 	}
 
+	/**
+	 * Calls all the functions to update the UI
+	 */
+	private void updateUI() {
+		updateMovesHistoryUI();
+		updateBeatenPiecesUI();
+		updatePiecesUI();
+		updateLabelsUI();
+	}
+
+	/**
+	 * Updates the beaten pieces on the UI
+	 */
 	private void updateBeatenPiecesUI() {
+
+		GameModel.updateBeatenPiecesLists();
 
 		whiteBeatenFlowPane.getChildren().clear();
 		blackBeatenFlowPane.getChildren().clear();
@@ -242,6 +226,9 @@ public class GameController {
 		}
 	}
 
+	/**
+	 * Updates the move history on the UI
+	 */
 	private void updateMovesHistoryUI() {
 
 		historyGrid.getChildren().clear();
@@ -267,6 +254,64 @@ public class GameController {
 		resize();
 	}
 
+	/**
+	 * Updates the pieces on the UI
+	 */
+	private void updatePiecesUI() {
+		// clear the board
+		AnchorPane pane;
+		Board board = GameModel.getCurrentGame().getCurrentPosition();
+		ImageView pieceView;
+		int piece;
+		String pieceName;
+
+		for (int i = 0; i <= 63; i++) {
+			// clear the pane
+			pane = (AnchorPane) boardGrid.getChildren().get(i);
+			pane.getChildren().clear();
+
+			piece = board.getPieceAt(i);
+
+			// if there is a piece here
+			if (piece != 0) {
+				// get the graphic of the piece
+				pieceView = GraphicsManager.getGraphicAsImageView(Piece.toName(piece));
+				pieceView.setFitHeight(50);
+				// put the graphic in th pane
+				pane.getChildren().add(pieceView);
+			}
+		}
+	}
+
+	/**
+	 * Updates the labels on the UI
+	 */
+	private void updateLabelsUI() {
+		String key;
+
+		// CurrentMoveLabel
+		if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.White) {
+			key = "game.whiteMove";
+		} else {
+			key = "game.blackMove";
+		}
+		TextManager.computeText(currentMoveLabel, key);
+	}
+
+	/**
+	 * Finishes the current move after flags for promotion are set.
+	 * @param move the current move containing flags for promotion
+	 */
+	private void finishMove(Move move) {
+		GameModel.getCurrentGame().addFlag(move);
+		System.out.println("Called: movePieceOnBorad(" + move.toString() + ")");
+		if (GameModel.getCurrentGame().attemptMove(move)) {
+			System.out.println("Move happened: " + move.toString());
+		} else {
+			System.out.println("Game.attemptMove() did not allow " + move.toString());
+		}
+		updateUI();
+	}
 	@FXML
 	private void handleSquareMouseEnter(MouseEvent event) {
 		Node source = (Node) event.getSource();
@@ -309,17 +354,24 @@ public class GameController {
 
 		if (source instanceof AnchorPane) {
 			AnchorPane square = (AnchorPane) source;
+			int index = Coordinate.toIndex(square.getId());
 
 			if (GameModel.isSelected()) { // if a piece has already been selected (second press)
 
-				if (!SettingsModel.isOneTouchRule() || GameModel.getSelectedIndex() != Coordinate.toIndex(square.getId())) {
+				if (!SettingsModel.isOneTouchRule() && GameModel.getSelectedIndex() == index) {
+					settingsButton.setDisable(false);
+					GameModel.setSelectedIndex(-1);
+					boardGrid.getChildren().forEach(s -> {
+						s.getStyleClass().removeAll("focused");
+					});
+				} else if (!SettingsModel.isOneTouchRule() || GameModel.getSelectedIndex() != index) {
 					movePieceOnBoard(GameModel.getSelectedIndex(), Coordinate.toIndex(square.getId()));
 
 					boardGrid.getChildren().forEach(s -> {
 						s.getStyleClass().removeAll("focused");
 					});
 
-					if (SettingsModel.isFlipBoard() && GameModel.getSelectedIndex() != Coordinate.toIndex(square.getId())) {
+					if (SettingsModel.isFlipBoard() && GameModel.getSelectedIndex() != index) {
 						flipBoard();
 					}
 					settingsButton.setDisable(false);
@@ -330,19 +382,22 @@ public class GameController {
 
 				if (!square.getChildren().isEmpty()) {
 
-					GameModel.setSelectedIndex(Coordinate.toIndex(square.getId()));
+					GameModel.setSelectedIndex(index);
 
 					square.getStyleClass().add("focused");
 					settingsButton.setDisable(true);
 				}
-
 			}
-
 		}
-
 	}
 
-	public void showPromotionPopup(ChessColor forColor) {
+	/**
+	 * Opens a popup menu to choose promotion
+	 * Should only be called if promotion is possible
+	 * @param forColor the current color on the board
+	 * @param move the move that brings a pawn to the last rank
+	 */
+	public void showPromotionPopup(ChessColor forColor, Move move) {
 		ImageView queenIcon = GraphicsManager
 				.getGraphicAsImageView(forColor == ChessColor.White ? "queen_white" : "queen_black");
 		ImageView rookIcon = GraphicsManager
@@ -369,14 +424,23 @@ public class GameController {
 		menuButton.setDisable(true);
 
 		EventHandler<ActionEvent> buttonActionHandler = (event) -> {
-			if (event.getSource() == promotionPopupQueenButton)
-				GameModel.setPieceForPromotion(Piece.Queen + (forColor == ChessColor.White ? Piece.White : Piece.Black));
-			if (event.getSource() == promotionPopupRookButton)
-				GameModel.setPieceForPromotion(Piece.Rook + (forColor == ChessColor.White ? Piece.White : Piece.Black));
-			if (event.getSource() == promotionPopupBishopButton)
-				GameModel.setPieceForPromotion(Piece.Bishop + (forColor == ChessColor.White ? Piece.White : Piece.Black));
-			if (event.getSource() == promotionPopupKnightButton)
-				GameModel.setPieceForPromotion(Piece.Knight + (forColor == ChessColor.White ? Piece.White : Piece.Black));
+
+			if (event.getSource() == promotionPopupQueenButton) {
+				move.setFlag(Move.PromoteToQueen);
+				finishMove(move);
+			}
+			if (event.getSource() == promotionPopupRookButton) {
+				move.setFlag(Move.PromoteToRook);
+				finishMove(move);
+			}
+			if (event.getSource() == promotionPopupBishopButton) {
+				move.setFlag(Move.PromoteToBishop);
+				finishMove(move);
+			}
+			if (event.getSource() == promotionPopupKnightButton) {
+				move.setFlag(Move.PromoteToKnight);
+				finishMove(move);
+			}
 
 			promotionPopup.setVisible(false);
 			boardGrid.setDisable(false);
@@ -427,6 +491,9 @@ public class GameController {
 
 	}
 
+	/**
+	 * Flips the board
+	 */
 	private void flipBoard() {
 		String lines = "12345678";
 		String columns = "hgfedcba";
@@ -451,6 +518,9 @@ public class GameController {
 		resize();
 	}
 
+	/**
+	 * Resizes the GameView
+	 */
 	private void resize() {
 		double rootHeight = rootPane.getHeight();
 		double rootWidth = rootPane.getWidth();
@@ -566,6 +636,12 @@ public class GameController {
 
 	}
 
+	/**
+	 * Sets the button style
+	 * @param button the button
+	 * @param rootSize the root size
+	 * @param graphicTextGap the graphic text gap
+	 */
 	private void setButtonStyle(Button button, double[] rootSize, double graphicTextGap) {
 		double fontSize = Math.min(rootSize[1] / 28.8, rootSize[0] / 51.2);
 		double borderRadius = Math.min(rootSize[1] / 72, rootSize[0] / 128 * 1.2);

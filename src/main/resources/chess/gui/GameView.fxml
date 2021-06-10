@@ -102,208 +102,96 @@
                                  </rowConstraints>
                                  <children>
                                     <AnchorPane fx:id="a8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/rook_black.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="lightSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="b8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/knight_black.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="darkSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="c8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/bishop_black.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="lightSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="d8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/queen_black.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="darkSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="e8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/king_black.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="lightSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="f8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/bishop_black.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="darkSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="g8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/knight_black.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="lightSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="h8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/rook_black.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="darkSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="a7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/pawn_black.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="darkSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="b7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/pawn_black.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="lightSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="c7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/pawn_black.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="darkSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="d7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/pawn_black.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="lightSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="e7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/pawn_black.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="darkSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="f7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/pawn_black.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="lightSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="g7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/pawn_black.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="darkSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="h7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="1">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/pawn_black.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="lightSquare" />
                                           <String fx:value="square" />
@@ -502,208 +390,96 @@
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="a2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="6">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/pawn_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="lightSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="b2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/pawn_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="darkSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="c2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/pawn_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="lightSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="d2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/pawn_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="darkSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="e2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/pawn_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="lightSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="f2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/pawn_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="darkSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="g2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/pawn_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="lightSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="h2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/pawn_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="darkSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="a1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="7">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/rook_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="darkSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="b1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/knight_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="lightSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="c1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/bishop_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="darkSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="d1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/queen_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="lightSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="e1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/king_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="darkSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="f1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="7">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/bishop_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="lightSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="g1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="7">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/knight_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="darkSquare" />
                                           <String fx:value="square" />
                                        </styleClass>
                                     </AnchorPane>
                                     <AnchorPane fx:id="h1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
-                                       <children>
-                                          <ImageView fitHeight="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@util/graphics/rook_white.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
                                        <styleClass>
                                           <String fx:value="lightSquare" />
                                           <String fx:value="square" />

@@ -140,7 +140,7 @@ public class MenuController {
 			if (GameModel.getGameMode() == ChessMode.Network) {
 				Gui.switchTo(Gui.ChessScene.NetworkConnection);
 			} else {
-				// TODO start a new Game
+				GameModel.beginNewGame();
 				Gui.switchTo(Gui.ChessScene.Game);
 			}
 

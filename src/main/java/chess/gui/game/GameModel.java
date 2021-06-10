@@ -1,5 +1,7 @@
 package chess.gui.game;
 
+import chess.gui.util.GraphicsManager;
+import chess.model.Game;
 import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,11 @@ import chess.model.Piece;
  * positions of image objects, which piece is selected, etc.
  */
 public class GameModel {
+
+	/**
+	 * The current Game
+	 */
+	private static chess.model.Game currentGame;
 
 	/*
 	 * Enumeration of available game modes
@@ -28,17 +35,12 @@ public class GameModel {
 	}
 
 	/**
-	 * Stores the chosen piece for promotion
-	 */
-	private static int pieceForPromotion = Piece.None;
-
-	/**
 	 * Stores the chosen game mode
 	 */
 	private static ChessMode gameMode = ChessMode.None;
 
 	/**
-	 * Stroes the chosen color
+	 * Stores the chosen color (not to confuse with currentColor)
 	 */
 	private static ChessColor color = ChessColor.None;
 
@@ -46,11 +48,6 @@ public class GameModel {
 	 * Stores the Move objects that represent the history of the game.
 	 */
 	private static List<Move> movesHistory = new ArrayList<>();
-
-	/**
-	 * Stores the ImageView objects that represent the pieces on the field.
-	 */
-	private static List<ImageView> piecesGraphics = new ArrayList<>();
 
 	/**
 	 * Stores the ImageView objects that represent the beaten white pieces.
@@ -63,20 +60,43 @@ public class GameModel {
 	private static List<ImageView> beatenBlackPiecesGraphics = new ArrayList<>();
 
 	/**
-	 * Stores the ImageView objects that represent the possible moves on the field.
-	 */
-	private static List<ImageView> possibleMovesGraphics = new ArrayList<>();
-
-	/**
-	 * Stored the ImageView object that represents the selection of a piece.
-	 */
-	private static ImageView selectedFieldGraphic = null;
-
-	/**
 	 * Stores the index of the selected field according to model.Board.squares. -1
 	 * means "no field selected". "a8" is 0 and "h1" is 63.
 	 */
 	private static int selectedIndex = -1;
+
+	/**
+	 * Begins a new Game
+	 */
+	public static void beginNewGame() {
+		// clear outdated lists
+		GameModel.beatenWhitePiecesGraphics.clear();
+		GameModel.beatenBlackPiecesGraphics.clear();
+		GameModel.movesHistory.clear();
+		// start the new game
+		currentGame = new Game();
+		if (color == ChessColor.White) {
+			currentGame.getCurrentPosition().setTurnColor(Piece.Black);
+		}
+	}
+
+	/**
+	 * Updates the Lists of the beaten pieces
+	 */
+	public static void updateBeatenPiecesLists() {
+		List<Integer> capturedPieces = currentGame.getCurrentPosition().getCapturedPieces();
+		beatenBlackPiecesGraphics.clear();
+		beatenWhitePiecesGraphics.clear();
+		ImageView pieceView;
+		for (int piece: capturedPieces) {
+			pieceView = GraphicsManager.getGraphicAsImageView(Piece.toName(piece));
+			if (Piece.isColor(piece, Piece.White)) {
+				beatenWhitePiecesGraphics.add(pieceView);
+			} else {
+				beatenBlackPiecesGraphics.add(pieceView);
+			}
+		}
+	}
 
 	/**
 	 * Gives information about whether a piece has been selected or not
@@ -106,15 +126,6 @@ public class GameModel {
 	}
 
 	/**
-	 * Setter for the pieceForPromotion
-	 * 
-	 * @param piece the new choosen piece for promotion
-	 */
-	public static void setPieceForPromotion(int piece) {
-		GameModel.pieceForPromotion = piece;
-	}
-
-	/**
 	 * Setter for the selectedIndex
 	 * 
 	 * @param index the new selectedIndex, should be -1 smaller than or equal index
@@ -124,6 +135,15 @@ public class GameModel {
 		if (-1 <= index && index <= 63) {
 			GameModel.selectedIndex = index;
 		}
+	}
+
+	/**
+	 * Getter for the currentGame variable
+	 *
+	 * @return the current game
+	 */
+	public static Game getCurrentGame() {
+		return currentGame;
 	}
 
 	/**
@@ -145,30 +165,12 @@ public class GameModel {
 	}
 
 	/**
-	 * Getter for the pieceForPromotion
-	 * 
-	 * @return current piece for promotion
-	 */
-	public static int getPieceForPromotion() {
-		return pieceForPromotion;
-	}
-
-	/**
 	 * Getter for the movesHistory-List
 	 * 
 	 * @return the movesHistory-List
 	 */
 	public static List<Move> getMovesHistory() {
 		return movesHistory;
-	}
-
-	/**
-	 * Getter for the piecesGraphics-List
-	 * 
-	 * @return the piecesGraphics-List
-	 */
-	public static List<ImageView> getPiecesGraphics() {
-		return piecesGraphics;
 	}
 
 	/**
@@ -190,63 +192,11 @@ public class GameModel {
 	}
 
 	/**
-	 * Getter for the possibleMovesGraphics-List
-	 * 
-	 * @return the possibleMovesGraphics-List
-	 */
-	public static List<ImageView> getPossibleMovesGraphics() {
-		return possibleMovesGraphics;
-	}
-
-	/**
 	 * Getter for the selected index
 	 * 
 	 * @return the selected index
 	 */
 	public static int getSelectedIndex() {
 		return selectedIndex;
-	}
-
-	/**
-	 * Getter for the selectedFieldGraphic
-	 * 
-	 * @return the selectedFieldGraphic
-	 */
-	public static ImageView getSelectedFieldGraphic() {
-		return selectedFieldGraphic;
-	}
-
-	/**
-	 * Setter for the piecesGraphics-List
-	 * 
-	 * @param piecesGraphics the new piecesGraphics-List
-	 */
-	public static void setPiecesGraphics(List<ImageView> piecesGraphics) {
-		GameModel.piecesGraphics = piecesGraphics;
-	}
-
-	/**
-	 * Setter for the possibleMovesGraphics-List
-	 * 
-	 * @param possibleMovesGraphics the new possibleMovesGraphics-List
-	 */
-	public static void setPossibleMovesGraphics(List<ImageView> possibleMovesGraphics) {
-		GameModel.possibleMovesGraphics = possibleMovesGraphics;
-	}
-
-	/**
-	 * Setter for the selectedFieldGraphic-List
-	 * 
-	 * @param selectedFieldGraphic the new selectedFieldGraphic-List
-	 */
-	public static void setSelectedFieldGraphic(ImageView selectedFieldGraphic) {
-		GameModel.selectedFieldGraphic = selectedFieldGraphic;
-	}
-
-	public static void reset() {
-		// TODO: Reset all to default values
-		GameModel.beatenWhitePiecesGraphics.clear();
-		GameModel.beatenBlackPiecesGraphics.clear();
-		GameModel.movesHistory.clear();
 	}
 }
