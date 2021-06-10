@@ -23,6 +23,12 @@ public class GameModel {
 
 	private static Engine engine = new Engine();
 
+	/**
+	 * Stores whether the user is allowed do make a move.
+	 * This variable is used to prevent the user from making moves while the Engine computes a move.
+	 */
+	private static boolean allowedToMove = true;
+
 	/*
 	 * Enumeration of available game modes
 	 */
@@ -72,15 +78,19 @@ public class GameModel {
 	 * Begins a new Game
 	 */
 	public static void beginNewGame() {
-		// clear outdated lists
-		GameModel.beatenWhitePiecesGraphics.clear();
-		GameModel.beatenBlackPiecesGraphics.clear();
-		GameModel.movesHistory.clear();
 		// start the new game
 		currentGame = new Game("k4bnr/3Ppppp/7q/1R6/1R6/8/PP1PPPPP/1NBQKBNR");
 		if (color == ChessColor.Black) {
 			currentGame.getCurrentPosition().setTurnColor(Piece.Black);
 		}
+
+		// clear outdated lists and do some reset
+		beatenWhitePiecesGraphics.clear();
+		beatenBlackPiecesGraphics.clear();
+		movesHistory.clear();
+		selectedIndex = -1;
+
+		allowedToMove = true;
 	}
 
 	/**
@@ -102,11 +112,16 @@ public class GameModel {
 	}
 
 	/**
-	 * Performs a move that is computed by the engine
+	 * Uses the engine to generate the next PC-move and executes that move.
 	 */
 	public static void performEngineMove() {
+		System.out.println("performEngineMove was called");
 		Move next = engine.generateBestMove(currentGame.getCurrentPosition());
-		currentGame.attemptMove(next);
+		System.out.println("Engine came up with this move: " + next.toString());
+		if(!currentGame.attemptMove(next)) {
+			System.out.println("The engines Move failed in attemption.");
+		}
+
 	}
 
 	/**
@@ -116,6 +131,22 @@ public class GameModel {
 	 */
 	public static boolean isSelected() {
 		return selectedIndex != -1;
+	}
+
+	/**
+	 * Setter for the allowedToMove variable
+	 * @param status the wanted status
+	 */
+	public static void setAllowedToMove(boolean status) {
+		allowedToMove = status;
+	}
+
+	/**
+	 * Getter for the allowedToMove vaiable
+	 * @return whether allowedToMove or not
+	 */
+	public static boolean isAllowedToMove() {
+		return allowedToMove;
 	}
 
 	/**

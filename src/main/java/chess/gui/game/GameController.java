@@ -1,5 +1,6 @@
 package chess.gui.game;
 
+import chess.engine.Engine;
 import chess.gui.Gui;
 import chess.gui.game.GameModel.ChessColor;
 import chess.gui.settings.SettingsModel;
@@ -54,8 +55,10 @@ public class GameController {
 	private FlowPane blackBeatenFlowPane;
 	@FXML
 	private Label currentMoveLabel;
+
 	@FXML
 	private ProgressIndicator activityIndicator;
+
 	@FXML
 	private Label checkLabel;
 	@FXML
@@ -188,7 +191,6 @@ public class GameController {
 	 * @param targetIndex the selected destination
 	 */
 	private void movePieceOnBoard(int startIndex, int targetIndex) {
-		checkLabel.setVisible(false);
 		Move move = new Move(startIndex, targetIndex);
 		Board board = GameModel.getCurrentGame().getCurrentPosition();
 		Move testMove = new Move(startIndex, targetIndex);
@@ -331,23 +333,35 @@ public class GameController {
 			System.out.println("Game.attemptMove() did not allow " + move.toString());
 			return;
 		}
-		checkForGameOver();
+
 		updateUI();
+		if (checkForGameOver()) return;
 
 		if (GameModel.getGameMode() == GameModel.ChessMode.Computer) {
 			activityIndicator.setVisible(true);
+			GameModel.setAllowedToMove(false);
+
+			// TODO rest of this function should happen in different thread
 			GameModel.performEngineMove();
+			activityIndicator.setVisible(false);
 			checkForGameOver();
 			updateUI();
-			activityIndicator.setVisible(false);
+			GameModel.setAllowedToMove(true);
 		}
+
+	}
+
+	private void activateIndikator(boolean status) {
+		System.out.println("activateIndikator was called.\n");
+		activityIndicator.setVisible(status);
 	}
 
 	/**
 	 * Checks whether the current game is over
 	 * if that is the case the endGame() function will be called
 	 */
-	private void checkForGameOver() {
+	private boolean checkForGameOver() {
+		checkLabel.setVisible(false);
 		Game game = GameModel.getCurrentGame();
 		if(game.checkCheck()) {
 			System.out.println("checkForGameOver was called");
@@ -362,8 +376,9 @@ public class GameController {
 		}
 		if (game.checkWinCondition() != 0) {
 			endGame();
-			return;
+			return true;
 		}
+		return false;
 	}
 
 	/**
@@ -436,7 +451,7 @@ public class GameController {
 
 		Node source = (Node) event.getSource();
 
-		if (!(source instanceof AnchorPane)) {
+		if (!(source instanceof AnchorPane || !(GameModel.isAllowedToMove()))) {
 			return;
 		}
 		AnchorPane square = (AnchorPane) source;
