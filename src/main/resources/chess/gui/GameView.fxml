@@ -808,6 +808,77 @@
                                     </GridPane>
                                  </children>
                               </AnchorPane>
+                              <AnchorPane fx:id="surePopup" layoutX="90.0" layoutY="265.0" maxHeight="150.0" maxWidth="500.0" prefHeight="150.0" prefWidth="500.0" styleClass="popupBox">
+                                 <children>
+                                    <GridPane layoutX="100.0" layoutY="55.0" prefHeight="200.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="4.0" prefWidth="20.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="92.0" prefWidth="460.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="4.0" prefWidth="20.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" percentHeight="13.33" prefHeight="20.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" percentHeight="13.33" prefHeight="20.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" percentHeight="40.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" percentHeight="13.33" prefHeight="20.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <children>
+                                                <Label fx:id="surePopupLabel" alignment="CENTER" layoutX="165.0" layoutY="12.0" prefHeight="40.0" prefWidth="360.0" styleClass="boxLabel" text="Are you sure?" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children>
+                                          </AnchorPane>
+                                          <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="47.82" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="4.34" prefWidth="20.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="47.82" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Button fx:id="surePopupCancelButton" graphicTextGap="20.0" layoutX="31.0" layoutY="30.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="153.0" text="Cancel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <graphic>
+                                                            <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@images/icons/cancelIcon.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                         <styleClass>
+                                                            <String fx:value="historyButton" />
+                                                            <String fx:value="surePopupButton" />
+                                                         </styleClass>
+                                                      </Button>
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                                   <children>
+                                                      <Button fx:id="surePopupYesButton" graphicTextGap="20.0" layoutX="31.0" layoutY="18.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="153.0" text="Yes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <graphic>
+                                                            <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@images/icons/yesIcon.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                         <styleClass>
+                                                            <String fx:value="historyButton" />
+                                                            <String fx:value="surePopupButton" />
+                                                         </styleClass>
+                                                      </Button>
+                                                   </children>
+                                                </AnchorPane>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
                            </children>
                         </StackPane>
                      </children>

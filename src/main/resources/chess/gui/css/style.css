@@ -103,6 +103,10 @@
   -fx-border-width: 2;
 }
 
+.surePopupButton {
+  -fx-background-color: rgba(131, 131, 131, 0.7);
+}
+
 .modeButton {
   -fx-pref-width: 237;
   -fx-pref-height: 150;
