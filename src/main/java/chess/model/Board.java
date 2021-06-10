@@ -29,7 +29,11 @@ public class Board {
     private boolean CastlingA8Possible = true;
     private boolean CastlingH1Possible = true;
     private boolean CastlingH8Possible = true;
+    // the move that created this position
+    private Move lastMove = null;
 
+    /** @return the last move that created this position */
+    public Move getLastMove(){return lastMove;}
     /** @return true if castling with A1 rook is possible */
     public boolean isCastlingA1Possible(){return CastlingA1Possible;}
     /** @return true if castling with A8 rook is possible */
@@ -147,6 +151,7 @@ public class Board {
         CastlingA8Possible = board.isCastlingA8Possible();
         CastlingH1Possible = board.isCastlingH1Possible();
         CastlingH8Possible = board.isCastlingH8Possible();
+        lastMove = board.getLastMove();
     }
 
 
@@ -176,6 +181,7 @@ public class Board {
 
         int nextTurnColor = (getTurnColor() == Piece.Black) ? Piece.White : Piece.Black;
         setTurnColor(nextTurnColor);
+        lastMove = move;
     }
 
 

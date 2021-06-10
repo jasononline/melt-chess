@@ -1,8 +1,14 @@
 package chess.engine;
 
-import chess.model.*;
+import chess.model.Board;
+import chess.model.Move;
+import chess.model.MoveGenerator;
+import chess.model.MoveValidator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Engine class for choosing next moves
@@ -21,25 +27,17 @@ public class Engine {
      *
      */
 
-    /*A pawn is worth one point,
-      a knight or bishop is worth three points,
-      a rook is worth five points and a queen is worth nine points.
-     */
-    private Map<Integer, Integer> pieceValue = new HashMap<>(
-            Map.of(Piece.Pawn, 1,
-                   Piece.Knight, 3,
-                   Piece.Bishop, 3,
-                   Piece.Rook, 5,
-                   Piece.Queen, 9 )
-    );
 
-    private List<Integer> promotionFilter;
+
+
+    // only promote to queen
+    private static final List<Integer> promotionFilter = new ArrayList<>();
+    private int maxDepth = 3; // only use odd values!
 
     /**
      * Contructor of the engine
      */
     public Engine() {
-        promotionFilter = new ArrayList<>();
         promotionFilter.add(Move.PromoteToBishop);
         promotionFilter.add(Move.PromoteToKnight);
         promotionFilter.add(Move.PromoteToRook);
@@ -52,7 +50,45 @@ public class Engine {
      * @return the move the engine thinks is the best
      */
     public Move generateBestMove(Board board){
-        return null;
+        int color = board.getTurnColor();
+
+        List<EngineBoard> possiblePositions = getNextPositions(new EngineBoard(board));
+        if (possiblePositions.isEmpty())
+            return null;
+
+        EngineBoard bestPosition = null;
+        int bestValue = Integer.MIN_VALUE;
+        int value;
+
+        for (EngineBoard position : possiblePositions) {
+            value = minimax(position, maxDepth, color);
+            if (bestValue < value) {
+                bestValue = value;
+                bestPosition = position;
+            }
+        }
+        assert bestPosition != null;
+        return bestPosition.getLastMove();
+    }
+
+
+    private int minimax(EngineBoard board, int depth, int maximizingColor) {
+        int value;
+        if (depth == 0) {
+            return board.getScore();
+        }
+        if (board.getTurnColor() == maximizingColor) {
+            value = Integer.MIN_VALUE;
+            for (EngineBoard newPosition : getNextPositions(board)) {
+                value = Math.max(value, minimax(newPosition, depth-1, maximizingColor));
+            }
+            return value;
+        }
+        value = Integer.MAX_VALUE;
+        for (EngineBoard newPosition : getNextPositions(board)) {
+            value = Math.min(value, minimax(newPosition, depth-1, maximizingColor));
+        }
+        return value;
     }
 
 
@@ -67,11 +103,11 @@ public class Engine {
         List<EngineBoard> nextQueue = new LinkedList<>();
 
         int moveCounter = queue.size();
-        System.out.println("1: " + moveCounter);
+        System.out.println("Level 1: " + moveCounter);
 
         int sizeCheck;
 
-        for (int i=0; i<max_depth-1; i++) {
+        for (int i=1; i<max_depth; i++) {
             for (EngineBoard board : queue) {
                 sizeCheck = nextQueue.size();
                 nextQueue.addAll(getNextPositions(board));
@@ -80,7 +116,7 @@ public class Engine {
             }
             queue = nextQueue;
             moveCounter += queue.size();
-            System.out.println("Level " + (i+2) + ": " + moveCounter +" nodes");
+            System.out.println("Level " + (i+1) + ": " + moveCounter +" nodes");
             nextQueue = new LinkedList<>();
             Collections.sort(queue);
             System.out.println("Best Position of run :");
@@ -99,36 +135,33 @@ public class Engine {
      * @return List of scored positions
      */
     private List<EngineBoard> getNextPositions(EngineBoard board) {
-        MoveGenerator generator = new MoveGenerator(board);
-        List<Move> moves;
-        moves = MoveValidator.filter(board, generator.generateMoves());
-        // filter promotions other than queen
-        moves.removeIf(m -> promotionFilter.contains(m.getFlag()));
+        List<Move> moves = getMoves(board, board.getTurnColor());
         // make moves
         List<EngineBoard> positions = new LinkedList<>();
         for (Move move : moves) {
             EngineBoard newBoard = new EngineBoard(board.makeMove(move));
-            newBoard.setScore(scoreBoard(newBoard));
             positions.add(newBoard);
         }
         return positions;
     }
 
+
     /**
-     * @param board Score this position
-     * @return positive good for whate, negative good for black.
+     * Compute list of possible moves
+     * @param board the current position
+     * @param color the color to move
+     * @return a list of Move objects
      */
-    private int scoreBoard(EngineBoard board) {
-        return scorePieceValue(board);
+    protected static List<Move> getMoves(EngineBoard board, int color) {
+        MoveGenerator generator = new MoveGenerator(board);
+        if (generator.getTeamColor() != color)
+            generator.swapColors();
+        List<Move> moves = MoveValidator.filter(board, generator.generateMoves());
+        // filter promotions other than queen
+        moves.removeIf(m -> promotionFilter.contains(m.getFlag()));
+        return moves;
     }
 
-    private int scorePieceValue(EngineBoard board) {
-        int score = 0;
-        int sign;
-        for (int piece : board.getCapturedPieces()) {
-            sign = Piece.isColor(piece, Piece.White) ? 1: -1;
-            score += sign * pieceValue.get(Piece.getType(piece));
-        }
-        return score;
-    }
+
+
 }
