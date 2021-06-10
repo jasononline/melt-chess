@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="body" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.gui.menu.MenuController">
+   <children>
+      <AnchorPane layoutX="488.0" layoutY="211.0" prefHeight="720.0" prefWidth="1280.0" styleClass="bgLayer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane layoutX="540.0" layoutY="315.0" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="15.0" percentWidth="2.34" prefWidth="30.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="610.0" percentWidth="95.31" prefWidth="1220.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="15.0" percentWidth="2.34" prefWidth="30.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="25.0" percentHeight="6.94" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="30.0" percentHeight="8.33" prefHeight="60.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="25.0" percentHeight="6.94" prefHeight="50.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="215.0" percentHeight="73.61" prefHeight="530.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="15.0" percentHeight="4.16" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Label fx:id="titleLabel" layoutX="449.0" layoutY="21.0" prefHeight="60.0" prefWidth="1220.0" styleClass="titleLabel" text="CHESS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <children>
+                        <GridPane layoutX="460.0" layoutY="220.0" prefHeight="530.0" prefWidth="1220.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="395.0" percentWidth="64.75" prefWidth="790.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="15.0" percentWidth="2.45" prefWidth="30.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" percentWidth="32.78" prefWidth="400.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <GridPane layoutX="295.0" layoutY="220.0" prefHeight="530.0" prefWidth="790.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="125.0" percentHeight="47.16" prefHeight="250.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="15.0" percentHeight="5.66" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="125.0" percentHeight="47.16" prefHeight="250.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="box">
+                                             <children>
+                                                <GridPane layoutX="295.0" layoutY="80.0" prefHeight="250.0" prefWidth="790.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                  <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="2.53" prefWidth="20.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="2.53" prefWidth="20.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="20.0" percentHeight="16.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="75.0" percentHeight="60.0" prefHeight="150.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                         <children>
+                                                            <GridPane layoutX="295.0" layoutY="30.0" prefHeight="150.0" prefWidth="790.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                              <columnConstraints>
+                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="78.8" percentWidth="31.54" prefWidth="236.6" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="2.66" prefWidth="20.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="78.8" percentWidth="31.54" prefWidth="236.6" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="2.66" prefWidth="20.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="78.8" percentWidth="31.54" prefWidth="236.6" />
+                                                              </columnConstraints>
+                                                              <rowConstraints>
+                                                                <RowConstraints minHeight="75.0" percentHeight="100.0" prefHeight="150.0" vgrow="SOMETIMES" />
+                                                              </rowConstraints>
+                                                               <children>
+                                                                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                                     <children>
+                                                                        <Button fx:id="playerModeButton" contentDisplay="TOP" graphicTextGap="20.0" layoutX="91.0" layoutY="62.0" mnemonicParsing="false" onAction="#handleModeButtonOnAction" prefHeight="150.0" prefWidth="237.0" text="Player" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                           <graphic>
+                                                                              <ImageView fitHeight="35.0" pickOnBounds="true" preserveRatio="true">
+                                                                                 <image>
+                                                                                    <Image url="@images/icons/playerIcon.png" />
+                                                                                 </image>
+                                                                              </ImageView>
+                                                                           </graphic>
+                                                                        </Button>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                                                     <children>
+                                                                        <Button fx:id="aiModeButton" contentDisplay="TOP" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleModeButtonOnAction" prefHeight="150.0" prefWidth="237.0" text="Computer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                           <graphic>
+                                                                              <ImageView fitHeight="35.0" pickOnBounds="true" preserveRatio="true">
+                                                                                 <image>
+                                                                                    <Image url="@images/icons/aiIcon.png" />
+                                                                                 </image>
+                                                                              </ImageView>
+                                                                           </graphic>
+                                                                        </Button>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
+                                                                     <children>
+                                                                        <Button fx:id="networkModeButton" contentDisplay="TOP" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleModeButtonOnAction" prefHeight="150.0" prefWidth="237.0" text="Network" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                           <graphic>
+                                                                              <ImageView fitHeight="35.0" pickOnBounds="true" preserveRatio="true">
+                                                                                 <image>
+                                                                                    <Image url="@images/icons/networkIcon.png" />
+                                                                                 </image>
+                                                                              </ImageView>
+                                                                           </graphic>
+                                                                        </Button>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </GridPane>
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                         <children>
+                                                            <Label fx:id="modeLabel" layoutX="253.0" layoutY="11.0" prefHeight="40.0" prefWidth="790.0" styleClass="boxNameLabel" text="Mode" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane fx:id="colorPane" prefHeight="200.0" prefWidth="200.0" styleClass="box" GridPane.rowIndex="2">
+                                             <children>
+                                                <GridPane prefHeight="250.0" prefWidth="790.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="2.53" prefWidth="20.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="2.53" prefWidth="20.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="20.0" percentHeight="16.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="75.0" percentHeight="60.0" prefHeight="150.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                         <children>
+                                                            <GridPane layoutX="275.0" layoutY="30.0" prefHeight="150.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                              <columnConstraints>
+                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="182.5" percentWidth="48.66" prefWidth="365.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="2.66" prefWidth="20.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="182.5" percentWidth="48.66" prefWidth="365.0" />
+                                                              </columnConstraints>
+                                                              <rowConstraints>
+                                                                <RowConstraints minHeight="75.0" percentHeight="100.0" prefHeight="150.0" vgrow="SOMETIMES" />
+                                                              </rowConstraints>
+                                                               <children>
+                                                                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                                     <children>
+                                                                        <Button fx:id="whiteColorButton" contentDisplay="TOP" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleColorButtonOnAction" prefHeight="150.0" prefWidth="365.0" text="White" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                           <graphic>
+                                                                              <ImageView fitHeight="35.0" pickOnBounds="true" preserveRatio="true">
+                                                                                 <image>
+                                                                                    <Image url="@images/icons/whiteColorIcon.png" />
+                                                                                 </image>
+                                                                              </ImageView>
+                                                                           </graphic>
+                                                                        </Button>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                                                     <children>
+                                                                        <Button fx:id="blackColorButton" contentDisplay="TOP" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleColorButtonOnAction" prefHeight="150.0" prefWidth="365.0" text="Black" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                           <graphic>
+                                                                              <ImageView fitHeight="35.0" pickOnBounds="true" preserveRatio="true">
+                                                                                 <image>
+                                                                                    <Image url="@images/icons/blackColorIcon.png" />
+                                                                                 </image>
+                                                                              </ImageView>
+                                                                           </graphic>
+                                                                        </Button>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </GridPane>
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                         <children>
+                                                            <Label fx:id="colorLabel" layoutX="253.0" layoutY="11.0" prefHeight="40.0" prefWidth="790.0" styleClass="boxNameLabel" text="Color" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="box" GridPane.columnIndex="2">
+                                 <children>
+                                    <GridPane layoutX="100.0" layoutY="220.0" prefHeight="530.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="5.0" prefWidth="20.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="180.0" percentWidth="90.0" prefWidth="360.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="5.0" prefWidth="20.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" percentHeight="3.77" prefHeight="20.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="75.0" percentHeight="28.3" prefHeight="150.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" percentHeight="3.77" prefHeight="20.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="75.0" percentHeight="28.3" prefHeight="150.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" percentHeight="3.77" prefHeight="20.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="75.0" percentHeight="28.3" prefHeight="150.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" percentHeight="3.77" prefHeight="20.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <children>
+                                                <Button fx:id="startButton" graphicTextGap="30.0" mnemonicParsing="false" onAction="#handleMenuButtonOnAction" prefHeight="150.0" prefWidth="360.0" text="Start game" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <graphic>
+                                                      <ImageView fitHeight="35.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@images/icons/startIcon.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                             <children>
+                                                <Button fx:id="settingsButton" graphicTextGap="30.0" mnemonicParsing="false" onAction="#handleMenuButtonOnAction" prefHeight="150.0" prefWidth="360.0" text="Settings" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <graphic>
+                                                      <ImageView fitHeight="35.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@images/icons/settingsIcon.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                             <children>
+                                                <Button fx:id="quitButton" graphicTextGap="30.0" mnemonicParsing="false" onAction="#handleMenuButtonOnAction" prefHeight="150.0" prefWidth="360.0" text="Quit game" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <graphic>
+                                                      <ImageView fitHeight="35.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@images/icons/quitIcon.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

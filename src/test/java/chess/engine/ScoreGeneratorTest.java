@@ -1,37 +1,30 @@
 package chess.engine;
 
-import chess.model.Move;
-import chess.model.Piece;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Run some tests for scoring a position
+ */
 class ScoreGeneratorTest {
 
     String startposition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+
     /**
-     * Test scoring which squares are under attack
+     * Run some tests for scoring a position
      */
     @Test
-    public void scoreSquaresUnderAttack() {
+    public void scoreGenerator() {
+        ScoreGenerator sg = new ScoreGenerator(new EngineBoard(startposition));
 
-        EngineBoard board = new EngineBoard(startposition);
-        System.out.println(board);
-        List<Move> whiteMoves = Engine.getMoves(board, Piece.White);
-        List<Move> blackMoves = Engine.getMoves(board, Piece.Black);
+        // expect score to be zero in symmetric starting position:
+        System.out.println(sg.getScore());
+        assertEquals(0, sg.getScore());
 
-        ScoreGenerator scoreGenerator = new ScoreGenerator(board);
-        scoreGenerator.scoreSquaresUnderAttack(whiteMoves, blackMoves);
-        int s = Arrays.stream(scoreGenerator.squaresScore).sum();
-        for (int row=0;row<8;row++) {
-            for (int col=0;col<8;col++) {
-                System.out.print(scoreGenerator.squaresScore[row*8+col] + "\t");
-            }
-            System.out.println();
-        }
-        assertEquals(0, s);
+        // test on some starting position breaking the symmetry
+        sg = new ScoreGenerator(new EngineBoard("rnbqk2r/ppp1bppp/3p1n2/4p3/8/5NP1/PPPPPPBP/RNBQ1RK1"));
+        System.out.println(sg.getScore());
+        assertEquals(112, sg.getScore());
     }
 }

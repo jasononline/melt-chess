@@ -1,0 +1,842 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="body" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.gui.game.GameController">
+   <children>
+      <AnchorPane layoutX="520.0" layoutY="260.0" prefHeight="720.0" prefWidth="1280.0" styleClass="bgLayer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane layoutX="540.0" layoutY="315.0" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="15.0" percentWidth="2.34" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" percentWidth="15.62" prefWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="2.34" prefWidth="30.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="330.0" percentWidth="51.56" prefWidth="660.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="15.0" percentWidth="2.34" prefWidth="30.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" percentWidth="23.43" prefWidth="300.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="15.0" percentWidth="2.34" prefWidth="30.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="15.0" percentHeight="4.16" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="330.0" percentHeight="91.66" prefHeight="660.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints percentHeight="4.16" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="box" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <GridPane layoutY="285.0" prefHeight="660.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="20.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="80.0" percentWidth="80.0" prefWidth="160.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="20.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" percentHeight="3.03" prefHeight="20.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" percentHeight="3.03" prefHeight="20.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="3.03" prefHeight="20.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="290.0" percentHeight="87.87" prefHeight="580.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" percentHeight="3.03" prefHeight="20.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <children>
+                                    <ScrollPane fx:id="historyScrollPane" fitToHeight="true" fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" layoutX="-20.0" layoutY="127.0" prefHeight="200.0" prefWidth="200.0" styleClass="scrollPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <content>
+                                        <AnchorPane fx:id="historyPane" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" styleClass="historyPane">
+                                             <children>
+                                                <GridPane fx:id="historyGrid" layoutX="-21.0" layoutY="244.0" prefHeight="578.0" prefWidth="158.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="100.0" prefWidth="158.0" />
+                                                  </columnConstraints>
+                                                </GridPane>
+                                             </children>
+                                          </AnchorPane>
+                                      </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label fx:id="historyLabel" layoutX="65.0" layoutY="1.0" prefHeight="20.0" prefWidth="160.0" styleClass="historyLabel" text="Game history" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <children>
+                        <StackPane prefHeight="660.0" prefWidth="660.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <GridPane fx:id="boardGrid" alignment="CENTER" prefHeight="660.0" prefWidth="660.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="41.25" prefWidth="82.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="41.25" prefWidth="82.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="41.25" prefWidth="82.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="41.25" prefWidth="82.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="41.25" prefWidth="82.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="41.25" prefWidth="82.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="41.25" prefWidth="82.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="41.25" prefWidth="82.5" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="41.25" prefHeight="82.5" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="41.25" prefHeight="82.5" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="41.25" prefHeight="82.5" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="41.25" prefHeight="82.5" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="41.25" prefHeight="82.5" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="41.25" prefHeight="82.5" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="41.25" prefHeight="82.5" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="41.25" prefHeight="82.5" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <AnchorPane fx:id="a8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="b8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="c8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="d8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="e8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="f8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="g8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="h8" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="a7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="b7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="c7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="d7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="e7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="f7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="g7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="h7" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="a6" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="b6" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="c6" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="d6" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="e6" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="f6" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="g6" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="h6" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="a5" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="b5" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="c5" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="d5" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="e5" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="f5" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="g5" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="h5" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="3">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="a4" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="b4" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="c4" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="d4" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="e4" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="f4" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="g4" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="h4" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="a3" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="b3" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="c3" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="d3" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="e3" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="f3" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="g3" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="h3" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="5">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="a2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="6">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="b2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="c2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="d2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="e2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="f2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="g2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="h2" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="a1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="7">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="b1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="c1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="d1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="e1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="f1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="7">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="g1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="7">
+                                       <styleClass>
+                                          <String fx:value="darkSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="h1" onMouseEntered="#handleSquareMouseEnter" onMouseExited="#handleSquareMouseExit" onMousePressed="#handleSquareMousePress" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
+                                       <styleClass>
+                                          <String fx:value="lightSquare" />
+                                          <String fx:value="square" />
+                                       </styleClass>
+                                    </AnchorPane>
+                                 </children>
+                              </GridPane>
+                              <AnchorPane fx:id="promotionPopup" maxHeight="150.0" maxWidth="500.0" prefHeight="150.0" prefWidth="500.0" styleClass="popupBox">
+                                 <children>
+                                    <GridPane layoutX="100.0" layoutY="55.0" prefHeight="200.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="4.0" prefWidth="20.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="92.0" prefWidth="460.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="4.0" prefWidth="20.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" percentHeight="13.33" prefHeight="20.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" percentHeight="13.33" prefHeight="20.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" percentHeight="40.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" percentHeight="13.33" prefHeight="20.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <children>
+                                                <Label fx:id="promotionPopupLabel" alignment="CENTER" layoutX="165.0" layoutY="12.0" prefHeight="40.0" prefWidth="360.0" styleClass="boxLabel" text="Promoute your pawn into" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children>
+                                          </AnchorPane>
+                                          <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="21.73" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="4.34" prefWidth="20.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="21.73" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="4.34" prefWidth="20.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="21.73" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="4.34" prefWidth="20.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="21.73" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Button fx:id="promotionPopupQueenButton" contentDisplay="TOP" graphicTextGap="5.0" layoutX="23.0" layoutY="18.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="145.0" text="Queen" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <styleClass>
+                                                            <String fx:value="button" />
+                                                            <String fx:value="popupButton" />
+                                                         </styleClass>
+                                                         <graphic>
+                                                            <ImageView fitHeight="20.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@util/graphics/queen_white.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                                   <children>
+                                                      <Button fx:id="promotionPopupRookButton" contentDisplay="TOP" graphicTextGap="5.0" layoutX="23.0" layoutY="18.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="145.0" styleClass="popupButton" text="Rook" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <graphic>
+                                                            <ImageView fitHeight="20.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@util/graphics/rook_white.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
+                                                   <children>
+                                                      <Button fx:id="promotionPopupBishopButton" contentDisplay="TOP" graphicTextGap="5.0" layoutX="31.0" layoutY="30.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="153.0" styleClass="popupButton" text="Bishop" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <graphic>
+                                                            <ImageView fitHeight="20.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@util/graphics/bishop_white.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6">
+                                                   <children>
+                                                      <Button fx:id="promotionPopupKnightButton" contentDisplay="TOP" graphicTextGap="5.0" layoutX="31.0" layoutY="18.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="153.0" styleClass="popupButton" text="Knight" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <graphic>
+                                                            <ImageView fitHeight="20.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@util/graphics/knight_white.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                   </children>
+                                                </AnchorPane>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane fx:id="surePopup" layoutX="90.0" layoutY="265.0" maxHeight="150.0" maxWidth="500.0" prefHeight="150.0" prefWidth="500.0" styleClass="popupBox">
+                                 <children>
+                                    <GridPane layoutX="100.0" layoutY="55.0" prefHeight="200.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="4.0" prefWidth="20.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="92.0" prefWidth="460.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="4.0" prefWidth="20.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" percentHeight="13.33" prefHeight="20.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" percentHeight="13.33" prefHeight="20.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" percentHeight="40.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" percentHeight="13.33" prefHeight="20.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <children>
+                                                <Label fx:id="surePopupLabel" alignment="CENTER" layoutX="165.0" layoutY="12.0" prefHeight="40.0" prefWidth="360.0" styleClass="boxLabel" text="Are you sure?" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children>
+                                          </AnchorPane>
+                                          <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="47.82" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="4.34" prefWidth="20.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="47.82" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Button fx:id="surePopupCancelButton" graphicTextGap="20.0" layoutX="31.0" layoutY="30.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="153.0" text="Cancel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <graphic>
+                                                            <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@images/icons/cancelIcon.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                         <styleClass>
+                                                            <String fx:value="historyButton" />
+                                                            <String fx:value="surePopupButton" />
+                                                         </styleClass>
+                                                      </Button>
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                                   <children>
+                                                      <Button fx:id="surePopupYesButton" graphicTextGap="20.0" layoutX="31.0" layoutY="18.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="153.0" text="Yes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <graphic>
+                                                            <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@images/icons/yesIcon.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                         <styleClass>
+                                                            <String fx:value="historyButton" />
+                                                            <String fx:value="surePopupButton" />
+                                                         </styleClass>
+                                                      </Button>
+                                                   </children>
+                                                </AnchorPane>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="box" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                     <children>
+                        <GridPane layoutX="50.0" layoutY="285.0" prefHeight="660.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="6.66" prefWidth="20.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="130.0" percentWidth="86.66" prefWidth="260.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="6.66" prefWidth="20.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" percentHeight="3.03" prefHeight="20.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="20.0" percentHeight="6.06" prefHeight="40.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="15.0" percentHeight="4.54" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="25.0" percentHeight="7.57" prefHeight="50.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="15.0" percentHeight="4.54" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="25.0" percentHeight="7.57" prefHeight="50.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="4.54" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="6.43" prefHeight="42.5" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="4.54" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="6.43" prefHeight="42.5" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="4.54" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="122.5" percentHeight="37.12" prefHeight="245.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" percentHeight="3.03" prefHeight="20.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                                 <children>
+                                    <GridPane layoutX="17.0" layoutY="78.0" prefHeight="245.0" prefWidth="260.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="25.0" percentHeight="20.4" prefHeight="50.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="7.5" percentHeight="6.12" prefHeight="15.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="25.0" percentHeight="20.4" prefHeight="50.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="7.5" percentHeight="6.12" prefHeight="15.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="25.0" percentHeight="20.4" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="7.5" percentHeight="6.12" prefHeight="15.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="25.0" percentHeight="20.4" prefHeight="50.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="6">
+                                             <children>
+                                                <Button fx:id="menuButton" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonOnAction" prefHeight="62.0" prefWidth="260.0" text="Main menu" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <graphic>
+                                                      <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@images/icons/menuIcon.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
+                                             <children>
+                                                <Button fx:id="settingsButton" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonOnAction" prefHeight="62.0" prefWidth="260.0" text="Settings" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <graphic>
+                                                      <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@images/icons/settingsIcon.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                             <children>
+                                                <Button fx:id="resignButton" graphicTextGap="20.0" layoutX="103.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleButtonOnAction" prefHeight="62.0" prefWidth="260.0" text="Resign" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <graphic>
+                                                      <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@images/icons/resignIcon.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                                             <children>
+                                                <Button fx:id="restartButton" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonOnAction" prefHeight="62.0" prefWidth="260.0" text="Restart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <graphic>
+                                                      <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@images/icons/restartIcon.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label fx:id="timeLabel" layoutX="115.0" layoutY="11.0" prefHeight="40.0" prefWidth="260.0" styleClass="boxNameLabel" text="04.13" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                              <FlowPane fx:id="whiteBeatenFlowPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <FlowPane fx:id="blackBeatenFlowPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                 <children>
+                                    <Label fx:id="checkLabel" alignment="CENTER" layoutX="75.0" layoutY="13.0" prefHeight="43.0" prefWidth="260.0" styleClass="checkLabel" text="White is in check!" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                 <children>
+                                    <Label fx:id="currentMoveLabel" alignment="CENTER" layoutX="115.0" layoutY="13.0" prefHeight="42.0" prefWidth="260.0" styleClass="moveLabel" text="White move" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <children>
+                        <GridPane fx:id="lineNumbersPane" prefHeight="660.0" prefWidth="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label styleClass="squareLabel" text="8" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Label styleClass="squareLabel" text="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                              <Label styleClass="squareLabel" text="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                              <Label styleClass="squareLabel" text="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                              <Label styleClass="squareLabel" text="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                              <Label styleClass="squareLabel" text="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                              <Label styleClass="squareLabel" text="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                              <Label styleClass="squareLabel" text="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <children>
+                        <GridPane fx:id="columnLettersPane" prefHeight="30.0" prefWidth="660.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label styleClass="squareLabel" text="a" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Label styleClass="squareLabel" text="b" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Label styleClass="squareLabel" text="c" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Label styleClass="squareLabel" text="d" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Label styleClass="squareLabel" text="e" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Label styleClass="squareLabel" text="f" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Label styleClass="squareLabel" text="g" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Label styleClass="squareLabel" text="h" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

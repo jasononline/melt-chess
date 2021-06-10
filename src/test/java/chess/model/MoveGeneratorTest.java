@@ -15,18 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class MoveGeneratorTest {
 
-    /**
-     * useless test for the coverage (class is static)
-     */
-    @Test
-    public void createObjects(){
-        MoveGeneratorPawn g = new MoveGeneratorPawn();
-        MoveGeneratorDirectional d = new MoveGeneratorDirectional();
-        MoveGeneratorKnight n = new MoveGeneratorKnight();
-        MoveGeneratorKing k = new MoveGeneratorKing();
-        assertEquals(k, k);
-    }
-
 
     @Test
     public void pawnPromotion() {

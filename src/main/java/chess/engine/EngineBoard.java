@@ -13,6 +13,7 @@ public class EngineBoard extends Board implements Comparable<EngineBoard> {
 
     EngineBoard(Board board) {
         super(board);
+        new ScoreGenerator(this);
     }
 
     EngineBoard(String fen) {
