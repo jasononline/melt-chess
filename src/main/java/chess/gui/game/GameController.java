@@ -76,8 +76,19 @@ public class GameController {
 	private Button promotionPopupBishopButton;
 	@FXML
 	private Button promotionPopupKnightButton;
+	@FXML
+	private AnchorPane surePopup;
+	@FXML
+	private Label surePopupLabel;
+	@FXML
+	private Button surePopupCancelButton;
+	@FXML
+	private Button surePopupYesButton;
 
 	private boolean isRotated = false;
+	private boolean endGame = false;
+	private boolean restartGame = false;
+	private boolean resignGame = false;
 
 	@FXML
 	private void initialize() {
@@ -111,6 +122,10 @@ public class GameController {
 		promotionPopup.prefWidthProperty().bind(boardGrid.widthProperty().divide(1.32));
 		promotionPopup.maxHeightProperty().bind(promotionPopup.prefHeightProperty());
 		promotionPopup.maxWidthProperty().bind(promotionPopup.prefWidthProperty());
+		surePopup.prefHeightProperty().bind(boardGrid.heightProperty().divide(4.4));
+		surePopup.prefWidthProperty().bind(boardGrid.widthProperty().divide(1.32));
+		surePopup.maxHeightProperty().bind(promotionPopup.prefHeightProperty());
+		surePopup.maxWidthProperty().bind(promotionPopup.prefWidthProperty());
 
 		lineNumbersPane.prefHeightProperty().bind(boardGrid.heightProperty());
 		lineNumbersPane.prefWidthProperty()
@@ -121,6 +136,7 @@ public class GameController {
 
 		checkLabel.setVisible(false);
 		promotionPopup.setVisible(false);
+		surePopup.setVisible(false);
 
 		updateUI();
 	}
@@ -129,13 +145,18 @@ public class GameController {
 	private void handleButtonOnAction(ActionEvent event) {
 		Button button = (Button) event.getSource();
 
-		if (button == resignButton) {
+		if (button != settingsButton && !resignGame && !restartGame && !endGame)
+			showSurePopup(event);
+
+		if (button == resignButton && resignGame) {
 			// TODO: End current game (leave game scene open)
 
 			System.out.println("Resign");
+			resignGame = false;
 		}
 
-		if (button == restartButton) {
+		if (button == restartButton && restartGame) {
+			restartGame = false;
 			System.out.println("Restart");
 			GameModel.beginNewGame();
 			initialize();
@@ -146,9 +167,9 @@ public class GameController {
 			Gui.switchTo(Gui.ChessScene.Settings);
 		}
 
-		if (button == menuButton) {
+		if (button == menuButton && endGame) {
 			// TODO: End current game
-
+			endGame = false;
 			Gui.switchTo(Gui.ChessScene.Menu);
 		}
 	}
@@ -435,6 +456,40 @@ public class GameController {
 		promotionPopupKnightButton.setOnAction(buttonActionHandler);
 	}
 
+	private void showSurePopup(ActionEvent sourceEvent) {
+		surePopup.setVisible(true);
+		boardGrid.setDisable(true);
+		historyPane.setDisable(true);
+		resignButton.setDisable(true);
+		restartButton.setDisable(true);
+		settingsButton.setDisable(true);
+		menuButton.setDisable(true);
+
+		EventHandler<ActionEvent> buttonActionHandler = (event) -> {
+			if (sourceEvent.getSource() == resignButton && event.getSource() == surePopupYesButton)
+				resignGame = true;
+			if (sourceEvent.getSource() == restartButton && event.getSource() == surePopupYesButton)
+				restartGame = true;
+			if (sourceEvent.getSource() == menuButton && event.getSource() == surePopupYesButton)
+				endGame = true;
+
+			if (event.getSource() == surePopupYesButton)
+				handleButtonOnAction(sourceEvent);
+
+			surePopup.setVisible(false);
+			boardGrid.setDisable(false);
+			historyPane.setDisable(false);
+			resignButton.setDisable(false);
+			restartButton.setDisable(false);
+			settingsButton.setDisable(false);
+			menuButton.setDisable(false);
+		};
+
+		surePopupCancelButton.setOnAction(buttonActionHandler);
+		surePopupYesButton.setOnAction(buttonActionHandler);
+
+	}
+
 	/**
 	 * Flips the board
 	 */
@@ -485,6 +540,7 @@ public class GameController {
 		timeLabel.setStyle("-fx-font-size: " + timeFontSize);
 		historyLabel.setStyle("-fx-font-size: " + historyFontSize);
 		promotionPopupLabel.setStyle("-fx-font-size: " + fontSize);
+		surePopupLabel.setStyle("-fx-font-size: " + fontSize);
 
 		historyLabel.getParent().getParent().getParent()
 				.setStyle("-fx-background-radius: " + borderRadius + "; -fx-border-radius: " + borderRadius);
@@ -512,6 +568,12 @@ public class GameController {
 		promotionPopupKnightButton.setStyle("-fx-font-size: " + fontSize / 1.66 + "; -fx-graphic-text-gap: " + fontSize / 5
 				+ "; -fx-background-radius: " + borderRadius / 2 + "; -fx-border-radius: " + borderRadius / 2
 				+ "; -fx-border-width: " + historyBorderWidth);
+		surePopupCancelButton.setStyle("-fx-font-size: " + historyButtonFontSize + "; -fx-graphic-text-gap: "
+				+ historyButtonFontSize + "; -fx-background-radius: " + borderRadius / 2 + "; -fx-border-radius: "
+				+ borderRadius / 2 + "; -fx-border-width: " + historyBorderWidth);
+		surePopupYesButton.setStyle("-fx-font-size: " + historyButtonFontSize + "; -fx-graphic-text-gap: "
+				+ historyButtonFontSize + "; -fx-background-radius: " + borderRadius / 2 + "; -fx-border-radius: "
+				+ borderRadius / 2 + "; -fx-border-width: " + historyBorderWidth);
 
 		ImageView[] promotionIcons = { (ImageView) promotionPopupQueenButton.getGraphic(),
 				(ImageView) promotionPopupRookButton.getGraphic(), (ImageView) promotionPopupBishopButton.getGraphic(),
@@ -521,7 +583,8 @@ public class GameController {
 		}
 
 		ImageView[] icons = { (ImageView) resignButton.getGraphic(), (ImageView) restartButton.getGraphic(),
-				(ImageView) settingsButton.getGraphic(), (ImageView) menuButton.getGraphic() };
+				(ImageView) settingsButton.getGraphic(), (ImageView) menuButton.getGraphic(),
+				(ImageView) surePopupCancelButton.getGraphic(), (ImageView) surePopupYesButton.getGraphic() };
 		for (ImageView icon : icons) {
 			icon.setFitHeight(fontSize);
 		}
