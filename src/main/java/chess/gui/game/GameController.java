@@ -176,7 +176,8 @@ public class GameController {
 
 	/**
 	 * Moves the selected Piece to the selected destination if allowed
-	 * @param startIndex the index of the selected piece
+	 * 
+	 * @param startIndex  the index of the selected piece
 	 * @param targetIndex the selected destination
 	 */
 	private void movePieceOnBoard(int startIndex, int targetIndex) {
@@ -279,6 +280,7 @@ public class GameController {
 				pieceView.setFitHeight(50);
 				// put the graphic in th pane
 				pane.getChildren().add(pieceView);
+				centerPiecePosition(pieceView);
 			}
 		}
 	}
@@ -300,6 +302,7 @@ public class GameController {
 
 	/**
 	 * Finishes the current move after flags for promotion are set.
+	 * 
 	 * @param move the current move containing flags for promotion
 	 */
 	private void finishMove(Move move) {
@@ -312,6 +315,7 @@ public class GameController {
 		}
 		updateUI();
 	}
+
 	@FXML
 	private void handleSquareMouseEnter(MouseEvent event) {
 		Node source = (Node) event.getSource();
@@ -392,10 +396,11 @@ public class GameController {
 	}
 
 	/**
-	 * Opens a popup menu to choose promotion
-	 * Should only be called if promotion is possible
+	 * Opens a popup menu to choose promotion Should only be called if promotion is
+	 * possible
+	 * 
 	 * @param forColor the current color on the board
-	 * @param move the move that brings a pawn to the last rank
+	 * @param move     the move that brings a pawn to the last rank
 	 */
 	public void showPromotionPopup(ChessColor forColor, Move move) {
 		ImageView queenIcon = GraphicsManager
@@ -627,19 +632,29 @@ public class GameController {
 			}
 			ImageView figure = !square.getChildren().isEmpty() ? (ImageView) square.getChildren().get(0) : null;
 			if (figure != null) {
-				figure.setFitHeight(Math.min(rootHeight / 14.4, rootWidth / 25.6));
-				figure.setY((Math.min(rootHeight / 8.72, rootWidth / 15.51) - figure.getFitHeight()) / 2);
-				figure.setX(
-						(Math.min(rootHeight / 8.72, rootWidth / 15.51) - figure.boundsInParentProperty().get().getWidth()) / 2);
+				centerPiecePosition(figure);
 			}
 		}
 
 	}
 
 	/**
+	 * Sets piece position in the center of the square
+	 * 
+	 * @param pieceView piece image viewp
+	 */
+	private void centerPiecePosition(ImageView pieceView) {
+		pieceView.setFitHeight(Math.min(rootPane.getHeight() / 14.4, rootPane.getWidth() / 25.6));
+		pieceView.setY((Math.min(rootPane.getHeight() / 8.72, rootPane.getWidth() / 15.51) - pieceView.getFitHeight()) / 2);
+		pieceView.setX((Math.min(rootPane.getHeight() / 8.72, rootPane.getWidth() / 15.51)
+				- pieceView.boundsInParentProperty().get().getWidth()) / 2);
+	}
+
+	/**
 	 * Sets the button style
-	 * @param button the button
-	 * @param rootSize the root size
+	 * 
+	 * @param button         the button
+	 * @param rootSize       the root size
 	 * @param graphicTextGap the graphic text gap
 	 */
 	private void setButtonStyle(Button button, double[] rootSize, double graphicTextGap) {
