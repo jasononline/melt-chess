@@ -183,9 +183,12 @@ public class GameController {
 	private void movePieceOnBoard(int startIndex, int targetIndex) {
 		Move move = new Move(startIndex, targetIndex);
 		Board board = GameModel.getCurrentGame().getCurrentPosition();
+		Move testMove = new Move(startIndex, targetIndex);
+		Game testGame = GameModel.getCurrentGame();
+		testGame.addFlag(testMove);
 
 		if (Piece.isColor(board.getPieceAt(startIndex), board.getTurnColor())
-				&& MoveValidator.validateMove(board, move)) {
+				&& MoveValidator.validateMove(testGame.getCurrentPosition(), testMove)) {
 			// if promotion is possible
 			if ((Coordinate.isOnUpperBorder(targetIndex) || Coordinate.isOnLowerBorder(targetIndex))
 				&& Piece.isType(board.getPieceAt(startIndex), Piece.Pawn)) {
@@ -315,10 +318,12 @@ public class GameController {
 		System.out.println("Called: movePieceOnBorad(" + move.toString() + ")");
 		if (GameModel.getCurrentGame().attemptMove(move)) {
 			System.out.println("Move happened: " + move.toString());
+			GameModel.getMovesHistory().add(0, move);
 		} else {
 			System.out.println("Game.attemptMove() did not allow " + move.toString());
 		}
 		updateUI();
+
 	}
 
 	@FXML
@@ -361,41 +366,43 @@ public class GameController {
 
 		Node source = (Node) event.getSource();
 
-		if (source instanceof AnchorPane) {
-			AnchorPane square = (AnchorPane) source;
-			int index = Coordinate.toIndex(square.getId());
+		if (!(source instanceof AnchorPane)) {
+			return;
+		}
+		AnchorPane square = (AnchorPane) source;
+		int index = Coordinate.toIndex(square.getId());
 
-			if (GameModel.isSelected()) { // if a piece has already been selected (second press)
+		if (GameModel.isSelected()) { // if a piece has already been selected (second press)
 
-				if (!SettingsModel.isOneTouchRule() && GameModel.getSelectedIndex() == index) {
-					settingsButton.setDisable(false);
-					GameModel.setSelectedIndex(-1);
-					boardGrid.getChildren().forEach(s -> {
-						s.getStyleClass().removeAll("focused");
-					});
-				} else if (!SettingsModel.isOneTouchRule() || GameModel.getSelectedIndex() != index) {
-					movePieceOnBoard(GameModel.getSelectedIndex(), Coordinate.toIndex(square.getId()));
+			if (!SettingsModel.isOneTouchRule() && GameModel.getSelectedIndex() == index) {
+				settingsButton.setDisable(false);
+				GameModel.setSelectedIndex(-1);
+				boardGrid.getChildren().forEach(s -> {
+					s.getStyleClass().removeAll("focused");
+				});
+			} else if (!SettingsModel.isOneTouchRule() || GameModel.getSelectedIndex() != index) {
+				movePieceOnBoard(GameModel.getSelectedIndex(), Coordinate.toIndex(square.getId()));
 
-					boardGrid.getChildren().forEach(s -> {
-						s.getStyleClass().removeAll("focused");
-					});
+				boardGrid.getChildren().forEach(s -> {
+					s.getStyleClass().removeAll("focused");
+				});
 
-					if (SettingsModel.isFlipBoard() && GameModel.getSelectedIndex() != index) {
-						flipBoard();
-					}
-					settingsButton.setDisable(false);
-					GameModel.setSelectedIndex(-1);
+				if (SettingsModel.isFlipBoard() && GameModel.getSelectedIndex() != index) {
+					flipBoard();
 				}
+				settingsButton.setDisable(promotionPopup.isVisible());
 
-			} else { // if a piece has not yet been selected (first press)
+				GameModel.setSelectedIndex(-1);
+			}
 
-				if (!square.getChildren().isEmpty()) {
+		} else { // if a piece has not yet been selected (first press)
 
-					GameModel.setSelectedIndex(index);
+			if (!square.getChildren().isEmpty()) {
 
-					square.getStyleClass().add("focused");
-					settingsButton.setDisable(true);
-				}
+				GameModel.setSelectedIndex(index);
+
+				square.getStyleClass().add("focused");
+				settingsButton.setDisable(true);
 			}
 		}
 	}
