@@ -52,38 +52,8 @@ public class GraphicsManager {
      * @return the graphic as an ImameView object according to name.
      */
     public static ImageView getGraphicAsImageView(String name) {
-        return new ImageView(getGraphicAsImage(name));
-    }
-
-
-    /**
-     * Returns the specified graphic as an ImgaeView object with specified coordinates.
-     *
-     * @param name the name of the wanted graphic.
-     * @param x the wanted x coordinate.
-     * @param y the wanted y coordinate.
-     * @return the graphic as an ImageView object with non-default coordinate values.
-     */
-    public static ImageView getGraphicAsImageView(String name, double x, double y) {
-        ImageView result = getGraphicAsImageView(name);
-        result.setX(x);
-        result.setY(y);
-        return result;
-    }
-
-    /**
-     * Returns the specified graphic as an ImgaeView object with specified coordinates and size
-     *
-     * @param name the name of the wanted graphic.
-     * @param x the wanted x coordinate.
-     * @param y the wanted y coordinate.
-     * @param size the wanted size.
-     * @return the graphic as an ImageView object with non-default coordinate values and specific size.
-     */
-    public static ImageView getGraphicAsImageView(String name, double x, double y, int size) {
-        ImageView result = getGraphicAsImageView(name, x, y);
-        result.setFitHeight(size);
-        result.setFitWidth(size);
-        return result;
+        ImageView imageView = new ImageView(getGraphicAsImage(name));
+        imageView.setPreserveRatio(true);
+        return imageView;
     }
 }
