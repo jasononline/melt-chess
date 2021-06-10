@@ -182,18 +182,23 @@ public class GameController {
 	 */
 	private void movePieceOnBoard(int startIndex, int targetIndex) {
 		Move move = new Move(startIndex, targetIndex);
+		Board board = GameModel.getCurrentGame().getCurrentPosition();
 
-		// if promotion is possible
-		if (Coordinate.isOnUpperBorder(targetIndex) || Coordinate.isOnLowerBorder(targetIndex)) {
-			ChessColor currentColor;
-			if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.White) {
-				currentColor = ChessColor.White;
-			} else {
-				currentColor = ChessColor.Black;
+		if (Piece.isColor(board.getPieceAt(startIndex), board.getTurnColor())
+				&& MoveValidator.validateMove(board, move)) {
+			// if promotion is possible
+			if ((Coordinate.isOnUpperBorder(targetIndex) || Coordinate.isOnLowerBorder(targetIndex))
+				&& Piece.isType(board.getPieceAt(startIndex), Piece.Pawn)) {
+				ChessColor currentColor;
+				if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.White) {
+					currentColor = ChessColor.White;
+				} else {
+					currentColor = ChessColor.Black;
+				}
+				// open the PopupMenu to choose promotion
+				showPromotionPopup(currentColor, move);
+				return;
 			}
-			// open the PopupMenu to choose promotion
-			showPromotionPopup(currentColor, move);
-			return;
 		}
 		finishMove(move);
 	}
