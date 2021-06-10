@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -53,6 +54,8 @@ public class GameController {
 	private FlowPane blackBeatenFlowPane;
 	@FXML
 	private Label currentMoveLabel;
+	@FXML
+	private ProgressIndicator activityIndicator;
 	@FXML
 	private Label checkLabel;
 	@FXML
@@ -137,6 +140,11 @@ public class GameController {
 		checkLabel.setVisible(false);
 		promotionPopup.setVisible(false);
 		surePopup.setVisible(false);
+		activityIndicator.setVisible(false);
+
+		boardGrid.getChildren().forEach(s -> {
+			s.getStyleClass().removeAll("focused");
+		});
 
 		updateUI();
 	}
@@ -168,7 +176,6 @@ public class GameController {
 		}
 
 		if (button == menuButton && endGame) {
-			// TODO: End current game
 			endGame = false;
 			Gui.switchTo(Gui.ChessScene.Menu);
 		}
@@ -181,6 +188,7 @@ public class GameController {
 	 * @param targetIndex the selected destination
 	 */
 	private void movePieceOnBoard(int startIndex, int targetIndex) {
+		checkLabel.setVisible(false);
 		Move move = new Move(startIndex, targetIndex);
 		Board board = GameModel.getCurrentGame().getCurrentPosition();
 		Move testMove = new Move(startIndex, targetIndex);
@@ -321,9 +329,71 @@ public class GameController {
 			GameModel.getMovesHistory().add(0, move);
 		} else {
 			System.out.println("Game.attemptMove() did not allow " + move.toString());
+			return;
 		}
+		checkForGameOver();
 		updateUI();
 
+		if (GameModel.getGameMode() == GameModel.ChessMode.Computer) {
+			activityIndicator.setVisible(true);
+			GameModel.performEngineMove();
+			checkForGameOver();
+			updateUI();
+			activityIndicator.setVisible(false);
+		}
+	}
+
+	/**
+	 * Checks whether the current game is over
+	 * if that is the case the endGame() function will be called
+	 */
+	private void checkForGameOver() {
+		Game game = GameModel.getCurrentGame();
+		if(game.checkCheck()) {
+			System.out.println("checkForGameOver was called");
+			String key;
+			if(game.getCurrentPosition().getTurnColor() == Piece.White) {
+				key = "game.whiteInCheck";
+			} else {
+				key = "game.blackInCheck";
+			}
+			checkLabel.setVisible(true);
+			TextManager.computeText(checkLabel, key);
+		}
+		if (game.checkWinCondition() != 0) {
+			endGame();
+			return;
+		}
+	}
+
+	/**
+	 * Ends the current game
+	 */
+	private void endGame() {
+		Game game = GameModel.getCurrentGame();
+		int winCondition = game.checkWinCondition();
+
+		// only end the game when it should be ended
+		if (winCondition == 0) return;
+
+		String key = "";
+		if (winCondition == 1) {
+			if (game.getCurrentPosition().getTurnColor() == Piece.White) {
+				key = "game.whiteInCheckmate";
+			} else {
+				key = "game.blackInCheckmate";
+			}
+		} else if (winCondition == 2) {
+			if (game.getCurrentPosition().getTurnColor() == Piece.White) {
+				key = "game.whiteInRemis";
+			} else {
+				key = "game.blackInRemis";
+			}
+		}
+		TextManager.computeText(checkLabel, key);
+		boardGrid.setDisable(true);
+		historyPane.setDisable(true);
+		resignButton.setDisable(true);
 	}
 
 	@FXML

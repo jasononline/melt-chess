@@ -1,5 +1,6 @@
 package chess.gui.game;
 
+import chess.engine.Engine;
 import chess.gui.util.GraphicsManager;
 import chess.model.Game;
 import javafx.scene.image.ImageView;
@@ -19,6 +20,8 @@ public class GameModel {
 	 * The current Game
 	 */
 	private static chess.model.Game currentGame;
+
+	private static Engine engine = new Engine();
 
 	/*
 	 * Enumeration of available game modes
@@ -74,8 +77,8 @@ public class GameModel {
 		GameModel.beatenBlackPiecesGraphics.clear();
 		GameModel.movesHistory.clear();
 		// start the new game
-		currentGame = new Game();
-		if (color == ChessColor.White) {
+		currentGame = new Game("k4bnr/3Ppppp/7q/1R6/1R6/8/PP1PPPPP/1NBQKBNR");
+		if (color == ChessColor.Black) {
 			currentGame.getCurrentPosition().setTurnColor(Piece.Black);
 		}
 	}
@@ -96,6 +99,14 @@ public class GameModel {
 				beatenBlackPiecesGraphics.add(pieceView);
 			}
 		}
+	}
+
+	/**
+	 * Performs a move that is computed by the engine
+	 */
+	public static void performEngineMove() {
+		Move next = engine.generateBestMove(currentGame.getCurrentPosition());
+		currentGame.attemptMove(next);
 	}
 
 	/**
