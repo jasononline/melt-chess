@@ -16,6 +16,8 @@ import chess.model.Piece;
 import javafx.animation.RotateTransition;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
+import javafx.concurrent.Service;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -104,6 +106,8 @@ public class GameController {
 	private boolean restartGame = false;
 	private boolean resignGame = false;
 
+	private Service service;
+
 	@FXML
 	private void initialize() {
 		TextManager.computeText(historyLabel, "game.history");
@@ -151,16 +155,27 @@ public class GameController {
 		checkLabel.setVisible(false);
 		promotionPopup.setVisible(false);
 		surePopup.setVisible(false);
+
+		activityIndicator.visibleProperty().unbind();
 		activityIndicator.setVisible(false);
 
 		boardGrid.getChildren().forEach(s -> {
 			s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
 		});
 
+		if(service == null) {
+			service = new PerformEngineMoveService();
+		} else {
+			// cancel a running service
+			service.cancel();
+		}
+
 		if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.Black && !isRotated
 				&& SettingsModel.isFlipBoard()) {
 			flipBoard();
 		}
+
+		checkForGameOver();
 		updateUI();
 	}
 
@@ -240,6 +255,10 @@ public class GameController {
 		updateLabelsUI();
 	}
 
+	/**
+	 * Displays the possible moves on the View
+	 * @param startPosition from where to look for moves
+	 */
 	private void showPossibleMoves(int startPosition) {
 
 		Board board = GameModel.getCurrentGame().getCurrentPosition();
@@ -377,22 +396,52 @@ public class GameController {
 			return;
 
 		if (GameModel.getGameMode() == GameModel.ChessMode.Computer) {
-			activityIndicator.setVisible(true);
-			GameModel.setAllowedToMove(false);
 
-			// TODO rest of this function should happen in different thread
-			GameModel.performEngineMove();
-			activityIndicator.setVisible(false);
-			checkForGameOver();
-			updateUI();
-			GameModel.setAllowedToMove(true);
+			activityIndicator.visibleProperty().bind(service.runningProperty());
+			/*
+			resignButton.disableProperty().bind(service.runningProperty());
+			restartButton.disableProperty().bind(service.runningProperty());
+			settingsButton.disableProperty().bind(service.runningProperty());
+			menuButton.disableProperty().bind(service.runningProperty());
+			boardGrid.disableProperty().bind(service.runningProperty());
+
+			 */
+
+			service.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+				@Override
+				public void handle(WorkerStateEvent workerStateEvent) {
+					finishEngineMove();
+				}
+			});
+			service.restart();
 		}
 
 	}
 
-	private void activateIndikator(boolean status) {
-		System.out.println("activateIndikator was called.\n");
-		activityIndicator.setVisible(status);
+	/**
+	 * Updates a performed move of the Engine to the view
+	 * @return null
+	 */
+	private EventHandler<WorkerStateEvent> finishEngineMove() {
+
+		System.out.println("finishEngineMove() was called");
+		/*
+		resignButton.disableProperty().unbind();
+		restartButton.disableProperty().unbind();
+		settingsButton.disableProperty().unbind();
+		menuButton.disableProperty().unbind();
+		boardGrid.disableProperty().unbind();
+
+		 */
+
+		GameModel.setSelectedIndex(-1);
+		boardGrid.getChildren().forEach(s -> {
+			s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
+		});
+		checkForGameOver();
+		updateUI();
+		GameModel.setAllowedToMove(true);
+		return null;
 	}
 
 	/**
@@ -529,7 +578,7 @@ public class GameController {
 				return;
 			}
 
-			movePieceOnBoard(GameModel.getSelectedIndex(), Coordinate.toIndex(square.getId()));
+			movePieceOnBoard(GameModel.getSelectedIndex(), index);
 
 			boardGrid.getChildren().forEach(s -> {
 				s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");

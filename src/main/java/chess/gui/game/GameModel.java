@@ -132,10 +132,15 @@ public class GameModel {
 	public static void performEngineMove() {
 		System.out.println("performEngineMove was called");
 		Move next = engine.generateBestMove(currentGame.getCurrentPosition());
-		System.out.println("Engine came up with this move: " + next.toString());
-		if(!currentGame.attemptMove(next)) {
-			System.out.println("The engines Move failed in attemption.");
+		System.out.println("does this message appear before the exception?\n-------------------");
+		if (next != null) {
+			System.out.println("Engine came up with this move: " + next.toString());
+			if(!currentGame.attemptMove(next)) {
+				System.out.println("The engines Move failed in attemption.");
+				return;
+			}
 		}
+		movesHistory.add(0, next);
 
 	}
 

@@ -18,7 +18,7 @@
    <children>
       <AnchorPane layoutX="520.0" layoutY="260.0" prefHeight="720.0" prefWidth="1280.0" styleClass="bgLayer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <GridPane layoutX="540.0" layoutY="315.0" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <GridPane fx:id="baseGrid" layoutX="540.0" layoutY="315.0" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="15.0" percentWidth="2.34" prefWidth="30.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" percentWidth="15.62" prefWidth="200.0" />
