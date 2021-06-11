@@ -225,15 +225,12 @@
 }
 
 .square {
-  -fx-border-width: 4;
+  -fx-border-width: 2.5;
   -fx-border-color: none;
 }
 
-.square.possible {
-  -fx-background-image: url(../util/graphics/possibleMoveIcon.png);
-  -fx-background-repeat: no-repeat;
-  -fx-background-size: 30%;
-  -fx-background-position: center center;
+.square:hover {
+  -fx-border-width: 4;
 }
 
 .square.cursor {
@@ -241,9 +238,25 @@
 }
 
 .square.focused {
-  -fx-border-color: #eee85b;
+  -fx-border-color: rgba(224, 239, 222, 1);
+  /* -fx-border-color: #eee85b; */
   -fx-cursor: hand;
   /* -fx-border-color: rgba(214, 169, 22); */
+}
+
+.square.possibleMove {
+  /* -fx-border-color: rgba(131, 249, 158, 0.9); */
+  -fx-border-color: rgba(148, 247, 140, 1);
+}
+
+.square.captureMove {
+  /* -fx-border-color: rgba(204, 2, 4, 0.9); */
+  -fx-border-color: rgba(255, 103, 77, 1);
+}
+
+.square.checkMove {
+  /* -fx-border-color: rgba(200, 84, 255, 0.9); */
+  -fx-border-color: rgba(216, 134, 255, 1);
 }
 
 .lightSquare {

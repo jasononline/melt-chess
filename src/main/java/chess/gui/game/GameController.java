@@ -2,13 +2,17 @@ package chess.gui.game;
 
 import java.util.function.Predicate;
 
-import chess.engine.Engine;
 import chess.gui.Gui;
 import chess.gui.game.GameModel.ChessColor;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.GraphicsManager;
 import chess.gui.util.TextManager;
-import chess.model.*;
+import chess.model.Board;
+import chess.model.Coordinate;
+import chess.model.Game;
+import chess.model.Move;
+import chess.model.MoveValidator;
+import chess.model.Piece;
 import javafx.animation.RotateTransition;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
@@ -26,7 +30,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 /**
@@ -151,7 +154,7 @@ public class GameController {
 		activityIndicator.setVisible(false);
 
 		boardGrid.getChildren().forEach(s -> {
-			s.getStyleClass().removeAll("focused");
+			s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
 		});
 
 		if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.Black && !isRotated
@@ -250,12 +253,11 @@ public class GameController {
 				return;
 
 			AnchorPane square = (AnchorPane) squareNode;
-			ImageView icon = GraphicsManager
-					.getGraphicAsImageView(square.getChildren().isEmpty() ? "possibleMoveIcon" : "captureMoveIcon");
-			icon.toFront();
-			icon.setId("possibleMove");
-			square.getChildren().add(icon);
-			stylePossibleMoveIcon(icon);
+			String styleClass = square.getChildren().isEmpty() ? "possibleMove" : "captureMove";
+			if (MoveValidator.getPossibleCheckMoves(board, board.getTurnColor(), move).contains(move)) {
+				styleClass = "checkMove";
+			}
+			square.getStyleClass().addAll(styleClass);
 		}
 	}
 
@@ -516,20 +518,21 @@ public class GameController {
 			settingsButton.setDisable(false);
 			GameModel.setSelectedIndex(-1);
 			boardGrid.getChildren().forEach(s -> {
-				s.getStyleClass().removeAll("focused");
-				Predicate<Node> possibleMove = node -> node.getId().equals("possibleMove");
-				((AnchorPane) s).getChildren().removeAll(((AnchorPane) s).getChildren().filtered(possibleMove));
+				s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
 			});
 
 			// if one touch rule is disabled and press not on the same square
 		} else if (!SettingsModel.isOneTouchRule() || GameModel.getSelectedIndex() != index) {
 
+			if (SettingsModel.isOneTouchRule() && !GameModel.getPossibleMoves(GameModel.getSelectedIndex())
+					.contains(new Move(GameModel.getSelectedIndex(), index))) {
+				return;
+			}
+
 			movePieceOnBoard(GameModel.getSelectedIndex(), Coordinate.toIndex(square.getId()));
 
 			boardGrid.getChildren().forEach(s -> {
-				s.getStyleClass().removeAll("focused");
-				Predicate<Node> possibleMove = node -> node.getId().equals("possibleMove");
-				((AnchorPane) s).getChildren().removeAll(((AnchorPane) s).getChildren().filtered(possibleMove));
+				s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
 			});
 			settingsButton.setDisable(promotionPopup.isVisible());
 
@@ -595,7 +598,8 @@ public class GameController {
 			historyPane.setDisable(false);
 			resignButton.setDisable(false);
 			restartButton.setDisable(false);
-			settingsButton.setDisable(false);
+			if (!GameModel.isSelected())
+				settingsButton.setDisable(false);
 			menuButton.setDisable(false);
 		};
 
@@ -630,7 +634,8 @@ public class GameController {
 			historyPane.setDisable(false);
 			resignButton.setDisable(false);
 			restartButton.setDisable(false);
-			settingsButton.setDisable(false);
+			if (!GameModel.isSelected())
+				settingsButton.setDisable(false);
 			menuButton.setDisable(false);
 		};
 
@@ -643,23 +648,18 @@ public class GameController {
 	 * Flips the board
 	 */
 	private void flipBoard() {
-		String lines = "12345678";
-		String columns = "hgfedcba";
-		if (isRotated) { // rotate back
-			lines = "87654321";
-			columns = "abcdefgh";
-		}
+		String lines = isRotated ? "87654321" : "12345678";
+		String columns = isRotated ? "abcdefgh" : "hgfedcba";
 
 		for (int i = 0; i < 8; i++) {
-			((Label) lineNumbersPane.getChildren().get(i)).setText("" + lines.charAt(i));
-		}
-		for (int i = 0; i < 8; i++) {
-			((Label) columnLettersPane.getChildren().get(i)).setText("" + columns.charAt(i));
+			((Label) lineNumbersPane.getChildren().get(i)).setText(lines.charAt(i) + "");
+			((Label) columnLettersPane.getChildren().get(i)).setText(columns.charAt(i) + "");
 		}
 
 		// -------- rotate with animation --------
-		RotateTransition transition = new RotateTransition(Duration.seconds(0.2), boardGrid);
+		RotateTransition transition = new RotateTransition(Duration.seconds(1.2), boardGrid);
 		transition.setToAngle(isRotated ? 0 : 180);
+		// transition.setDelay(Duration.seconds(0.5));
 		transition.play();
 
 		// -------- rotate without animation --------
@@ -760,23 +760,20 @@ public class GameController {
 
 		for (Node squareNode : boardGrid.getChildren()) {
 			AnchorPane square = (AnchorPane) squareNode;
-			if (!square.getId().equals("a8") && !square.getId().equals("h8") && !square.getId().equals("a1")
-					&& !square.getId().equals("h1")) {
-				square.setStyle("-fx-border-width: " + historyBorderWidth * 2);
-			}
+			square.setStyle("-fx-border-width: " + historyBorderWidth * 1.25);
 
 			Predicate<Node> pieces = image -> image.getId().equals("piece");
-			Predicate<Node> possibleMoves = image -> image.getId().equals("possibleMove");
+			// Predicate<Node> possibleMoves = image -> image.getId().equals("possibleMove");
 
 			for (Node node : square.getChildren().filtered(pieces)) {
 				ImageView piece = (ImageView) node;
 				centerPiecePosition(piece);
 			}
 
-			for (Node node : square.getChildren().filtered(possibleMoves)) {
-				ImageView icon = (ImageView) node;
-				stylePossibleMoveIcon(icon);
-			}
+			// for (Node node : square.getChildren().filtered(possibleMoves)) {
+			// 	ImageView icon = (ImageView) node;
+			// 	stylePossibleMoveIcon(icon);
+			// }
 		}
 
 	}

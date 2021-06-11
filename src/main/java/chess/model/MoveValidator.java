@@ -1,5 +1,6 @@
 package chess.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,6 +54,33 @@ public class MoveValidator {
 			}
 		}
 		return numChecks;
+	}
+
+	/**
+	 * Checks if check is possible
+	 * 
+	 * @param board        the current position
+	 * @param currentColor current team color
+	 * @param move         from which move
+	 * @return checkMoves List of Move objects
+	 */
+	public static List<Move> getPossibleCheckMoves(Board board, int currentColor, Move move) {
+
+		List<Move> checkMoves = new ArrayList<>();
+		MoveGenerator generator = new MoveGenerator(board.makeMove(move));
+		int kingPosition = findKing(board, currentColor == Piece.White ? Piece.Black : Piece.White);
+
+		// swap color to opponent
+		if (generator.getTeamColor() != currentColor)
+			generator.swapColors();
+
+		for (Move possibleMove : generator.generateMovesStartingAt(move.getTargetSquare())) {
+			if (possibleMove.getTargetSquare() == kingPosition) {
+				checkMoves.add(move);
+			}
+		}
+
+		return checkMoves;
 	}
 
 	// Check if move is any legal move found by the MoveGenerator
