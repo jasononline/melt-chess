@@ -53,8 +53,12 @@ public class Engine {
         int color = board.getTurnColor();
 
         List<EngineBoard> possiblePositions = getNextPositions(new EngineBoard(board));
-        if (possiblePositions.isEmpty())
+        if (possiblePositions.isEmpty()) {
+            System.out.println("No possible moves for engine!");
             return null;
+        }
+
+        System.out.println(possiblePositions);
 
         EngineBoard bestPosition = null;
         int bestValue = Integer.MIN_VALUE;
@@ -67,7 +71,9 @@ public class Engine {
                 bestPosition = position;
             }
         }
-        assert bestPosition != null;
+        if (bestPosition == null) {
+            return possiblePositions.get(0).getLastMove();
+        }
         return bestPosition.getLastMove();
     }
 
