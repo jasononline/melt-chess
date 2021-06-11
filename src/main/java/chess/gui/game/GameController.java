@@ -129,6 +129,7 @@ public class GameController {
 		rootPane.widthProperty().addListener(rootPaneSizeListener);
 		rootPane.heightProperty().addListener(rootPaneSizeListener);
 
+		boardGrid.setDisable(false);
 		boardGrid.prefHeightProperty()
 				.bind(Bindings.min(rootPane.widthProperty().divide(1.94), rootPane.heightProperty().divide(1.09)));
 		boardGrid.prefWidthProperty()
@@ -398,14 +399,7 @@ public class GameController {
 		if (GameModel.getGameMode() == GameModel.ChessMode.Computer) {
 
 			activityIndicator.visibleProperty().bind(service.runningProperty());
-			/*
-			resignButton.disableProperty().bind(service.runningProperty());
-			restartButton.disableProperty().bind(service.runningProperty());
-			settingsButton.disableProperty().bind(service.runningProperty());
-			menuButton.disableProperty().bind(service.runningProperty());
-			boardGrid.disableProperty().bind(service.runningProperty());
-
-			 */
+			boardGrid.setDisable(true);
 
 			service.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 				@Override
@@ -425,14 +419,7 @@ public class GameController {
 	private EventHandler<WorkerStateEvent> finishEngineMove() {
 
 		System.out.println("finishEngineMove() was called");
-		/*
-		resignButton.disableProperty().unbind();
-		restartButton.disableProperty().unbind();
-		settingsButton.disableProperty().unbind();
-		menuButton.disableProperty().unbind();
-		boardGrid.disableProperty().unbind();
 
-		 */
 
 		GameModel.setSelectedIndex(-1);
 		boardGrid.getChildren().forEach(s -> {
@@ -441,6 +428,7 @@ public class GameController {
 		checkForGameOver();
 		updateUI();
 		GameModel.setAllowedToMove(true);
+		boardGrid.setDisable(false);
 		return null;
 	}
 
