@@ -107,21 +107,6 @@
   -fx-background-color: rgba(131, 131, 131, 0.7);
 }
 
-.modeButton {
-  -fx-pref-width: 237;
-  -fx-pref-height: 150;
-}
-
-.colorButton {
-  -fx-pref-width: 365;
-  -fx-pref-height: 150;
-}
-
-.menuButton {
-  -fx-pref-width: 360;
-  -fx-pref-height: 150;
-}
-
 .langButton {
   -fx-background-radius: 5;
   -fx-border-radius: 5;
@@ -137,6 +122,10 @@
   -fx-border-width: 2;
 }
 
+.historyButton:hover {
+  -fx-border-color: none;
+}
+
 .historyLabel {
   -fx-font-weight: 600;
   -fx-font-size: 20px;
@@ -148,6 +137,10 @@
   -fx-font-weight: 700;
   -fx-font-size: 20px;
   -fx-text-fill: rgb(223, 38, 38);
+}
+
+.progressIndicator {
+  -fx-progress-color: white;
 }
 
 .moveLabel {
@@ -205,6 +198,32 @@
   -fx-background-color: transparent;
 }
 
+.scrollPane .content {
+  -fx-padding: 0 10 0 0;
+}
+
+.scrollPane .track-background {
+  -fx-backgroung-color: rgba(92, 92, 92, 0.9);
+}
+
+.scrollPane .thumb {
+  -fx-background-color: rgba(131, 131, 131, 0.5);
+  -fx-background-insets: 0 0 0 5;
+}
+
+.scrollPane .increment-button,
+.scrollPane .decrement-button {
+  -fx-background-color: transparent;
+  -fx-cursor: hand;
+  -fx-padding: 0;
+}
+
+.scrollPane .increment-arrow,
+.scrollPane .decrement-arrow {
+  -fx-shape: " ";
+  -fx-padding: 0;
+}
+
 .square {
   -fx-border-width: 4;
   -fx-border-color: none;
@@ -239,4 +258,8 @@
   -fx-font-size: 12;
   -fx-font-weight: 700;
   -fx-text-fill: white;
+}
+
+.boardGrid {
+  -fx-background-radius: 10;
 }

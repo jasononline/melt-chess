@@ -83,7 +83,7 @@
                      <children>
                         <StackPane prefHeight="660.0" prefWidth="660.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <GridPane fx:id="boardGrid" alignment="CENTER" prefHeight="660.0" prefWidth="660.0">
+                              <GridPane fx:id="boardGrid" alignment="CENTER" prefHeight="660.0" prefWidth="660.0" styleClass="boardGrid">
                                  <columnConstraints>
                                     <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="41.25" prefWidth="82.5" />
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="41.25" prefWidth="82.5" />
@@ -776,7 +776,7 @@
                                     <Label fx:id="currentMoveLabel" alignment="CENTER" graphicTextGap="10.0" layoutX="115.0" layoutY="13.0" prefHeight="42.0" prefWidth="260.0" styleClass="moveLabel" text="White move" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
-                              <ProgressIndicator fx:id="activityIndicator" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                              <ProgressIndicator fx:id="activityIndicator" styleClass="progressIndicator" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
                            </children>
                         </GridPane>
                      </children>

@@ -1,5 +1,7 @@
 package chess.gui.game;
 
+import java.util.function.Predicate;
+
 import chess.engine.Engine;
 import chess.gui.Gui;
 import chess.gui.game.GameModel.ChessColor;
@@ -7,6 +9,7 @@ import chess.gui.settings.SettingsModel;
 import chess.gui.util.GraphicsManager;
 import chess.gui.util.TextManager;
 import chess.model.*;
+import javafx.animation.RotateTransition;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -22,7 +25,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
 
 /**
  * Controls behaviour of GUI elements except the chessboard (see
@@ -149,6 +154,10 @@ public class GameController {
 			s.getStyleClass().removeAll("focused");
 		});
 
+		if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.Black && !isRotated
+				&& SettingsModel.isFlipBoard()) {
+			flipBoard();
+		}
 		updateUI();
 	}
 
@@ -169,6 +178,8 @@ public class GameController {
 		if (button == restartButton && restartGame) {
 			restartGame = false;
 			System.out.println("Restart");
+			if (SettingsModel.isFlipBoard() && isRotated)
+				flipBoard();
 			GameModel.beginNewGame();
 			initialize();
 		}
@@ -201,7 +212,7 @@ public class GameController {
 				&& MoveValidator.validateMove(testGame.getCurrentPosition(), testMove)) {
 			// if promotion is possible
 			if ((Coordinate.isOnUpperBorder(targetIndex) || Coordinate.isOnLowerBorder(targetIndex))
-				&& Piece.isType(board.getPieceAt(startIndex), Piece.Pawn)) {
+					&& Piece.isType(board.getPieceAt(startIndex), Piece.Pawn)) {
 				ChessColor currentColor;
 				if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.White) {
 					currentColor = ChessColor.White;
@@ -224,6 +235,28 @@ public class GameController {
 		updateBeatenPiecesUI();
 		updatePiecesUI();
 		updateLabelsUI();
+	}
+
+	private void showPossibleMoves(int startPosition) {
+
+		Board board = GameModel.getCurrentGame().getCurrentPosition();
+		if (!Piece.isColor(board.getPieceAt(startPosition), board.getTurnColor()))
+			return;
+
+		for (Move move : GameModel.getPossibleMoves(startPosition)) {
+			Node squareNode = boardGrid.getChildren().get(move.getTargetSquare());
+
+			if (!(squareNode instanceof AnchorPane))
+				return;
+
+			AnchorPane square = (AnchorPane) squareNode;
+			ImageView icon = GraphicsManager
+					.getGraphicAsImageView(square.getChildren().isEmpty() ? "possibleMoveIcon" : "captureMoveIcon");
+			icon.toFront();
+			icon.setId("possibleMove");
+			square.getChildren().add(icon);
+			stylePossibleMoveIcon(icon);
+		}
 	}
 
 	/**
@@ -296,6 +329,7 @@ public class GameController {
 				// get the graphic of the piece
 				pieceView = GraphicsManager.getGraphicAsImageView(Piece.toName(piece));
 				pieceView.setFitHeight(50);
+				pieceView.setId("piece");
 				// put the graphic in th pane
 				pane.getChildren().add(pieceView);
 				centerPiecePosition(pieceView);
@@ -329,13 +363,16 @@ public class GameController {
 		if (GameModel.getCurrentGame().attemptMove(move)) {
 			System.out.println("Move happened: " + move.toString());
 			GameModel.getMovesHistory().add(0, move);
+			if (SettingsModel.isFlipBoard())
+				flipBoard();
 		} else {
 			System.out.println("Game.attemptMove() did not allow " + move.toString());
 			return;
 		}
 
 		updateUI();
-		if (checkForGameOver()) return;
+		if (checkForGameOver())
+			return;
 
 		if (GameModel.getGameMode() == GameModel.ChessMode.Computer) {
 			activityIndicator.setVisible(true);
@@ -357,16 +394,16 @@ public class GameController {
 	}
 
 	/**
-	 * Checks whether the current game is over
-	 * if that is the case the endGame() function will be called
+	 * Checks whether the current game is over if that is the case the endGame()
+	 * function will be called
 	 */
 	private boolean checkForGameOver() {
 		checkLabel.setVisible(false);
 		Game game = GameModel.getCurrentGame();
-		if(game.checkCheck()) {
+		if (game.checkCheck()) {
 			System.out.println("checkForGameOver was called");
 			String key;
-			if(game.getCurrentPosition().getTurnColor() == Piece.White) {
+			if (game.getCurrentPosition().getTurnColor() == Piece.White) {
 				key = "game.whiteInCheck";
 			} else {
 				key = "game.blackInCheck";
@@ -389,7 +426,8 @@ public class GameController {
 		int winCondition = game.checkWinCondition();
 
 		// only end the game when it should be ended
-		if (winCondition == 0) return;
+		if (winCondition == 0)
+			return;
 
 		String key = "";
 		if (winCondition == 1) {
@@ -451,45 +489,53 @@ public class GameController {
 
 		Node source = (Node) event.getSource();
 
-		if (!(source instanceof AnchorPane || !(GameModel.isAllowedToMove()))) {
+		if (!(source instanceof AnchorPane || !(GameModel.isAllowedToMove())))
 			return;
-		}
-		AnchorPane square = (AnchorPane) source;
+
+		AnchorPane square = (AnchorPane) event.getSource();
 		int index = Coordinate.toIndex(square.getId());
 
-		if (GameModel.isSelected()) { // if a piece has already been selected (second press)
-
-			if (!SettingsModel.isOneTouchRule() && GameModel.getSelectedIndex() == index) {
-				settingsButton.setDisable(false);
-				GameModel.setSelectedIndex(-1);
-				boardGrid.getChildren().forEach(s -> {
-					s.getStyleClass().removeAll("focused");
-				});
-			} else if (!SettingsModel.isOneTouchRule() || GameModel.getSelectedIndex() != index) {
-				movePieceOnBoard(GameModel.getSelectedIndex(), Coordinate.toIndex(square.getId()));
-
-				boardGrid.getChildren().forEach(s -> {
-					s.getStyleClass().removeAll("focused");
-				});
-
-				if (SettingsModel.isFlipBoard() && GameModel.getSelectedIndex() != index) {
-					flipBoard();
-				}
-				settingsButton.setDisable(promotionPopup.isVisible());
-
-				GameModel.setSelectedIndex(-1);
-			}
-
-		} else { // if a piece has not yet been selected (first press)
+		if (!GameModel.isSelected()) { // if a piece has not yet been selected (first press)
 
 			if (!square.getChildren().isEmpty()) {
 
 				GameModel.setSelectedIndex(index);
-
 				square.getStyleClass().add("focused");
 				settingsButton.setDisable(true);
+
+				if (SettingsModel.isShowPossibleMoves())
+					showPossibleMoves(index);
 			}
+			return;
 		}
+
+		// if a piece has already been selected (second press)
+
+		// if one touch rule is disabled and press on the same square
+		if (!SettingsModel.isOneTouchRule() && GameModel.getSelectedIndex() == index) {
+			settingsButton.setDisable(false);
+			GameModel.setSelectedIndex(-1);
+			boardGrid.getChildren().forEach(s -> {
+				s.getStyleClass().removeAll("focused");
+				Predicate<Node> possibleMove = node -> node.getId().equals("possibleMove");
+				((AnchorPane) s).getChildren().removeAll(((AnchorPane) s).getChildren().filtered(possibleMove));
+			});
+
+			// if one touch rule is disabled and press not on the same square
+		} else if (!SettingsModel.isOneTouchRule() || GameModel.getSelectedIndex() != index) {
+
+			movePieceOnBoard(GameModel.getSelectedIndex(), Coordinate.toIndex(square.getId()));
+
+			boardGrid.getChildren().forEach(s -> {
+				s.getStyleClass().removeAll("focused");
+				Predicate<Node> possibleMove = node -> node.getId().equals("possibleMove");
+				((AnchorPane) s).getChildren().removeAll(((AnchorPane) s).getChildren().filtered(possibleMove));
+			});
+			settingsButton.setDisable(promotionPopup.isVisible());
+
+			GameModel.setSelectedIndex(-1);
+		}
+
 	}
 
 	/**
@@ -611,13 +657,18 @@ public class GameController {
 			((Label) columnLettersPane.getChildren().get(i)).setText("" + columns.charAt(i));
 		}
 
-		boardGrid.getTransforms().add(new Rotate(180, boardGrid.getWidth() / 2, boardGrid.getHeight() / 2));
+		// -------- rotate with animation --------
+		RotateTransition transition = new RotateTransition(Duration.seconds(0.2), boardGrid);
+		transition.setToAngle(isRotated ? 0 : 180);
+		transition.play();
+
+		// -------- rotate without animation --------
+		// boardGrid.setRotate(isRotated ? 0 : 180);
+
 		for (Node squareNode : boardGrid.getChildren()) {
-			squareNode.getTransforms()
-					.add(new Rotate(180, squareNode.getBoundsInLocal().getCenterX(), squareNode.getBoundsInLocal().getCenterY()));
+			squareNode.setRotate(isRotated ? 0 : 180);
 		}
 		isRotated = !isRotated;
-		resize();
 	}
 
 	/**
@@ -701,25 +752,11 @@ public class GameController {
 			letter.setStyle("-fx-font-size: " + Math.min(rootHeight / 60, rootWidth / 106.66));
 		}
 
-		if (isRotated) {
-			boardGrid.getChildren().get(0).setStyle("-fx-background-radius: 0 0 " + borderRadius
-					+ " 0; -fx-border-radius: 0 0 " + borderRadius + " 0; -fx-border-width: " + historyBorderWidth * 2);
-			boardGrid.getChildren().get(7).setStyle("-fx-background-radius: " + borderRadius + " 0 0 0; -fx-border-radius: 0 "
-					+ borderRadius + " 0 0; -fx-border-width: " + historyBorderWidth * 2);
-			boardGrid.getChildren().get(63).setStyle("-fx-background-radius: 0 0 " + borderRadius
-					+ " 0; -fx-border-radius: 0 0 " + borderRadius + " 0; -fx-border-width: " + historyBorderWidth * 2);
-			boardGrid.getChildren().get(56).setStyle("-fx-background-radius: 0 " + borderRadius
-					+ " 0 0; -fx-border-radius: 0 " + borderRadius + " 0 0; -fx-border-width: " + historyBorderWidth * 2);
-		} else {
-			boardGrid.getChildren().get(0).setStyle("-fx-background-radius: " + borderRadius + " 0 0 0; -fx-border-radius: "
-					+ borderRadius + " 0 0 0; -fx-border-width: " + historyBorderWidth * 2);
-			boardGrid.getChildren().get(7).setStyle("-fx-background-radius: 0 " + borderRadius + " 0 0; -fx-border-radius: 0 "
-					+ borderRadius + " 0 0; -fx-border-width: " + historyBorderWidth * 2);
-			boardGrid.getChildren().get(63).setStyle("-fx-background-radius: 0 0 " + borderRadius
-					+ " 0; -fx-border-radius: 0 0 " + borderRadius + " 0; -fx-border-width: " + historyBorderWidth * 2);
-			boardGrid.getChildren().get(56).setStyle("-fx-background-radius: 0 0 0 " + borderRadius
-					+ "; -fx-border-radius: 0 0 0 " + borderRadius + "; -fx-border-width: " + historyBorderWidth * 2);
-		}
+		Double clipSize = Math.min(rootPane.getWidth() / 1.94, rootPane.getHeight() / 1.09);
+		Rectangle clip = new Rectangle(clipSize, clipSize);
+		clip.setArcWidth(borderRadius * 2);
+		clip.setArcHeight(borderRadius * 2);
+		boardGrid.setClip(clip);
 
 		for (Node squareNode : boardGrid.getChildren()) {
 			AnchorPane square = (AnchorPane) squareNode;
@@ -727,9 +764,18 @@ public class GameController {
 					&& !square.getId().equals("h1")) {
 				square.setStyle("-fx-border-width: " + historyBorderWidth * 2);
 			}
-			ImageView figure = !square.getChildren().isEmpty() ? (ImageView) square.getChildren().get(0) : null;
-			if (figure != null) {
-				centerPiecePosition(figure);
+
+			Predicate<Node> pieces = image -> image.getId().equals("piece");
+			Predicate<Node> possibleMoves = image -> image.getId().equals("possibleMove");
+
+			for (Node node : square.getChildren().filtered(pieces)) {
+				ImageView piece = (ImageView) node;
+				centerPiecePosition(piece);
+			}
+
+			for (Node node : square.getChildren().filtered(possibleMoves)) {
+				ImageView icon = (ImageView) node;
+				stylePossibleMoveIcon(icon);
 			}
 		}
 
@@ -738,13 +784,25 @@ public class GameController {
 	/**
 	 * Sets piece position in the center of the square
 	 * 
-	 * @param pieceView piece image viewp
+	 * @param pieceView piece image view
 	 */
 	private void centerPiecePosition(ImageView pieceView) {
 		pieceView.setFitHeight(Math.min(rootPane.getHeight() / 14.4, rootPane.getWidth() / 25.6));
 		pieceView.setY((Math.min(rootPane.getHeight() / 8.72, rootPane.getWidth() / 15.51) - pieceView.getFitHeight()) / 2);
 		pieceView.setX((Math.min(rootPane.getHeight() / 8.72, rootPane.getWidth() / 15.51)
 				- pieceView.boundsInParentProperty().get().getWidth()) / 2);
+	}
+
+	/**
+	 * Styles possible move icon
+	 * 
+	 * @param icon icon image view
+	 */
+	private void stylePossibleMoveIcon(ImageView icon) {
+		icon.setFitHeight(Math.min(rootPane.getHeight() / 36, rootPane.getWidth() / 64));
+		icon.setFitWidth(Math.min(rootPane.getHeight() / 28.8, rootPane.getWidth() / 51.2));
+		icon.setX((Math.min(rootPane.getHeight() / 8.72, rootPane.getWidth() / 15.51) - icon.getFitHeight()) / 2);
+		icon.setY((Math.min(rootPane.getHeight() / 8.72, rootPane.getWidth() / 15.51) - icon.getFitWidth()) / 2);
 	}
 
 	/**

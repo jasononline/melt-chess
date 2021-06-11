@@ -9,6 +9,8 @@ import java.util.List;
 
 import chess.model.Move;
 import chess.model.Piece;
+import chess.model.MoveGenerator;
+import chess.model.MoveValidator;
 
 /**
  * Storage for information on the currently visible board position, like
@@ -59,6 +61,12 @@ public class GameModel {
 	private static List<Move> movesHistory = new ArrayList<>();
 
 	/**
+	 * Stores the Move objects that represent the possible moves for current
+	 * position.
+	 */
+	private static List<Move> possibleMoves = new ArrayList<>();
+
+	/**
 	 * Stores the ImageView objects that represent the beaten white pieces.
 	 */
 	private static List<ImageView> beatenWhitePiecesGraphics = new ArrayList<>();
@@ -101,7 +109,7 @@ public class GameModel {
 		beatenBlackPiecesGraphics.clear();
 		beatenWhitePiecesGraphics.clear();
 		ImageView pieceView;
-		for (int piece: capturedPieces) {
+		for (int piece : capturedPieces) {
 			pieceView = GraphicsManager.getGraphicAsImageView(Piece.toName(piece));
 			if (Piece.isColor(piece, Piece.White)) {
 				beatenWhitePiecesGraphics.add(pieceView);
@@ -109,6 +117,13 @@ public class GameModel {
 				beatenBlackPiecesGraphics.add(pieceView);
 			}
 		}
+	}
+
+	public static List<Move> getPossibleMoves(int startPosition) {
+		MoveGenerator generator = new MoveGenerator(currentGame.getCurrentPosition());
+		possibleMoves = MoveValidator.filter(currentGame.getCurrentPosition(),
+				generator.generateMovesStartingAt(startPosition));
+		return possibleMoves;
 	}
 
 	/**

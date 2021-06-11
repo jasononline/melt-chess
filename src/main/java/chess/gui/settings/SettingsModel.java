@@ -14,8 +14,8 @@ public class SettingsModel implements Serializable {
 
 	private static boolean flipBoard = false;
 	private static boolean oneTouchRule = false;
-	private static boolean showInCheck = false;
-	private static boolean showPossibleMoves = false;
+	private static boolean showInCheck = true;
+	private static boolean showPossibleMoves = true;
 	private static Locale currentLocale = Locale.GERMAN;
 	private static ChessScene lastScene = ChessScene.Menu;
 
