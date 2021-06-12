@@ -1,9 +1,13 @@
 package chess.gui.game;
 
 import chess.engine.Engine;
+import chess.gui.Gui;
+import chess.gui.settings.SettingsModel;
 import chess.gui.util.GraphicsManager;
 import chess.model.Game;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +30,8 @@ public class GameModel {
 	private static Engine engine = new Engine();
 
 	/**
-	 * Stores whether the user is allowed do make a move.
-	 * This variable is used to prevent the user from making moves while the Engine computes a move.
+	 * Stores whether the user is allowed do make a move. This variable is used to
+	 * prevent the user from making moves while the Engine computes a move.
 	 */
 	private static boolean allowedToMove = true;
 
@@ -75,6 +79,26 @@ public class GameModel {
 	 * Stores the ImageView objects that represent the beaten black pieces.
 	 */
 	private static List<ImageView> beatenBlackPiecesGraphics = new ArrayList<>();
+
+	/**
+	 * Stores the AudioClip object that represent the move sound.
+	 */
+	private static AudioClip moveSound = new AudioClip(Gui.class.getResource("audio/move.mp3").toExternalForm());
+
+	/**
+	 * Stores the AudioClip object that represent the capture sound.
+	 */
+	private static AudioClip captureSound = new AudioClip(Gui.class.getResource("audio/capture.mp3").toExternalForm());
+
+	/**
+	 * Stores the AudioClip object that represent the check sound.
+	 */
+	private static AudioClip checkSound = new AudioClip(Gui.class.getResource("audio/check.wav").toExternalForm());
+
+	/**
+	 * Stores the AudioClip object that represent the failure sound.
+	 */
+	private static AudioClip failureSound = new AudioClip(Gui.class.getResource("audio/failure.mp3").toExternalForm());
 
 	/**
 	 * Stores the index of the selected field according to model.Board.squares. -1
@@ -131,14 +155,22 @@ public class GameModel {
 	 */
 	public static void performEngineMove() {
 		System.out.println("performEngineMove was called");
+		List<Integer> capturedPieces = currentGame.getCurrentPosition().getCapturedPieces();
 		Move next = engine.generateBestMove(currentGame.getCurrentPosition());
 		System.out.println("does this message appear before the exception?\n-------------------");
 		if (next != null) {
 			System.out.println("Engine came up with this move: " + next.toString());
-			if(!currentGame.attemptMove(next)) {
+			if (!currentGame.attemptMove(next)) {
 				System.out.println("The engines Move failed in attemption.");
 				return;
 			}
+		}
+		if (currentGame.checkCheck()) {
+			playCheckSound();
+		} else if (currentGame.getCurrentPosition().getCapturedPieces().equals(capturedPieces)) {
+			playMoveSound();
+		} else {
+			playCaptureSound();
 		}
 		movesHistory.add(0, next);
 
@@ -155,6 +187,7 @@ public class GameModel {
 
 	/**
 	 * Setter for the allowedToMove variable
+	 * 
 	 * @param status the wanted status
 	 */
 	public static void setAllowedToMove(boolean status) {
@@ -163,6 +196,7 @@ public class GameModel {
 
 	/**
 	 * Getter for the allowedToMove vaiable
+	 * 
 	 * @return whether allowedToMove or not
 	 */
 	public static boolean isAllowedToMove() {
@@ -260,5 +294,40 @@ public class GameModel {
 	 */
 	public static int getSelectedIndex() {
 		return selectedIndex;
+	}
+
+	/**
+	 * Plays AudioClips object that represents the move sound if setting is enabled.
+	 */
+	public static void playMoveSound() {
+		if (SettingsModel.isSoundEffects())
+			moveSound.play();
+	}
+
+	/**
+	 * Plays AudioClips object that represents the capture sound if setting is
+	 * enabled.
+	 */
+	public static void playCaptureSound() {
+		if (SettingsModel.isSoundEffects())
+			captureSound.play();
+	}
+
+	/**
+	 * Plays AudioClips object that represents the check sound if setting is
+	 * enabled.
+	 */
+	public static void playCheckSound() {
+		if (SettingsModel.isSoundEffects())
+			checkSound.play();
+	}
+
+	/**
+	 * Plays AudioClips object that represents the failure sound if setting is
+	 * enabled.
+	 */
+	public static void playFailureSound() {
+		if (SettingsModel.isSoundEffects())
+			failureSound.play();
 	}
 }

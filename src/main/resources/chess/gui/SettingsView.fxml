@@ -26,8 +26,8 @@
 						<RowConstraints minHeight="25.0" percentHeight="6.9" prefHeight="50.0" vgrow="SOMETIMES" />
 						<RowConstraints minHeight="30.0" percentHeight="8.3" prefHeight="60.0" vgrow="SOMETIMES" />
 						<RowConstraints minHeight="25.0" percentHeight="6.9" prefHeight="50.0" vgrow="SOMETIMES" />
-						<RowConstraints minHeight="157.5" percentHeight="43.75" prefHeight="315.0" vgrow="SOMETIMES" />
-						<RowConstraints minHeight="22.5" percentHeight="13.25" prefHeight="95.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="157.5" percentHeight="51.38" prefHeight="370.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="22.5" percentHeight="5.55" prefHeight="40.0" vgrow="SOMETIMES" />
 						<RowConstraints minHeight="50.0" percentHeight="13.95" prefHeight="100.0" vgrow="SOMETIMES" />
 						<RowConstraints minHeight="25.0" percentHeight="6.9" prefHeight="50.0" vgrow="SOMETIMES" />
 					</rowConstraints>
@@ -58,6 +58,8 @@
 										<RowConstraints minHeight="17.5" percentHeight="11.11" prefHeight="35.0" vgrow="SOMETIMES" />
 										<RowConstraints minHeight="10.0" percentHeight="6.34" prefHeight="20.0" vgrow="SOMETIMES" />
 										<RowConstraints minHeight="17.5" percentHeight="11.11" prefHeight="35.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="6.34" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="17.5" percentHeight="11.11" prefHeight="35.0" vgrow="SOMETIMES" />
 										<RowConstraints minHeight="15.0" percentHeight="9.52" prefHeight="30.0" vgrow="SOMETIMES" />
 									</rowConstraints>
 									<children>
@@ -141,6 +143,16 @@
                                  </opaqueInsets>
                               </CheckBox>
                               <CheckBox fx:id="showPossibleMovesCheckbox" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" graphicTextGap="0.0" maxWidth="70.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" prefWidth="70.0" selected="true" styleClass="checkbox" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </CheckBox>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                                 <children>
+                                    <Label fx:id="soundEffectsLabel" prefHeight="45.0" prefWidth="210.0" styleClass="boxLabel" text="Sound effects" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                              <CheckBox fx:id="soundEffectsCheckbox" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" graphicTextGap="0.0" maxWidth="70.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" prefWidth="70.0" selected="true" styleClass="checkbox" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="11">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>

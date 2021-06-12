@@ -16,6 +16,7 @@ public class SettingsModel implements Serializable {
 	private static boolean oneTouchRule = false;
 	private static boolean showInCheck = true;
 	private static boolean showPossibleMoves = true;
+	private static boolean soundEffects = true;
 	private static Locale currentLocale = Locale.GERMAN;
 	private static ChessScene lastScene = ChessScene.Menu;
 
@@ -83,6 +84,22 @@ public class SettingsModel implements Serializable {
 	 */
 	public static void setShowPossibleMoves(boolean showPossibleMoves) {
 		SettingsModel.showPossibleMoves = showPossibleMoves;
+	}
+
+	/**
+	 * @return boolean value whether sound effects is enabled
+	 */
+	public static boolean isSoundEffects() {
+		return soundEffects;
+	}
+
+	/**
+	 * Set whether sound effects is enabled
+	 * 
+	 * @param soundEffects boolean value whether sound effects is enabled
+	 */
+	public static void setSoundEffects(boolean soundEffects) {
+		SettingsModel.soundEffects = soundEffects;
 	}
 
 	/**
