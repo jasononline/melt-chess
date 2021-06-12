@@ -8,25 +8,24 @@ import java.util.List;
  */
 public class MoveGeneratorKing {
 
-
-    // walk from king to rook checking for pieces in between
-    private static boolean[] castlingWalker(Board board, int[] stops, boolean[] boardFlags, int startSquare) {
-        boolean[] result = new boolean[]{true, true};
-        int direction;
-        for (int i=0;i<2;i++) {
-            if (!boardFlags[i]) {
-                result[i] = false;
-                continue;
-            }
-            direction = 2*i-1;
-            for (int step=1; step<stops[i]; step++) {
-                if (!Piece.isType(board.getPieceAt(startSquare + direction * step), Piece.None)) {
-                    result[i] = false;
-                }
-            }
-        }
-        return result;
-    }
+	// Walk from king to rook checking for pieces in between
+	private static boolean[] castlingWalker(Board board, int[] stops, boolean[] boardFlags, int startSquare) {
+		boolean[] result = new boolean[] { true, true };
+		int direction;
+		for (int i = 0; i < 2; i++) {
+			if (!boardFlags[i]) {
+				result[i] = false;
+				continue;
+			}
+			direction = 2 * i - 1;
+			for (int step = 1; step < stops[i]; step++) {
+				if (!Piece.isType(board.getPieceAt(startSquare + direction * step), Piece.None)) {
+					result[i] = false;
+				}
+			}
+		}
+		return result;
+	}
 
 
     private static boolean[] isBlackCastlingPossible(Board board) {
@@ -65,17 +64,18 @@ public class MoveGeneratorKing {
         }
     }
 
-
-    /**
-     * Generate moves for the king
-     * @param startSquare the position of the king
-     * @return ArrayList of Move objects
-     */
-    public static List<Move> generateKingMoves(Board board, int startSquare) {
-        // normal movement
-        List<Move> generatedMoves = new ArrayList<>();
-        List<Integer> directions = MoveGeneratorDirectional.generateStartingDirectionsAcross(startSquare);
-        directions.addAll(MoveGeneratorDirectional.generateStartingDirectionsDiagonal(startSquare));
+	/**
+	 * Generate moves for the king
+	 *
+	 * @param board       current game board
+	 * @param startSquare the start position of the king
+	 * @return ArrayList of Move objects
+	 */
+	public static List<Move> generateKingMoves(Board board, int startSquare) {
+		// normal movement
+		List<Move> generatedMoves = new ArrayList<>();
+		List<Integer> directions = MoveGeneratorDirectional.generateStartingDirectionsAcross(startSquare);
+		directions.addAll(MoveGeneratorDirectional.generateStartingDirectionsDiagonal(startSquare));
 
         int targetSquare, piece;
         for (int direction : directions) {
