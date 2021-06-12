@@ -1,5 +1,6 @@
 package chess.gui.game;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import chess.gui.Gui;
@@ -164,7 +165,7 @@ public class GameController {
 			s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
 		});
 
-		if(service == null) {
+		if (service == null) {
 			service = new PerformEngineMoveService();
 		} else {
 			// cancel a running service
@@ -258,6 +259,7 @@ public class GameController {
 
 	/**
 	 * Displays the possible moves on the View
+	 * 
 	 * @param startPosition from where to look for moves
 	 */
 	private void showPossibleMoves(int startPosition) {
@@ -382,13 +384,24 @@ public class GameController {
 	private void finishMove(Move move) {
 		GameModel.getCurrentGame().addFlag(move);
 		System.out.println("Called: movePieceOnBorad(" + move.toString() + ")");
+		List<Integer> capturedPieces = GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces();
 		if (GameModel.getCurrentGame().attemptMove(move)) {
+
+			if (GameModel.getCurrentGame().checkCheck()) {
+				GameModel.playCheckSound();
+			} else if (GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces().equals(capturedPieces)) {
+				GameModel.playMoveSound();
+			} else {
+				GameModel.playCaptureSound();
+			}
+
 			System.out.println("Move happened: " + move.toString());
 			GameModel.getMovesHistory().add(0, move);
 			if (SettingsModel.isFlipBoard())
 				flipBoard();
 		} else {
 			System.out.println("Game.attemptMove() did not allow " + move.toString());
+			GameModel.playFailureSound();
 			return;
 		}
 
@@ -414,12 +427,12 @@ public class GameController {
 
 	/**
 	 * Updates a performed move of the Engine to the view
+	 * 
 	 * @return null
 	 */
 	private EventHandler<WorkerStateEvent> finishEngineMove() {
 
 		System.out.println("finishEngineMove() was called");
-
 
 		GameModel.setSelectedIndex(-1);
 		boardGrid.getChildren().forEach(s -> {
@@ -441,6 +454,7 @@ public class GameController {
 		Game game = GameModel.getCurrentGame();
 		if (game.checkCheck()) {
 			System.out.println("checkForGameOver was called");
+
 			String key;
 			if (game.getCurrentPosition().getTurnColor() == Piece.White) {
 				key = "game.whiteInCheck";
@@ -538,6 +552,13 @@ public class GameController {
 
 			if (!square.getChildren().isEmpty()) {
 
+				int piece = GameModel.getCurrentGame().getCurrentPosition().getPieceAt(index);
+				boolean colorMatch = Piece.isColor(piece, GameModel.getCurrentGame().getCurrentPosition().getTurnColor());
+				if (SettingsModel.isOneTouchRule() && (!colorMatch || GameModel.getPossibleMoves(index).isEmpty())) {
+					GameModel.playFailureSound();
+					return;
+				}
+
 				GameModel.setSelectedIndex(index);
 				square.getStyleClass().add("focused");
 				settingsButton.setDisable(true);
@@ -550,30 +571,35 @@ public class GameController {
 
 		// if a piece has already been selected (second press)
 
-		// if one touch rule is disabled and press on the same square
-		if (!SettingsModel.isOneTouchRule() && GameModel.getSelectedIndex() == index) {
-			settingsButton.setDisable(false);
-			GameModel.setSelectedIndex(-1);
-			boardGrid.getChildren().forEach(s -> {
-				s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
-			});
+		Move currentMove = new Move(GameModel.getSelectedIndex(), index);
+		Game testGame = GameModel.getCurrentGame();
+		testGame.addFlag(currentMove);
+		int piece = GameModel.getCurrentGame().getCurrentPosition().getPieceAt(GameModel.getSelectedIndex());
+		boolean colorMatch = Piece.isColor(piece, GameModel.getCurrentGame().getCurrentPosition().getTurnColor());
 
-			// if one touch rule is disabled and press not on the same square
-		} else if (!SettingsModel.isOneTouchRule() || GameModel.getSelectedIndex() != index) {
+		if (SettingsModel.isOneTouchRule()
+				&& (!GameModel.getPossibleMoves(GameModel.getSelectedIndex()).contains(currentMove) || !colorMatch)) {
+			System.out.println("Move not allowed");
+			GameModel.playFailureSound();
+		} else {
+			System.out.println("Move allowed");
+			if (GameModel.getSelectedIndex() == index) {
+				settingsButton.setDisable(false);
+				GameModel.setSelectedIndex(-1);
+				boardGrid.getChildren().forEach(s -> {
+					s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
+				});
 
-			if (SettingsModel.isOneTouchRule() && !GameModel.getPossibleMoves(GameModel.getSelectedIndex())
-					.contains(new Move(GameModel.getSelectedIndex(), index))) {
-				return;
+			} else {
+
+				movePieceOnBoard(GameModel.getSelectedIndex(), index);
+
+				boardGrid.getChildren().forEach(s -> {
+					s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
+				});
+				settingsButton.setDisable(promotionPopup.isVisible());
+				GameModel.setSelectedIndex(-1);
 			}
-
-			movePieceOnBoard(GameModel.getSelectedIndex(), index);
-
-			boardGrid.getChildren().forEach(s -> {
-				s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
-			});
-			settingsButton.setDisable(promotionPopup.isVisible());
-
-			GameModel.setSelectedIndex(-1);
 		}
 
 	}
@@ -800,7 +826,8 @@ public class GameController {
 			square.setStyle("-fx-border-width: " + historyBorderWidth * 1.25);
 
 			Predicate<Node> pieces = image -> image.getId().equals("piece");
-			// Predicate<Node> possibleMoves = image -> image.getId().equals("possibleMove");
+			// Predicate<Node> possibleMoves = image ->
+			// image.getId().equals("possibleMove");
 
 			for (Node node : square.getChildren().filtered(pieces)) {
 				ImageView piece = (ImageView) node;
@@ -808,8 +835,8 @@ public class GameController {
 			}
 
 			// for (Node node : square.getChildren().filtered(possibleMoves)) {
-			// 	ImageView icon = (ImageView) node;
-			// 	stylePossibleMoveIcon(icon);
+			// ImageView icon = (ImageView) node;
+			// stylePossibleMoveIcon(icon);
 			// }
 		}
 
