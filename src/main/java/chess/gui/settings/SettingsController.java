@@ -45,6 +45,10 @@ public class SettingsController {
 	@FXML
 	private CheckBox showPossibleMovesCheckbox;
 	@FXML
+	private Label soundEffectsLabel;
+	@FXML
+	private CheckBox soundEffectsCheckbox;
+	@FXML
 	private Button cancelButton;
 	@FXML
 	private Button saveButton;
@@ -61,6 +65,7 @@ public class SettingsController {
 		TextManager.computeText(oneTouchRuleLabel, "settings.oneTouchRule");
 		TextManager.computeText(showInCheckLabel, "settings.showInCheck");
 		TextManager.computeText(showPossibleMovesLabel, "settings.showPossibleMoves");
+		TextManager.computeText(soundEffectsLabel, "settings.soundEffects");
 		TextManager.computeText(saveButton, "settings.save");
 		TextManager.computeText(cancelButton, "settings.cancel");
 
@@ -82,6 +87,7 @@ public class SettingsController {
 		oneTouchRuleCheckbox.setSelected(SettingsModel.isOneTouchRule());
 		showInCheckCheckbox.setSelected(SettingsModel.isShowInCheck());
 		showPossibleMovesCheckbox.setSelected(SettingsModel.isShowPossibleMoves());
+		soundEffectsCheckbox.setSelected(SettingsModel.isSoundEffects());
 	}
 
 	/**
@@ -95,6 +101,7 @@ public class SettingsController {
 		SettingsModel.setOneTouchRule(oneTouchRuleCheckbox.isSelected());
 		SettingsModel.setShowInCheck(showInCheckCheckbox.isSelected());
 		SettingsModel.setShowPossibleMoves(showPossibleMovesCheckbox.isSelected());
+		SettingsModel.setSoundEffects(soundEffectsCheckbox.isSelected());
 		SettingsModel.setCurrentLocale(currentLocale);
 		TextManager.setLocale(SettingsModel.getCurrentLocale());
 		Gui.switchTo(SettingsModel.getLastScene());
@@ -142,6 +149,7 @@ public class SettingsController {
 		oneTouchRuleLabel.setStyle("-fx-font-size: " + fontSize);
 		showInCheckLabel.setStyle("-fx-font-size: " + fontSize);
 		showPossibleMovesLabel.setStyle("-fx-font-size: " + fontSize);
+		soundEffectsLabel.setStyle("-fx-font-size: " + fontSize);
 		englishButton.setStyle("-fx-font-size: " + langButtonFontSize + "; -fx-background-radius: " + borderRadius / 2
 				+ "; -fx-border-radius: " + borderRadius / 2 + "; -fx-border-width: " + borderWidth / 1.5);
 		germanButton.setStyle("-fx-font-size: " + langButtonFontSize + "; -fx-background-radius: " + borderRadius / 2
@@ -166,6 +174,7 @@ public class SettingsController {
 		setCheckboxStyle(oneTouchRuleCheckbox, borderWidth / 1.5, borderRadius / 2, rootHeight);
 		setCheckboxStyle(showInCheckCheckbox, borderWidth / 1.5, borderRadius / 2, rootHeight);
 		setCheckboxStyle(showPossibleMovesCheckbox, borderWidth / 1.5, borderRadius / 2, rootHeight);
+		setCheckboxStyle(soundEffectsCheckbox, borderWidth / 1.5, borderRadius / 2, rootHeight);
 
 	}
 
