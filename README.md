@@ -1,6 +1,27 @@
 # Schach
 
-Bitte hier eine sinnvolle Dokumentation ergänzen!
+Dieses Programm ist ein Schachspiel. Es besteht die Möglichkeit das Spiel gegen eine Person, den Computer oder einen Netzwerk-Spieler zu spielen.
+Es gibt zwei Möglichkeiten das Spiel zu starten und zu spielen:
+
+Client:
+
+![](images/Cli_image.png)
+
+GUI: 
+
+![](images/Gui_image.png)
+
+Eine ausführliche Bedienungsanleitung finden Sie unter Bedienungsanleitung.pdf
+
+Neben dem regulären Schachspiel, nach den allgemeinen Regeln des Weltschachverbands (FIDE) in der deutschen Übersetzung von 2018 (ausgenommen von Sonderregeln), gibt es die folgenden Features:
+
+- Interfacesprache in Deutsch und Englisch
+- Spieluhr
+- Schachbrett nach jedem Zug drehen
+- Schach anzeigen
+- Geschlagene Figuren anzeigen
+- Mögliche Züge für die Spielfiguren anzeigen
+- Spielhistorie
 
 # Maven
 
