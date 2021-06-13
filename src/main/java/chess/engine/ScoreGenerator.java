@@ -13,7 +13,7 @@ import java.util.Map;
 public class ScoreGenerator {
 
     /*
-         Start of definition of piece position score values for middlegame (mg) and endgame (eg).
+         Start of definition of piece position score values for early- and middlegame (mg) and endgame (eg).
 
          Values taken from here:
          http://www.talkchess.com/forum3/viewtopic.php?f=2&t=68311&start=19
@@ -153,7 +153,6 @@ public class ScoreGenerator {
         End of piece position tables
      */
 
-
     /*A pawn is worth one point,
       a knight or bishop is worth three points,
       a rook is worth five points and a queen is worth nine points.
@@ -168,9 +167,10 @@ public class ScoreGenerator {
 
 
     private final EngineBoard board;
-    // positive score value is good for white, negative good for black.
-    private int score;
-    private int numOpponentPieces=0;
+    private int score;                        // positive score value is good for white, negative good for black.
+    private final int numPiecesEndgame = 10;  // if there are less pieces left in the game we enter endgame.
+    private int numPieces=0;                  // may be better count material value as described here
+                                              // https://en.wikipedia.org/wiki/Chess_endgame#The_start_of_the_endgame
 
 
     /**
@@ -204,7 +204,8 @@ public class ScoreGenerator {
 
 
     /**
-     * positive score value is good for white, negative good for black.
+     * Runs all score methods for this board.
+     * A positive score value is good for white, negative good for black.
      */
     private void scoreBoard() {
         score = 0;
@@ -214,13 +215,17 @@ public class ScoreGenerator {
     }
 
 
+    /**
+     * Scores the material (piece score values) in the current position
+     * @return score for material count
+     */
     private int scorePieceValue() {
         int score = 0;
         int sign;
         int oppColor = board.getTurnColor() == Piece.White ? Piece.Black : Piece.White;
         for (int piece : board.getCapturedPieces()) {
             if (Piece.isColor(piece, oppColor)) {
-                numOpponentPieces += 1;
+                numPieces += 1;
             }
             sign = Piece.isColor(piece, Piece.White) ? 1: -1;
             score += sign * pieceValue.get(Piece.getType(piece));
@@ -229,6 +234,10 @@ public class ScoreGenerator {
     }
 
 
+    /**
+     * Scores the position of all pieces according to the corresponding table
+     * @return total score for the position value count
+     */
     private int scorePiecePositionValue() {
         int piece, type, color, sign;
         int score = 0;
@@ -241,7 +250,7 @@ public class ScoreGenerator {
             color = Piece.getColor(piece);
             sign = color == Piece.White ? 1: -1;
 
-            if (numOpponentPieces <= 4) {
+            if (numPieces <= numPiecesEndgame) {
                 score += getPiecePositionValueEG(getTableIndex(index, color), sign, type);
             } else {
                 score += getPiecePositionValueMG(getTableIndex(index, color), sign, type);
