@@ -6,7 +6,6 @@ import chess.model.MoveGenerator;
 import chess.model.MoveValidator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,8 +25,6 @@ public class Engine {
      * qqqrq3/q7/b1NPQQBP/K1Q5/P1R5/b1BQRQNP/k7/nrqqn3 w - -
      *
      */
-
-
 
 
     // only promote to queen
@@ -54,11 +51,8 @@ public class Engine {
 
         List<EngineBoard> possiblePositions = getNextPositions(new EngineBoard(board));
         if (possiblePositions.isEmpty()) {
-            System.out.println("No possible moves for engine!");
             return null;
         }
-
-        System.out.println(possiblePositions);
 
         EngineBoard bestPosition = null;
         int bestValue = Integer.MIN_VALUE;
@@ -99,41 +93,6 @@ public class Engine {
 
 
     /**
-     * Attempts to solve the position
-     * @param startPosition initial position of the problem
-     * @return Piece.White or Piece.Black
-     */
-    public int solve(EngineBoard startPosition) {
-        int max_depth = 4;
-        List<EngineBoard> queue = getNextPositions(startPosition);
-        List<EngineBoard> nextQueue = new LinkedList<>();
-
-        int moveCounter = queue.size();
-        System.out.println("Level 1: " + moveCounter);
-
-        int sizeCheck;
-
-        for (int i=1; i<max_depth; i++) {
-            for (EngineBoard board : queue) {
-                sizeCheck = nextQueue.size();
-                nextQueue.addAll(getNextPositions(board));
-                if (nextQueue.size() == sizeCheck)
-                    break;
-            }
-            queue = nextQueue;
-            moveCounter += queue.size();
-            System.out.println("Level " + (i+1) + ": " + moveCounter +" nodes");
-            nextQueue = new LinkedList<>();
-            Collections.sort(queue);
-            System.out.println("Best Position of run :");
-            System.out.println(queue.get(0).getCapturedPiecesToString() + " (" + queue.get(0).getScore() +")");
-            System.out.println(queue.get(0));
-        }
-        return moveCounter;
-    }
-
-
-    /**
      * Gets all possible moves from the MoveGenerator,
      * filters them with the MoveValidator
      * and gives a score
@@ -153,7 +112,7 @@ public class Engine {
 
 
     /**
-     * Compute list of possible moves
+     * Compute list of all possible moves, but only promote to Queen
      * @param board the current position
      * @param color the color to move
      * @return a list of Move objects
@@ -167,7 +126,4 @@ public class Engine {
         moves.removeIf(m -> promotionFilter.contains(m.getFlag()));
         return moves;
     }
-
-
-
 }
