@@ -413,6 +413,8 @@ public class GameController {
 
 			activityIndicator.visibleProperty().bind(service.runningProperty());
 			boardGrid.setDisable(true);
+			settingsButton.disableProperty().bind(service.runningProperty());
+			resignButton.disableProperty().bind(service.runningProperty());
 
 			service.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 				@Override
@@ -442,6 +444,10 @@ public class GameController {
 		updateUI();
 		GameModel.setAllowedToMove(true);
 		boardGrid.setDisable(false);
+		settingsButton.disableProperty().unbind();
+		settingsButton.setDisable(false);
+		resignButton.disableProperty().unbind();
+		resignButton.setDisable(false);
 		return null;
 	}
 
