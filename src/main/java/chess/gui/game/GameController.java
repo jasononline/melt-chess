@@ -124,9 +124,13 @@ public class GameController {
 		rootPane.heightProperty().addListener(rootPaneSizeListener);
 
 		checkLabel.setVisible(false);
-		resignButton.setDisable(false);
+		if (!resignButton.disableProperty().isBound()) {
+			resignButton.setDisable(false);
+		}
 		restartButton.setDisable(false);
-		settingsButton.setDisable(false);
+		if (!settingsButton.disableProperty().isBound()) {
+			settingsButton.setDisable(false);
+		}
 		menuButton.setDisable(false);
 
 		activityIndicator.visibleProperty().unbind();
@@ -312,7 +316,9 @@ public class GameController {
 
 				GameModel.setSelectedIndex(index);
 				square.getStyleClass().add("focused");
-				settingsButton.setDisable(true);
+				if (!settingsButton.disableProperty().isBound()) {
+					settingsButton.setDisable(true);
+				}
 
 				if (SettingsModel.isShowPossibleMoves())
 					boardController.showPossibleMoves(index);
@@ -333,7 +339,9 @@ public class GameController {
 			GameModel.playSound(GameModel.ChessSound.Failure, true);
 		} else {
 			if (GameModel.getSelectedIndex() == index) {
-				settingsButton.setDisable(false);
+				if (!settingsButton.disableProperty().isBound()) {
+					settingsButton.setDisable(false);
+				}
 				GameModel.setSelectedIndex(-1);
 				boardGrid.getChildren().forEach(s -> {
 					s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
@@ -341,7 +349,9 @@ public class GameController {
 
 			} else {
 
-				settingsButton.setDisable(promotionPopup.isVisible());
+				if (!settingsButton.disableProperty().isBound()) {
+					settingsButton.setDisable(promotionPopup.isVisible());
+				}
 				boardController.movePieceOnBoard(GameModel.getSelectedIndex(), index);
 
 				boardGrid.getChildren().forEach(s -> {

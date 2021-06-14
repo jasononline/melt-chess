@@ -73,9 +73,13 @@ public class GamePopup {
 	private void disableUI() {
 		gameController.boardGrid.setDisable(true);
 		gameController.historyGrid.setDisable(true);
-		gameController.resignButton.setDisable(true);
+		if (!gameController.resignButton.disableProperty().isBound()) {
+			gameController.resignButton.setDisable(true);
+		}
 		gameController.restartButton.setDisable(true);
-		gameController.settingsButton.setDisable(true);
+		if (!gameController.settingsButton.disableProperty().isBound()) {
+			gameController.settingsButton.setDisable(true);
+		}
 		gameController.menuButton.setDisable(true);
 	}
 
@@ -128,9 +132,11 @@ public class GamePopup {
 			gameController.promotionPopup.setVisible(false);
 			gameController.boardGrid.setDisable(false);
 			gameController.historyGrid.setDisable(false);
-			gameController.resignButton.setDisable(false);
+			if (!gameController.resignButton.disableProperty().isBound()) {
+				gameController.resignButton.setDisable(false);
+			}
 			gameController.restartButton.setDisable(false);
-			if (!GameModel.isSelected())
+			if (!GameModel.isSelected() && !gameController.settingsButton.disableProperty().isBound())
 				gameController.settingsButton.setDisable(false);
 			gameController.menuButton.setDisable(false);
 		};
@@ -161,7 +167,9 @@ public class GamePopup {
 			if (button == gameController.resignButton && event.getSource() == gameController.surePopupYesButton) { // Resign
 				gameController.surePopup.setVisible(false);
 				gameController.restartButton.setDisable(false);
-				gameController.settingsButton.setDisable(false);
+				if (!gameController.settingsButton.disableProperty().isBound()) {
+					gameController.settingsButton.setDisable(false);
+				}
 				gameController.menuButton.setDisable(false);
 
 				String key = "";
@@ -191,9 +199,11 @@ public class GamePopup {
 			gameController.surePopup.setVisible(false);
 			gameController.boardGrid.setDisable(false);
 			gameController.historyGrid.setDisable(false);
-			gameController.resignButton.setDisable(false);
+			if (!gameController.resignButton.disableProperty().isBound()) {
+				gameController.resignButton.setDisable(false);
+			}
 			gameController.restartButton.setDisable(false);
-			if (!GameModel.isSelected())
+			if (!GameModel.isSelected() && !gameController.settingsButton.disableProperty().isBound())
 				gameController.settingsButton.setDisable(false);
 			gameController.menuButton.setDisable(false);
 		};

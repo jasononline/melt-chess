@@ -137,38 +137,51 @@ public class BoardController {
 	 */
 	protected void finishMove(Move move) {
 		GameModel.getCurrentGame().addFlag(move);
-		System.out.println("Called: movePieceOnBorad(" + move.toString() + ")");
 		List<Integer> capturedPieces = GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces();
-		if (GameModel.getCurrentGame().attemptMove(move)) {
 
-			if (GameModel.getCurrentGame().checkWinCondition() == 0) {
-				if (GameModel.getCurrentGame().checkCheck() && SettingsModel.isShowInCheck()) {
-					GameModel.playSound(GameModel.ChessSound.Check, true);
-				} else if (GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces().equals(capturedPieces)) {
-					GameModel.playSound(GameModel.ChessSound.Move, true);
-				} else {
-					GameModel.playSound(GameModel.ChessSound.Capture, true);
-				}
-			}
-
-			System.out.println("Move happened: " + move.toString());
-			GameModel.getMovesHistory().add(0, move);
-			if (SettingsModel.isFlipBoard() && GameModel.getGameMode() != GameModel.ChessMode.Computer)
-				flipBoard(true);
-		} else {
-			System.out.println("Game.attemptMove() did not allow " + move.toString());
+		if (!GameModel.getCurrentGame().attemptMove(move)) {
 			GameModel.playSound(GameModel.ChessSound.Failure, true);
 			return;
 		}
+
+		if (GameModel.getCurrentGame().checkCheck() && SettingsModel.isShowInCheck()
+			&& GameModel.getCurrentGame().checkWinCondition() == 0) {
+			GameModel.playSound(GameModel.ChessSound.Check, true);
+		} else if (GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces().equals(capturedPieces)
+				   && GameModel.getCurrentGame().checkWinCondition() == 0) {
+			GameModel.playSound(GameModel.ChessSound.Move, true);
+		} else if (GameModel.getCurrentGame().checkWinCondition() == 0) {
+			GameModel.playSound(GameModel.ChessSound.Capture, true);
+		}
+
+		GameModel.getMovesHistory().add(0, move);
+		if (SettingsModel.isFlipBoard() && GameModel.getGameMode() != GameModel.ChessMode.Computer)
+			flipBoard(true);
+
 
 		gameController.updateUI();
 		if (checkForGameOver())
 			return;
 
+		continueAccordingToGameMode();
+	}
+
+	/**
+	 * Continues the actions depending on the gamemode
+	 */
+	private void continueAccordingToGameMode() {
+
+		// PvP
+		if (GameModel.getGameMode() == GameModel.ChessMode.Player) {
+			return;
+		}
+		// PvPC
 		if (GameModel.getGameMode() == GameModel.ChessMode.Computer) {
 
 			gameController.activityIndicator.visibleProperty().bind(service.runningProperty());
 			gameController.boardGrid.setDisable(true);
+			gameController.resignButton.disableProperty().bind(service.runningProperty());
+			gameController.settingsButton.disableProperty().bind(service.runningProperty());
 
 			service.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 				@Override
@@ -178,7 +191,13 @@ public class BoardController {
 			});
 			service.restart();
 		}
-
+		// Network
+		if (GameModel.getGameMode() == GameModel.ChessMode.Network) {
+			// TODO implement what happens in Network game
+			return;
+		}
+		// Default just in case
+		return;
 	}
 
 	/**
@@ -187,15 +206,18 @@ public class BoardController {
 	 * @return null
 	 */
 	private EventHandler<WorkerStateEvent> finishEngineMove() {
-
-		System.out.println("finishEngineMove() was called");
-
 		GameModel.setSelectedIndex(-1);
 		gameController.boardGrid.getChildren().forEach(s -> {
 			s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
 		});
 		GameModel.setAllowedToMove(true);
 		gameController.boardGrid.setDisable(false);
+		if (!gameController.settingsButton.disableProperty().isBound()) {
+			gameController.settingsButton.setDisable(false);
+		}
+		if (!gameController.resignButton.disableProperty().isBound()) {
+			gameController.resignButton.setDisable(false);
+		}
 		checkForGameOver();
 		gameController.updateUI();
 		return null;
@@ -209,8 +231,6 @@ public class BoardController {
 		gameController.checkLabel.setVisible(false);
 		Game game = GameModel.getCurrentGame();
 		if (game.checkCheck()) {
-			System.out.println("checkForGameOver was called");
-
 			String key;
 			if (game.getCurrentPosition().getTurnColor() == Piece.White) {
 				key = "game.whiteInCheck";
