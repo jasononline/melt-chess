@@ -11,7 +11,7 @@ import javafx.stage.Stage;
  */
 public class Gui extends Application {
 
-	/*
+	/**
 	 * Enumeration of available scenes
 	 */
 	public enum ChessScene {

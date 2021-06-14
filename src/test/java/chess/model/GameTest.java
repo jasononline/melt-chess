@@ -31,7 +31,6 @@ public class GameTest {
     @Test
     public void attemptMove() {
         Game game = new Game();
-        Board startingPosition = game.getCurrentPosition();
         Move movePawn = new Move(52, 37, Move.PawnTwoForward);
         assertFalse(game.attemptMove(movePawn));
     }

@@ -3,8 +3,8 @@
  */
 module chess {
 	requires javafx.fxml;
-	requires javafx.controls;
-	requires javafx.media;
+	requires transitive javafx.controls;
+	requires transitive javafx.media;
 	requires transitive javafx.graphics;
 
 	exports chess.gui;

@@ -35,18 +35,32 @@ public class GameModel {
 	 */
 	private static boolean allowedToMove = true;
 
-	/*
+	/**
 	 * Enumeration of available game modes
 	 */
 	public enum ChessMode {
 		None, Player, Computer, Network;
 	}
 
-	/*
+	/**
 	 * Enumeration of available colors
 	 */
 	public enum ChessColor {
 		None, White, Black;
+	}
+
+	/**
+	 * Enumeration of available sounds
+	 */
+	public enum ChessSound {
+		Move("move.mp3"), Capture("capture.mp3"), Check("check.wav"), Failure("failure.mp3"), GameOver("gameover.mp3"),
+		Win("win.mp3"), Lose("lose.mp3");
+
+		public final AudioClip audio;
+
+		private ChessSound(String filename) {
+			this.audio = new AudioClip(Gui.class.getResource("audio/" + filename).toExternalForm());
+		}
 	}
 
 	/**
@@ -79,26 +93,6 @@ public class GameModel {
 	 * Stores the ImageView objects that represent the beaten black pieces.
 	 */
 	private static List<ImageView> beatenBlackPiecesGraphics = new ArrayList<>();
-
-	/**
-	 * Stores the AudioClip object that represent the move sound.
-	 */
-	private static AudioClip moveSound = new AudioClip(Gui.class.getResource("audio/move.mp3").toExternalForm());
-
-	/**
-	 * Stores the AudioClip object that represent the capture sound.
-	 */
-	private static AudioClip captureSound = new AudioClip(Gui.class.getResource("audio/capture.mp3").toExternalForm());
-
-	/**
-	 * Stores the AudioClip object that represent the check sound.
-	 */
-	private static AudioClip checkSound = new AudioClip(Gui.class.getResource("audio/check.wav").toExternalForm());
-
-	/**
-	 * Stores the AudioClip object that represent the failure sound.
-	 */
-	private static AudioClip failureSound = new AudioClip(Gui.class.getResource("audio/failure.mp3").toExternalForm());
 
 	/**
 	 * Stores the index of the selected field according to model.Board.squares. -1
@@ -143,6 +137,12 @@ public class GameModel {
 		}
 	}
 
+	/**
+	 * Uses the MoveGenerator to get possible moves from a starting position
+	 * 
+	 * @param startPosition the starting position
+	 * @return the possible moves
+	 */
 	public static List<Move> getPossibleMoves(int startPosition) {
 		MoveGenerator generator = new MoveGenerator(currentGame.getCurrentPosition());
 		possibleMoves = MoveValidator.filter(currentGame.getCurrentPosition(),
@@ -165,12 +165,14 @@ public class GameModel {
 				return;
 			}
 		}
-		if (currentGame.checkCheck()) {
-			playCheckSound();
-		} else if (currentGame.getCurrentPosition().getCapturedPieces().equals(capturedPieces)) {
-			playMoveSound();
-		} else {
-			playCaptureSound();
+		if (currentGame.checkWinCondition() == 0) {
+			if (currentGame.checkCheck() && SettingsModel.isShowInCheck()) {
+				GameModel.playSound(GameModel.ChessSound.Check, true);
+			} else if (currentGame.getCurrentPosition().getCapturedPieces().equals(capturedPieces)) {
+				GameModel.playSound(GameModel.ChessSound.Move, true);
+			} else {
+				GameModel.playSound(GameModel.ChessSound.Capture, true);
+			}
 		}
 		movesHistory.add(0, next);
 
@@ -297,37 +299,17 @@ public class GameModel {
 	}
 
 	/**
-	 * Plays AudioClips object that represents the move sound if setting is enabled.
-	 */
-	public static void playMoveSound() {
-		if (SettingsModel.isSoundEffects())
-			moveSound.play();
-	}
-
-	/**
-	 * Plays AudioClips object that represents the capture sound if setting is
+	 * Plays AudioClips object that represents the specific sound if setting is
 	 * enabled.
+	 * 
+	 * @param sound which sound is to be played or stopped
+	 * @param play  whether the sound should play or stop
 	 */
-	public static void playCaptureSound() {
-		if (SettingsModel.isSoundEffects())
-			captureSound.play();
-	}
-
-	/**
-	 * Plays AudioClips object that represents the check sound if setting is
-	 * enabled.
-	 */
-	public static void playCheckSound() {
-		if (SettingsModel.isSoundEffects())
-			checkSound.play();
-	}
-
-	/**
-	 * Plays AudioClips object that represents the failure sound if setting is
-	 * enabled.
-	 */
-	public static void playFailureSound() {
-		if (SettingsModel.isSoundEffects())
-			failureSound.play();
+	public static void playSound(ChessSound sound, boolean play) {
+		if (SettingsModel.isSoundEffects() && play) {
+			sound.audio.play();
+		} else {
+			sound.audio.stop();
+		}
 	}
 }

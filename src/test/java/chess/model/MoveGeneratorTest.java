@@ -16,17 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class MoveGeneratorTest {
 
 
-    @Test
-    public void pawnPromotion() {
-        Board board = new Board("3r1r2/4P3/8/8/8/8/4p3/8");
-        MoveGenerator generator = new MoveGenerator(board);
-        List<Move> moves = generator.generateMovesStartingAt(12);
-        generator.swapColors();
-        moves.addAll(generator.generateMovesStartingAt(52));
-        assertEquals(16, moves.size());
-    }
-
-
     /**
      * Swap colors test
      */
@@ -57,67 +46,6 @@ public class MoveGeneratorTest {
         Board b = new Board();
         MoveGenerator g = new MoveGenerator(b);
         assertEquals(0, g.generateMovesStartingAt(0).size());
-    }
-
-
-    /**
-     * Tests for the rules of the pawn
-     */
-    @Test
-    public void testPawnRules() {
-        String fen = "8/5pP1/3p4/3PP3/8/8/8/8";
-        Board board = new Board(fen);
-
-        List<Move> generatedMoves = new ArrayList<>();
-        for (int position : new int[]{27, 28, 14}) {
-            generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board, position));
-        }
-
-        board.setTurnColor(Piece.Black);
-        for (int position : new int[]{13, 19}) {
-            generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board, position));
-        }
-
-        List<Move> expectedMoves = new ArrayList<>();
-        // valid black piece moves
-        expectedMoves.add(new Move(13, 21));
-        expectedMoves.add(new Move(13, 29, Move.PawnTwoForward));
-        expectedMoves.add(new Move(19, 28));
-        // valid white piece moves
-        expectedMoves.add(new Move(14, 6, Move.PromoteToQueen));
-        expectedMoves.add(new Move(14, 6, Move.PromoteToRook));
-        expectedMoves.add(new Move(14, 6, Move.PromoteToBishop));
-        expectedMoves.add(new Move(14, 6, Move.PromoteToKnight));
-        expectedMoves.add(new Move(28, 19));
-        expectedMoves.add(new Move(28, 20));
-        // check generated vs expected
-        assertTrue(expectedMoves.containsAll(generatedMoves));
-        assertTrue(generatedMoves.containsAll(expectedMoves));
-    }
-
-
-    /**
-     * Tests for the en passant capture rule of the pawn
-     */
-    @Test
-    public void testPawnEnPassantCapture() {
-        // test en passant capture
-        String fen = "rnbqkbnr/ppp1pppp/8/3pP3/4P3/8/PPPPPPPP/RNBQKBNR";
-        Board board = new Board(fen);
-        board.setEnPassantSquare(19);
-        Move expectedMove = new Move(28, 19, Move.EnPassantCapture);
-
-        List<Move> generatedMoves = new ArrayList<>();
-        generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board,28));
-        generatedMoves.addAll(MoveGeneratorPawn.generatePawnMoves(board,53));
-        assertTrue(generatedMoves.contains(expectedMove));
-
-        System.out.println(board);
-        board = board.makeMove(expectedMove);
-        System.out.println("Board after " +expectedMove);
-        System.out.println(board);
-        assertEquals(Piece.None, board.getPieceAt(27));
-        assertEquals(Piece.Pawn+Piece.White, board.getPieceAt(19));
     }
 
 
@@ -275,98 +203,5 @@ public class MoveGeneratorTest {
         generatedMoves = generator.generateQueenMoves(startSquare);
         assertTrue(generatedMoves.containsAll(expectedMoves));
         assertTrue(expectedMoves.containsAll(generatedMoves));
-    }
-
-
-    /**
-     * Test king move generation
-     */
-    @Test
-    public void generateKingMoves() {
-        int startSquare = 60;
-        String fen = "8/3k4/8/8/8/8/8/4K3";
-        // test white King first
-        Board board = new Board(fen);
-        MoveGenerator generator = new MoveGenerator(board);
-        List<Move> generatedMoves;
-        List<Move> expectedMoves = new ArrayList<>();
-        // reminder: castling moves are also found, even though there are no rooks
-        // that's because we don't validate the moves
-        expectedMoves.add(new Move(60, 58, Move.Castling));
-        expectedMoves.add(new Move(60, 62, Move.Castling));
-        for (int expectedTarget : new int[]{51, 52, 53, 59, 61}) {
-            expectedMoves.add(new Move(startSquare, expectedTarget));
-        }
-        generatedMoves = generator.generateKingMoves(startSquare);
-        assertTrue(generatedMoves.containsAll(expectedMoves));
-        assertTrue(expectedMoves.containsAll(generatedMoves));
-
-        // test black King
-        board.setTurnColor(Piece.Black);
-        startSquare = 11;
-        generator = new MoveGenerator(board);
-        expectedMoves = new ArrayList<>();
-        for (int expectedTarget : new int[]{2, 3, 4, 10, 12, 18, 19, 20}) {
-            expectedMoves.add(new Move(startSquare, expectedTarget));
-        }
-        generatedMoves = generator.generateKingMoves(startSquare);
-        assertTrue(generatedMoves.containsAll(expectedMoves));
-        assertTrue(expectedMoves.containsAll(generatedMoves));
-    }
-
-    /**
-     * Test king castling
-     */
-    @Test
-    public void generateKingMovesCastling() {
-        String fen = "r3kq1r/8/8/8/8/8/8/R3K2R";
-        // test white king first
-        Board board = new Board(fen);
-        board.forbidCastlingA1();
-        MoveGenerator generator = new MoveGenerator(board);
-        List<Move> generatedMoves;
-        List<Move> expectedMoves = new ArrayList<>();
-        // expected moves for white
-        int startSquare = 60;
-        for (int expectedTarget : new int[]{51, 52, 53, 59, 61}) {
-            expectedMoves.add(new Move(startSquare, expectedTarget));
-        }
-        expectedMoves.add(new Move(startSquare, 62, Move.Castling));
-        generatedMoves = generator.generateKingMoves(startSquare);
-
-        // now test black king
-        board.setTurnColor(Piece.Black);
-        startSquare = 4;
-        generator = new MoveGenerator(board);
-        // expected moves for black
-        for (int expectedTarget : new int[]{3, 11, 12, 13}) {
-            expectedMoves.add(new Move(startSquare, expectedTarget));
-        }
-        expectedMoves.add(new Move(startSquare, 2, Move.Castling));
-        generatedMoves.addAll(generator.generateKingMoves(startSquare));
-
-        assertTrue(generatedMoves.containsAll(expectedMoves));
-        assertTrue(expectedMoves.containsAll(generatedMoves));
-    }
-
-
-
-    @Test
-    public void testKingStartMovesGeneration() {
-        String fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
-        Board board = new Board(fen);
-        MoveGenerator generator = new MoveGenerator(board);
-
-        System.out.println(board);
-        System.out.println("Expect no moves for the kings..");
-        if (generator.getTeamColor() != Piece.Black)
-            generator.swapColors();
-        List<Move> moves = generator.generateMovesStartingAt(4);
-        assertEquals(0, moves.size());
-        if (generator.getTeamColor() != Piece.White)
-            generator.swapColors();
-        moves = generator.generateMovesStartingAt(60);
-        assertEquals(0, moves.size());
-
     }
 }

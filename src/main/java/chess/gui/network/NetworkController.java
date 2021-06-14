@@ -1,13 +1,13 @@
 package chess.gui.network;
 
 import chess.gui.Gui;
+import chess.gui.util.ResizeManager;
 import chess.gui.util.TextManager;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -20,25 +20,27 @@ import javafx.scene.layout.AnchorPane;
 public class NetworkController {
 
 	@FXML
-	private AnchorPane rootPane;
+	public AnchorPane rootPane;
 	@FXML
-	private Label titleLabel;
+	public Label titleLabel;
 	@FXML
-	private Label ipLabel;
+	public Label ipLabel;
 	@FXML
-	private TextField ipTextField;
+	public TextField ipTextField;
 	@FXML
-	private Label portLabel;
+	public Label portLabel;
 	@FXML
-	private TextField portTextField;
+	public TextField portTextField;
 	@FXML
-	private AnchorPane errorPane;
+	public AnchorPane errorPane;
 	@FXML
-	private Label errorLabel;
+	public Label errorLabel;
 	@FXML
-	private Button cancelButton;
+	public Button cancelButton;
 	@FXML
-	private Button connectButton;
+	public Button connectButton;
+
+	private ResizeManager resizeManager = new ResizeManager(this);
 
 	private boolean isIpValid = false;
 	private boolean isPortValid = false;
@@ -55,7 +57,7 @@ public class NetworkController {
 		connectButton.setDisable(true);
 
 		ChangeListener<Number> rootPaneSizeListener = (observable, oldValue, newValue) -> {
-			resize();
+			resizeManager.resizeNetwork(rootPane.getWidth(), rootPane.getHeight());
 		};
 		rootPane.widthProperty().addListener(rootPaneSizeListener);
 		rootPane.heightProperty().addListener(rootPaneSizeListener);
@@ -107,7 +109,7 @@ public class NetworkController {
 
 		// if error
 		// errorPane.setVisible(true);
-		
+
 		// else
 		// TODO: Start new game
 		// Gui.switchTo(Gui.ChessScene.Game);
@@ -133,38 +135,5 @@ public class NetworkController {
 					handleConnectButtonOnAction();
 			}
 		}
-	}
-
-	private void resize() {
-		double rootHeight = rootPane.getHeight();
-		double rootWidth = rootPane.getWidth();
-		double titleFontSize = Math.min(rootHeight / 12, rootWidth / 21.33 * 1.5);
-		double fontSize = Math.min(rootHeight / 28.8, rootWidth / 51.2 * 1.5);
-		double iconSize = Math.min(rootHeight / 20.57, rootWidth / 36.57 * 1.5);
-		double borderRadius = Math.min(rootHeight / 72, rootWidth / 128 * 1.2);
-		double borderWidth = Math.min(rootHeight / 240, rootWidth / 426.66);
-
-		titleLabel.setStyle("-fx-font-size: " + titleFontSize);
-		ipLabel.setStyle("-fx-font-size: " + fontSize);
-		portLabel.setStyle("-fx-font-size: " + fontSize);
-		errorLabel.setStyle("-fx-font-size: " + Math.min(rootHeight / 36, rootWidth / 64 * 1.5));
-		ipTextField.setStyle("-fx-font-size: " + fontSize + "; -fx-background-radius: " + borderRadius
-				+ "; -fx-border-radius: " + borderRadius + "; -fx-border-width: " + borderWidth / 1.5);
-		portTextField.setStyle("-fx-font-size: " + fontSize + "; -fx-background-radius: " + borderRadius
-				+ "; -fx-border-radius: " + borderRadius + "; -fx-border-width: " + borderWidth / 1.5);
-		cancelButton.setStyle(
-				"-fx-font-size: " + fontSize + "; -fx-graphic-text-gap: " + rootWidth / 42.66 + "; -fx-background-radius: "
-						+ borderRadius + "; -fx-border-radius: " + borderRadius + "; -fx-border-width: " + borderWidth);
-		connectButton.setStyle(
-				"-fx-font-size: " + fontSize + "; -fx-graphic-text-gap: " + rootWidth / 42.66 + "; -fx-background-radius: "
-						+ borderRadius + "; -fx-border-radius: " + borderRadius + "; -fx-border-width: " + borderWidth);
-		ImageView cancelButtonIcon = (ImageView) cancelButton.getGraphic();
-		cancelButtonIcon.setFitHeight(iconSize);
-		ImageView connectButtonIcon = (ImageView) connectButton.getGraphic();
-		connectButtonIcon.setFitHeight(iconSize);
-		connectButton.getParent().getParent().getParent()
-				.setStyle("-fx-background-radius: " + borderRadius + "; -fx-border-radius: " + borderRadius);
-		ipTextField.getParent().getParent().getParent()
-				.setStyle("-fx-background-radius: " + borderRadius + "; -fx-border-radius: " + borderRadius);
 	}
 }
