@@ -48,15 +48,30 @@ public final class TextManager {
 		return getSupportedLocales().contains(sysDefault) ? sysDefault : Locale.GERMAN;
 	}
 
+	/**
+	 * Get the current Locale
+	 * 
+	 * @return the current Locale
+	 */
 	public static Locale getLocale() {
 		return locale.get();
 	}
 
+	/**
+	 * Set the current Locale
+	 * 
+	 * @param locale the new locale
+	 */
 	public static void setLocale(Locale locale) {
 		localeProperty().set(locale);
 		Locale.setDefault(locale);
 	}
 
+	/**
+	 * Get Locale ObjectProperty
+	 * 
+	 * @return the current Locale ObjectProperty
+	 */
 	public static ObjectProperty<Locale> localeProperty() {
 		return locale;
 	}
