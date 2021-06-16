@@ -29,6 +29,9 @@ import javafx.scene.layout.GridPane;
  * BoardController). The chess.model.Game class should be used as GameModel for
  * this scene.
  */
+@SuppressWarnings({"PMD.UnusedPrivateMethod", "PMD.TooManyFields"})
+// Some methods in this class seem unused but they are used by FXML
+// since there are many elements to be controlled in the game view, many fields are required
 public class GameController {
 
 	@FXML
@@ -103,10 +106,15 @@ public class GameController {
 	@FXML
 	public Button gameOverPopupStayButton;
 
+	private static String focused = "focused";
+
 	private ResizeManager resizeManager = new ResizeManager(this);
 	protected GamePopup gamePopup = new GamePopup(this);
 	protected BoardController boardController = new BoardController(this);
 
+	/**
+	 * Initializes the elements in the Game view
+	 */
 	@FXML
 	protected void initialize() {
 		TextManager.computeText(historyLabel, "game.history");
@@ -143,6 +151,10 @@ public class GameController {
 
 	}
 
+	/**
+	 * Handles what to do when User clicks a button in the game view
+	 * @param event the Action event to handle
+	 */
 	@FXML
 	protected void handleButtonOnAction(ActionEvent event) {
 		Button button = (Button) event.getSource();
@@ -269,7 +281,7 @@ public class GameController {
 			}
 
 			if (GameModel.isSelected()) {
-				square.getStyleClass().add("focused");
+				square.getStyleClass().add(focused);
 			}
 		}
 	}
@@ -286,7 +298,7 @@ public class GameController {
 			}
 
 			if (GameModel.isSelected() && square != boardGrid.getChildren().get(GameModel.getSelectedIndex())) {
-				square.getStyleClass().removeAll("focused");
+				square.getStyleClass().removeAll(focused);
 			}
 		}
 
@@ -303,31 +315,46 @@ public class GameController {
 		AnchorPane square = (AnchorPane) event.getSource();
 		int index = Coordinate.toIndex(square.getId());
 
-		if (!GameModel.isSelected()) { // if a piece has not yet been selected (first press)
-
-			if (!square.getChildren().isEmpty()) {
-
-				int piece = GameModel.getCurrentGame().getCurrentPosition().getPieceAt(index);
-				boolean colorMatch = Piece.isColor(piece, GameModel.getCurrentGame().getCurrentPosition().getTurnColor());
-				if (SettingsModel.isOneTouchRule() && (!colorMatch || GameModel.getPossibleMoves(index).isEmpty())) {
-					GameModel.playSound(GameModel.ChessSound.Failure, true);
-					return;
-				}
-
-				GameModel.setSelectedIndex(index);
-				square.getStyleClass().add("focused");
-				if (!settingsButton.disableProperty().isBound()) {
-					settingsButton.setDisable(true);
-				}
-
-				if (SettingsModel.isShowPossibleMoves())
-					boardController.showPossibleMoves(index);
-			}
+		if (!GameModel.isSelected()) {
+			// if no piece has yet been selected (first press)
+			handleFirstClick(square, index);
 			return;
+		} else {
+			// if a piece has already been selected (second press)
+			handleSecondClick(index);
 		}
+	}
 
-		// if a piece has already been selected (second press)
+	/**
+	 * Has ability to control what should happen when there was a click on the board and no Piece has been selected yet
+	 * @param square the AnchorPane of the clicked on square
+	 * @param index the index of the clicked on square
+	 */
+	private void handleFirstClick(AnchorPane square, int index) {
+		if (!square.getChildren().isEmpty()) {
 
+			int piece = GameModel.getCurrentGame().getCurrentPosition().getPieceAt(index);
+			boolean colorMatch = Piece.isColor(piece, GameModel.getCurrentGame().getCurrentPosition().getTurnColor());
+			if (SettingsModel.isOneTouchRule() && (!colorMatch || GameModel.getPossibleMoves(index).isEmpty())) {
+				GameModel.playSound(GameModel.ChessSound.Failure, true);
+				return;
+			}
+
+			GameModel.setSelectedIndex(index);
+			square.getStyleClass().add(focused);
+			if (!settingsButton.disableProperty().isBound()) {
+				settingsButton.setDisable(true);
+			}
+			if (SettingsModel.isShowPossibleMoves())
+				boardController.showPossibleMoves(index);
+		}
+	}
+
+	/**
+	 * Has ability to control what should happen when there was a click on the board and a Piece has been selected yet
+	 * @param index the index of the clicked on square
+	 */
+	private void handleSecondClick(int index) {
 		Move currentMove = new Move(GameModel.getSelectedIndex(), index);
 		Game testGame = GameModel.getCurrentGame();
 		testGame.addFlag(currentMove);
@@ -335,31 +362,32 @@ public class GameController {
 		boolean colorMatch = Piece.isColor(piece, GameModel.getCurrentGame().getCurrentPosition().getTurnColor());
 
 		if (SettingsModel.isOneTouchRule()
-				&& (!GameModel.getPossibleMoves(GameModel.getSelectedIndex()).contains(currentMove) || !colorMatch)) {
+				&& (!GameModel.getPossibleMoves(GameModel.getSelectedIndex()).contains(currentMove)
+				|| !colorMatch)) {
 			GameModel.playSound(GameModel.ChessSound.Failure, true);
 		} else {
 			if (GameModel.getSelectedIndex() == index) {
+				// if clicked on selected piece
 				if (!settingsButton.disableProperty().isBound()) {
 					settingsButton.setDisable(false);
 				}
 				GameModel.setSelectedIndex(-1);
 				boardGrid.getChildren().forEach(s -> {
-					s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
+					s.getStyleClass().removeAll(focused, "possibleMove", "checkMove", "captureMove");
 				});
 
 			} else {
-
+				// if not clicked on selected piece
 				if (!settingsButton.disableProperty().isBound()) {
 					settingsButton.setDisable(promotionPopup.isVisible());
 				}
 				boardController.movePieceOnBoard(GameModel.getSelectedIndex(), index);
 
 				boardGrid.getChildren().forEach(s -> {
-					s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
+					s.getStyleClass().removeAll(focused, "possibleMove", "checkMove", "captureMove");
 				});
 				GameModel.setSelectedIndex(-1);
 			}
 		}
-
 	}
 }

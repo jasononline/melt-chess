@@ -17,6 +17,9 @@ import javafx.scene.layout.AnchorPane;
  * Controls the behaviour and actions of the UI elements in the menu scene,
  * mainly switching to one of the other scenes and selecting game options.
  */
+@SuppressWarnings({"PMD.UnusedPrivateMethod", "PMD.TooManyFields"})
+// Some methods in this class seem unused but they are used by FXML
+// This class controls many elements of the gui, hence many fields are needed here.
 public class MenuController {
 
 	@FXML
@@ -45,6 +48,8 @@ public class MenuController {
 	public Button settingsButton;
 	@FXML
 	public Button quitButton;
+
+	private static String selected = "selected";
 
 	private ResizeManager resizeManager = new ResizeManager(this);
 
@@ -78,15 +83,15 @@ public class MenuController {
 	@FXML
 	private void handleModeButtonOnAction(ActionEvent event) {
 		Node source = (Node) event.getSource();
-		playerModeButton.getStyleClass().remove("selected");
-		aiModeButton.getStyleClass().remove("selected");
-		networkModeButton.getStyleClass().remove("selected");
+		playerModeButton.getStyleClass().remove(selected);
+		aiModeButton.getStyleClass().remove(selected);
+		networkModeButton.getStyleClass().remove(selected);
 		colorPane.setDisable(true);
-		source.getStyleClass().add("selected");
+		source.getStyleClass().add(selected);
 
 		if (source == playerModeButton) {
-			whiteColorButton.getStyleClass().remove("selected");
-			blackColorButton.getStyleClass().remove("selected");
+			whiteColorButton.getStyleClass().remove(selected);
+			blackColorButton.getStyleClass().remove(selected);
 			GameModel.setColor(GameModel.ChessColor.None);
 			GameModel.setGameMode(GameModel.ChessMode.Player);
 		}
@@ -95,8 +100,8 @@ public class MenuController {
 			GameModel.setGameMode(GameModel.ChessMode.Computer);
 		}
 		if (source == networkModeButton) {
-			whiteColorButton.getStyleClass().remove("selected");
-			blackColorButton.getStyleClass().remove("selected");
+			whiteColorButton.getStyleClass().remove(selected);
+			blackColorButton.getStyleClass().remove(selected);
 			GameModel.setColor(GameModel.ChessColor.None);
 			GameModel.setGameMode(GameModel.ChessMode.Network);
 		}
@@ -116,9 +121,9 @@ public class MenuController {
 	@FXML
 	private void handleColorButtonOnAction(ActionEvent event) {
 		Node source = (Node) event.getSource();
-		whiteColorButton.getStyleClass().remove("selected");
-		blackColorButton.getStyleClass().remove("selected");
-		source.getStyleClass().add("selected");
+		whiteColorButton.getStyleClass().remove(selected);
+		blackColorButton.getStyleClass().remove(selected);
+		source.getStyleClass().add(selected);
 
 		if (source == whiteColorButton)
 			GameModel.setColor(GameModel.ChessColor.White);

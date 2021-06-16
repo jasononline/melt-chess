@@ -17,6 +17,9 @@ import javafx.scene.layout.AnchorPane;
  * In this scene the user can enter the IP, port and start to establish a
  * connection.
  */
+@SuppressWarnings({"PMD.UnusedPrivateMethod", "PMD.TooManyFields"})
+// Some methods in this class seem unused but they are used by FXML
+// This class controls many elements of the gui, hence many fields are needed here.
 public class NetworkController {
 
 	@FXML
@@ -42,6 +45,7 @@ public class NetworkController {
 
 	private ResizeManager resizeManager = new ResizeManager(this);
 
+	private static String error = "error";
 	private boolean isIpValid = false;
 	private boolean isPortValid = false;
 
@@ -64,34 +68,34 @@ public class NetworkController {
 
 		// Check if input matched ip pattern
 		ipTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			ipTextField.getStyleClass().add("error");
+			ipTextField.getStyleClass().add(error);
 			isIpValid = false;
 			connectButton.setDisable(true);
 			if (newValue.matches("^(([01]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])(.(?!$)|$)){4}$")) {
-				ipTextField.getStyleClass().removeAll("error");
+				ipTextField.getStyleClass().removeAll(error);
 				isIpValid = true;
 				if (isIpValid && isPortValid)
 					connectButton.setDisable(false);
 			}
 			if (newValue == "") {
-				ipTextField.getStyleClass().removeAll("error");
+				ipTextField.getStyleClass().removeAll(error);
 			}
 		});
 
 		// Check if port is in range of [1-65535]
 		portTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			portTextField.getStyleClass().add("error");
+			portTextField.getStyleClass().add(error);
 			isPortValid = false;
 			connectButton.setDisable(true);
 			if (newValue
 					.matches("^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$")) {
-				portTextField.getStyleClass().removeAll("error");
+				portTextField.getStyleClass().removeAll(error);
 				isPortValid = true;
 				if (isIpValid && isPortValid)
 					connectButton.setDisable(false);
 			}
 			if (newValue == "") {
-				portTextField.getStyleClass().removeAll("error");
+				portTextField.getStyleClass().removeAll(error);
 			}
 		});
 	}
@@ -123,17 +127,12 @@ public class NetworkController {
 	@FXML
 	private void handleTextFieldKeyPress(KeyEvent event) {
 		TextField field = (TextField) event.getSource();
-		if (field == ipTextField) {
-			if (event.getCode().equals(KeyCode.ENTER) || event.getCode().equals(KeyCode.TAB)) {
-				portTextField.requestFocus();
-			}
+		if (field == ipTextField && event.getCode().equals(KeyCode.ENTER) || event.getCode().equals(KeyCode.TAB)) {
+			portTextField.requestFocus();
 		}
 
-		if (field == portTextField) {
-			if (event.getCode().equals(KeyCode.ENTER)) {
-				if (isIpValid && isPortValid)
-					handleConnectButtonOnAction();
-			}
+		if (field == portTextField && event.getCode().equals(KeyCode.ENTER) && isIpValid && isPortValid) {
+			handleConnectButtonOnAction();
 		}
 	}
 }
