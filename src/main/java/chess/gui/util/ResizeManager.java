@@ -50,7 +50,6 @@ public class ResizeManager {
 	private static String fxGraphicTextGap = "; -fx-graphic-text-gap: ";
 	private static String fxBorderWidth = "; -fx-border-width: ";
 
-
 	/**
 	 * Create new ResizeManager instance of
 	 * 
@@ -123,12 +122,10 @@ public class ResizeManager {
 	public void resizeMenu(double rootWidth, double rootHeight) {
 		updateValues(rootWidth, rootHeight);
 
-		String buttonStyleV = fxFontSize + fontSize25 + fxGraphicTextGap + graphicTextGapV20
-				+ fxBackgroundRadius + borderRadius10 + fxBorderRadius + borderRadius10
-				+ fxBorderWidth + borderWidth3;
-		String buttonStyleH = fxFontSize + fontSize25 + fxGraphicTextGap + graphicTextGapH30
-				+ fxBackgroundRadius + borderRadius10 + fxBorderRadius + borderRadius10
-				+ fxBorderWidth + borderWidth3;
+		String buttonStyleV = fxFontSize + fontSize25 + fxGraphicTextGap + graphicTextGapV20 + fxBackgroundRadius
+				+ borderRadius10 + fxBorderRadius + borderRadius10 + fxBorderWidth + borderWidth3;
+		String buttonStyleH = fxFontSize + fontSize25 + fxGraphicTextGap + graphicTextGapH30 + fxBackgroundRadius
+				+ borderRadius10 + fxBorderRadius + borderRadius10 + fxBorderWidth + borderWidth3;
 
 		menuController.titleLabel.setStyle(fxFontSize + fontSize60);
 		menuController.modeLabel.setStyle(fxFontSize + fontSize40);
@@ -178,11 +175,10 @@ public class ResizeManager {
 		settingsController.showPossibleMovesLabel.setStyle(fxFontSize + fontSize25);
 		settingsController.soundEffectsLabel.setStyle(fxFontSize + fontSize25);
 
-		String langButtonStyle = fxFontSize + fontSize18 + fxBackgroundRadius + borderRadius5
-				+ fxBorderRadius + borderRadius5 + fxBorderWidth + borderWidth2;
-		String controlButtonStyle = fxFontSize + fontSize25 + fxGraphicTextGap + graphicTextGapH30
-				+ fxBackgroundRadius + borderRadius10 + fxBorderRadius + borderRadius10
-				+ fxBorderWidth + borderWidth3;
+		String langButtonStyle = fxFontSize + fontSize18 + fxBackgroundRadius + borderRadius5 + fxBorderRadius
+				+ borderRadius5 + fxBorderWidth + borderWidth2;
+		String controlButtonStyle = fxFontSize + fontSize25 + fxGraphicTextGap + graphicTextGapH30 + fxBackgroundRadius
+				+ borderRadius10 + fxBorderRadius + borderRadius10 + fxBorderWidth + borderWidth3;
 
 		settingsController.englishButton.setStyle(langButtonStyle);
 		settingsController.germanButton.setStyle(langButtonStyle);
@@ -216,9 +212,8 @@ public class ResizeManager {
 		double width = checkbox.getHeight() != 0 ? checkbox.getHeight() * 2 : rootHeight / 20.57 * 2;
 		checkbox.setPrefWidth(width);
 		checkbox.setMaxWidth(width);
-		checkbox.setStyle(
-				"-fx-padding: 0 0 0 " + (width / 3.04) + fxBorderWidth + borderWidth2 + fxBackgroundRadius
-						+ borderRadius5 + fxBorderRadius + borderRadius5 + "; -fx-font-size: " + fontSize15);
+		checkbox.setStyle("-fx-padding: 0 0 0 " + (width / 3.04) + fxBorderWidth + borderWidth2 + fxBackgroundRadius
+				+ borderRadius5 + fxBorderRadius + borderRadius5 + "; -fx-font-size: " + fontSize15);
 	}
 
 	/**
@@ -235,11 +230,10 @@ public class ResizeManager {
 		networkController.portLabel.setStyle(fxFontSize + fontSize25);
 		networkController.errorLabel.setStyle(fxFontSize + fontSize20);
 
-		String textFieldStyle = fxFontSize + fontSize25 + fxBackgroundRadius + borderRadius10
-				+ fxBorderRadius + borderRadius10 + fxBorderWidth + borderWidth2;
-		String controlButtonStyle = fxFontSize + fontSize25 + fxGraphicTextGap + graphicTextGapH30
-				+ fxBackgroundRadius + borderRadius10 + fxBorderRadius + borderRadius10
-				+ fxBorderWidth + borderWidth3;
+		String textFieldStyle = fxFontSize + fontSize25 + fxBackgroundRadius + borderRadius10 + fxBorderRadius
+				+ borderRadius10 + fxBorderWidth + borderWidth2;
+		String controlButtonStyle = fxFontSize + fontSize25 + fxGraphicTextGap + graphicTextGapH30 + fxBackgroundRadius
+				+ borderRadius10 + fxBorderRadius + borderRadius10 + fxBorderWidth + borderWidth3;
 
 		networkController.ipTextField.setStyle(textFieldStyle);
 		networkController.portTextField.setStyle(textFieldStyle);
@@ -268,9 +262,8 @@ public class ResizeManager {
 	public void resizeGame(double rootWidth, double rootHeight) {
 		updateValues(rootWidth, rootHeight);
 
-		String buttonStyleH = fxFontSize + fontSize25 + fxGraphicTextGap + graphicTextGapH30 / 3
-				+ fxBackgroundRadius + borderRadius10 + fxBorderRadius + borderRadius10
-				+ fxBorderWidth + borderWidth3;
+		String buttonStyleH = fxFontSize + fontSize25 + fxGraphicTextGap + graphicTextGapH30 / 3 + fxBackgroundRadius
+				+ borderRadius10 + fxBorderRadius + borderRadius10 + fxBorderWidth + borderWidth3;
 
 		gameController.resignButton.setStyle(buttonStyleH);
 		gameController.restartButton.setStyle(buttonStyleH);
@@ -321,20 +314,18 @@ public class ResizeManager {
 		gameController.historyGrid.setVgap(graphicTextGapV20 / 2);
 		for (Node historyNode : gameController.historyGrid.getChildren()) {
 			Button historyButton = (Button) ((AnchorPane) historyNode).getChildren().get(0);
-			historyButton.setStyle(fxFontSize + fontSize18 + fxBackgroundRadius + borderRadius5
-					+ fxBorderRadius + borderRadius5 + fxBorderWidth + borderWidth2);
+			historyButton.setStyle(fxFontSize + fontSize18 + fxBackgroundRadius + borderRadius5 + fxBorderRadius
+					+ borderRadius5 + fxBorderWidth + borderWidth2);
 		}
 	}
 
 	private void setPopupStyles() {
 		gameController.gameOverPopupTitle.setStyle(fxFontSize + fontSize25);
 
-		String popupButtonStyleV = fxFontSize + fontSize15 + fxGraphicTextGap + graphicTextGapV5
-				+ fxBackgroundRadius + borderRadius5 + fxBorderRadius + borderRadius5 + fxBorderWidth
-				+ borderWidth2;
-		String popupButtonStyleH = fxFontSize + fontSize18 + fxGraphicTextGap + graphicTextGapV20
-				+ fxBackgroundRadius + borderRadius5 + fxBorderRadius + borderRadius5 + fxBorderWidth
-				+ borderWidth2;
+		String popupButtonStyleV = fxFontSize + fontSize15 + fxGraphicTextGap + graphicTextGapV5 + fxBackgroundRadius
+				+ borderRadius5 + fxBorderRadius + borderRadius5 + fxBorderWidth + borderWidth2;
+		String popupButtonStyleH = fxFontSize + fontSize18 + fxGraphicTextGap + graphicTextGapV20 + fxBackgroundRadius
+				+ borderRadius5 + fxBorderRadius + borderRadius5 + fxBorderWidth + borderWidth2;
 
 		gameController.promotionPopupQueenButton.setStyle(popupButtonStyleV);
 		gameController.promotionPopupRookButton.setStyle(popupButtonStyleV);
@@ -348,7 +339,6 @@ public class ResizeManager {
 		gameController.gameOverPopupRestartButton.setStyle(popupButtonStyleV);
 		gameController.gameOverPopupStayButton.setStyle(popupButtonStyleV);
 	}
-
 
 	private void setLabelStyles() {
 		gameController.currentMoveLabel.setStyle(fxFontSize + fontSize25);
@@ -365,22 +355,18 @@ public class ResizeManager {
 				.setStyle(fxBackgroundRadiusNoSemicolon + borderRadius10 + fxBorderRadius + borderRadius10);
 	}
 
-
 	private ImageView[] getPromotionIcons() {
-		return new ImageView[]{
-				(ImageView) gameController.promotionPopupQueenButton.getGraphic(),
+		return new ImageView[] { (ImageView) gameController.promotionPopupQueenButton.getGraphic(),
 				(ImageView) gameController.promotionPopupRookButton.getGraphic(),
 				(ImageView) gameController.promotionPopupBishopButton.getGraphic(),
 				(ImageView) gameController.promotionPopupKnightButton.getGraphic(),
 				(ImageView) gameController.gameOverPopupMenuButton.getGraphic(),
 				(ImageView) gameController.gameOverPopupRestartButton.getGraphic(),
-				(ImageView) gameController.gameOverPopupStayButton.getGraphic()
-		};
+				(ImageView) gameController.gameOverPopupStayButton.getGraphic() };
 	}
 
 	private ImageView[] getButtonIcons() {
-		return new ImageView[] {
-				(ImageView) gameController.resignButton.getGraphic(),
+		return new ImageView[] { (ImageView) gameController.resignButton.getGraphic(),
 				(ImageView) gameController.restartButton.getGraphic(), (ImageView) gameController.settingsButton.getGraphic(),
 				(ImageView) gameController.menuButton.getGraphic(),
 				(ImageView) gameController.surePopupCancelButton.getGraphic(),

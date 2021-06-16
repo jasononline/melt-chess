@@ -17,9 +17,10 @@ import javafx.scene.layout.AnchorPane;
  * In this scene the user can enter the IP, port and start to establish a
  * connection.
  */
-@SuppressWarnings({"PMD.UnusedPrivateMethod", "PMD.TooManyFields"})
+@SuppressWarnings({ "PMD.UnusedPrivateMethod", "PMD.TooManyFields" })
 // Some methods in this class seem unused but they are used by FXML
-// This class controls many elements of the gui, hence many fields are needed here.
+// This class controls many elements of the gui, hence many fields are needed
+// here.
 public class NetworkController {
 
 	@FXML

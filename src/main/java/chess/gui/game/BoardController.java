@@ -70,8 +70,7 @@ public class BoardController {
 
 		if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.Black && !isRotated
 				&& SettingsModel.isFlipBoard()
-				|| GameModel.getGameMode() != GameModel.ChessMode.Player
-						&& GameModel.getColor() == GameModel.ChessColor.Black)
+				|| GameModel.getGameMode() != GameModel.ChessMode.Player && GameModel.getColor() == GameModel.ChessColor.Black)
 			flipBoard(false);
 
 		checkForGameOver();
@@ -94,10 +93,9 @@ public class BoardController {
 		if (Piece.isColor(board.getPieceAt(startIndex), board.getTurnColor())
 				&& MoveValidator.validateMove(testGame.getCurrentPosition(), testMove)
 				&& (Coordinate.isOnUpperBorder(targetIndex) || Coordinate.isOnLowerBorder(targetIndex))
-					&& Piece.isType(board.getPieceAt(startIndex), Piece.Pawn)) {
+				&& Piece.isType(board.getPieceAt(startIndex), Piece.Pawn)) {
 			// open the PopupMenu to choose promotion
-			gameController.gamePopup.showPromotionPopup(GameModel.getCurrentGame().getCurrentPosition().getTurnColor(),
-					move);
+			gameController.gamePopup.showPromotionPopup(GameModel.getCurrentGame().getCurrentPosition().getTurnColor(), move);
 			return;
 		}
 		finishMove(move);
@@ -147,7 +145,6 @@ public class BoardController {
 		GameModel.getMovesHistory().add(0, move);
 		if (SettingsModel.isFlipBoard() && GameModel.getGameMode() != GameModel.ChessMode.Computer)
 			flipBoard(true);
-
 
 		gameController.updateUI();
 		if (checkForGameOver())

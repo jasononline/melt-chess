@@ -91,19 +91,19 @@ public class GamePopup {
 	 * @param move     the move that brings a pawn to the last rank
 	 */
 	protected void showPromotionPopup(int forColor, Move move) {
-		ImageView queenIcon =
-				GraphicsManager.getGraphicAsImageView(forColor == Piece.White ?"queen_white":"queen_black", 20);
+		ImageView queenIcon = GraphicsManager.getGraphicAsImageView(forColor == Piece.White ? "queen_white" : "queen_black",
+				20);
 
-		ImageView rookIcon =
-				GraphicsManager.getGraphicAsImageView(forColor == Piece.White ?"rook_white":"rook_black", 20);
+		ImageView rookIcon = GraphicsManager.getGraphicAsImageView(forColor == Piece.White ? "rook_white" : "rook_black",
+				20);
 
-		ImageView bishopIcon =
-				GraphicsManager.getGraphicAsImageView(forColor == Piece.White?"bishop_white":"bishop_black", 20);
+		ImageView bishopIcon = GraphicsManager
+				.getGraphicAsImageView(forColor == Piece.White ? "bishop_white" : "bishop_black", 20);
 
-		ImageView knightIcon =
-				GraphicsManager.getGraphicAsImageView(forColor == Piece.White?"knight_white":"knight_black", 20);
+		ImageView knightIcon = GraphicsManager
+				.getGraphicAsImageView(forColor == Piece.White ? "knight_white" : "knight_black", 20);
 
-		ImageView[] icons = {queenIcon, rookIcon, bishopIcon, knightIcon};
+		ImageView[] icons = { queenIcon, rookIcon, bishopIcon, knightIcon };
 
 		gameController.promotionPopupQueenButton.setGraphic(queenIcon);
 		gameController.promotionPopupRookButton.setGraphic(rookIcon);

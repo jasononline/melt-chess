@@ -29,9 +29,10 @@ import javafx.scene.layout.GridPane;
  * BoardController). The chess.model.Game class should be used as GameModel for
  * this scene.
  */
-@SuppressWarnings({"PMD.UnusedPrivateMethod", "PMD.TooManyFields"})
+@SuppressWarnings({ "PMD.UnusedPrivateMethod", "PMD.TooManyFields" })
 // Some methods in this class seem unused but they are used by FXML
-// since there are many elements to be controlled in the game view, many fields are required
+// since there are many elements to be controlled in the game view, many fields
+// are required
 public class GameController {
 
 	@FXML
@@ -153,6 +154,7 @@ public class GameController {
 
 	/**
 	 * Handles what to do when User clicks a button in the game view
+	 * 
 	 * @param event the Action event to handle
 	 */
 	@FXML
@@ -326,9 +328,11 @@ public class GameController {
 	}
 
 	/**
-	 * Has ability to control what should happen when there was a click on the board and no Piece has been selected yet
+	 * Has ability to control what should happen when there was a click on the board
+	 * and no Piece has been selected yet
+	 * 
 	 * @param square the AnchorPane of the clicked on square
-	 * @param index the index of the clicked on square
+	 * @param index  the index of the clicked on square
 	 */
 	private void handleFirstClick(AnchorPane square, int index) {
 		if (!square.getChildren().isEmpty()) {
@@ -351,7 +355,9 @@ public class GameController {
 	}
 
 	/**
-	 * Has ability to control what should happen when there was a click on the board and a Piece has been selected yet
+	 * Has ability to control what should happen when there was a click on the board
+	 * and a Piece has been selected yet
+	 * 
 	 * @param index the index of the clicked on square
 	 */
 	private void handleSecondClick(int index) {
@@ -362,8 +368,7 @@ public class GameController {
 		boolean colorMatch = Piece.isColor(piece, GameModel.getCurrentGame().getCurrentPosition().getTurnColor());
 
 		if (SettingsModel.isOneTouchRule()
-				&& (!GameModel.getPossibleMoves(GameModel.getSelectedIndex()).contains(currentMove)
-				|| !colorMatch)) {
+				&& (!GameModel.getPossibleMoves(GameModel.getSelectedIndex()).contains(currentMove) || !colorMatch)) {
 			GameModel.playSound(GameModel.ChessSound.Failure, true);
 		} else {
 			if (GameModel.getSelectedIndex() == index) {

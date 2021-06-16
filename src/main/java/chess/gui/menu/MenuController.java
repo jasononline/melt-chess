@@ -17,9 +17,10 @@ import javafx.scene.layout.AnchorPane;
  * Controls the behaviour and actions of the UI elements in the menu scene,
  * mainly switching to one of the other scenes and selecting game options.
  */
-@SuppressWarnings({"PMD.UnusedPrivateMethod", "PMD.TooManyFields"})
+@SuppressWarnings({ "PMD.UnusedPrivateMethod", "PMD.TooManyFields" })
 // Some methods in this class seem unused but they are used by FXML
-// This class controls many elements of the gui, hence many fields are needed here.
+// This class controls many elements of the gui, hence many fields are needed
+// here.
 public class MenuController {
 
 	@FXML
@@ -106,7 +107,8 @@ public class MenuController {
 			GameModel.setGameMode(GameModel.ChessMode.Network);
 		}
 
-		if (GameModel.getGameMode() != GameModel.ChessMode.None && GameModel.getGameMode() != GameModel.ChessMode.Computer) {
+		if (GameModel.getGameMode() != GameModel.ChessMode.None
+				&& GameModel.getGameMode() != GameModel.ChessMode.Computer) {
 			startButton.setDisable(false);
 		} else {
 			startButton.setDisable(true);
