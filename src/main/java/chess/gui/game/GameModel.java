@@ -105,7 +105,7 @@ public class GameModel {
 	 */
 	public static void beginNewGame() {
 		// start the new game
-		currentGame = new Game("k4bnr/3Ppppp/7q/1R6/1R6/8/PP1PPPPP/1NBQKBNR");
+		currentGame = new Game();
 		if (color == ChessColor.Black) {
 			currentGame.getCurrentPosition().setTurnColor(Piece.Black);
 		}
@@ -154,14 +154,10 @@ public class GameModel {
 	 * Uses the engine to generate the next PC-move and executes that move.
 	 */
 	public static void performEngineMove() {
-		System.out.println("performEngineMove was called");
 		List<Integer> capturedPieces = currentGame.getCurrentPosition().getCapturedPieces();
 		Move next = engine.generateBestMove(currentGame.getCurrentPosition());
-		System.out.println("does this message appear before the exception?\n-------------------");
 		if (next != null) {
-			System.out.println("Engine came up with this move: " + next.toString());
 			if (!currentGame.attemptMove(next)) {
-				System.out.println("The engines Move failed in attemption.");
 				return;
 			}
 		}
