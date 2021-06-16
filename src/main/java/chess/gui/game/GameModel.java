@@ -20,20 +20,10 @@ import chess.model.MoveValidator;
  * Storage for information on the currently visible board position, like
  * positions of image objects, which piece is selected, etc.
  */
+@SuppressWarnings("PMD.TooManyFields")
+// One of the main features of this class is to store states of variables.
+// That's why many fields are necessary here.
 public class GameModel {
-
-	/**
-	 * The current Game
-	 */
-	private static chess.model.Game currentGame;
-
-	private static Engine engine = new Engine();
-
-	/**
-	 * Stores whether the user is allowed do make a move. This variable is used to
-	 * prevent the user from making moves while the Engine computes a move.
-	 */
-	private static boolean allowedToMove = true;
 
 	/**
 	 * Enumeration of available game modes
@@ -58,10 +48,26 @@ public class GameModel {
 
 		public final AudioClip audio;
 
-		private ChessSound(String filename) {
+		ChessSound(String filename) {
 			this.audio = new AudioClip(Gui.class.getResource("audio/" + filename).toExternalForm());
 		}
 	}
+
+	/**
+	 * The current Game
+	 */
+	private static Game currentGame;
+
+	/**
+	 * The engine to get best moves from
+	 */
+	private static Engine engine = new Engine();
+
+	/**
+	 * Stores whether the user is allowed do make a move. This variable is used to
+	 * prevent the user from making moves while the Engine computes a move.
+	 */
+	private static boolean allowedToMove = true;
 
 	/**
 	 * Stores the chosen game mode
@@ -156,10 +162,8 @@ public class GameModel {
 	public static void performEngineMove() {
 		List<Integer> capturedPieces = currentGame.getCurrentPosition().getCapturedPieces();
 		Move next = engine.generateBestMove(currentGame.getCurrentPosition());
-		if (next != null) {
-			if (!currentGame.attemptMove(next)) {
-				return;
-			}
+		if (next != null && !currentGame.attemptMove(next)) {
+			return;
 		}
 		if (currentGame.checkWinCondition() == 0) {
 			if (currentGame.checkCheck() && SettingsModel.isShowInCheck()) {

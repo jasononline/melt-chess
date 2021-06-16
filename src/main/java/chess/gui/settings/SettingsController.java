@@ -16,6 +16,9 @@ import javafx.scene.control.Label;
 /**
  * Controls the behaviour and actions of the UI elements in the settings scene
  */
+@SuppressWarnings({"PMD.UnusedPrivateMethod", "PMD.TooManyFields"})
+// Some methods in this class seem unused but they are used by FXML
+// This class controls many elements of the gui, hence many fields are needed here.
 public class SettingsController {
 
 	@FXML
@@ -56,6 +59,7 @@ public class SettingsController {
 	private ResizeManager resizeManager = new ResizeManager(this);
 
 	private Locale currentLocale = SettingsModel.getCurrentLocale();
+	private static String selected = "selected";
 
 	@FXML
 	private void initialize() {
@@ -78,11 +82,11 @@ public class SettingsController {
 		rootPane.heightProperty().addListener(rootPaneSizeListener);
 
 		if (SettingsModel.getCurrentLocale() == Locale.ENGLISH) {
-			englishButton.getStyleClass().add("selected");
-			germanButton.getStyleClass().remove("selected");
+			englishButton.getStyleClass().add(selected);
+			germanButton.getStyleClass().remove(selected);
 		} else {
-			englishButton.getStyleClass().remove("selected");
-			germanButton.getStyleClass().add("selected");
+			englishButton.getStyleClass().remove(selected);
+			germanButton.getStyleClass().add(selected);
 		}
 
 		flipBoardCheckbox.setSelected(SettingsModel.isFlipBoard());
@@ -114,13 +118,13 @@ public class SettingsController {
 		Button button = (Button) event.getSource();
 		if (button == englishButton) {
 			currentLocale = Locale.ENGLISH;
-			germanButton.getStyleClass().remove("selected");
-			englishButton.getStyleClass().add("selected");
+			germanButton.getStyleClass().remove(selected);
+			englishButton.getStyleClass().add(selected);
 		}
 		if (button == germanButton) {
 			currentLocale = Locale.GERMAN;
-			englishButton.getStyleClass().remove("selected");
-			germanButton.getStyleClass().add("selected");
+			englishButton.getStyleClass().remove(selected);
+			germanButton.getStyleClass().add(selected);
 		}
 		TextManager.setLocale(currentLocale);
 	}

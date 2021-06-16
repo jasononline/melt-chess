@@ -68,10 +68,10 @@ public class BoardController {
 			s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
 		});
 
-		if ((GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.Black && !isRotated
-				&& SettingsModel.isFlipBoard())
-				|| (GameModel.getGameMode() != GameModel.ChessMode.Player
-						&& GameModel.getColor() == GameModel.ChessColor.Black))
+		if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.Black && !isRotated
+				&& SettingsModel.isFlipBoard()
+				|| GameModel.getGameMode() != GameModel.ChessMode.Player
+						&& GameModel.getColor() == GameModel.ChessColor.Black)
 			flipBoard(false);
 
 		checkForGameOver();
@@ -90,16 +90,15 @@ public class BoardController {
 		Game testGame = GameModel.getCurrentGame();
 		testGame.addFlag(testMove);
 
+		// if promotion is possible
 		if (Piece.isColor(board.getPieceAt(startIndex), board.getTurnColor())
-				&& MoveValidator.validateMove(testGame.getCurrentPosition(), testMove)) {
-			// if promotion is possible
-			if ((Coordinate.isOnUpperBorder(targetIndex) || Coordinate.isOnLowerBorder(targetIndex))
+				&& MoveValidator.validateMove(testGame.getCurrentPosition(), testMove)
+				&& (Coordinate.isOnUpperBorder(targetIndex) || Coordinate.isOnLowerBorder(targetIndex))
 					&& Piece.isType(board.getPieceAt(startIndex), Piece.Pawn)) {
-				// open the PopupMenu to choose promotion
-				gameController.gamePopup.showPromotionPopup(GameModel.getCurrentGame().getCurrentPosition().getTurnColor(),
-						move);
-				return;
-			}
+			// open the PopupMenu to choose promotion
+			gameController.gamePopup.showPromotionPopup(GameModel.getCurrentGame().getCurrentPosition().getTurnColor(),
+					move);
+			return;
 		}
 		finishMove(move);
 	}
@@ -137,22 +136,13 @@ public class BoardController {
 	 */
 	protected void finishMove(Move move) {
 		GameModel.getCurrentGame().addFlag(move);
-		List<Integer> capturedPieces = GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces();
 
 		if (!GameModel.getCurrentGame().attemptMove(move)) {
 			GameModel.playSound(GameModel.ChessSound.Failure, true);
 			return;
 		}
 
-		if (GameModel.getCurrentGame().checkCheck() && SettingsModel.isShowInCheck()
-			&& GameModel.getCurrentGame().checkWinCondition() == 0) {
-			GameModel.playSound(GameModel.ChessSound.Check, true);
-		} else if (GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces().equals(capturedPieces)
-				   && GameModel.getCurrentGame().checkWinCondition() == 0) {
-			GameModel.playSound(GameModel.ChessSound.Move, true);
-		} else if (GameModel.getCurrentGame().checkWinCondition() == 0) {
-			GameModel.playSound(GameModel.ChessSound.Capture, true);
-		}
+		playMoveSounds();
 
 		GameModel.getMovesHistory().add(0, move);
 		if (SettingsModel.isFlipBoard() && GameModel.getGameMode() != GameModel.ChessMode.Computer)
@@ -164,6 +154,23 @@ public class BoardController {
 			return;
 
 		continueAccordingToGameMode();
+	}
+
+	/**
+	 * Play sounds according to a happened Move
+	 */
+	private void playMoveSounds() {
+		List<Integer> capturedPieces = GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces();
+
+		if (GameModel.getCurrentGame().checkCheck() && SettingsModel.isShowInCheck()
+				&& GameModel.getCurrentGame().checkWinCondition() == 0) {
+			GameModel.playSound(GameModel.ChessSound.Check, true);
+		} else if (GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces().equals(capturedPieces)
+				&& GameModel.getCurrentGame().checkWinCondition() == 0) {
+			GameModel.playSound(GameModel.ChessSound.Move, true);
+		} else if (GameModel.getCurrentGame().checkWinCondition() == 0) {
+			GameModel.playSound(GameModel.ChessSound.Capture, true);
+		}
 	}
 
 	/**
@@ -196,8 +203,6 @@ public class BoardController {
 			// TODO implement what happens in Network game
 			return;
 		}
-		// Default just in case
-		return;
 	}
 
 	/**

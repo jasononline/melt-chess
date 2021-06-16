@@ -49,11 +49,27 @@ public class GraphicsManager {
      * Returns the specified graphic as an ImgaeView object.
      *
      * @param name the name of the wanted graphic.
-     * @return the graphic as an ImameView object according to name.
+     * @return the graphic as an ImageView object according to name.
      */
     public static ImageView getGraphicAsImageView(String name) {
         ImageView imageView = new ImageView(getGraphicAsImage(name));
         imageView.setPreserveRatio(true);
         return imageView;
     }
+
+
+    /**
+     * Returns the specified graphic as an ImgaeView object with specified height
+     *
+     * @param name the name of the wanted graphic.
+     * @param height the wanted height of the graphic.
+     * @return the graphic as an ImageView object according to name.
+     */
+    public static ImageView getGraphicAsImageView(String name, int height) {
+        ImageView imageView = new ImageView(getGraphicAsImage(name));
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(height);
+        return imageView;
+    }
+
 }
