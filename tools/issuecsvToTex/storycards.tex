@@ -15,13 +15,13 @@ Der Benutzer hat die Möglichkeit das Schachspiel gegen einen anderen Benutzer z
     \item[\done]  Die Benutzereingabe wird korrekt geparsed (Tests für ``parseUserMoveInput`` bestanden)
   \item[\done]  Gameloop ist etabliert (User Input einlesen, Schachbrettposition ausgeben, ...)
   \item[\done]  Ausgabe der geschlagenen Figuren auf den Befehl ``beaten``
-  \item  Ausgabe wenn ein Spieler im Schach steht
+  \item[\done]  Ausgabe wenn ein Spieler im Schach steht
   \item[\done]  Die Anforderungen an die Ausgabe bei gesetztem ``
   \item[\done]  Fehleingabe wird mit ``!Invalid move`` quittiert
   \item[\done]  Gültige Eingabe wird mit ``!<Eingabe>``quittiert
   \item[\done]  Ein ungültiger Zug wird mit ``!Move not allowed``quittiert
   \item[\done]  Schachbrett wird nach jedem Zug geprintet
-  \item  Matt oder Unentschieden wird angezeigt und dadurch wird das Spiel beendet
+  \item[\done]  Matt oder Unentschieden wird angezeigt und dadurch wird das Spiel beendet
   \item[\done]  Es gibt einen Befehl, um das Spiel zu beenden
   \item[\done]  Nach einer falschen Eingabe wird auf eine neue Eingabe gewartet
 
@@ -124,6 +124,26 @@ Die Klasse \lstj{Piece}im Paket \lstj{model} soll die geplanten statischen Metho
 \end{todolist}
 
 
+\subsection*{Erstellen der 2D GUI}
+id: \#9 Milestone: 2. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] E
+\item[Storypoints] 34
+\item[Risiko] high
+\end{itemize}
+
+Zum planen GUI für die Folgenden Schritte weitere Issues anlegen und mit \#9 verlinken: Design, Architektur, Implementierung
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Klare Vorstellung wie die GUI aussehen soll (Design)
+  \item[\done]  Die Architektur wurde geplant
+  \item[\done]  Die GUI wurde implementiert
+
+\end{todolist}
+
+
 \subsection*{Erstellen der Engine}
 id: \#10 Milestone: 2. Iteration\\
 
@@ -137,8 +157,8 @@ Erstellen der Klasse \lstj{Engine} im Paket \lstj{engine}. Die Engine berechnet 
 
 \textbf{Abgeschlossen wenn}
 \begin{todolist}
-    \item  Die Engine ist in der Lage ein paar einfache ausgewählte Schachprobleme zu lösen
-  \item  Die Engine kann sinnvolle nächste Züge für ein PVPC Spiel generieren
+    \item[\done]  Die Engine ist in der Lage ein paar einfache ausgewählte Schachprobleme zu lösen
+  \item[\done]  Die Engine kann sinnvolle nächste Züge für ein PVPC Spiel generieren
 
 \end{todolist}
 
@@ -217,6 +237,289 @@ Testen der Konsolenschnittstelle und damit auch des \lstj{model} Pakets mittels 
 \begin{todolist}
     \item[\done]  checker App läuft und kann MELT Chess ausführen
   \item[\done]  Bugs und nicht bestandene Tests sind behoben
+
+\end{todolist}
+
+
+\subsection*{Erstellen MenuController}
+id: \#15 Milestone: 2. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] C
+\item[Storypoints] 13
+\item[Risiko] high
+\end{itemize}
+
+Der `MenuController` interpretiert die Aktionen des Benutzers, die dieser über die [`MenuView`](\#16) ausführt.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Der Benutzer kann einen von drei Spielmodi wählen: "Game against AI / Spiel gegen KI", "Game against second player / Spiel gegen zweiten Spieler" oder "Network game / Netzwerkspiel". Der gewählte Modus muss sich grafisch abheben.
+  \item[\done]  Der Benutzer kann eine von zwei Farben der Spielfiguren wählen: weiß oder schwarz. Die gewählte Farbe muss sich grafisch abheben.
+  \item[\done]  Die Taste "Start game / Spiel starten" startet das Spiel gegen die KI, gegen den zweiten Spieler oder startet das Netzwerkspiel, je nachdem, was der Benutzer ausgewählt hat
+  \item[\done]  Die Taste "Settings / Einstellungen" öffnet das Einstellungsmenü
+
+\end{todolist}
+
+
+\subsection*{Erstellen MenuView}
+id: \#16 Milestone: 2. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] A
+\item[Storypoints] 8
+\item[Risiko] high
+\end{itemize}
+
+Zeigt dem Benutzer das Hauptmenü an.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Enthält drei Tasten zur Auswahl des Spielmodus: "Game against AI / Spiel gegen KI", "Game against second player / Spiel gegen zweiten Spieler" und "Network game / Netzwerkspiel". Die ausgewählte Taste muss sich grafisch abheben.`handleRadioButtonAIOnAction``handleRadioButtonPVPOnAction``handleRadioButtonNetOnAction`
+  \item[\done]  Enthält zwei Tasten zur Auswahl der Farbe der Spielfiguren: weiß und schwarz. Die ausgewählte Taste muss sich grafisch abheben.`handleRadioButtonColorBlackOnAction``handleRadioButtonColorWhiteOnAction`
+  \item[\done]  Enthält Spielstarttaste "Start game / Spiel starten"`handleButtonStartOnAction`
+  \item[\done]  Enthält eine Taste "Settings / Einstellungen" zum Öffnen der Einstellungen`handleButtonSettingsOnAction`
+
+\end{todolist}
+
+
+\subsection*{Erstellen SettingsView}
+id: \#17 Milestone: 2. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] A
+\item[Storypoints] 13
+\item[Risiko] high
+\end{itemize}
+
+Zeigt dem Benutzer das Einstellungen an.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Enthält eine Taste "Save / Speichern" zum Speichern der Einstellungen.`handleButtonSaveOnAction`
+  \item[\done]  Enthält Taste "Cancel / Abbrechen" zum Verlassen der Einstellungen.`handleButtonCancelOnAction`
+  \item[\done]  Enthält eine Label mit dem Text "Interface language / Interfacesprache".
+  \item[\done]  Enthält zwei Radio Buttons mit möglichen Sprachen.`handleRadioButtonEnOnAction``handleRadioButtonDeOnAction`
+  \item[\done]  Enthält ein Kontrollkästchen mit dem Text "Rotate the chessboard after each move / Das Schachbrett nach jedem Zug drehen".`handleCheckboxFlipBoardOnAction`
+  \item[\done]  Enthält ein Kontrollkästchen mit dem Text "One
+  \item[\done]  Enthält ein Kontrollkästchen mit dem Text "Show that the player is in check / Zeigen, dass der Spieler in Schach ist".`handleCheckboxShowInCheckOnAction`
+  \item[\done]  Enthält ein Kontrollkästchen mit dem Text "Show possible moves when selecting a character / Mögliche Züge bei Auswahl einer Figur anzeigen".`handleCheckboxShowPossibleMovesOnAction`
+
+\end{todolist}
+
+
+\subsection*{Erstellen SettingsController}
+id: \#18 Milestone: 2. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] C
+\item[Storypoints] 13
+\item[Risiko] high
+\end{itemize}
+
+Der `SettingsController` interpretiert die Aktionen des Benutzers, die dieser über die [`SettingsView`](\#17) ausführt.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Der Benutzer kann die Sprache über das Auswahlmenü ändern.
+  \item[\done]  Mit der Taste "Save / Speichern" kann der Benutzer die geänderten Einstellungen speichern.
+  \item[\done]  Mit der Taste "Cancel / Abbrechen" kann der Benutzer die geänderten Einstellungen verwerfen und das Einstellungsfenster verlassen.
+  \item[\done]  Der Benutzer kann das Kontrollkästchen verwenden, um "Rotate the chessboard after each move / Das Schachbrett nach jedem Zug drehen" zu aktivieren oder zu deaktivieren.
+  \item[\done]  Der Benutzer kann das Kontrollkästchen verwenden, um "One
+  \item[\done]  Der Benutzer kann das Kontrollkästchen verwenden, um "Show that the player is in check / Zeigen, dass der Spieler in Schach ist" zu aktivieren oder zu deaktivieren.
+  \item[\done]  Der Benutzer kann das Kontrollkästchen verwenden, um "Show possible moves when selecting a character / Mögliche Züge bei Auswahl einer Figur anzeigen" zu aktivieren oder zu deaktivieren.
+
+\end{todolist}
+
+
+\subsection*{Erstellen Settings Klasse}
+id: \#19 Milestone: 2. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] 
+\item[Storypoints] 
+\item[Risiko] S
+\end{itemize}
+
+Speichert den Status der aktuellen Einstellungen und stellt sie zur Abfrage bereit.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Die Klasse besitzt alle nötigen Felder für die verschiedenen Einstellungsmöglichkeiten
+  \item  Die Klasse kann serialsiert werden
+
+\end{todolist}
+
+
+\subsection*{Erstellen TextManager Klasse}
+id: \#20 Milestone: 2. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] B
+\item[Storypoints] 8
+\item[Risiko] low
+\end{itemize}
+
+Steuert die Ausgabe des gewünschten Sprachpakets in Abhängigkeit von der aktuellen Sprache
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Andere Klassen können durch den 'TextManager' die Beschriftungen von Labels ändern lassen
+
+\end{todolist}
+
+
+\subsection*{Erstellen NetworkConnectView}
+id: \#21 Milestone: 2. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] E
+\item[Storypoints] 8
+\item[Risiko] low
+\end{itemize}
+
+Die `NetworkConnectView` gibt dem Benutzer die Möglichkeit, die Daten für die Netzwerkverbindung einzugeben.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Es gibt das Textfeld `textfieldIPAddress`, in dem die IP
+  \item[\done]  Es gibt das Textfeld `textfieldPort`, in dem das entsprechende Port eingegeben werden kann. Dieses Textfeld ist mit dem Label `lblPort` "Port" versehen.
+  \item[\done]  Es gibt das Label `lblConnectionFail` "Connection Error, check IP
+  \item[\done]  Es gibt den Button `handleConnectSaveOnAction` "Connect"/"Verbinden".
+  \item[\done]  Es gibt den Button `handleButtonCancelOnAction` "Cancel"/"Abbrechen".
+
+\end{todolist}
+
+
+\subsection*{Erstellen NetworkConnectController}
+id: \#22 Milestone: 2. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] 
+\item[Storypoints] 
+\item[Risiko] D
+\end{itemize}
+
+Der `NetworkConnectController` interpretiert die Aktionen des Benutzers, die dieser über die `NetworkConnectView` ausführt.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item  Bei Klick auf `btnConnect` wird das `lblConnectionFail` auf "unsichtbar" geändert und ein Verbindungsaufbau entsprechend der Nutzereingabe versucht.
+  \item  Schlägt die Verbindung fehl, wird die Sichtbarkeit von `lblConnectionFail` auf "sichtbar" geändert.
+  \item  Gelingt die Verbindung, so wird die `GameView` als aktuelle `Scene` gesetzt.
+  \item[\done]  Bei einem Klick auf `btnCancel` wird die `MainMenueView` als aktuelle `scene` gesetzt.
+
+\end{todolist}
+
+
+\subsection*{Erstellen GameView}
+id: \#23 Milestone: 2. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] A
+\item[Storypoints] 21
+\item[Risiko] high
+\end{itemize}
+
+Die `GameView` ist die View, in der der Nutzer das eigentliche Spiel spielen kann, hier kann er Züge eingeben und das Spielfeld sehen.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Es gibt den Button `handleButtonSettingsOnAction` "Settings"/"Einstellungen".
+  \item[\done]  Es gibt den Button `handleButtonResetOnAction` "Reset"/"Zurücksetzen".
+  \item[\done]  Es gibt den Button `handleButtonSurrenderOnAction` "Surrender"/"Aufgeben".
+  \item[\done]  Es gibt den Button `handleButtonMenueOnAction` "Main Menue"/"Hauptmenü".
+  \item[\done]  Es gibt das Label `lblHistory` darin werden die ausgeführten Züge aufgelistet. Dieses Label sollte scrollbar sein.
+  \item[\done]  Es gibt ein Canvas `canvasField`, das die Musterung des Schachfeldes zeigt.
+  \item[\done]  Es gibt die Möglichkeit, die Grafik der aktuellen Aufstellung der Figuren auf dem `canvasField` zu zeigen.
+  \item[\done]  Es gibt das Label `lblCheckMessage`, das im Initialzustand unsichtbar ist. Hier werden Informationen wie "Check!"/"Schach!" oder "Check Mate"/"Schachmatt" angezeigt.
+  \item[\done]  Es gibt das Label `lblInfo`, das anzeigen soll, welche Farbe am Zug ist. Das muss nicht zwingend ein Label sein, sonder könnte auch als Farbfeld realisiert werden.
+
+\end{todolist}
+
+
+\subsection*{Erstellen GameController}
+id: \#24 Milestone: 2. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] C
+\item[Storypoints] 13
+\item[Risiko] high
+\end{itemize}
+
+Der `GameController` interpretiert die Aktionen des Benutzers, die dieser über die [GameView](\#23) ausführt.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Der Button `btnSettings` setzt die `SettingsView` als aktuelle `Scene`.
+  \item[\done]  Der Inhalt des Labels `lblHistory` wird nach jedem Zug entsprechend aktualisiert.
+  \item[\done]  Der Button `btnMainMenue` setzt die `MainMenueView` als aktuelle `Scene`.
+  \item[\done]  Der Button `btnReset` setzt das Spiel zurück, also ein neues Spiel im aktuellen Modus wird gestartet. Das sollte wahrscheinlich aber im NetworkGame nicht möglich sein.
+  \item[\done]  Das Label `lblInfo` wird im Fall von Schach (wenn das in den Einstellungen so konfiguriert ist) mit dem Text "Check!"/"Schach!" auf sichtbar gesetzt und beim nächsten Zug aber wieder auf unsichtbar gesetzt.
+  \item[\done]  Das Label `lblCheckMessage` wird im Fall von Schachmatt mit dem Text "Check Mate, game over!"/"Schachmatt, Spiel vorbei!" auf sichtbar gesetzt.
+  \item[\done]  Das Label `lblInfo` zeigt immer, welche Farbe am Zug ist. Das muss nicht zwingend ein Label sein, sonder könnte auch als Farbfeld realisiert werden.
+  \item[\done]  Der `GameViewController` kann sich von der Klasse `BoardGraphics` die grafische Umsetzung des aktuellen Aufstellung holen und diese in dem `canvasField` über der Musterung des Schachfeldes anzeigen. Das muss nach jedem Zug passieren.
+  \item[\done]  Der `GameViewController` achtet darauf ob und wo in das Canvas `canvasField` geklickt wird. Wenn dort was passiert, verarbeitet er das Event entsprechend.
+
+\end{todolist}
+
+
+\subsection*{Erstellen GraphicsManager}
+id: \#25 Milestone: 2. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] B
+\item[Storypoints] 8
+\item[Risiko] high
+\end{itemize}
+
+Die `GraphicsManger`-Klasse Verwaltet die grundsätzliche Verwendung von allen verwendeten Grafiken. Nur auf diesem Weg soll ein Zugriff auf unsere Grafiken möglich sein.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Andere Klassen können bestimmte Grafiken anfordern.
+
+\end{todolist}
+
+
+\subsection*{Erstellen BoardController}
+id: \#26 Milestone: 2. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] C
+\item[Storypoints] 21
+\item[Risiko] high
+\end{itemize}
+
+Die `BoardController`-Klasse kontrolliert, was passiert, wenn auf das Schachfbrett geklickt wird. Sie benutzt dabei `BoardModel`, um relevante Informationen zu erhalten und kann auch Informationen in `BoardModel` verändern.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Aus einem übergebenen Cursor
+  \item[\done]  Speichert im `BoardModel`, welches genaue Feld angeklickt wurde.
+  \item[\done]  Kann das `BoardModel` fragen, ob bereits ein genaues Feld angeklickt wurde.
+  \item[\done]  Kann das `SettignsModel` fragen, ob es erlaubt ist, ein bestimmtes Feld anzuklicken.
+  \item[\done]  Kann aus einem `Board` die Positionen (Koordinaten) für Graphiken bestimmen und das Ergebnis im `BoardModel` speichern. Das gilt für die Grafiken von den Figuren, für die geschlagenen Figuren und für die Grafiken der Markierungen.
+
+\end{todolist}
+
+
+\subsection*{Erstellen BoardModel}
+id: \#27 Milestone: 2. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] B
+\item[Storypoints] 8
+\item[Risiko] high
+\end{itemize}
+
+Hier werden Informationen über das gerade sichtbare Schachbrett gespeichert. Dazu gehören die Positionen von den Grafiken, welche Figur gerade ausgewählt ist etc.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  speichert ob eine Figur ausgewählt ist.
+  \item[\done]  speichert welche Figur ausgewählt ist.
+  \item[\done]  speichert eine Liste der geschlagenen Figuren als `ImageView`
 
 \end{todolist}
 
