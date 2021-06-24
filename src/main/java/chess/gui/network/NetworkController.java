@@ -1,9 +1,15 @@
 package chess.gui.network;
 
 import chess.gui.Gui;
+import chess.gui.game.PerformEngineMoveService;
 import chess.gui.util.ResizeManager;
 import chess.util.TextManager;
+import chess.gui.util.TextManager;
+import chess.util.Client;
+import chess.util.Server;
 import javafx.beans.value.ChangeListener;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,6 +17,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Random;
 
 /**
  * Controls the behaviour and actions of the UI elements in the network scene.
@@ -50,8 +60,10 @@ public class NetworkController {
 	private boolean isIpValid = false;
 	private boolean isPortValid = false;
 
+	private Service serverStarter;
+	private Service colorSelector;
 	@FXML
-	private void initialize() {
+	private void initialize() throws IOException {
 		TextManager.computeText(titleLabel, "network.title");
 		TextManager.computeText(ipLabel, "network.ip");
 		TextManager.computeText(portLabel, "network.port");
@@ -61,13 +73,20 @@ public class NetworkController {
 		errorPane.setVisible(false);
 		connectButton.setDisable(true);
 
+		if (colorSelector == null) {
+			colorSelector = new ConnectClientService();
+		} else {
+			// cancel al running service
+			colorSelector.cancel();
+		}
+
 		ChangeListener<Number> rootPaneSizeListener = (observable, oldValue, newValue) -> {
 			resizeManager.resizeNetwork(rootPane.getWidth(), rootPane.getHeight());
 		};
 		rootPane.widthProperty().addListener(rootPaneSizeListener);
 		rootPane.heightProperty().addListener(rootPaneSizeListener);
 
-		// Check if input matched ip pattern
+		// Add Listener to check if input matched ip pattern
 		ipTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			ipTextField.getStyleClass().add(error);
 			isIpValid = false;
@@ -83,7 +102,7 @@ public class NetworkController {
 			}
 		});
 
-		// Check if port is in range of [1-65535]
+		// Add Listener to check if port is in range of [1-65535]
 		portTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			portTextField.getStyleClass().add(error);
 			isPortValid = false;
@@ -102,18 +121,24 @@ public class NetworkController {
 	}
 
 	@FXML
-	private void handleConnectButtonOnAction() {
-		String IPAddress = ipTextField.getText();
-		String PortAddress = portTextField.getText();
+	private void handleConnectButtonOnAction() throws IOException {
+		String iPAddress = ipTextField.getText();
+		String portAddress = portTextField.getText();
+		/*
 		System.out.println("Connect to");
-		System.out.println("IP Address: " + IPAddress);
-		System.out.println("Port: " + PortAddress);
+		System.out.println("IP Address: " + iPAddress);
+		System.out.println("Port: " + portAddress);
+		 */
 		errorPane.setVisible(false);
 
-		// TODO: Establish connection
+		// Establish connection
+		try {
+			Client.initialize(iPAddress, Integer.parseInt(portAddress));
+			colorSelector.start();
+		} catch (Exception exception) {
+			errorPane.setVisible(true);
+		}
 
-		// if error
-		// errorPane.setVisible(true);
 
 		// else
 		// TODO: Start new game
@@ -126,7 +151,7 @@ public class NetworkController {
 	}
 
 	@FXML
-	private void handleTextFieldKeyPress(KeyEvent event) {
+	private void handleTextFieldKeyPress(KeyEvent event) throws IOException {
 		TextField field = (TextField) event.getSource();
 		if (field.equals(ipTextField) && event.getCode().equals(KeyCode.ENTER) || event.getCode().equals(KeyCode.TAB)) {
 			portTextField.requestFocus();
