@@ -112,9 +112,6 @@ public class GameModel {
 	public static void beginNewGame() {
 		// start the new game
 		currentGame = new Game();
-		if (color == ChessColor.Black) {
-			currentGame.getCurrentPosition().setTurnColor(Piece.Black);
-		}
 
 		// clear outdated lists and do some reset
 		beatenWhitePiecesGraphics.clear();

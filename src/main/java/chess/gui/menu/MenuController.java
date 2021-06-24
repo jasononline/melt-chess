@@ -1,17 +1,23 @@
 package chess.gui.menu;
 
 import chess.gui.Gui;
+import chess.gui.game.BoardController;
 import chess.gui.game.GameModel;
+import chess.gui.network.NetworkServerService;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.ResizeManager;
 import chess.gui.util.TextManager;
+import chess.util.Server;
 import javafx.beans.value.ChangeListener;
+import javafx.concurrent.Service;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+
+import java.io.IOException;
 
 /**
  * Controls the behaviour and actions of the UI elements in the menu scene,
@@ -141,11 +147,14 @@ public class MenuController {
 	 * Controls the effect when clicking one of the menu buttons.
 	 */
 	@FXML
-	private void handleMenuButtonOnAction(ActionEvent event) {
+	private void handleMenuButtonOnAction(ActionEvent event) throws IOException {
 		Node source = (Node) event.getSource();
 
 		if (source == startButton) {
 			if (GameModel.getGameMode() == GameModel.ChessMode.Network) {
+				Server.quit();
+				NetworkServerService server = new NetworkServerService();
+				server.start();
 				Gui.switchTo(Gui.ChessScene.NetworkConnection);
 			} else {
 				GameModel.beginNewGame();

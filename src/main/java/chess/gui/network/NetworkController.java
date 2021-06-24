@@ -72,15 +72,6 @@ public class NetworkController {
 		errorPane.setVisible(false);
 		connectButton.setDisable(true);
 
-		// Setup the Server
-		if (serverStarter == null) {
-			serverStarter = new NetworkServerService();
-		} else {
-			// cancel a running service
-			serverStarter.cancel();
-		}
-		serverStarter.restart();
-
 		if (colorSelector == null) {
 			colorSelector = new ConnectClientService();
 		} else {
@@ -132,9 +123,11 @@ public class NetworkController {
 	private void handleConnectButtonOnAction() throws IOException {
 		String iPAddress = ipTextField.getText();
 		String portAddress = portTextField.getText();
+		/*
 		System.out.println("Connect to");
 		System.out.println("IP Address: " + iPAddress);
 		System.out.println("Port: " + portAddress);
+		 */
 		errorPane.setVisible(false);
 
 		// Establish connection

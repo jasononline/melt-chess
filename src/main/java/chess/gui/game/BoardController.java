@@ -173,7 +173,7 @@ public class BoardController {
 	/**
 	 * Continues the actions depending on the gamemode
 	 */
-	private void continueAccordingToGameMode() {
+	protected void continueAccordingToGameMode() {
 
 		// PvP
 		if (GameModel.getGameMode() == GameModel.ChessMode.Player) {

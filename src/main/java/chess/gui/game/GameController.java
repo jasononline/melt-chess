@@ -150,6 +150,8 @@ public class GameController {
 
 		updateUI();
 
+		boardController.continueAccordingToGameMode();
+
 	}
 
 	/**
