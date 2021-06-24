@@ -4,7 +4,6 @@ import chess.gui.Gui;
 import chess.gui.game.PerformEngineMoveService;
 import chess.gui.util.ResizeManager;
 import chess.util.TextManager;
-import chess.gui.util.TextManager;
 import chess.util.Client;
 import chess.util.Server;
 import javafx.beans.value.ChangeListener;
