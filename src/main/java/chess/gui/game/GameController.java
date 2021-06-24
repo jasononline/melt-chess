@@ -4,12 +4,12 @@ import chess.gui.Gui;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.GraphicsManager;
 import chess.gui.util.ResizeManager;
-import chess.gui.util.TextManager;
 import chess.model.Board;
 import chess.model.Coordinate;
 import chess.model.Game;
 import chess.model.Move;
 import chess.model.Piece;
+import chess.util.TextManager;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -161,7 +161,7 @@ public class GameController {
 	protected void handleButtonOnAction(ActionEvent event) {
 		Button button = (Button) event.getSource();
 
-		if (button == settingsButton) {
+		if (button.equals(settingsButton)) {
 			SettingsModel.setLastScene(Gui.ChessScene.Game);
 			Gui.switchTo(Gui.ChessScene.Settings);
 		} else {

@@ -3,13 +3,13 @@ package chess.gui.game;
 import java.util.List;
 
 import chess.gui.settings.SettingsModel;
-import chess.gui.util.TextManager;
 import chess.model.Board;
 import chess.model.Coordinate;
 import chess.model.Game;
 import chess.model.Move;
 import chess.model.MoveValidator;
 import chess.model.Piece;
+import chess.util.TextManager;
 import javafx.animation.RotateTransition;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Service;
@@ -228,6 +228,8 @@ public class BoardController {
 	/**
 	 * Checks whether the current game is over if that is the case the endGame()
 	 * function will be called
+	 * 
+	 * @return boolean whether the current game is over
 	 */
 	protected boolean checkForGameOver() {
 		gameController.checkLabel.setVisible(false);

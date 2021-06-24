@@ -1,4 +1,4 @@
-package chess.gui.util;
+package chess.util;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;

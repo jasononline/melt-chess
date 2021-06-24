@@ -2,7 +2,7 @@ package chess.gui.network;
 
 import chess.gui.Gui;
 import chess.gui.util.ResizeManager;
-import chess.gui.util.TextManager;
+import chess.util.TextManager;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -128,11 +128,11 @@ public class NetworkController {
 	@FXML
 	private void handleTextFieldKeyPress(KeyEvent event) {
 		TextField field = (TextField) event.getSource();
-		if (field == ipTextField && event.getCode().equals(KeyCode.ENTER) || event.getCode().equals(KeyCode.TAB)) {
+		if (field.equals(ipTextField) && event.getCode().equals(KeyCode.ENTER) || event.getCode().equals(KeyCode.TAB)) {
 			portTextField.requestFocus();
 		}
 
-		if (field == portTextField && event.getCode().equals(KeyCode.ENTER) && isIpValid && isPortValid) {
+		if (field.equals(portTextField) && event.getCode().equals(KeyCode.ENTER) && isIpValid && isPortValid) {
 			handleConnectButtonOnAction();
 		}
 	}

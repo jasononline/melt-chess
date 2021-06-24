@@ -4,7 +4,7 @@ import java.util.Locale;
 
 import chess.gui.Gui;
 import chess.gui.util.ResizeManager;
-import chess.gui.util.TextManager;
+import chess.util.TextManager;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -117,12 +117,12 @@ public class SettingsController {
 	@FXML
 	private void handleLanguageButtonOnAction(ActionEvent event) {
 		Button button = (Button) event.getSource();
-		if (button == englishButton) {
+		if (button.equals(englishButton)) {
 			currentLocale = Locale.ENGLISH;
 			germanButton.getStyleClass().remove(selected);
 			englishButton.getStyleClass().add(selected);
 		}
-		if (button == germanButton) {
+		if (button.equals(germanButton)) {
 			currentLocale = Locale.GERMAN;
 			englishButton.getStyleClass().remove(selected);
 			germanButton.getStyleClass().add(selected);

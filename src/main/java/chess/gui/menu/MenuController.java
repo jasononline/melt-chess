@@ -4,7 +4,7 @@ import chess.gui.Gui;
 import chess.gui.game.GameModel;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.ResizeManager;
-import chess.gui.util.TextManager;
+import chess.util.TextManager;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -90,17 +90,17 @@ public class MenuController {
 		colorPane.setDisable(true);
 		source.getStyleClass().add(selected);
 
-		if (source == playerModeButton) {
+		if (source.equals(playerModeButton)) {
 			whiteColorButton.getStyleClass().remove(selected);
 			blackColorButton.getStyleClass().remove(selected);
 			GameModel.setColor(GameModel.ChessColor.None);
 			GameModel.setGameMode(GameModel.ChessMode.Player);
 		}
-		if (source == aiModeButton) {
+		if (source.equals(aiModeButton)) {
 			colorPane.setDisable(false);
 			GameModel.setGameMode(GameModel.ChessMode.Computer);
 		}
-		if (source == networkModeButton) {
+		if (source.equals(networkModeButton)) {
 			whiteColorButton.getStyleClass().remove(selected);
 			blackColorButton.getStyleClass().remove(selected);
 			GameModel.setColor(GameModel.ChessColor.None);
@@ -127,9 +127,9 @@ public class MenuController {
 		blackColorButton.getStyleClass().remove(selected);
 		source.getStyleClass().add(selected);
 
-		if (source == whiteColorButton)
+		if (source.equals(whiteColorButton))
 			GameModel.setColor(GameModel.ChessColor.White);
-		if (source == blackColorButton)
+		if (source.equals(blackColorButton))
 			GameModel.setColor(GameModel.ChessColor.Black);
 
 		if (GameModel.getColor() != GameModel.ChessColor.None) {
@@ -144,7 +144,7 @@ public class MenuController {
 	private void handleMenuButtonOnAction(ActionEvent event) {
 		Node source = (Node) event.getSource();
 
-		if (source == startButton) {
+		if (source.equals(startButton)) {
 			if (GameModel.getGameMode() == GameModel.ChessMode.Network) {
 				Gui.switchTo(Gui.ChessScene.NetworkConnection);
 			} else {
@@ -154,12 +154,12 @@ public class MenuController {
 
 		}
 
-		if (source == settingsButton) {
+		if (source.equals(settingsButton)) {
 			SettingsModel.setLastScene(Gui.ChessScene.Menu);
 			Gui.switchTo(Gui.ChessScene.Settings);
 		}
 
-		if (source == quitButton)
+		if (source.equals(quitButton))
 			System.exit(0);
 	}
 
