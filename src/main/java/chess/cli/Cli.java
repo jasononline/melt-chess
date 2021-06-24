@@ -187,6 +187,13 @@ public class Cli {
 	}
 
 	/**
+	 * Saves the current game
+	 */
+	private static void saveGame() {
+		// TODO: Save the current game
+	}
+
+	/**
 	 * Exits the game with a message
 	 */
 	private static void exitGame() {
@@ -313,6 +320,11 @@ public class Cli {
 				System.out.println("\n" + game.getCurrentPosition().toString());
 				break;
 
+			case "save":
+			case "speichern":
+				saveGame();
+				break;
+
 			case "quit":
 			case "beenden":
 				exitGame();
@@ -360,7 +372,7 @@ public class Cli {
 		// Checks if input matches one of valid inputs: move(e7-e8[Q]), beaten, help,
 		// quit, reset
 		return userInput.matches(
-				"^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[qrbn]?$|^help$|^hilfe$|^english$|^englisch$|^german$|^deutsch$|^beaten$|^geschlagen$|^reset$|^neustart$|^quit$|^beenden$");
+				"^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[qrbn]?$|^help$|^hilfe$|^english$|^englisch$|^german$|^deutsch$|^beaten$|^geschlagen$|^reset$|^neustart$|^save$|^speichern$|^quit$|^beenden$");
 	}
 
 	/**
@@ -401,12 +413,15 @@ public class Cli {
 		help = new StringBuilder("\n" + TextManager.get("cli.help.title") + "\n\n");
 		help.append(TextManager.get("cli.help.fromAnywhere")).append("\n\n");
 
-		String[] commands = {"cli.helpCommand", "cli.enCommand", "cli.deCommand", "cli.quitCommand", "cli.beatenCommand", "cli.resetCommand"};
-		String[] descriptions = {"cli.help.help", "cli.help.english", "cli.help.german", "cli.help.quit", "cli.help.beaten", "cli.help.reset"};
+		String[] commands = { "cli.helpCommand", "cli.enCommand", "cli.deCommand", "cli.quitCommand", "cli.beatenCommand",
+				"cli.resetCommand", "cli.saveCommand" };
+		String[] descriptions = { "cli.help.help", "cli.help.english", "cli.help.german", "cli.help.quit",
+				"cli.help.beaten", "cli.help.reset", "cli.help.save" };
 
-		for (int i =0; i < 6; i++) {
-			help.append(TextManager.get(commands[i] + "En")).append("	| ").append(TextManager.get(commands[i] + "De")).append("	").append(TextManager.get(descriptions[i])).append("\n");
-			if (i==3) {
+		for (int i = 0; i < commands.length; i++) {
+			help.append(TextManager.get(commands[i] + "En")).append("	| ").append(TextManager.get(commands[i] + "De"))
+					.append("	").append(TextManager.get(descriptions[i])).append("\n");
+			if (i == 3) {
 				help.append("\n").append(TextManager.get("cli.help.fromGame")).append("\n\n");
 			}
 		}
