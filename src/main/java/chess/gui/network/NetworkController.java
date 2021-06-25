@@ -1,14 +1,12 @@
 package chess.gui.network;
 
 import chess.gui.Gui;
-import chess.gui.game.PerformEngineMoveService;
 import chess.gui.util.ResizeManager;
 import chess.util.TextManager;
 import chess.util.Client;
-import chess.util.Server;
+import chess.util.networkServices.ConnectClientService;
 import javafx.beans.value.ChangeListener;
 import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,8 +16,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Random;
 
 /**
  * Controls the behaviour and actions of the UI elements in the network scene.
