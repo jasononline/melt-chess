@@ -25,18 +25,4 @@ public class CliTests {
 		assertFalse(Cli.testUserInputSyntax("exit"));
 		assertFalse(Cli.testUserInputSyntax("blabla"));
 	}
-
-	/**
-	 * Method to test the expected behavior of the Method Cli.parseUserMoveInput()
-	 */
-	@Test
-	public void parseMoveFromString() {
-		assertEquals(Cli.parseUserMoveInput("c2-c4"), new Move(50, 34, Move.PawnTwoForward));
-		assertEquals(Cli.parseUserMoveInput("c2-h4"), new Move(50, 39, Move.PawnTwoForward));
-		assertEquals(Cli.parseUserMoveInput("a8-h1Q"), new Move(0, 63, Move.PromoteToQueen));
-		assertEquals(Cli.parseUserMoveInput("h1-a8R"), new Move(63, 0, Move.PromoteToRook));
-	}
-
-
-
 }
