@@ -10,13 +10,9 @@ import java.io.IOException;
 public class PerformOpponentActionTask extends Task {
     @Override
     protected Object call() throws IOException {
-        String opponentInput = Server.getOpponentInput();
-        if (opponentInput == "resign") {
-            // TODO resign
-            System.out.println("Opponent resigned");
-        } else {
-            GameModel.performOpponentMove();
-        }
+        System.out.println("PerformOpponentActionTask started.");
+        GameModel.performOpponentMove();
+        System.out.println("PerformOpponentActionTask finished.");
         return null;
     }
 }

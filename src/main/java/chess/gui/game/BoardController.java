@@ -1,5 +1,6 @@
 package chess.gui.game;
 
+import java.io.IOException;
 import java.util.List;
 
 import chess.gui.settings.SettingsModel;
@@ -9,6 +10,7 @@ import chess.model.Game;
 import chess.model.Move;
 import chess.model.MoveValidator;
 import chess.model.Piece;
+import chess.util.Client;
 import chess.util.TextManager;
 import chess.util.networkServices.PerformOpponentActionService;
 import javafx.animation.RotateTransition;
@@ -156,6 +158,12 @@ public class BoardController {
 		if (SettingsModel.isFlipBoard() && GameModel.getGameMode() != GameModel.ChessMode.Computer)
 			flipBoard(true);
 
+		try {
+			Client.send(move.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		gameController.updateUI();
 		if (checkForGameOver())
 			return;
@@ -203,7 +211,7 @@ public class BoardController {
 			performEngineMoveService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 				@Override
 				public void handle(WorkerStateEvent workerStateEvent) {
-					finishEngineMove();
+					finishOpponentAction();
 				}
 			});
 			performEngineMoveService.restart();
@@ -213,6 +221,7 @@ public class BoardController {
 			gameController.activityIndicator.visibleProperty().bind(performOpponentActionService.runningProperty());
 			gameController.boardGrid.setDisable(true);
 			gameController.settingsButton.disableProperty().bind(performOpponentActionService.runningProperty());
+			gameController.saveButton.disableProperty().bind(performOpponentActionService.runningProperty());
 
 			performOpponentActionService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 				@Override
@@ -229,7 +238,7 @@ public class BoardController {
 	 * 
 	 * @return null
 	 */
-	private EventHandler<WorkerStateEvent> finishEngineMove() {
+	private EventHandler<WorkerStateEvent> finishOpponentAction() {
 		GameModel.setSelectedIndex(-1);
 		gameController.boardGrid.getChildren().forEach(s -> {
 			s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
@@ -248,11 +257,6 @@ public class BoardController {
 		checkForGameOver();
 		gameController.updateUI();
 		return null;
-	}
-
-	private void finishOpponentAction() {
-		String input = (String) performOpponentActionService.getValue();
-		Move opponentMove = Move.parseUserMoveInput(input, GameModel.getCurrentGame());
 	}
 
 	/**

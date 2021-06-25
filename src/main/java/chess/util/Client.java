@@ -50,44 +50,6 @@ public class Client {
         }
 
         return 0;
-
-
-
-        /*
-        for (int i = 0; i < 180; i ++) {
-
-            send(String.valueOf(result));
-            opponentString = Server.read();
-
-            if (!(opponentString == null)) {
-                try {
-                    int opponentNumber = Integer.parseInt(Server.read());
-                    System.out.println("OpponentNumber is: " + opponentString);
-                    if (opponentNumber == result) {
-                        result = rand.nextInt(100) + 1;
-                    }
-                    if (result < opponentNumber) {
-                        System.out.println("Return White");
-                        return Piece.White;
-                    } else if (result > opponentNumber) {
-                        System.out.println("Return Black");
-                        return Piece.Black;
-                    } else {
-                        // New number because both numbers were equal
-                        result = rand.nextInt(100) + 1;
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("There is a NumberFormatException during Color deciding.");
-                }
-            }
-            Thread.sleep(2000);
-
-        }
-
-        // Timeout
-        return 0;
-
-         */
     }
 
     public static void send(String message) throws IOException {
@@ -95,6 +57,7 @@ public class Client {
             return;
         }
         dataOutputStream.writeUTF(message);
+        System.out.println("This message has been sent: " + message);
     }
 
     public static void quit() throws IOException {

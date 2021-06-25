@@ -47,13 +47,17 @@ public class Server {
     }
 
     public static String getOpponentInput() throws IOException {
-        String input;
-        do {
+        System.out.println("I am listening to Opponent input!");
+        String input = read();
+        while (!testUserInputSyntax(input)) {
             input = read();
-            if (input != "") {
-                System.out.println("Opponent input was: " + input);
+            if (input != "" && !testUserInputSyntax(input)) {
+                System.out.println("Probably illegal Opponent input was: " + input + " (will be ignored)");
             }
-        } while (!testUserInputSyntax(input));
+        }
+
+        System.out.println("Probably legal Opponent input was: " + input);
+
         return input;
     }
 

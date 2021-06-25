@@ -169,13 +169,21 @@ public class GameModel {
 	 * Uses the engine to generate the next PC-move and executes that move.
 	 */
 	public static void performOpponentMove() throws IOException {
+		System.out.println("performOpponentMove() was called.");
 		List<Integer> capturedPieces = currentGame.getCurrentPosition().getCapturedPieces();
 		Move next;
 		if (gameMode == ChessMode.Computer) {
+			// PvPC
 			next = engine.generateBestMove(currentGame.getCurrentPosition());
 		} else {
+			// Network
 			String opponentInput = Server.getOpponentInput();
-			next = Move.parseUserMoveInput(opponentInput, GameModel.getCurrentGame());
+			if (opponentInput == "resign") {
+				// TODO resign
+				System.out.println("Opponent resigned.");
+				return;
+			}
+			next = Move.parseUserMoveInput(opponentInput, currentGame);
 		}
 
 		if (next != null && !currentGame.attemptMove(next)) {
