@@ -50,6 +50,9 @@ public class Server {
         String input;
         do {
             input = read();
+            if (input != "") {
+                System.out.println("Opponent input was: " + input);
+            }
         } while (!testUserInputSyntax(input));
         return input;
     }

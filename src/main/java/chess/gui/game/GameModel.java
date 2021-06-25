@@ -5,9 +5,11 @@ import chess.gui.Gui;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.GraphicsManager;
 import chess.model.Game;
+import chess.util.Server;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,14 +31,14 @@ public class GameModel {
 	 * Enumeration of available game modes
 	 */
 	public enum ChessMode {
-		None, Player, Computer, Network;
+		None, Player, Computer, Network
 	}
 
 	/**
 	 * Enumeration of available colors
 	 */
 	public enum ChessColor {
-		None, White, Black;
+		None, White, Black
 	}
 
 	/**
@@ -156,9 +158,16 @@ public class GameModel {
 	/**
 	 * Uses the engine to generate the next PC-move and executes that move.
 	 */
-	public static void performEngineMove() {
+	public static void performOpponentMove() throws IOException {
 		List<Integer> capturedPieces = currentGame.getCurrentPosition().getCapturedPieces();
-		Move next = engine.generateBestMove(currentGame.getCurrentPosition());
+		Move next;
+		if (gameMode == ChessMode.Computer) {
+			next = engine.generateBestMove(currentGame.getCurrentPosition());
+		} else {
+			String opponentInput = Server.getOpponentInput();
+			next = Move.parseUserMoveInput(opponentInput, GameModel.getCurrentGame());
+		}
+
 		if (next != null && !currentGame.attemptMove(next)) {
 			return;
 		}
@@ -172,7 +181,6 @@ public class GameModel {
 			}
 		}
 		movesHistory.add(0, next);
-
 	}
 
 	/**
@@ -194,7 +202,7 @@ public class GameModel {
 	}
 
 	/**
-	 * Getter for the allowedToMove vaiable
+	 * Getter for the allowedToMove variable
 	 * 
 	 * @return whether allowedToMove or not
 	 */
