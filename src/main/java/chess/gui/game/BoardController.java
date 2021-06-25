@@ -70,7 +70,7 @@ public class BoardController {
 
 		if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.Black && !isRotated
 				&& SettingsModel.isFlipBoard()
-				|| GameModel.getGameMode() != GameModel.ChessMode.Player && GameModel.getColor() == GameModel.ChessColor.Black)
+				|| GameModel.getGameMode() != GameModel.ChessMode.Player && GameModel.getChoosenColor() == Piece.Black)
 			flipBoard(false);
 
 		checkForGameOver();
@@ -135,12 +135,13 @@ public class BoardController {
 	protected void finishMove(Move move) {
 		GameModel.getCurrentGame().addFlag(move);
 
+		List<Integer> capturedPieces = GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces();
 		if (!GameModel.getCurrentGame().attemptMove(move)) {
 			GameModel.playSound(GameModel.ChessSound.Failure, true);
 			return;
 		}
 
-		playMoveSounds();
+		playMoveSounds(capturedPieces);
 
 		GameModel.getMovesHistory().add(0, move);
 		if (SettingsModel.isFlipBoard() && GameModel.getGameMode() != GameModel.ChessMode.Computer)
@@ -156,17 +157,17 @@ public class BoardController {
 	/**
 	 * Play sounds according to a happened Move
 	 */
-	private void playMoveSounds() {
-		List<Integer> capturedPieces = GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces();
+	private void playMoveSounds(List<Integer> capturedPieces) {
 
-		if (GameModel.getCurrentGame().checkCheck() && SettingsModel.isShowInCheck()
-				&& GameModel.getCurrentGame().checkWinCondition() == 0) {
+		if (GameModel.getCurrentGame().checkWinCondition() != Game.WinCondition.NONE)
+			return;
+
+		if (GameModel.getCurrentGame().checkCheck() && SettingsModel.isShowInCheck()) {
 			GameModel.playSound(GameModel.ChessSound.Check, true);
-		} else if (GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces().equals(capturedPieces)
-				&& GameModel.getCurrentGame().checkWinCondition() == 0) {
-			GameModel.playSound(GameModel.ChessSound.Move, true);
-		} else if (GameModel.getCurrentGame().checkWinCondition() == 0) {
+		} else if (!GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces().equals(capturedPieces)) {
 			GameModel.playSound(GameModel.ChessSound.Capture, true);
+		} else {
+			GameModel.playSound(GameModel.ChessSound.Move, true);
 		}
 	}
 
@@ -174,7 +175,9 @@ public class BoardController {
 	 * Continues the actions depending on the gamemode
 	 */
 	protected void continueAccordingToGameMode() {
-
+		if (GameModel.getChoosenColor() == GameModel.getCurrentGame().getCurrentPosition().getTurnColor()) {
+			return;
+		}
 		// PvP
 		if (GameModel.getGameMode() == GameModel.ChessMode.Player) {
 			return;
@@ -186,6 +189,7 @@ public class BoardController {
 			gameController.boardGrid.setDisable(true);
 			gameController.resignButton.disableProperty().bind(service.runningProperty());
 			gameController.settingsButton.disableProperty().bind(service.runningProperty());
+			gameController.saveButton.disableProperty().bind(service.runningProperty());
 
 			service.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 				@Override
@@ -217,6 +221,9 @@ public class BoardController {
 		if (!gameController.settingsButton.disableProperty().isBound()) {
 			gameController.settingsButton.setDisable(false);
 		}
+		if (!gameController.saveButton.disableProperty().isBound()) {
+			gameController.saveButton.setDisable(false);
+		}
 		if (!gameController.resignButton.disableProperty().isBound()) {
 			gameController.resignButton.setDisable(false);
 		}
@@ -245,7 +252,7 @@ public class BoardController {
 				gameController.checkLabel.setVisible(true);
 			TextManager.computeText(gameController.checkLabel, key);
 		}
-		if (game.checkWinCondition() != 0) {
+		if (game.checkWinCondition() != Game.WinCondition.NONE) {
 			endGame();
 			return true;
 		}
@@ -257,20 +264,20 @@ public class BoardController {
 	 */
 	public void endGame() {
 		Game game = GameModel.getCurrentGame();
-		int winCondition = game.checkWinCondition();
+		Game.WinCondition winCondition = game.checkWinCondition();
 
 		// only end the game when it should be ended
-		if (winCondition == 0)
+		if (winCondition == Game.WinCondition.NONE)
 			return;
 
 		String key = "";
-		if (winCondition == 1) {
+		if (winCondition == Game.WinCondition.CHECKMATE) {
 			if (game.getCurrentPosition().getTurnColor() == Piece.White) {
 				key = "game.whiteInCheckmate";
 			} else {
 				key = "game.blackInCheckmate";
 			}
-		} else if (winCondition == 2) {
+		} else if (winCondition == Game.WinCondition.REMIS) {
 			if (game.getCurrentPosition().getTurnColor() == Piece.White) {
 				key = "game.whiteInRemis";
 			} else {

@@ -5,14 +5,21 @@ import java.util.Stack;
 
 import static java.lang.Math.abs;
 
+import java.io.Serializable;
+
 /**
  * Represents a game of chess
  */
-public class Game {
+public class Game implements Serializable {
 
 	private static final String startingPositionFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
-	public static final int CHECKMATE = 1;
-	public static final int REMIS = 2;
+
+	/**
+	 * Enumeration of available win conditions
+	 */
+	public static enum WinCondition {
+		NONE, CHECKMATE, REMIS, RESIGN;
+	}
 
 	private final Stack<Board> history;
 
@@ -74,27 +81,27 @@ public class Game {
 	 * CHECKMATE the *other color* has won the game!
 	 * 
 	 * @param board current position
-	 * @return 0: NONE, 1: CHECKMATE, 2: REMIS
+	 * @return NONE, CHECKMATE, REMIS
 	 */
-	public int checkWinCondition(Board board) {
+	public WinCondition checkWinCondition(Board board) {
 		MoveGenerator generator = new MoveGenerator(board);
 		int check = MoveValidator.checkCheck(board, board.getTurnColor());
 		List<Move> possibleMoves = MoveValidator.filter(board, generator.generateMoves());
 		if (possibleMoves.isEmpty()) {
 			if (check != 0)
-				return CHECKMATE;
-			return REMIS;
+				return WinCondition.CHECKMATE;
+			return WinCondition.REMIS;
 		}
-		return 0;
+		return WinCondition.NONE;
 	}
 
 	/**
 	 * Returns Checkmate or Remis for current player in game history. Beware: If
 	 * this returns CHECKMATE the *other color* has won the game!
 	 * 
-	 * @return 0: NONE, 1: CHECKMATE, 2: REMIS
+	 * @return NONE, CHECKMATE, REMIS
 	 */
-	public int checkWinCondition() {
+	public WinCondition checkWinCondition() {
 		return checkWinCondition(getCurrentPosition());
 	}
 
@@ -154,4 +161,10 @@ public class Game {
 		if (fileDiff == 2)
 			move.setFlag(Move.Castling);
 	}
+
+	@Override
+	public String toString() {
+		return "Game object";
+	}
+
 }

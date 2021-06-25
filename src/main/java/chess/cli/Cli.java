@@ -343,7 +343,7 @@ public class Cli {
 						System.out
 								.println(ConsoleColors.PURPLE_BOLD + "\n" + TextManager.get("cli.youInCheck") + ConsoleColors.RESET);
 					}
-					if (game.checkWinCondition() != 0) {
+					if (game.checkWinCondition() != Game.WinCondition.NONE) {
 						endGame();
 					}
 				}
@@ -390,7 +390,7 @@ public class Cli {
 		if (game.checkCheck()) {
 			System.out.println(ConsoleColors.PURPLE_BOLD + "\n" + TextManager.get("cli.youInCheck") + ConsoleColors.RESET);
 		}
-		if (game.checkWinCondition() != 0) {
+		if (game.checkWinCondition() != Game.WinCondition.NONE) {
 			endGame();
 		}
 	}
@@ -485,8 +485,8 @@ public class Cli {
 	 * End the game according to win conditions
 	 */
 	private static void endGame() {
-		int winCondition = game.checkWinCondition();
-		if (winCondition == 1) {
+		Game.WinCondition winCondition = game.checkWinCondition();
+		if (winCondition == Game.WinCondition.CHECKMATE) {
 			if (!runningPVP) {
 				if (game.getCurrentPosition().getTurnColor() == Piece.White) {
 					System.out.println(ConsoleColors.YELLOW_BOLD + TextManager.get("cli.lose") + ConsoleColors.RESET);
@@ -500,10 +500,10 @@ public class Cli {
 					System.out.println(ConsoleColors.YELLOW_BOLD + TextManager.get("cli.whiteWin") + ConsoleColors.RESET);
 				}
 			}
-		} else if (winCondition == 2) {
+		} else if (winCondition == Game.WinCondition.REMIS) {
 			System.out.println(ConsoleColors.YELLOW_BOLD + TextManager.get("cli.remis") + ConsoleColors.RESET);
 		}
-		if (winCondition != 0) {
+		if (winCondition != Game.WinCondition.NONE) {
 			printBeatenPieces();
 			exitGame();
 		}

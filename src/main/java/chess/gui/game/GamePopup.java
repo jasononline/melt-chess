@@ -1,12 +1,12 @@
 package chess.gui.game;
 
 import chess.gui.Gui;
-import chess.gui.game.GameModel.ChessColor;
 import chess.gui.game.GameModel.ChessMode;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.GraphicsManager;
 import chess.model.Move;
 import chess.model.Piece;
+import chess.model.Game.WinCondition;
 import chess.util.TextManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -80,6 +80,9 @@ public class GamePopup {
 		if (!gameController.settingsButton.disableProperty().isBound()) {
 			gameController.settingsButton.setDisable(true);
 		}
+		if (!gameController.saveButton.disableProperty().isBound()) {
+			gameController.saveButton.setDisable(true);
+		}
 		gameController.menuButton.setDisable(true);
 	}
 
@@ -135,6 +138,8 @@ public class GamePopup {
 			gameController.restartButton.setDisable(false);
 			if (!GameModel.isSelected() && !gameController.settingsButton.disableProperty().isBound())
 				gameController.settingsButton.setDisable(false);
+			if (!GameModel.isSelected() && !gameController.saveButton.disableProperty().isBound())
+				gameController.saveButton.setDisable(false);
 			gameController.menuButton.setDisable(false);
 		};
 
@@ -169,6 +174,9 @@ public class GamePopup {
 				if (!gameController.settingsButton.disableProperty().isBound()) {
 					gameController.settingsButton.setDisable(false);
 				}
+				if (!gameController.saveButton.disableProperty().isBound()) {
+					gameController.saveButton.setDisable(false);
+				}
 
 				String key = "";
 				if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.White) {
@@ -181,7 +189,7 @@ public class GamePopup {
 				});
 				TextManager.computeText(gameController.checkLabel, key);
 				gameController.checkLabel.setVisible(true);
-				gameController.gamePopup.showGameOverPopup(3);
+				gameController.gamePopup.showGameOverPopup(WinCondition.RESIGN);
 				return;
 			}
 			if (button == gameController.restartButton && event.getSource() == gameController.surePopupYesButton) { // Restart
@@ -212,6 +220,8 @@ public class GamePopup {
 		}
 		if (!GameModel.isSelected() && !gameController.settingsButton.disableProperty().isBound())
 			gameController.settingsButton.setDisable(false);
+		if (!GameModel.isSelected() && !gameController.saveButton.disableProperty().isBound())
+			gameController.saveButton.setDisable(false);
 	}
 
 	/**
@@ -220,15 +230,15 @@ public class GamePopup {
 	 * 
 	 * @param winCondition type of win for current player
 	 */
-	protected void showGameOverPopup(int winCondition) {
+	protected void showGameOverPopup(WinCondition winCondition) {
 
 		gameController.gameOverPopup.setVisible(true);
 		disableUI();
 
-		if (winCondition == 1) {
+		if (winCondition == WinCondition.CHECKMATE) {
 			// Checkmate
 			handleCheckmate();
-		} else if (winCondition == 2) {
+		} else if (winCondition == WinCondition.REMIS) {
 			// Remis
 			if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.White) {
 				gameController.gameOverPopupLabel.setText(TextManager.get("game.whiteInRemis"));
@@ -236,7 +246,7 @@ public class GamePopup {
 				gameController.gameOverPopupLabel.setText(TextManager.get("game.blackInRemis"));
 			}
 			GameModel.playSound(GameModel.ChessSound.GameOver, true);
-		} else if (winCondition == 3) {
+		} else if (winCondition == WinCondition.RESIGN) {
 			// Resign
 			if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.White) {
 				gameController.gameOverPopupLabel.setText(TextManager.get("game.gameOverPopupWhiteResign"));
@@ -280,7 +290,7 @@ public class GamePopup {
 			GameModel.playSound(GameModel.ChessSound.GameOver, true);
 		} else {
 
-			if (GameModel.getColor() == ChessColor.White) {
+			if (GameModel.getChoosenColor() == Piece.White) {
 				if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.White) {
 					gameController.gameOverPopupLabel.setText(TextManager.get("game.gameOverPopupLose"));
 					TextManager.computeText(gameController.gameOverPopupRestartButton, "game.gameOverPopupRestartLose");

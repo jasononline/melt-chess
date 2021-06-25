@@ -46,7 +46,9 @@
                               <RowConstraints minHeight="10.0" percentHeight="3.03" prefHeight="20.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" percentHeight="3.03" prefHeight="20.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" percentHeight="3.03" prefHeight="20.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="290.0" percentHeight="87.87" prefHeight="580.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" percentHeight="77.27" prefHeight="510.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="3.03" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="7.57" prefHeight="50.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" percentHeight="3.03" prefHeight="20.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
@@ -73,6 +75,23 @@
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <children>
                                     <Label fx:id="historyLabel" layoutX="65.0" layoutY="1.0" prefHeight="20.0" prefWidth="160.0" styleClass="historyLabel" text="Game history" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <children>
+                                    <Button fx:id="saveButton" graphicTextGap="20.0" layoutX="53.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleButtonOnAction" prefHeight="60.0" prefWidth="160.0" text="Save" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <styleClass>
+                                          <String fx:value="button" />
+                                          <String fx:value="saveButton" />
+                                       </styleClass>
+                                       <graphic>
+                                          <ImageView fitHeight="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/icons/saveIcon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
                                  </children>
                               </AnchorPane>
                            </children>
@@ -621,7 +640,7 @@
                                              <children>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                    <children>
-                                                      <Button fx:id="surePopupCancelButton" graphicTextGap="20.0" layoutX="31.0" layoutY="30.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="153.0" text="Cancel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <Button fx:id="surePopupCancelButton" graphicTextGap="20.0" layoutX="31.0" layoutY="30.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="153.0" styleClass="surePopupButton" text="Cancel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                          <graphic>
                                                             <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
@@ -629,16 +648,12 @@
                                                                </image>
                                                             </ImageView>
                                                          </graphic>
-                                                         <styleClass>
-                                                            <String fx:value="historyButton" />
-                                                            <String fx:value="surePopupButton" />
-                                                         </styleClass>
                                                       </Button>
                                                    </children>
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                                                    <children>
-                                                      <Button fx:id="surePopupYesButton" graphicTextGap="20.0" layoutX="31.0" layoutY="18.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="153.0" text="Yes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <Button fx:id="surePopupYesButton" graphicTextGap="20.0" layoutX="31.0" layoutY="18.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="153.0" styleClass="surePopupButton" text="Yes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                          <graphic>
                                                             <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
@@ -646,10 +661,6 @@
                                                                </image>
                                                             </ImageView>
                                                          </graphic>
-                                                         <styleClass>
-                                                            <String fx:value="historyButton" />
-                                                            <String fx:value="surePopupButton" />
-                                                         </styleClass>
                                                       </Button>
                                                    </children>
                                                 </AnchorPane>

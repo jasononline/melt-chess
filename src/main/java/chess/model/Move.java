@@ -1,10 +1,12 @@
 package chess.model;
 
+import java.io.Serializable;
+
 /**
  * Container for a possible Move. Contains start and destination square as well
  * as flags for capturing, castling and piece exchange
  */
-public class Move {
+public class Move implements Serializable {
 
 	public static final int EnPassantCapture = 1;
 	public static final int PawnTwoForward = 2;

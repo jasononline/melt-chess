@@ -1,6 +1,5 @@
 package chess.cli;
 
-import chess.model.Game;
 import chess.model.Move;
 import org.junit.jupiter.api.Test;
 

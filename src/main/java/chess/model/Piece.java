@@ -82,21 +82,34 @@ public class Piece {
 		return UTFSymbols.substring(position, position + 1);
 	}
 
-
 	/**
-	 * Builds the name of the piece according to the name of the graphic of the piece
+	 * Builds the name of the piece according to the name of the graphic of the
+	 * piece
+	 * 
 	 * @param piece the piece for which the name is searched
 	 * @return the name of the piece
 	 */
 	public static String toName(int piece) {
 		StringBuilder name = new StringBuilder();
 		switch (getType(piece)) {
-			case King: name.append("king_"); break;
-			case Pawn: name.append("pawn_"); break;
-			case Knight: name.append("knight_"); break;
-			case Bishop: name.append("bishop_"); break;
-			case Rook: name.append("rook_"); break;
-			case Queen: name.append("queen_"); break;
+			case King:
+				name.append("king_");
+				break;
+			case Pawn:
+				name.append("pawn_");
+				break;
+			case Knight:
+				name.append("knight_");
+				break;
+			case Bishop:
+				name.append("bishop_");
+				break;
+			case Rook:
+				name.append("rook_");
+				break;
+			case Queen:
+				name.append("queen_");
+				break;
 		}
 
 		if (isColor(piece, Piece.White)) {

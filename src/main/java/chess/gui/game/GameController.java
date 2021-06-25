@@ -1,5 +1,7 @@
 package chess.gui.game;
 
+import java.io.File;
+
 import chess.gui.Gui;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.GraphicsManager;
@@ -9,6 +11,8 @@ import chess.model.Coordinate;
 import chess.model.Game;
 import chess.model.Move;
 import chess.model.Piece;
+import chess.util.SavingManager;
+import chess.util.Saving;
 import chess.util.TextManager;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -23,6 +27,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
  * Controls behaviour of GUI elements except the chessboard (see
@@ -73,6 +80,8 @@ public class GameController {
 	public Button settingsButton;
 	@FXML
 	public Button menuButton;
+	@FXML
+	public Button saveButton;
 
 	@FXML
 	public AnchorPane promotionPopup;
@@ -125,6 +134,7 @@ public class GameController {
 		TextManager.computeText(resignButton, "game.resign");
 		TextManager.computeText(restartButton, "game.restart");
 		TextManager.computeText(menuButton, "game.menu");
+		TextManager.computeText(saveButton, "game.save");
 
 		ChangeListener<Number> rootPaneSizeListener = (observable, oldValue, newValue) -> {
 			resizeManager.resizeGame(rootPane.getWidth(), rootPane.getHeight());
@@ -141,6 +151,9 @@ public class GameController {
 			settingsButton.setDisable(false);
 		}
 		menuButton.setDisable(false);
+		if (!saveButton.disableProperty().isBound()) {
+			saveButton.setDisable(false);
+		}
 
 		activityIndicator.visibleProperty().unbind();
 		activityIndicator.setVisible(false);
@@ -166,6 +179,8 @@ public class GameController {
 		if (button.equals(settingsButton)) {
 			SettingsModel.setLastScene(Gui.ChessScene.Game);
 			Gui.switchTo(Gui.ChessScene.Settings);
+		} else if (button.equals(saveButton)) {
+			saveGame();
 		} else {
 			gamePopup.showSurePopup(button);
 		}
@@ -263,7 +278,6 @@ public class GameController {
 	 */
 	private void updateLabelsUI() {
 		String key;
-
 		// CurrentMoveLabel
 		if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.White) {
 			key = "game.whiteMove";
@@ -271,6 +285,20 @@ public class GameController {
 			key = "game.blackMove";
 		}
 		TextManager.computeText(currentMoveLabel, key);
+	}
+
+	/**
+	 * Saves current game
+	 */
+	private void saveGame() {
+		FileChooser fc = new FileChooser();
+		fc.getExtensionFilters().addAll(new ExtensionFilter("MELT-CHESS Files", "*.melt"));
+		fc.setInitialFileName(SavingManager.getDefaultFileName());
+		File file = fc.showSaveDialog(rootPane.getScene().getWindow());
+		if (file != null) {
+			Saving saving = new Saving(GameModel.getCurrentGame(), GameModel.getMovesHistory());
+			SavingManager.saveGame(saving, file);
+		}
 	}
 
 	@FXML
@@ -351,6 +379,8 @@ public class GameController {
 			if (!settingsButton.disableProperty().isBound()) {
 				settingsButton.setDisable(true);
 			}
+			if (!saveButton.disableProperty().isBound())
+				saveButton.setDisable(true);
 			if (SettingsModel.isShowPossibleMoves())
 				boardController.showPossibleMoves(index);
 		}
@@ -378,6 +408,8 @@ public class GameController {
 				if (!settingsButton.disableProperty().isBound()) {
 					settingsButton.setDisable(false);
 				}
+				if (!saveButton.disableProperty().isBound())
+					saveButton.setDisable(false);
 				GameModel.setSelectedIndex(-1);
 				boardGrid.getChildren().forEach(s -> {
 					s.getStyleClass().removeAll(focused, "possibleMove", "checkMove", "captureMove");
@@ -387,6 +419,9 @@ public class GameController {
 				// if not clicked on selected piece
 				if (!settingsButton.disableProperty().isBound()) {
 					settingsButton.setDisable(promotionPopup.isVisible());
+				}
+				if (!saveButton.disableProperty().isBound()) {
+					saveButton.setDisable(promotionPopup.isVisible());
 				}
 				boardController.movePieceOnBoard(GameModel.getSelectedIndex(), index);
 

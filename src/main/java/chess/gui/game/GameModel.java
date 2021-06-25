@@ -13,6 +13,7 @@ import java.util.List;
 
 import chess.model.Move;
 import chess.model.Piece;
+import chess.util.Saving;
 import chess.model.MoveGenerator;
 import chess.model.MoveValidator;
 
@@ -30,13 +31,6 @@ public class GameModel {
 	 */
 	public enum ChessMode {
 		None, Player, Computer, Network;
-	}
-
-	/**
-	 * Enumeration of available colors
-	 */
-	public enum ChessColor {
-		None, White, Black;
 	}
 
 	/**
@@ -77,7 +71,7 @@ public class GameModel {
 	/**
 	 * Stores the chosen color (not to confuse with currentColor)
 	 */
-	private static ChessColor color = ChessColor.None;
+	private static int choosenColor = Piece.None;
 
 	/**
 	 * Stores the Move objects that represent the history of the game.
@@ -123,6 +117,22 @@ public class GameModel {
 	}
 
 	/**
+	 * Begins a saveg game
+	 * 
+	 * @param saving
+	 */
+	public static void beginSavedGame(Saving saving) {
+		// start saved game
+		currentGame = saving.getGame();
+
+		updateBeatenPiecesLists();
+		movesHistory = saving.getMovesHistory();
+		selectedIndex = -1;
+
+		allowedToMove = true;
+	}
+
+	/**
 	 * Updates the Lists of the beaten pieces
 	 */
 	public static void updateBeatenPiecesLists() {
@@ -162,7 +172,7 @@ public class GameModel {
 		if (next != null && !currentGame.attemptMove(next)) {
 			return;
 		}
-		if (currentGame.checkWinCondition() == 0) {
+		if (currentGame.checkWinCondition() == Game.WinCondition.NONE) {
 			if (currentGame.checkCheck() && SettingsModel.isShowInCheck()) {
 				GameModel.playSound(GameModel.ChessSound.Check, true);
 			} else if (currentGame.getCurrentPosition().getCapturedPieces().equals(capturedPieces)) {
@@ -216,8 +226,8 @@ public class GameModel {
 	 * 
 	 * @param color the new color
 	 */
-	public static void setColor(ChessColor color) {
-		GameModel.color = color;
+	public static void setChoosenColor(int color) {
+		GameModel.choosenColor = color;
 	}
 
 	/**
@@ -255,8 +265,8 @@ public class GameModel {
 	 * 
 	 * @return current color
 	 */
-	public static ChessColor getColor() {
-		return color;
+	public static int getChoosenColor() {
+		return choosenColor;
 	}
 
 	/**

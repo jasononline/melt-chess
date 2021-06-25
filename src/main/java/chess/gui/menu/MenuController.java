@@ -1,22 +1,27 @@
 package chess.gui.menu;
 
 import chess.gui.Gui;
-import chess.gui.game.BoardController;
 import chess.gui.game.GameModel;
 import chess.gui.network.NetworkServerService;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.ResizeManager;
+import chess.model.Piece;
 import chess.util.TextManager;
+import chess.util.SavingManager;
+import chess.util.Saving;
 import chess.util.Server;
 import javafx.beans.value.ChangeListener;
-import javafx.concurrent.Service;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -52,6 +57,8 @@ public class MenuController {
 	@FXML
 	public Button startButton;
 	@FXML
+	public Button loadButton;
+	@FXML
 	public Button settingsButton;
 	@FXML
 	public Button quitButton;
@@ -72,8 +79,10 @@ public class MenuController {
 		TextManager.computeText(blackColorButton, "menu.black");
 		TextManager.computeText(settingsButton, "menu.settings");
 		TextManager.computeText(startButton, "menu.start");
+		TextManager.computeText(loadButton, "menu.load");
 		TextManager.computeText(quitButton, "menu.quit");
 		startButton.setDisable(true);
+		loadButton.setDisable(true);
 		colorPane.setDisable(true);
 
 		ChangeListener<Number> rootPaneSizeListener = (observable, oldValue, newValue) -> {
@@ -99,7 +108,7 @@ public class MenuController {
 		if (source.equals(playerModeButton)) {
 			whiteColorButton.getStyleClass().remove(selected);
 			blackColorButton.getStyleClass().remove(selected);
-			GameModel.setColor(GameModel.ChessColor.None);
+			GameModel.setChoosenColor(Piece.None);
 			GameModel.setGameMode(GameModel.ChessMode.Player);
 		}
 		if (source.equals(aiModeButton)) {
@@ -109,15 +118,19 @@ public class MenuController {
 		if (source.equals(networkModeButton)) {
 			whiteColorButton.getStyleClass().remove(selected);
 			blackColorButton.getStyleClass().remove(selected);
-			GameModel.setColor(GameModel.ChessColor.None);
+			GameModel.setChoosenColor(Piece.None);
 			GameModel.setGameMode(GameModel.ChessMode.Network);
+			loadButton.setDisable(true);
 		}
 
 		if (GameModel.getGameMode() != GameModel.ChessMode.None
 				&& GameModel.getGameMode() != GameModel.ChessMode.Computer) {
 			startButton.setDisable(false);
+			if (GameModel.getGameMode() != GameModel.ChessMode.Network)
+				loadButton.setDisable(false);
 		} else {
 			startButton.setDisable(true);
+			loadButton.setDisable(true);
 		}
 
 	}
@@ -134,12 +147,13 @@ public class MenuController {
 		source.getStyleClass().add(selected);
 
 		if (source.equals(whiteColorButton))
-			GameModel.setColor(GameModel.ChessColor.White);
+			GameModel.setChoosenColor(Piece.White);
 		if (source.equals(blackColorButton))
-			GameModel.setColor(GameModel.ChessColor.Black);
+			GameModel.setChoosenColor(Piece.Black);
 
-		if (GameModel.getColor() != GameModel.ChessColor.None) {
+		if (GameModel.getChoosenColor() != Piece.None) {
 			startButton.setDisable(false);
+			loadButton.setDisable(false);
 		}
 	}
 
@@ -160,7 +174,15 @@ public class MenuController {
 				GameModel.beginNewGame();
 				Gui.switchTo(Gui.ChessScene.Game);
 			}
+		}
 
+		if (source.equals(loadButton)) {
+			Saving saving = loadGame();
+			if (saving == null)
+				return;
+			GameModel.beginSavedGame(saving);
+
+			Gui.switchTo(Gui.ChessScene.Game);
 		}
 
 		if (source.equals(settingsButton)) {
@@ -172,4 +194,14 @@ public class MenuController {
 			System.exit(0);
 	}
 
+	private Saving loadGame() {
+		FileChooser fc = new FileChooser();
+		fc.setTitle(TextManager.get("menu.selectFileTitle"));
+		fc.getExtensionFilters().addAll(new ExtensionFilter("MELT-CHESS Files", "*.melt"));
+		File file = fc.showOpenDialog(rootPane.getScene().getWindow());
+		if (file != null) {
+			return SavingManager.loadGame(file);
+		}
+		return null;
+	}
 }

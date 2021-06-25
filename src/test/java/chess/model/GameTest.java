@@ -47,7 +47,7 @@ public class GameTest {
         Game game = new Game();
         System.out.println("Test win condition:");
         System.out.println(checkmatePosition);
-        assertEquals(Game.CHECKMATE, game.checkWinCondition(checkmatePosition));
+        assertEquals(Game.WinCondition.CHECKMATE, game.checkWinCondition(checkmatePosition));
         System.out.println("Test win condition:");
         System.out.println(notCheckmatePosition);
         assertEquals(0, game.checkWinCondition(notCheckmatePosition));
@@ -62,7 +62,7 @@ public class GameTest {
         Game game = new Game();
         System.out.println("Test win condition (remis):");
         System.out.println(simpleRemisPosition);
-        assertEquals(Game.REMIS, game.checkWinCondition(simpleRemisPosition));
+        assertEquals(Game.WinCondition.REMIS, game.checkWinCondition(simpleRemisPosition));
     }
 
 

@@ -137,6 +137,7 @@ public class ResizeManager {
 		menuController.whiteColorButton.setStyle(buttonStyleV);
 		menuController.blackColorButton.setStyle(buttonStyleV);
 		menuController.startButton.setStyle(buttonStyleH);
+		menuController.loadButton.setStyle(buttonStyleH);
 		menuController.settingsButton.setStyle(buttonStyleH);
 		menuController.quitButton.setStyle(buttonStyleH);
 
@@ -144,7 +145,8 @@ public class ResizeManager {
 				(ImageView) menuController.aiModeButton.getGraphic(), (ImageView) menuController.networkModeButton.getGraphic(),
 				(ImageView) menuController.whiteColorButton.getGraphic(),
 				(ImageView) menuController.blackColorButton.getGraphic(), (ImageView) menuController.startButton.getGraphic(),
-				(ImageView) menuController.settingsButton.getGraphic(), (ImageView) menuController.quitButton.getGraphic() };
+				(ImageView) menuController.loadButton.getGraphic(), (ImageView) menuController.settingsButton.getGraphic(),
+				(ImageView) menuController.quitButton.getGraphic() };
 
 		for (ImageView icon : icons) {
 			icon.setFitHeight(iconHeight35);
@@ -312,10 +314,12 @@ public class ResizeManager {
 
 	private void setHistoryStyles() {
 		gameController.historyGrid.setVgap(graphicTextGapV20 / 2);
+		String historyButtonStyle = fxFontSize + fontSize18 + fxGraphicTextGap + graphicTextGapH30 / 3 + fxBackgroundRadius
+				+ borderRadius5 + fxBorderRadius + borderRadius5 + fxBorderWidth + borderWidth2;
+		gameController.saveButton.setStyle(historyButtonStyle);
 		for (Node historyNode : gameController.historyGrid.getChildren()) {
 			Button historyButton = (Button) ((AnchorPane) historyNode).getChildren().get(0);
-			historyButton.setStyle(fxFontSize + fontSize18 + fxBackgroundRadius + borderRadius5 + fxBorderRadius
-					+ borderRadius5 + fxBorderWidth + borderWidth2);
+			historyButton.setStyle(historyButtonStyle);
 		}
 	}
 
@@ -368,7 +372,7 @@ public class ResizeManager {
 	private ImageView[] getButtonIcons() {
 		return new ImageView[] { (ImageView) gameController.resignButton.getGraphic(),
 				(ImageView) gameController.restartButton.getGraphic(), (ImageView) gameController.settingsButton.getGraphic(),
-				(ImageView) gameController.menuButton.getGraphic(),
+				(ImageView) gameController.menuButton.getGraphic(), (ImageView) gameController.saveButton.getGraphic(),
 				(ImageView) gameController.surePopupCancelButton.getGraphic(),
 				(ImageView) gameController.surePopupYesButton.getGraphic() };
 	}
