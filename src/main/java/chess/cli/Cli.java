@@ -202,41 +202,6 @@ public class Cli {
 	}
 
 	/**
-	 * Parse the user input string and return Move object
-	 *
-	 * @param input User input like "e7-e8[Q]"
-	 * @return parsed move object from user input
-	 */
-	public static Move parseUserMoveInput(String input) {
-		String[] squares = input.split("-"); // Split input by '-'
-		int startSquare = Coordinate.toIndex(squares[0]); // start position in the board.squares array
-		int targetSquare = Coordinate.toIndex(squares[1].substring(0, 2)); // target position in the board.squares array
-		String flagString = squares[1].length() > 2 ? "" + squares[1].charAt(2) : "";
-		int flag = 0;
-
-		switch (flagString) {
-			case "Q":
-				flag = Move.PromoteToQueen;
-				break;
-			case "K":
-				flag = Move.PromoteToKnight;
-				break;
-			case "R":
-				flag = Move.PromoteToRook;
-				break;
-			case "B":
-				flag = Move.PromoteToBishop;
-				break;
-			default:
-				break;
-		}
-
-		Move move = new Move(startSquare, targetSquare, flag);
-		game.addFlag(move);
-		return move;
-	}
-
-	/**
 	 * Start the correct new game loop
 	 */
 	public static void runGame() {
@@ -331,7 +296,7 @@ public class Cli {
 				break;
 
 			default:
-				if (!game.attemptMove(parseUserMoveInput(userInput))) {
+				if (!game.attemptMove(Move.parseUserMoveInput(userInput, game))) {
 					System.out.println(ConsoleColors.RED_BOLD + "\n!Move not allowed\n" + ConsoleColors.RESET);
 				} else {
 					ConsoleColors.green();

@@ -46,16 +46,19 @@ public class Server {
         }
     }
 
-    public static void readAndPrintForever() throws IOException {
-        if (dataInputStream == null) {
-            // System.out.println("Not initialized yet.");
-            return;
-        }
-        while (true) {
-            String message = dataInputStream.readUTF();
-            if (!(message == null)) {
-                System.out.println("The message sent from the socket was: " + message);
+    public static String getOpponentInput() throws IOException {
+        String input;
+        do {
+            input = read();
+            if (input != "") {
+                System.out.println("Opponent input was: " + input);
             }
-        }
+        } while (!testUserInputSyntax(input));
+        return input;
+    }
+
+    private static boolean testUserInputSyntax(String userInput) {
+        // Checks if input matches one of valid inputs: move(e7-e8[Q]), resign
+        return userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[qrbn]?$|^resign$");
     }
 }

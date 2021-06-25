@@ -2,7 +2,7 @@ package chess.gui.menu;
 
 import chess.gui.Gui;
 import chess.gui.game.GameModel;
-import chess.gui.network.NetworkServerService;
+import chess.util.networkServices.InitServerService;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.ResizeManager;
 import chess.model.Piece;
@@ -167,7 +167,7 @@ public class MenuController {
 		if (source.equals(startButton)) {
 			if (GameModel.getGameMode() == GameModel.ChessMode.Network) {
 				Server.quit();
-				NetworkServerService server = new NetworkServerService();
+				InitServerService server = new InitServerService();
 				server.start();
 				Gui.switchTo(Gui.ChessScene.NetworkConnection);
 			} else {

@@ -16,7 +16,7 @@ public class PerformEngineMoveTask extends Task {
 	 */
 	@Override
 	protected Object call() throws Exception {
-		GameModel.performEngineMove();
+		GameModel.performOpponentMove();
 		return null;
 	}
 

@@ -10,6 +10,7 @@ import chess.model.Move;
 import chess.model.MoveValidator;
 import chess.model.Piece;
 import chess.util.TextManager;
+import chess.util.networkServices.PerformOpponentActionService;
 import javafx.animation.RotateTransition;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Service;
@@ -26,7 +27,8 @@ import javafx.util.Duration;
 public class BoardController {
 
 	private GameController gameController;
-	private Service service;
+	private Service performEngineMoveService;
+	private Service performOpponentActionService;
 	protected boolean isRotated = false;
 
 	/**
@@ -42,11 +44,18 @@ public class BoardController {
 	 * Initialize chessboard in GameView
 	 */
 	protected void initialize() {
-		if (service == null) {
-			service = new PerformEngineMoveService();
+		if (performEngineMoveService == null) {
+			performEngineMoveService = new PerformEngineMoveService();
 		} else {
 			// cancel a running service
-			service.cancel();
+			performEngineMoveService.cancel();
+		}
+
+		if (performOpponentActionService == null) {
+			performOpponentActionService = new PerformOpponentActionService();
+		} else {
+			// cancel a running service
+			performOpponentActionService.cancel();
 		}
 
 		gameController.boardGrid.setDisable(false);
@@ -185,24 +194,33 @@ public class BoardController {
 		// PvPC
 		if (GameModel.getGameMode() == GameModel.ChessMode.Computer) {
 
-			gameController.activityIndicator.visibleProperty().bind(service.runningProperty());
+			gameController.activityIndicator.visibleProperty().bind(performEngineMoveService.runningProperty());
 			gameController.boardGrid.setDisable(true);
-			gameController.resignButton.disableProperty().bind(service.runningProperty());
-			gameController.settingsButton.disableProperty().bind(service.runningProperty());
-			gameController.saveButton.disableProperty().bind(service.runningProperty());
+			gameController.resignButton.disableProperty().bind(performEngineMoveService.runningProperty());
+			gameController.settingsButton.disableProperty().bind(performEngineMoveService.runningProperty());
+			gameController.saveButton.disableProperty().bind(performEngineMoveService.runningProperty());
 
-			service.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			performEngineMoveService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 				@Override
 				public void handle(WorkerStateEvent workerStateEvent) {
 					finishEngineMove();
 				}
 			});
-			service.restart();
+			performEngineMoveService.restart();
 		}
 		// Network
 		if (GameModel.getGameMode() == GameModel.ChessMode.Network) {
-			// TODO implement what happens in Network game
-			return;
+			gameController.activityIndicator.visibleProperty().bind(performOpponentActionService.runningProperty());
+			gameController.boardGrid.setDisable(true);
+			gameController.settingsButton.disableProperty().bind(performOpponentActionService.runningProperty());
+
+			performOpponentActionService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+				@Override
+				public void handle(WorkerStateEvent workerStateEvent) {
+					finishOpponentAction();
+				}
+			});
+			performOpponentActionService.restart();
 		}
 	}
 
@@ -230,6 +248,11 @@ public class BoardController {
 		checkForGameOver();
 		gameController.updateUI();
 		return null;
+	}
+
+	private void finishOpponentAction() {
+		String input = (String) performOpponentActionService.getValue();
+		Move opponentMove = Move.parseUserMoveInput(input, GameModel.getCurrentGame());
 	}
 
 	/**

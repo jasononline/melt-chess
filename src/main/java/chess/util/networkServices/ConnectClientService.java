@@ -1,4 +1,4 @@
-package chess.gui.network;
+package chess.util.networkServices;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
