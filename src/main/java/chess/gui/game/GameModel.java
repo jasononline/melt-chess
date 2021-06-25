@@ -6,10 +6,12 @@ import chess.gui.settings.SettingsModel;
 import chess.gui.util.GraphicsManager;
 import chess.model.Game;
 import chess.util.Server;
+import javafx.concurrent.Worker;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 
 import java.io.IOException;
+import java.security.Provider;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -166,7 +168,9 @@ public class GameModel {
 	}
 
 	/**
-	 * Uses the engine to generate the next PC-move and executes that move.
+	 * Uses the engine to generate the next PC-move, or Network-Opponent-move and executes that move.
+	 * Should only be used for PvPC or Network game
+	 *
 	 */
 	public static void performOpponentMove() throws IOException {
 		System.out.println("performOpponentMove() was called.");
@@ -175,9 +179,15 @@ public class GameModel {
 		if (gameMode == ChessMode.Computer) {
 			// PvPC
 			next = engine.generateBestMove(currentGame.getCurrentPosition());
+			if (BoardController.getPerformEngineMoveService().getState().equals(Worker.State.CANCELLED)) {
+				return;
+			}
 		} else {
 			// Network
 			String opponentInput = Server.getOpponentInput();
+			if (BoardController.getPerformOpponentActionService().getState().equals(Worker.State.CANCELLED)) {
+				return;
+			}
 			if (opponentInput == "resign") {
 				// TODO resign
 				System.out.println("Opponent resigned.");

@@ -4,6 +4,7 @@ import chess.gui.Gui;
 import chess.gui.game.GameModel.ChessMode;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.GraphicsManager;
+import chess.model.Board;
 import chess.model.Move;
 import chess.model.Piece;
 import chess.model.Game.WinCondition;
@@ -192,13 +193,17 @@ public class GamePopup {
 				gameController.gamePopup.showGameOverPopup(WinCondition.RESIGN);
 				return;
 			}
-			if (button == gameController.restartButton && event.getSource() == gameController.surePopupYesButton) { // Restart
+			if (button == gameController.restartButton && event.getSource() == gameController.surePopupYesButton) {
+				// Restart
 				if (SettingsModel.isFlipBoard() && gameController.boardController.isRotated)
 					gameController.boardController.flipBoard(true);
 				GameModel.beginNewGame();
 				gameController.initialize();
 			}
-			if (button == gameController.menuButton && event.getSource() == gameController.surePopupYesButton) { // Main menu
+			if (button == gameController.menuButton && event.getSource() == gameController.surePopupYesButton) {
+				// Main menu
+				BoardController.getPerformEngineMoveService().cancel();
+				BoardController.getPerformOpponentActionService().cancel();
 				Gui.switchTo(Gui.ChessScene.Menu);
 			}
 

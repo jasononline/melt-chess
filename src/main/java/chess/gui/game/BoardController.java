@@ -29,8 +29,9 @@ import javafx.util.Duration;
 public class BoardController {
 
 	private GameController gameController;
-	private Service performEngineMoveService;
-	private Service performOpponentActionService;
+
+	private static Service performEngineMoveService;
+	private static Service performOpponentActionService;
 	protected boolean isRotated = false;
 
 	/**
@@ -345,6 +346,14 @@ public class BoardController {
 			squareNode.setRotate(isRotated ? 0 : 180);
 		}
 		isRotated = !isRotated;
+	}
+
+	public static Service getPerformEngineMoveService() {
+		return performEngineMoveService;
+	}
+
+	public static Service getPerformOpponentActionService() {
+		return performOpponentActionService;
 	}
 
 }
