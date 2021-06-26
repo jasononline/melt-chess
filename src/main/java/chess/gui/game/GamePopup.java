@@ -201,8 +201,7 @@ public class GamePopup {
 			}
 			if (button == gameController.menuButton && event.getSource() == gameController.surePopupYesButton) {
 				// Main menu
-				BoardController.getPerformEngineMoveService().cancel();
-				BoardController.getPerformOpponentActionService().cancel();
+				GameModel.stopTask();
 				Gui.switchTo(Gui.ChessScene.Menu);
 			}
 

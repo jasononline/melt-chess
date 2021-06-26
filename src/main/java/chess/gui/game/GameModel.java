@@ -6,7 +6,6 @@ import chess.gui.settings.SettingsModel;
 import chess.gui.util.GraphicsManager;
 import chess.model.Game;
 import chess.util.Server;
-import javafx.concurrent.Worker;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 
@@ -54,6 +53,8 @@ public class GameModel {
 	 * The current Game
 	 */
 	private static Game currentGame;
+
+	private static boolean stopTask = false;
 
 	/**
 	 * The engine to get best moves from
@@ -117,6 +118,7 @@ public class GameModel {
 		selectedIndex = -1;
 
 		allowedToMove = true;
+		stopTask = false;
 	}
 
 	/**
@@ -133,6 +135,7 @@ public class GameModel {
 		selectedIndex = -1;
 
 		allowedToMove = true;
+		stopTask = false;
 	}
 
 	/**
@@ -182,7 +185,8 @@ public class GameModel {
 			next = networkMove();
 		}
 
-		if (next != null && !currentGame.attemptMove(next)) {
+		if (next == null || !currentGame.attemptMove(next) || stopTask) {
+			stopTask = false;
 			return;
 		}
 		if (currentGame.checkWinCondition() == Game.WinCondition.NONE) {
@@ -199,17 +203,11 @@ public class GameModel {
 
 	private static Move engineMove() {
 		Move next = engine.generateBestMove(currentGame.getCurrentPosition());
-		if (BoardController.getPerformEngineMoveService().getState().equals(Worker.State.CANCELLED)) {
-			return null;
-		}
 		return next;
 	}
 
 	private static Move networkMove() throws IOException {
 		String opponentInput = Server.getOpponentInput();
-		if (BoardController.getPerformOpponentActionService().getState().equals(Worker.State.CANCELLED)) {
-			return null;
-		}
 		if (opponentInput == "resign") {
 			// TODO resign
 			System.out.println("Opponent resigned.");
@@ -350,5 +348,12 @@ public class GameModel {
 		} else {
 			sound.audio.stop();
 		}
+	}
+
+	/**
+	 * This can be called to prevent the engine from finishing its move when leaving Game view
+	 */
+	public static void stopTask() {
+		stopTask = true;
 	}
 }
