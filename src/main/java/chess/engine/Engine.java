@@ -31,6 +31,8 @@ public class Engine {
     private static final List<Integer> promotionFilter = new ArrayList<>();
     private int maxDepth = 3; // only use odd values!
 
+    private static final boolean alphaBetaPruningFeatureSwitch = true;
+
     /**
      * Contructor of the engine
      */
@@ -59,7 +61,11 @@ public class Engine {
         int value;
 
         for (EngineBoard position : possiblePositions) {
-            value = minimax(position, maxDepth, color);
+            if (alphaBetaPruningFeatureSwitch) {
+                value = alphaBetaPruning(position, maxDepth, color);
+            } else {
+                value = minimax(position, maxDepth, color);
+            }
             if (bestValue < value) {
                 bestValue = value;
                 bestPosition = position;
@@ -87,6 +93,41 @@ public class Engine {
         value = Integer.MAX_VALUE;
         for (EngineBoard newPosition : getNextPositions(board)) {
             value = Math.min(value, minimax(newPosition, depth-1, maximizingColor));
+        }
+        return value;
+    }
+
+
+    private int alphaBetaPruning(EngineBoard board, int depth, int maximizingColor) {
+        int alpha, beta;
+        alpha = Integer.MIN_VALUE;
+        beta  = Integer.MAX_VALUE;
+        return alphaBetaPruning(board, depth, maximizingColor, alpha, beta);
+    }
+
+    private int alphaBetaPruning(EngineBoard board, int depth, int maximizingColor, int alpha, int beta) {
+        int value;
+        if (depth == 0) {
+            return board.getScore();
+        }
+        if (board.getTurnColor() == maximizingColor) {
+            value = Integer.MIN_VALUE;
+            for (EngineBoard newPosition : getNextPositions(board)) {
+                value = Math.max(value, alphaBetaPruning(newPosition, depth-1, maximizingColor, alpha, beta));
+                if (value <= beta) {
+                    break;
+                }
+                alpha = Math.max(alpha, value);
+            }
+            return value;
+        }
+        value = Integer.MAX_VALUE;
+        for (EngineBoard newPosition : getNextPositions(board)) {
+            value = Math.min(value, alphaBetaPruning(newPosition, depth-1, maximizingColor, alpha, beta));
+            if (value <= alpha) {
+                break;
+            }
+            beta = Math.min(beta, value);
         }
         return value;
     }
