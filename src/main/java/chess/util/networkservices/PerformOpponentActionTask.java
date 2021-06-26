@@ -1,12 +1,13 @@
-package chess.util.networkServices;
+package chess.util.networkservices;
 
 import chess.gui.game.GameModel;
-import chess.model.Move;
-import chess.util.Server;
 import javafx.concurrent.Task;
 
 import java.io.IOException;
 
+/**
+ * Task to receive and perform the next Opponent action
+ */
 public class PerformOpponentActionTask extends Task {
     @Override
     protected Object call() throws IOException {

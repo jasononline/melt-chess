@@ -20,6 +20,6 @@ module chess {
 	opens chess.gui.game;
 	opens chess.gui.menu;
 	opens chess.gui.network;
-    exports chess.util.networkServices;
-    opens chess.util.networkServices;
+    exports chess.util.networkservices;
+    opens chess.util.networkservices;
 }

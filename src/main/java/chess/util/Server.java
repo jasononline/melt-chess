@@ -7,6 +7,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.InetAddress;
 
+/**
+ * Class representing a Server for the Network Game mode
+ */
 public class Server {
 
     private static ServerSocket serverSocket;
@@ -14,6 +17,10 @@ public class Server {
     private static InputStream inputStream;
     private static DataInputStream dataInputStream;
 
+    /**
+     * initializes the Server
+     * @throws IOException
+     */
     public static void initialize() throws IOException {
         serverSocket = new ServerSocket(1905);
         String ip = InetAddress.getLocalHost().getHostAddress().toString();
@@ -27,6 +34,11 @@ public class Server {
         dataInputStream = new DataInputStream(inputStream);
     }
 
+    /**
+     * Reads the next message from the server socket
+     * @return the next message from the server socket
+     * @throws IOException
+     */
     public static String read() throws IOException {
         if (dataInputStream == null) {
             // System.out.println("Not initialized yet.");
@@ -37,15 +49,12 @@ public class Server {
         return message;
     }
 
-    public static void quit() throws IOException {
-        if (!(serverSocket == null)) {
-            serverSocket.close();
-        }
-        if (!(socket == null)) {
-            socket.close();
-        }
-    }
-
+    /**
+     * Reads the next message from the server socket, ignores unexpected messages.
+     * Should only be called from background thread since this method polls the server socket until finding legin input
+     * @return the next legal Opponent message
+     * @throws IOException
+     */
     public static String getOpponentInput() throws IOException {
         System.out.println("I am listening to Opponent input!");
         String input = read();
@@ -61,6 +70,11 @@ public class Server {
         return input;
     }
 
+    /**
+     * Tests whether a String is a legal Opponent action
+     * @param userInput
+     * @return true if userInput is legal, else false
+     */
     private static boolean testUserInputSyntax(String userInput) {
         // Checks if input matches one of valid inputs: move(e7-e8[Q]), resign
         return userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[qrbn]?$|^resign$");

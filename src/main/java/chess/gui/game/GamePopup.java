@@ -4,7 +4,6 @@ import chess.gui.Gui;
 import chess.gui.game.GameModel.ChessMode;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.GraphicsManager;
-import chess.model.Board;
 import chess.model.Move;
 import chess.model.Piece;
 import chess.model.Game.WinCondition;

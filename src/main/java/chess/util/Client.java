@@ -8,12 +8,20 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Random;
 
+/**
+ * Class representing a Client for the Network Game mode
+ */
 public class Client {
 
     private static Socket socket;
-    private static OutputStream outputStream;
     private static DataOutputStream dataOutputStream;
 
+    /**
+     * Initializes and connects the Client
+     * @param ipAddress the ip Address to connect to
+     * @param port the port to connect to
+     * @throws IOException
+     */
     public static void initialize(String ipAddress, int port) throws IOException {
         socket = new Socket(ipAddress, port);
         System.out.println("Client socket setup.");
@@ -23,6 +31,12 @@ public class Client {
         dataOutputStream = new DataOutputStream(outputStream);
     }
 
+    /**
+     * This will communicate with the opponent-Server to decide who will begin the game
+     * @return Piece.White or Piece.Black, the color one will play
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public static int decideColor() throws IOException, InterruptedException {
         Random rand = new Random();
         int result = rand.nextInt(100) + 1;
@@ -52,21 +66,16 @@ public class Client {
         return 0;
     }
 
+    /**
+     * This will send a String message to a previously connected Server
+     * @param message the message to send to the connected server
+     * @throws IOException
+     */
     public static void send(String message) throws IOException {
         if (dataOutputStream == null) {
             return;
         }
         dataOutputStream.writeUTF(message);
         System.out.println("This message has been sent: " + message);
-    }
-
-    public static void quit() throws IOException {
-        if (!(dataOutputStream == null)) {
-            dataOutputStream.close();
-        }
-        if (!(socket == null)) {
-            socket.close();
-        }
-
     }
 }

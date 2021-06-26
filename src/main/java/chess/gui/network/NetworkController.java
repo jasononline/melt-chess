@@ -4,7 +4,7 @@ import chess.gui.Gui;
 import chess.gui.util.ResizeManager;
 import chess.util.TextManager;
 import chess.util.Client;
-import chess.util.networkServices.ConnectClientService;
+import chess.util.networkservices.ConnectClientService;
 import javafx.beans.value.ChangeListener;
 import javafx.concurrent.Service;
 import javafx.fxml.FXML;
@@ -55,7 +55,6 @@ public class NetworkController {
 	private boolean isIpValid = false;
 	private boolean isPortValid = false;
 
-	private Service serverStarter;
 	private Service colorSelector;
 	@FXML
 	private void initialize() throws IOException {

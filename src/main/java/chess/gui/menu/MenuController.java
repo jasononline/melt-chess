@@ -2,14 +2,13 @@ package chess.gui.menu;
 
 import chess.gui.Gui;
 import chess.gui.game.GameModel;
-import chess.util.networkServices.InitServerService;
+import chess.util.networkservices.InitServerService;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.ResizeManager;
 import chess.model.Piece;
 import chess.util.TextManager;
 import chess.util.SavingManager;
 import chess.util.Saving;
-import chess.util.Server;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +16,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
@@ -166,7 +164,6 @@ public class MenuController {
 
 		if (source.equals(startButton)) {
 			if (GameModel.getGameMode() == GameModel.ChessMode.Network) {
-				Server.quit();
 				InitServerService server = new InitServerService();
 				server.start();
 				Gui.switchTo(Gui.ChessScene.NetworkConnection);

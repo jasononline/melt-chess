@@ -11,7 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 
 import java.io.IOException;
-import java.security.Provider;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -173,27 +172,14 @@ public class GameModel {
 	 *
 	 */
 	public static void performOpponentMove() throws IOException {
-		System.out.println("performOpponentMove() was called.");
 		List<Integer> capturedPieces = currentGame.getCurrentPosition().getCapturedPieces();
 		Move next;
 		if (gameMode == ChessMode.Computer) {
 			// PvPC
-			next = engine.generateBestMove(currentGame.getCurrentPosition());
-			if (BoardController.getPerformEngineMoveService().getState().equals(Worker.State.CANCELLED)) {
-				return;
-			}
+			next = engineMove();
 		} else {
 			// Network
-			String opponentInput = Server.getOpponentInput();
-			if (BoardController.getPerformOpponentActionService().getState().equals(Worker.State.CANCELLED)) {
-				return;
-			}
-			if (opponentInput == "resign") {
-				// TODO resign
-				System.out.println("Opponent resigned.");
-				return;
-			}
-			next = Move.parseUserMoveInput(opponentInput, currentGame);
+			next = networkMove();
 		}
 
 		if (next != null && !currentGame.attemptMove(next)) {
@@ -211,6 +197,26 @@ public class GameModel {
 		movesHistory.add(0, next);
 	}
 
+	private static Move engineMove() {
+		Move next = engine.generateBestMove(currentGame.getCurrentPosition());
+		if (BoardController.getPerformEngineMoveService().getState().equals(Worker.State.CANCELLED)) {
+			return null;
+		}
+		return next;
+	}
+
+	private static Move networkMove() throws IOException {
+		String opponentInput = Server.getOpponentInput();
+		if (BoardController.getPerformOpponentActionService().getState().equals(Worker.State.CANCELLED)) {
+			return null;
+		}
+		if (opponentInput == "resign") {
+			// TODO resign
+			System.out.println("Opponent resigned.");
+			return null;
+		}
+		return Move.parseUserMoveInput(opponentInput, currentGame);
+	}
 	/**
 	 * Gives information about whether a piece has been selected or not
 	 * 

@@ -1,7 +1,6 @@
 package chess.cli;
 
 import chess.engine.Engine;
-import chess.model.Coordinate;
 import chess.model.Game;
 import chess.model.Move;
 import chess.model.Piece;

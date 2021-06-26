@@ -12,7 +12,7 @@ import chess.model.MoveValidator;
 import chess.model.Piece;
 import chess.util.Client;
 import chess.util.TextManager;
-import chess.util.networkServices.PerformOpponentActionService;
+import chess.util.networkservices.PerformOpponentActionService;
 import javafx.animation.RotateTransition;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Service;
@@ -348,10 +348,18 @@ public class BoardController {
 		isRotated = !isRotated;
 	}
 
+	/**
+	 * Getter for the performEngineMoveService
+	 * @return the performEngineMoveService
+	 */
 	public static Service getPerformEngineMoveService() {
 		return performEngineMoveService;
 	}
 
+	/**
+	 * Getter for the performOpponentActionService
+	 * @return the performOpponentActionService
+	 */
 	public static Service getPerformOpponentActionService() {
 		return performOpponentActionService;
 	}
