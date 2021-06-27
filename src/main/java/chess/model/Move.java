@@ -48,6 +48,7 @@ public class Move implements Serializable {
 	 * Parse the user input string and return Move object
 	 *
 	 * @param input User input like "e7-e8[Q]"
+	 * @param game  the current game
 	 * @return parsed move object from user input
 	 */
 	public static Move parseUserMoveInput(String input, Game game) {

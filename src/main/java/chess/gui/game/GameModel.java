@@ -122,9 +122,9 @@ public class GameModel {
 	}
 
 	/**
-	 * Begins a saveg game
+	 * Begins a saved game
 	 *
-	 * @param saving
+	 * @param saving saving object
 	 */
 	public static void beginSavedGame(Saving saving) {
 		// start saved game
@@ -170,8 +170,8 @@ public class GameModel {
 	}
 
 	/**
-	 * Uses the engine to generate the next PC-move, or Network-Opponent-move and executes that move.
-	 * Should only be used for PvPC or Network game
+	 * Uses the engine to generate the next PC-move, or Network-Opponent-move and
+	 * executes that move. Should only be used for PvPC or Network game
 	 *
 	 */
 	public static void performOpponentMove() throws IOException {
@@ -215,6 +215,7 @@ public class GameModel {
 		}
 		return Move.parseUserMoveInput(opponentInput, currentGame);
 	}
+
 	/**
 	 * Gives information about whether a piece has been selected or not
 	 * 
@@ -351,7 +352,8 @@ public class GameModel {
 	}
 
 	/**
-	 * This can be called to prevent the engine from finishing its move when leaving Game view
+	 * This can be called to prevent the engine from finishing its move when leaving
+	 * Game view
 	 */
 	public static void stopTask() {
 		stopTask = true;

@@ -15,6 +15,7 @@ module chess {
 	exports chess.cli;
 	exports chess.model;
 	exports chess.engine;
+	exports chess.util;
 
 	opens chess.gui.settings;
 	opens chess.gui.game;

@@ -82,21 +82,35 @@ public class ConsoleColors {
 	/**
 	 * Changes console output to red bold text
 	 */
-	public static void redBold() {
+	public static void redBoldColor() {
 		System.out.print(RED_BOLD);
 	}
 
 	/**
 	 * Changes console output to green text
 	 */
-	public static void green() {
+	public static void greenColor() {
 		System.out.print(GREEN);
+	}
+
+	/**
+	 * Changes console output to cyan bold text
+	 */
+	public static void cyanBoldColor() {
+		System.out.print(CYAN_BOLD);
+	}
+
+	/**
+	 * Changes console output to green bold text
+	 */
+	public static void greenBoldColor() {
+		System.out.print(GREEN_BOLD);
 	}
 
 	/**
 	 * Resets console output to default style
 	 */
-	public static void reset() {
+	public static void resetColor() {
 		System.out.print(RESET);
 	}
 }

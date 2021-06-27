@@ -1,27 +1,28 @@
 package chess.cli;
 
+import java.util.List;
 import java.util.Scanner;
 
 import chess.util.TextManager;
 
 /**
- * Controls the behaviour and actions of CLI menus
+ * Represents a menu of Cli
  */
 public class Menu {
 
 	private int selectedIndex;
 	private final String title;
-	private final String[] options;
+	private final List<String> options;
 
 	/**
-	 * Create new GamePopup instance of
+	 * Create new Menu instance of
 	 * 
-	 * @param title  the title of menu
+	 * @param title   the title of menu
 	 * @param options available options
 	 */
-	public Menu(String title, String[] options) {
+	public Menu(String title, List<String> options) {
 		this.title = title;
-		this.options = options.clone();
+		this.options = options;
 		this.selectedIndex = 0;
 	}
 
@@ -31,8 +32,8 @@ public class Menu {
 	private void displayOptions() {
 		System.out.println(ConsoleColors.CYAN_BOLD + "\n" + title + ConsoleColors.RESET);
 		System.out.println("-------------------------");
-		for (int i = 0; i < options.length; i++) {
-			System.out.println("[" + (i + 1) + "] - " + options[i].toUpperCase());
+		for (int i = 0; i < options.size(); i++) {
+			System.out.println("[" + (i + 1) + "] - " + options.get(i));
 		}
 		System.out.println("-------------------------");
 		// Test on other console
@@ -47,32 +48,29 @@ public class Menu {
 	 */
 	public int run() {
 
-		displayOptions();
 		Scanner scan = new Scanner(System.in);
+		displayOptions();
+		System.out.flush();
 		String choice = scan.next().toLowerCase();
 
 		try {
-			ConsoleColors.redBold();
+			ConsoleColors.redBoldColor();
 			selectedIndex = Integer.parseInt(choice) - 1;
-			if (selectedIndex >= options.length) {
+			if (selectedIndex >= options.size()) {
 				System.out.println("\n" + TextManager.get("cli.errorChoice"));
 				run();
 			}
 		} catch (NumberFormatException e) {
-			if (choice.equals(TextManager.get("cli.helpCommandEn")) || choice.equals(TextManager.get("cli.helpCommandDe")))
-				return 101;
-			if (choice.equals(TextManager.get("cli.enCommandEn")) || choice.equals(TextManager.get("cli.enCommandDe")))
-				return 102;
-			if (choice.equals(TextManager.get("cli.deCommandEn")) || choice.equals(TextManager.get("cli.deCommandDe")))
-				return 103;
-			if (choice.equals(TextManager.get("cli.quitCommandEn")) || choice.equals(TextManager.get("cli.quitCommandDe")))
-				return 104;
+			int code = Help.detectStandardCommands(choice);
+			if (code != 0) {
+				return code;
+			}
 
 			System.out.println("\n" + TextManager.get("cli.errorChoice"));
 			run();
 		}
 
-		ConsoleColors.reset();
+		ConsoleColors.resetColor();
 
 		return selectedIndex;
 	}

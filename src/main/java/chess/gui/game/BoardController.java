@@ -350,6 +350,7 @@ public class BoardController {
 
 	/**
 	 * Getter for the performEngineMoveService
+	 * 
 	 * @return the performEngineMoveService
 	 */
 	public static Service getPerformEngineMoveService() {
@@ -358,6 +359,7 @@ public class BoardController {
 
 	/**
 	 * Getter for the performOpponentActionService
+	 * 
 	 * @return the performOpponentActionService
 	 */
 	public static Service getPerformOpponentActionService() {

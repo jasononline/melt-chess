@@ -56,6 +56,7 @@ public class NetworkController {
 	private boolean isPortValid = false;
 
 	private Service colorSelector;
+
 	@FXML
 	private void initialize() throws IOException {
 		TextManager.computeText(titleLabel, "network.title");
@@ -119,9 +120,8 @@ public class NetworkController {
 		String iPAddress = ipTextField.getText();
 		String portAddress = portTextField.getText();
 		/*
-		System.out.println("Connect to");
-		System.out.println("IP Address: " + iPAddress);
-		System.out.println("Port: " + portAddress);
+		 * System.out.println("Connect to"); System.out.println("IP Address: " +
+		 * iPAddress); System.out.println("Port: " + portAddress);
 		 */
 		errorPane.setVisible(false);
 
@@ -132,7 +132,6 @@ public class NetworkController {
 		} catch (Exception exception) {
 			errorPane.setVisible(true);
 		}
-
 
 		// else
 		// TODO: Start new game

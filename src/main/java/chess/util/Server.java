@@ -19,7 +19,7 @@ public class Server {
 
     /**
      * initializes the Server
-     * @throws IOException
+     * @throws IOException IOException
      */
     public static void initialize() throws IOException {
         serverSocket = new ServerSocket(1905);
@@ -37,7 +37,7 @@ public class Server {
     /**
      * Reads the next message from the server socket
      * @return the next message from the server socket
-     * @throws IOException
+     * @throws IOException IOException
      */
     public static String read() throws IOException {
         if (dataInputStream == null) {
@@ -53,7 +53,7 @@ public class Server {
      * Reads the next message from the server socket, ignores unexpected messages.
      * Should only be called from background thread since this method polls the server socket until finding legin input
      * @return the next legal Opponent message
-     * @throws IOException
+     * @throws IOException IOException
      */
     public static String getOpponentInput() throws IOException {
         System.out.println("I am listening to Opponent input!");

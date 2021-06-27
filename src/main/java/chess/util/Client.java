@@ -20,7 +20,7 @@ public class Client {
      * Initializes and connects the Client
      * @param ipAddress the ip Address to connect to
      * @param port the port to connect to
-     * @throws IOException
+     * @throws IOException IOException
      */
     public static void initialize(String ipAddress, int port) throws IOException {
         socket = new Socket(ipAddress, port);
@@ -34,8 +34,8 @@ public class Client {
     /**
      * This will communicate with the opponent-Server to decide who will begin the game
      * @return Piece.White or Piece.Black, the color one will play
-     * @throws IOException
-     * @throws InterruptedException
+     * @throws IOException IOException
+     * @throws InterruptedException InterruptedException
      */
     public static int decideColor() throws IOException, InterruptedException {
         Random rand = new Random();
@@ -69,7 +69,7 @@ public class Client {
     /**
      * This will send a String message to a previously connected Server
      * @param message the message to send to the connected server
-     * @throws IOException
+     * @throws IOException IOException
      */
     public static void send(String message) throws IOException {
         if (dataOutputStream == null) {

@@ -17,7 +17,7 @@ public class Game implements Serializable {
 	/**
 	 * Enumeration of available win conditions
 	 */
-	public static enum WinCondition {
+	public enum WinCondition {
 		NONE, CHECKMATE, REMIS, RESIGN;
 	}
 
