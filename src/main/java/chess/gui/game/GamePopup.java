@@ -7,11 +7,14 @@ import chess.gui.util.GraphicsManager;
 import chess.model.Move;
 import chess.model.Piece;
 import chess.model.Game.WinCondition;
+import chess.util.Client;
 import chess.util.TextManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+
+import java.io.IOException;
 
 /**
  * Controls behaviour of GUI game popup menus.
@@ -168,28 +171,7 @@ public class GamePopup {
 		EventHandler<ActionEvent> buttonActionHandler = (event) -> {
 			if (button == gameController.resignButton && event.getSource() == gameController.surePopupYesButton) {
 				// Resign
-				gameController.surePopup.setVisible(false);
-				gameController.restartButton.setDisable(false);
-				gameController.menuButton.setDisable(false);
-				if (!gameController.settingsButton.disableProperty().isBound()) {
-					gameController.settingsButton.setDisable(false);
-				}
-				if (!gameController.saveButton.disableProperty().isBound()) {
-					gameController.saveButton.setDisable(false);
-				}
-
-				String key = "";
-				if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.White) {
-					key = "game.whiteResigned";
-				} else {
-					key = "game.blackResigned";
-				}
-				gameController.boardGrid.getChildren().forEach(s -> {
-					s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
-				});
-				TextManager.computeText(gameController.checkLabel, key);
-				gameController.checkLabel.setVisible(true);
-				gameController.gamePopup.showGameOverPopup(WinCondition.RESIGN);
+				resign();
 				return;
 			}
 			if (button == gameController.restartButton && event.getSource() == gameController.surePopupYesButton) {
@@ -213,6 +195,40 @@ public class GamePopup {
 
 		gameController.surePopupCancelButton.setOnAction(buttonActionHandler);
 		gameController.surePopupYesButton.setOnAction(buttonActionHandler);
+	}
+
+	protected void resign() {
+		System.out.println("resign() was called in GamePopup.java!");
+		try {
+			Client.send("resign");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		gameController.activityIndicator.visibleProperty().unbind();
+		gameController.activityIndicator.setVisible(false);
+
+		gameController.surePopup.setVisible(false);
+		gameController.restartButton.setDisable(false);
+		gameController.menuButton.setDisable(false);
+		if (!gameController.settingsButton.disableProperty().isBound()) {
+			gameController.settingsButton.setDisable(false);
+		}
+		if (!gameController.saveButton.disableProperty().isBound()) {
+			gameController.saveButton.setDisable(false);
+		}
+
+		String key = "";
+		if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.White) {
+			key = "game.whiteResigned";
+		} else {
+			key = "game.blackResigned";
+		}
+		gameController.boardGrid.getChildren().forEach(s -> {
+			s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
+		});
+		TextManager.computeText(gameController.checkLabel, key);
+		gameController.checkLabel.setVisible(true);
+		gameController.gamePopup.showGameOverPopup(WinCondition.RESIGN);
 	}
 
 	private void enableButtons() {

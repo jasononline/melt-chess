@@ -13,6 +13,7 @@ public class ConnectClientTask extends Task {
 	@Override
 	protected Object call() throws Exception {
 		int color = Client.decideColor();
+		System.out.println("Client.decideColor() was called in ConnectClientTask.");
 		if (color == Piece.White) {
 			GameModel.setChoosenColor(Piece.White);
 			System.out.println("My color is WHITE.");
