@@ -197,6 +197,9 @@ public class GamePopup {
 		gameController.surePopupYesButton.setOnAction(buttonActionHandler);
 	}
 
+	/**
+	 * Takes care of actions that have to happen when resigning
+	 */
 	protected void resign() {
 		System.out.println("resign() was called in GamePopup.java!");
 		try {

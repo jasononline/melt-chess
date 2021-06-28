@@ -54,7 +54,7 @@ public class GameModel {
 	 */
 	private static Game currentGame;
 
-	private static boolean stopTask = false;
+	private static boolean taskStopped = false;
 
 	public static boolean surrendered = false;
 
@@ -120,7 +120,7 @@ public class GameModel {
 		selectedIndex = -1;
 
 		allowedToMove = true;
-		stopTask = false;
+		taskStopped = false;
 		surrendered = false;
 	}
 
@@ -138,7 +138,7 @@ public class GameModel {
 		selectedIndex = -1;
 
 		allowedToMove = true;
-		stopTask = false;
+		taskStopped = false;
 		surrendered = false;
 	}
 
@@ -189,8 +189,8 @@ public class GameModel {
 			next = networkMove();
 		}
 
-		if (next == null || !currentGame.attemptMove(next) || stopTask) {
-			stopTask = false;
+		if (next == null || !currentGame.attemptMove(next) || taskStopped) {
+			taskStopped = false;
 			return;
 		}
 		if (currentGame.checkWinCondition() == Game.WinCondition.NONE) {
@@ -367,14 +367,14 @@ public class GameModel {
 	 * Game view
 	 */
 	public static void stopTask() {
-		stopTask = true;
+		taskStopped = true;
 	}
 
 	/**
 	 * Used to find out if a Task should no longer work for this game
 	 * @return wheter a Task should no longer work for this game
 	 */
-	public static boolean isStopTask() {
-		return stopTask;
+	public static boolean isTaskStopped() {
+		return taskStopped;
 	}
 }

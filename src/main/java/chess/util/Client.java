@@ -89,6 +89,10 @@ public class Client {
         System.out.println("This message has been sent: " + message);
     }
 
+    /**
+     * This mehtod will close an existing Client socket and output stream
+     * @throws IOException
+     */
     public static void endOldClient() throws IOException {
         System.out.println("If there already was a Client, it will now be closed.");
         if (dataOutputStream != null) {

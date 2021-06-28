@@ -1,14 +1,13 @@
 package chess.util;
 
 import chess.gui.game.GameModel;
-import chess.model.Game;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.InetAddress;
 
 /**
  * Class representing a Server for the Network Game mode
@@ -29,19 +28,20 @@ public class Server {
         String ip = InetAddress.getLocalHost().getHostAddress();
         //System.out.println("A Server has been setup. ip = " + ip + ", port = " + serverSocket.getLocalPort());
         //System.out.println("ServerSocket awaiting connections...");
-        System.out.println("\n******************************************************");
+        String line = "******************************************************";
+        System.out.println("\n" + line);
         System.out.println("Other Players are now able to connect to you!");
         System.out.println("If you want someone to connect share IP-Addr and Port:");
         System.out.println("IP-Address:\t" + "\033[43m" + ip + "\033[0;0m");
         System.out.println("Port:\t\t" + "\033[43m" + serverSocket.getLocalPort() + "\033[0;0m");
-        System.out.println("******************************************************\n");
+        System.out.println(line + "\n");
         socket = serverSocket.accept(); // blocking call, this will wait until a connection is attempted on this port.
-        System.out.println("\n******************************************************");
+        System.out.println("\n" + line);
         System.out.println("An other Player connected to you!");
         System.out.println("If you want to connect to that Player choose:");
         System.out.println("IP-Address:\t" + "\033[42m" + socket.getInetAddress().getHostAddress() + "\033[0;0m");
         System.out.println("Port:\t\t" + "\033[42m" + socket.getLocalPort() + "\033[0;0m");
-        System.out.println("******************************************************\n");
+        System.out.println(line + "\n");
         // get the input stream from the connected socket
         inputStream = socket.getInputStream();
         // create a DataInputStream so we can read data from it.
@@ -73,7 +73,7 @@ public class Server {
         System.out.println("I am listening to Opponent input!");
         String input = read();
         while (!testUserInputSyntax(input)) {
-            if(GameModel.isStopTask()) {
+            if(GameModel.isTaskStopped()) {
                 return "";
             }
             input = read();
