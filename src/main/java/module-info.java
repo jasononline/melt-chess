@@ -16,11 +16,16 @@ module chess {
 	exports chess.model;
 	exports chess.engine;
 	exports chess.util;
+	exports chess.util.networkservices;
 
+	opens chess.model;
 	opens chess.gui.settings;
 	opens chess.gui.game;
 	opens chess.gui.menu;
 	opens chess.gui.network;
-    exports chess.util.networkservices;
-    opens chess.util.networkservices;
+	opens chess.engine;
+	opens chess.util;
+	opens chess.util.networkservices;
+
+
 }
