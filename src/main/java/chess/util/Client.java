@@ -85,6 +85,9 @@ public class Client {
         if (dataOutputStream == null) {
             return;
         }
+        if (message.equals("resign")) {
+            Server.lastOpponentInput = "resign";
+        }
         dataOutputStream.writeUTF(message);
         System.out.println("This message has been sent: " + message);
     }

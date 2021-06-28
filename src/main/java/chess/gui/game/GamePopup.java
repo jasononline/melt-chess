@@ -171,6 +171,13 @@ public class GamePopup {
 		EventHandler<ActionEvent> buttonActionHandler = (event) -> {
 			if (button == gameController.resignButton && event.getSource() == gameController.surePopupYesButton) {
 				// Resign
+				if (GameModel.getGameMode() == ChessMode.Network) {
+					try {
+						Client.send("resign");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 				resign();
 				return;
 			}
@@ -203,20 +210,15 @@ public class GamePopup {
 	 */
 	protected void resign() {
 		System.out.println("resign() was called in GamePopup.java!");
-		try {
-			Client.send("resign");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		gameController.activityIndicator.visibleProperty().unbind();
 		gameController.activityIndicator.setVisible(false);
 
 		gameController.surePopup.setVisible(false);
 		gameController.restartButton.setDisable(false);
 		gameController.menuButton.setDisable(false);
-		if (!gameController.settingsButton.disableProperty().isBound()) {
-			gameController.settingsButton.setDisable(false);
-		}
+		gameController.settingsButton.disableProperty().unbind();
+		gameController.settingsButton.setDisable(false);
+
 		if (!gameController.saveButton.disableProperty().isBound()) {
 			gameController.saveButton.setDisable(false);
 		}
