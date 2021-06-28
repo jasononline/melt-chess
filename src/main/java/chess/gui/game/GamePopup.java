@@ -176,7 +176,8 @@ public class GamePopup {
 			}
 			if (button == gameController.restartButton && event.getSource() == gameController.surePopupYesButton) {
 				// Restart
-				if (SettingsModel.isFlipBoard() && gameController.boardController.isRotated)
+				if (SettingsModel.isFlipBoard() && gameController.boardController.isRotated
+						&& GameModel.getChoosenColor() != Piece.Black)
 					gameController.boardController.flipBoard(true);
 				GameModel.beginNewGame();
 				gameController.initialize();

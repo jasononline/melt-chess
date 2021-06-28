@@ -88,10 +88,10 @@ public class BoardController {
 			s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
 		});
 
-		if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.Black && !isRotated
-				&& SettingsModel.isFlipBoard()
-				|| GameModel.getGameMode() != GameModel.ChessMode.Player && GameModel.getChoosenColor() == Piece.Black)
+		if (GameModel.getGameMode() != GameModel.ChessMode.Player && GameModel.getChoosenColor() == Piece.Black) {
+			isRotated = false;
 			flipBoard(false);
+		}
 
 		checkForGameOver();
 	}
