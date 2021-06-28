@@ -158,11 +158,11 @@ public class ScoreGenerator {
       a rook is worth five points and a queen is worth nine points.
      */
     private static final Map<Integer, Integer> pieceValue = new HashMap<>(
-            Map.of(Piece.Pawn, 100,
-                    Piece.Knight, 300,
-                    Piece.Bishop, 300,
-                    Piece.Rook, 500,
-                    Piece.Queen, 900 )
+            Map.of(Piece.Pawn, 1000,
+                    Piece.Knight, 3000,
+                    Piece.Bishop, 3000,
+                    Piece.Rook, 5000,
+                    Piece.Queen, 9000 )
     );
 
 
