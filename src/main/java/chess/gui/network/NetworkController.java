@@ -11,6 +11,7 @@ import javafx.concurrent.Service;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -49,6 +50,8 @@ public class NetworkController {
 	public Button cancelButton;
 	@FXML
 	public Button connectButton;
+	@FXML
+	public ProgressIndicator activityIndicator;
 
 	private ResizeManager resizeManager = new ResizeManager(this);
 
@@ -75,6 +78,7 @@ public class NetworkController {
 			// cancel al running service
 			colorSelector.cancel();
 		}
+		activityIndicator.visibleProperty().bind(colorSelector.runningProperty());
 
 		ChangeListener<Number> rootPaneSizeListener = (observable, oldValue, newValue) -> {
 			resizeManager.resizeNetwork(rootPane.getWidth(), rootPane.getHeight());
