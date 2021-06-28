@@ -23,6 +23,7 @@ public class Client {
      * @throws IOException
      */
     public static void initialize(String ipAddress, int port) throws IOException {
+        //endOldClient();
         socket = new Socket(ipAddress, port);
         System.out.println("Client socket setup.");
         // get the output stream from the socket.
@@ -37,21 +38,30 @@ public class Client {
      * @throws IOException
      * @throws InterruptedException
      */
-    public static int decideColor() throws IOException, InterruptedException {
+    public static int decideColor() throws InterruptedException, IOException {
+        System.out.println("decideColor() method call.");
         Random rand = new Random();
         int result = rand.nextInt(100) + 1;
+        String resultString = String.valueOf(result);
         String opponentString = "";
         int opponentNumber;
 
-        System.out.println("Begin to decide Color... " + "My Number is: " + result);
-        send(String.valueOf(result));
+        System.out.println("Begin to decide Color... " + "My Number is: " + resultString);
 
+        send(resultString);
         while (opponentString == "") {
             System.out.println("Opponent string is Empty.");
-            opponentString = Server.read();
-            send(String.valueOf(result));
-            Thread.sleep(3000);
+            try {
+                opponentString = Server.read();
+            } catch (IOException e) {
+                System.out.println("Reading did not work, retrying...");
+            }
+            System.out.println("new Opponent String is: " + opponentString);
+            send(String.valueOf(resultString));
+            Thread.sleep(1000);
         }
+        send(resultString);
+
         System.out.println("OpponentNumber is: " + opponentString);
         opponentNumber = Integer.parseInt(opponentString);
 
@@ -77,5 +87,15 @@ public class Client {
         }
         dataOutputStream.writeUTF(message);
         System.out.println("This message has been sent: " + message);
+    }
+
+    public static void endOldClient() throws IOException {
+        System.out.println("If there already was a Client, it will now be closed.");
+        if (dataOutputStream != null) {
+            dataOutputStream.close();
+        }
+        if (socket != null) {
+            socket.close();
+        }
     }
 }

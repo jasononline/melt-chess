@@ -1,6 +1,7 @@
 package chess.gui.network;
 
 import chess.gui.Gui;
+import chess.gui.game.GameModel;
 import chess.gui.util.ResizeManager;
 import chess.util.TextManager;
 import chess.util.Client;
@@ -128,7 +129,9 @@ public class NetworkController {
 		// Establish connection
 		try {
 			Client.initialize(iPAddress, Integer.parseInt(portAddress));
-			colorSelector.start();
+			System.out.println("Restarting the NetworkConnectService...");
+			colorSelector.restart();
+			System.out.println("NetworkConnectService is done.");
 		} catch (Exception exception) {
 			errorPane.setVisible(true);
 		}
@@ -141,6 +144,7 @@ public class NetworkController {
 
 	@FXML
 	private void handleCancelButtonOnAction() {
+		GameModel.stopTask();
 		Gui.switchTo(Gui.ChessScene.Menu);
 	}
 

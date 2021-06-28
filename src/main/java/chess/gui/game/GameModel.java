@@ -56,6 +56,8 @@ public class GameModel {
 
 	private static boolean stopTask = false;
 
+	public static boolean surrendered = false;
+
 	/**
 	 * The engine to get best moves from
 	 */
@@ -119,6 +121,7 @@ public class GameModel {
 
 		allowedToMove = true;
 		stopTask = false;
+		surrendered = false;
 	}
 
 	/**
@@ -136,6 +139,7 @@ public class GameModel {
 
 		allowedToMove = true;
 		stopTask = false;
+		surrendered = false;
 	}
 
 	/**
@@ -207,10 +211,17 @@ public class GameModel {
 	}
 
 	private static Move networkMove() throws IOException {
+		System.out.println("networkMove() was called.");
 		String opponentInput = Server.getOpponentInput();
-		if (opponentInput == "resign") {
-			// TODO resign
+		if (opponentInput.equals("")) {
+			// this only happens when the task is being stopped
+			return null;
+		}
+		System.out.println("Opponent input was: " + opponentInput);
+		if (opponentInput.equals("resign")) {
 			System.out.println("Opponent resigned.");
+			surrendered = true;
+			stopTask();
 			return null;
 		}
 		return Move.parseUserMoveInput(opponentInput, currentGame);
@@ -355,5 +366,13 @@ public class GameModel {
 	 */
 	public static void stopTask() {
 		stopTask = true;
+	}
+
+	/**
+	 * Used to find out if a Task should no longer work for this game
+	 * @return wheter a Task should no longer work for this game
+	 */
+	public static boolean isStopTask() {
+		return stopTask;
 	}
 }
