@@ -242,12 +242,16 @@ public class ResizeManager {
 
 		networkController.cancelButton.setStyle(controlButtonStyle);
 		networkController.connectButton.setStyle(controlButtonStyle);
+		networkController.connectingLabel.setStyle(controlButtonStyle);
 
 		ImageView[] icons = { (ImageView) networkController.cancelButton.getGraphic(),
 				(ImageView) networkController.connectButton.getGraphic() };
 		for (ImageView icon : icons) {
 			icon.setFitHeight(iconHeight35);
 		}
+
+		networkController.activityIndicator.setPrefHeight(iconHeight35);
+		networkController.activityIndicator.setPrefWidth(iconHeight35);
 
 		networkController.connectButton.getParent().getParent().getParent()
 				.setStyle(fxBackgroundRadiusNoSemicolon + borderRadius10 + fxBorderRadius + borderRadius10);

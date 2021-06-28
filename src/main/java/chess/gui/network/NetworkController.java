@@ -51,6 +51,8 @@ public class NetworkController {
 	@FXML
 	public Button connectButton;
 	@FXML
+	public Label connectingLabel;
+	@FXML
 	public ProgressIndicator activityIndicator;
 
 	private ResizeManager resizeManager = new ResizeManager(this);
@@ -69,6 +71,7 @@ public class NetworkController {
 		TextManager.computeText(errorLabel, "network.error");
 		TextManager.computeText(cancelButton, "network.cancel");
 		TextManager.computeText(connectButton, "network.connect");
+		TextManager.computeText(connectingLabel, "network.connecting");
 		errorPane.setVisible(false);
 		connectButton.setDisable(true);
 
@@ -78,6 +81,9 @@ public class NetworkController {
 			// cancel al running service
 			colorSelector.cancel();
 		}
+
+		connectButton.visibleProperty().bind(colorSelector.runningProperty().not());
+		connectingLabel.visibleProperty().bind(colorSelector.runningProperty());
 		activityIndicator.visibleProperty().bind(colorSelector.runningProperty());
 
 		ChangeListener<Number> rootPaneSizeListener = (observable, oldValue, newValue) -> {

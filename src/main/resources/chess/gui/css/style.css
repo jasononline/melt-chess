@@ -89,6 +89,17 @@
   -fx-cursor: hand;
 }
 
+.connectingLabel {
+  -fx-background-color: rgba(131, 131, 131, 0.3);
+  -fx-background-radius: 10;
+  -fx-border-radius: 10;
+  -fx-border-width: 3px;
+  -fx-font-family: Montserrat;
+  -fx-font-weight: 600;
+  -fx-font-size: 25px;
+  -fx-text-fill: #fff;
+}
+
 .button.selected {
   -fx-border-color: #fff;
   -fx-scale-x: 1.03;

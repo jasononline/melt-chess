@@ -85,9 +85,9 @@
                         <GridPane layoutX="242.0" layoutY="5.0" prefHeight="100.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="2.22" prefWidth="20.0" />
-                            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="210.0" percentWidth="40.0" prefWidth="420.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="20.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="210.0" percentWidth="40.0" prefWidth="420.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="210.0" percentWidth="46.66" prefWidth="420.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="2.22" prefWidth="20.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="210.0" percentWidth="46.66" prefWidth="420.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="2.22" prefWidth="20.0" />
                           </columnConstraints>
                           <rowConstraints>
@@ -111,7 +111,7 @@
                               </AnchorPane>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                  <children>
-                                    <Button fx:id="connectButton" alignment="CENTER" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleConnectButtonOnAction" prefHeight="60.0" prefWidth="420.0" text="Connect" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <Button fx:id="connectButton" alignment="CENTER" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleConnectButtonOnAction" prefHeight="60.0" prefWidth="420.0" text="Connect" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <graphic>
                                           <ImageView fitHeight="35.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -120,9 +120,13 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
+                                    <Label fx:id="connectingLabel" alignment="CENTER" graphicTextGap="20.0" prefHeight="60.0" prefWidth="420.0" styleClass="connectingLabel" text="Connecting" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <graphic>
+                                          <ProgressIndicator fx:id="activityIndicator" prefHeight="35.0" prefWidth="35.0" styleClass="progressIndicator" visible="false" />
+                                       </graphic>
+                                    </Label>
                                  </children>
                               </AnchorPane>
-                              <ProgressIndicator fx:id="activityIndicator" styleClass="progressIndicator" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                            </children>
                         </GridPane>
                      </children>
