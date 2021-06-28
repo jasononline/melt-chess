@@ -18,6 +18,7 @@ public class Server {
     private static Socket socket;
     private static InputStream inputStream;
     private static DataInputStream dataInputStream;
+    protected static String lastOpponentInput;
 
     /**
      * initializes the Server
@@ -77,13 +78,16 @@ public class Server {
                 return "";
             }
             input = read();
+            if (input.equals(lastOpponentInput)) {
+                continue;
+            }
             if (input != "" && !testUserInputSyntax(input)) {
                 System.out.println("Probably illegal Opponent input was: " + input + " (will be ignored)");
             }
         }
 
         System.out.println("Probably legal Opponent input was: " + input);
-
+        lastOpponentInput = input;
         return input;
     }
 
