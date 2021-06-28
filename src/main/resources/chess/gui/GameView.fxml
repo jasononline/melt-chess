@@ -831,19 +831,6 @@
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                              <children>
-                                                <Button fx:id="resignButton" graphicTextGap="20.0" layoutX="103.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleButtonOnAction" prefHeight="62.0" prefWidth="260.0" text="Resign" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                   <graphic>
-                                                      <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@images/icons/resignIcon.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </graphic>
-                                                </Button>
-                                             </children>
-                                          </AnchorPane>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
-                                             <children>
                                                 <Button fx:id="restartButton" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonOnAction" prefHeight="62.0" prefWidth="260.0" text="Restart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <graphic>
                                                       <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
@@ -855,15 +842,24 @@
                                                 </Button>
                                              </children>
                                           </AnchorPane>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                                             <children>
+                                                <Button fx:id="resignButton" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonOnAction" prefHeight="62.0" prefWidth="260.0" text="Resign" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <graphic>
+                                                      <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@images/icons/resignIcon.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </AnchorPane>
                                        </children>
                                     </GridPane>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <children>
-                                    <Label fx:id="timeLabel" layoutX="115.0" layoutY="11.0" prefHeight="40.0" prefWidth="260.0" styleClass="boxNameLabel" text="04.13" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                 </children>
-                              </AnchorPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <FlowPane fx:id="whiteBeatenFlowPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <FlowPane fx:id="blackBeatenFlowPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">

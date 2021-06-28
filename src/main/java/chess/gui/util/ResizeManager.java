@@ -347,15 +347,12 @@ public class ResizeManager {
 	private void setLabelStyles() {
 		gameController.currentMoveLabel.setStyle(fxFontSize + fontSize25);
 		gameController.checkLabel.setStyle(fxFontSize + fontSize20);
-		gameController.timeLabel.setStyle(fxFontSize + fontSize40);
 		gameController.historyLabel.setStyle(fxFontSize + fontSize20);
 		gameController.promotionPopupLabel.setStyle(fxFontSize + fontSize25);
 		gameController.surePopupLabel.setStyle(fxFontSize + fontSize20);
 		gameController.gameOverPopupLabel.setStyle(fxFontSize + fontSize20);
 
 		gameController.historyLabel.getParent().getParent().getParent()
-				.setStyle(fxBackgroundRadiusNoSemicolon + borderRadius10 + fxBorderRadius + borderRadius10);
-		gameController.timeLabel.getParent().getParent().getParent()
 				.setStyle(fxBackgroundRadiusNoSemicolon + borderRadius10 + fxBorderRadius + borderRadius10);
 	}
 

@@ -58,8 +58,6 @@ public class GameController {
 	@FXML
 	public GridPane boardGrid;
 	@FXML
-	public Label timeLabel;
-	@FXML
 	public FlowPane whiteBeatenFlowPane;
 	@FXML
 	public FlowPane blackBeatenFlowPane;
@@ -142,10 +140,12 @@ public class GameController {
 		rootPane.heightProperty().addListener(rootPaneSizeListener);
 
 		checkLabel.setVisible(false);
+
 		if (!resignButton.disableProperty().isBound()) {
 			resignButton.setDisable(false);
 		}
 		restartButton.setDisable(false);
+		restartButton.setVisible(GameModel.getGameMode() != GameModel.ChessMode.Network);
 		if (!settingsButton.disableProperty().isBound()) {
 			settingsButton.setDisable(false);
 		}
