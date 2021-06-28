@@ -161,6 +161,7 @@ public class MenuController {
 		Node source = (Node) event.getSource();
 
 		if (source.equals(startButton)) {
+			GameModel.setTaskStopped(false);
 			if (GameModel.getGameMode() == GameModel.ChessMode.Network) {
 				InitServerService server = new InitServerService();
 				Server.endOldServer();

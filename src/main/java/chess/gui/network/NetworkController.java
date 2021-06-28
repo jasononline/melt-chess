@@ -8,6 +8,8 @@ import chess.util.TextManager;
 import chess.util.networkservices.ConnectClientService;
 import javafx.beans.value.ChangeListener;
 import javafx.concurrent.Service;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -78,7 +80,7 @@ public class NetworkController {
 		if (colorSelector == null) {
 			colorSelector = new ConnectClientService();
 		} else {
-			// cancel al running service
+			// cancel a running service
 			colorSelector.cancel();
 		}
 
@@ -130,19 +132,26 @@ public class NetworkController {
 	private void handleConnectButtonOnAction() {
 		String iPAddress = ipTextField.getText();
 		String portAddress = portTextField.getText();
+		GameModel.setTaskStopped(false);
 		// Establish connection
 		errorPane.setVisible(false);
-
-		if (Client.initialize(iPAddress, Integer.parseInt(portAddress))) {
+		Client.setConnectionValues(iPAddress, Integer.parseInt(portAddress));
+		try {
 			colorSelector.restart();
-		} else {
+		} catch (Exception e) {
 			errorPane.setVisible(true);
 		}
+		colorSelector.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent workerStateEvent) {
+				errorPane.setVisible(true);
+			}
+		});
 	}
 
 	@FXML
 	private void handleCancelButtonOnAction() {
-		GameModel.stopTask();
+		GameModel.setTaskStopped(true);
 		Gui.switchTo(Gui.ChessScene.Menu);
 	}
 

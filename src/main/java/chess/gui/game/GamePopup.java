@@ -191,7 +191,7 @@ public class GamePopup {
 			}
 			if (button == gameController.menuButton && event.getSource() == gameController.surePopupYesButton) {
 				// Main menu
-				GameModel.stopTask();
+				GameModel.setTaskStopped(true);
 				Gui.switchTo(Gui.ChessScene.Menu);
 			}
 

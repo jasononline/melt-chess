@@ -1,11 +1,11 @@
 package chess.util;
 
+import chess.gui.game.GameModel;
 import chess.model.Piece;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Random;
 
@@ -16,21 +16,17 @@ public class Client {
 
     private static Socket socket;
     private static DataOutputStream dataOutputStream;
+    private static String ipAddress;
+    private static int port;
 
     /**
      * Initializes and connects the Client
-     * @param ipAddress the ip Address to connect to
-     * @param port the port to connect to
+     * @return true if ipAddress is reacheable
      * @throws IOException IOException
      */
-    public static boolean initialize(String ipAddress, int port) {
-        try {
-            InetAddress.getByName(ipAddress).isReachable(500);
-            socket = new Socket(ipAddress, port);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    public static boolean initialize() throws IOException {
+        socket = new Socket(ipAddress, port);
+
         // get the output stream from the socket.
         OutputStream outputStream = null;
         try {
@@ -58,11 +54,11 @@ public class Client {
         String opponentString = "";
         int opponentNumber;
 
-        // System.out.println("Begin to decide Color... " + "My Number is: " + resultString);
-
         send(resultString);
         while (opponentString == "") {
-            // System.out.println("Opponent string is Empty.");
+            if (GameModel.isTaskStopped()) {
+                return 0;
+            }
             try {
                 opponentString = Server.read();
             } catch (IOException e) {
@@ -113,5 +109,23 @@ public class Client {
         if (socket != null) {
             socket.close();
         }
+    }
+
+    /**
+     * Method to set where to connect to
+     * @param ip the ip Address
+     * @param port the port
+     */
+    public static void setConnectionValues(String ip, int port) {
+        ipAddress = ip;
+        Client.port = port;
+    }
+
+    /**
+     * Getter for the IPAddress
+     * @return the IPAddress
+     */
+    public static String getIpAddress() {
+        return ipAddress;
     }
 }

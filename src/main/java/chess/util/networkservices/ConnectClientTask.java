@@ -6,12 +6,20 @@ import chess.model.Piece;
 import chess.util.Client;
 import javafx.concurrent.Task;
 
+import java.io.IOException;
+import java.net.InetAddress;
+
 /**
  * Task to connect the Client to a server socket and decide what color one will play
  */
 public class ConnectClientTask extends Task {
 	@Override
-	protected Object call() {
+	protected Object call() throws IOException {
+		if (InetAddress.getByName(Client.getIpAddress()).isReachable(10000)) {
+			Client.initialize();
+		} else {
+			return null;
+		}
 		int color = 0;
 		try {
 			color = Client.decideColor();

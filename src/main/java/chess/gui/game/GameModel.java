@@ -216,7 +216,7 @@ public class GameModel {
 		if (opponentInput.equals("resign")) {
 			System.out.println("Opponent resigned.");
 			surrendered = true;
-			stopTask();
+			taskStopped = true;
 			return null;
 		}
 		return Move.parseUserMoveInput(opponentInput, currentGame);
@@ -358,11 +358,12 @@ public class GameModel {
 	}
 
 	/**
+	 * Setter for the taskStopped variable
 	 * This can be called to prevent the engine from finishing its move when leaving
-	 * Game view
+	 * @param stop whether taskt should be stopped or not
 	 */
-	public static void stopTask() {
-		taskStopped = true;
+	public static void setTaskStopped(boolean stop) {
+		taskStopped = stop;
 	}
 
 	/**
