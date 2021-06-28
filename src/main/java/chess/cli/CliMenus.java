@@ -1,5 +1,9 @@
 package chess.cli;
 
+import chess.util.Saving;
+import chess.util.SavingManager;
+import chess.util.TextManager;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,10 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-
-import chess.util.Saving;
-import chess.util.SavingManager;
-import chess.util.TextManager;
 
 /**
  * Controls behaviour of Cli menus.

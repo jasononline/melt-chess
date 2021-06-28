@@ -1,11 +1,10 @@
 package chess.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Stack;
 
 import static java.lang.Math.abs;
-
-import java.io.Serializable;
 
 /**
  * Represents a game of chess

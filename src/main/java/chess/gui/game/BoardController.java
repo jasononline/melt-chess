@@ -1,15 +1,7 @@
 package chess.gui.game;
 
-import java.io.IOException;
-import java.util.List;
-
 import chess.gui.settings.SettingsModel;
-import chess.model.Board;
-import chess.model.Coordinate;
-import chess.model.Game;
-import chess.model.Move;
-import chess.model.MoveValidator;
-import chess.model.Piece;
+import chess.model.*;
 import chess.util.Client;
 import chess.util.TextManager;
 import chess.util.networkservices.PerformOpponentActionService;
@@ -22,6 +14,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Controls behaviour of GUI chessboard.

@@ -4,7 +4,8 @@ import chess.engine.Engine;
 import chess.gui.Gui;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.GraphicsManager;
-import chess.model.Game;
+import chess.model.*;
+import chess.util.Saving;
 import chess.util.Server;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
@@ -12,12 +13,6 @@ import javafx.scene.media.AudioClip;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import chess.model.Move;
-import chess.model.Piece;
-import chess.util.Saving;
-import chess.model.MoveGenerator;
-import chess.model.MoveValidator;
 
 /**
  * Storage for information on the currently visible board position, like

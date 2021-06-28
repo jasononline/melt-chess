@@ -2,11 +2,11 @@ package chess.gui.menu;
 
 import chess.gui.Gui;
 import chess.gui.game.GameModel;
-import chess.util.*;
-import chess.util.networkservices.InitServerService;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.ResizeManager;
 import chess.model.Piece;
+import chess.util.*;
+import chess.util.networkservices.InitServerService;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

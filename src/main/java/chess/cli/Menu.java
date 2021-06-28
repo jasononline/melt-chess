@@ -1,9 +1,9 @@
 package chess.cli;
 
+import chess.util.TextManager;
+
 import java.util.List;
 import java.util.Scanner;
-
-import chess.util.TextManager;
 
 /**
  * Represents a menu of Cli

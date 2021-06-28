@@ -1,9 +1,9 @@
 package chess.gui.settings;
 
+import chess.gui.Gui.ChessScene;
+
 import java.io.Serializable;
 import java.util.Locale;
-
-import chess.gui.Gui.ChessScene;
 
 /**
  * Data container for all the settings. Should implement Serializable to save

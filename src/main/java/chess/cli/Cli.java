@@ -8,11 +8,7 @@ import chess.util.Saving;
 import chess.util.SavingManager;
 import chess.util.TextManager;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Starting point of the command line interface

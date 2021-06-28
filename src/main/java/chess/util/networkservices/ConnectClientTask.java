@@ -11,9 +11,14 @@ import javafx.concurrent.Task;
  */
 public class ConnectClientTask extends Task {
 	@Override
-	protected Object call() throws Exception {
-		int color = Client.decideColor();
-		System.out.println("Client.decideColor() was called in ConnectClientTask.");
+	protected Object call() {
+		int color = 0;
+		try {
+			color = Client.decideColor();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 		if (color == Piece.White) {
 			GameModel.setChoosenColor(Piece.White);
 			System.out.println("My color is WHITE.");

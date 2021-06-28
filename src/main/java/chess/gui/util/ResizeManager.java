@@ -1,7 +1,5 @@
 package chess.gui.util;
 
-import java.util.function.Predicate;
-
 import chess.gui.game.GameController;
 import chess.gui.menu.MenuController;
 import chess.gui.network.NetworkController;
@@ -12,6 +10,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
+
+import java.util.function.Predicate;
 
 /**
  * Resizes GUI elements, depending on the current view.

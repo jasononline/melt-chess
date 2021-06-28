@@ -1,18 +1,12 @@
 package chess.gui.game;
 
-import java.io.File;
-
 import chess.gui.Gui;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.GraphicsManager;
 import chess.gui.util.ResizeManager;
-import chess.model.Board;
-import chess.model.Coordinate;
-import chess.model.Game;
-import chess.model.Move;
-import chess.model.Piece;
-import chess.util.SavingManager;
+import chess.model.*;
 import chess.util.Saving;
+import chess.util.SavingManager;
 import chess.util.TextManager;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -29,6 +23,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+
+import java.io.File;
 
 /**
  * Controls behaviour of GUI elements except the chessboard (see

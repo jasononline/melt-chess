@@ -1,7 +1,5 @@
 package chess.gui.settings;
 
-import java.util.Locale;
-
 import chess.gui.Gui;
 import chess.gui.util.ResizeManager;
 import chess.util.TextManager;
@@ -10,8 +8,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+
+import java.util.Locale;
 
 /**
  * Controls the behaviour and actions of the UI elements in the settings scene

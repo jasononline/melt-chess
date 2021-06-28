@@ -5,6 +5,7 @@ import chess.model.Piece;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Random;
 
@@ -22,14 +23,25 @@ public class Client {
      * @param port the port to connect to
      * @throws IOException IOException
      */
-    public static void initialize(String ipAddress, int port) throws IOException {
-        //endOldClient();
-        socket = new Socket(ipAddress, port);
-        System.out.println("Client socket setup.");
+    public static boolean initialize(String ipAddress, int port) {
+        try {
+            InetAddress.getByName(ipAddress).isReachable(500);
+            socket = new Socket(ipAddress, port);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
         // get the output stream from the socket.
-        OutputStream outputStream = socket.getOutputStream();
+        OutputStream outputStream = null;
+        try {
+            outputStream = socket.getOutputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
         // create a data output stream from the output stream
         dataOutputStream = new DataOutputStream(outputStream);
+        return true;
     }
 
     /**
@@ -46,11 +58,11 @@ public class Client {
         String opponentString = "";
         int opponentNumber;
 
-        System.out.println("Begin to decide Color... " + "My Number is: " + resultString);
+        // System.out.println("Begin to decide Color... " + "My Number is: " + resultString);
 
         send(resultString);
         while (opponentString == "") {
-            System.out.println("Opponent string is Empty.");
+            // System.out.println("Opponent string is Empty.");
             try {
                 opponentString = Server.read();
             } catch (IOException e) {
@@ -66,10 +78,8 @@ public class Client {
         opponentNumber = Integer.parseInt(opponentString);
 
         if (result < opponentNumber) {
-            System.out.println("Return White");
             return Piece.White;
         } else if (result > opponentNumber) {
-            System.out.println("Return Black");
             return Piece.Black;
         }
 
@@ -97,7 +107,6 @@ public class Client {
      * @throws IOException
      */
     public static void endOldClient() throws IOException {
-        System.out.println("If there already was a Client, it will now be closed.");
         if (dataOutputStream != null) {
             dataOutputStream.close();
         }

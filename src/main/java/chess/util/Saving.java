@@ -1,10 +1,10 @@
 package chess.util;
 
-import java.io.Serializable;
-import java.util.List;
-
 import chess.model.Game;
 import chess.model.Move;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * Container for a game saving. Contains game object and list of moves

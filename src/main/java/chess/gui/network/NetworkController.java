@@ -3,8 +3,8 @@ package chess.gui.network;
 import chess.gui.Gui;
 import chess.gui.game.GameModel;
 import chess.gui.util.ResizeManager;
-import chess.util.TextManager;
 import chess.util.Client;
+import chess.util.TextManager;
 import chess.util.networkservices.ConnectClientService;
 import javafx.beans.value.ChangeListener;
 import javafx.concurrent.Service;
@@ -127,28 +127,17 @@ public class NetworkController {
 	}
 
 	@FXML
-	private void handleConnectButtonOnAction() throws IOException {
+	private void handleConnectButtonOnAction() {
 		String iPAddress = ipTextField.getText();
 		String portAddress = portTextField.getText();
-		/*
-		 * System.out.println("Connect to"); System.out.println("IP Address: " +
-		 * iPAddress); System.out.println("Port: " + portAddress);
-		 */
+		// Establish connection
 		errorPane.setVisible(false);
 
-		// Establish connection
-		try {
-			Client.initialize(iPAddress, Integer.parseInt(portAddress));
-			System.out.println("Restarting the NetworkConnectService...");
+		if (Client.initialize(iPAddress, Integer.parseInt(portAddress))) {
 			colorSelector.restart();
-			System.out.println("NetworkConnectService is done.");
-		} catch (Exception exception) {
+		} else {
 			errorPane.setVisible(true);
 		}
-
-		// else
-		// TODO: Start new game
-		// Gui.switchTo(Gui.ChessScene.Game);
 	}
 
 	@FXML
