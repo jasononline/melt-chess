@@ -99,7 +99,8 @@ public class NetworkController {
 			ipTextField.getStyleClass().add(error);
 			isIpValid = false;
 			connectButton.setDisable(true);
-			if (newValue.matches("^(([01]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])(.(?!$)|$)){4}$")) {
+			if (newValue
+					.matches("^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")) {
 				ipTextField.getStyleClass().removeAll(error);
 				isIpValid = true;
 				if (isIpValid && isPortValid)
