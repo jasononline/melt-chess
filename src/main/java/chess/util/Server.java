@@ -25,7 +25,7 @@ public class Server {
      * @throws IOException IOException
      */
     public static void initialize() throws IOException {
-        serverSocket = new ServerSocket(1905);
+        serverSocket = new ServerSocket(0);
         String ip = InetAddress.getLocalHost().getHostAddress();
         //System.out.println("A Server has been setup. ip = " + ip + ", port = " + serverSocket.getLocalPort());
         //System.out.println("ServerSocket awaiting connections...");
@@ -41,7 +41,7 @@ public class Server {
         System.out.println("An other Player connected to you!");
         System.out.println("If you want to connect to that Player choose:");
         System.out.println("IP-Address:\t" + "\033[42m" + socket.getInetAddress().getHostAddress() + "\033[0;0m");
-        System.out.println("Port:\t\t" + "\033[42m" + socket.getLocalPort() + "\033[0;0m");
+        System.out.println("Port:\t\t" + "Ask the other Player for the correct port.");
         System.out.println(line + "\n");
         // get the input stream from the connected socket
         inputStream = socket.getInputStream();
