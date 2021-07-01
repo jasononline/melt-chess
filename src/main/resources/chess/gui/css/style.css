@@ -24,7 +24,9 @@
   -fx-pref-height: 720;
   -fx-min-width: 640;
   -fx-min-height: 360;
-  -fx-background-image: url(../images/bgImage.jpg);
+  -fx-background-image: url("../images/bgImage.jpg");
+  /* -fx-background-image: url(https://artmouse.com.ua/img/sweng-pr/bgImage.jpg); */
+  /* -fx-background-image: url(https://projects.isp.uni-luebeck.de/melt-chess/melt-chess/-/raw/main/src/main/resources/chess/gui/images/bgImage.jpg); */
   -fx-background-size: 100% 100%;
   -fx-font-family: Montserrat;
 }
