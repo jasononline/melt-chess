@@ -69,15 +69,17 @@ public class BoardController {
 				gameController.rootPane.widthProperty().divide(1.94), gameController.rootPane.heightProperty().divide(1.09)));
 		gameController.boardGrid.prefWidthProperty().bind(Bindings.min(gameController.rootPane.widthProperty().divide(1.94),
 				gameController.rootPane.heightProperty().divide(1.09)));
-		gameController.boardGrid.maxHeightProperty().bind(gameController.boardGrid.prefHeightProperty());
-		gameController.boardGrid.maxWidthProperty().bind(gameController.boardGrid.prefWidthProperty());
 
 		gameController.lineNumbersPane.prefHeightProperty().bind(gameController.boardGrid.heightProperty());
 		gameController.lineNumbersPane.prefWidthProperty().bind(Bindings.min(
 				gameController.rootPane.widthProperty().divide(42.66), gameController.rootPane.heightProperty().divide(24)));
+		gameController.lineNumbersPane.translateXProperty().bind(gameController.boardGrid.widthProperty().divide(2)
+				.add(gameController.lineNumbersPane.widthProperty().divide(2)).negate());
 
 		gameController.columnLettersPane.prefHeightProperty().bind(gameController.lineNumbersPane.widthProperty());
 		gameController.columnLettersPane.prefWidthProperty().bind(gameController.boardGrid.widthProperty());
+		gameController.columnLettersPane.translateYProperty().bind(gameController.boardGrid.heightProperty().divide(2)
+				.add(gameController.columnLettersPane.heightProperty().divide(2)));
 
 		gameController.boardGrid.getChildren().forEach(s -> {
 			s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
