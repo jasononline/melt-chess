@@ -116,7 +116,6 @@ public class Move implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		// TODO write tests for Move.toString
 		String promotion;
 		switch (flag) {
 			case Move.PromoteToQueen:

@@ -386,8 +386,6 @@ public class Board implements Serializable {
 	 * @return returns List of positions
 	 */
 	public List<Integer> getPiecePositionsFor(int color) {
-		// TODO write tests
-		// TODO write function
 		ArrayList<Integer> positions = new ArrayList<>();
 		for (int i = 0; i < 64; i++) {
 			if (Piece.isColor(squares[i], color))

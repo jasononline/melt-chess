@@ -4,8 +4,6 @@ import chess.engine.Engine;
 import chess.model.Game;
 import chess.model.Move;
 import chess.model.Piece;
-import chess.util.Saving;
-import chess.util.SavingManager;
 import chess.util.TextManager;
 
 import java.util.*;
@@ -117,7 +115,7 @@ public class Cli {
 				CliMenus.runMainMenu();
 				break;
 			case 109: // save code
-				saveGame();
+				CliMenus.runSaveMenu(".");
 				printGameBoard();
 				break;
 			default: // make a move
@@ -268,17 +266,6 @@ public class Cli {
 		} else {
 			System.out.println("> No beaten pieces");
 		}
-	}
-
-	/**
-	 * Saves the current game
-	 */
-	private static void saveGame() {
-		System.out.println("Enter the path to the folder where you want to save your game.");
-		String path = scan.next();
-		Saving saving = new Saving(game, movesHistory);
-		System.out.println("Game saved successfuly.");
-		SavingManager.saveGame(saving, path);
 	}
 
 	/**

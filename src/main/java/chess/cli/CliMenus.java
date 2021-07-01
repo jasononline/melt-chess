@@ -86,7 +86,7 @@ public class CliMenus {
 				break;
 			case 2: // network mode when newgame is true or back to main menu when false
 				if (newgame) {
-					// TODO: Start network game
+					startNetworkGame();
 				} else {
 					runMainMenu();
 				}
@@ -102,6 +102,33 @@ public class CliMenus {
 				handleStandardMenuCommands(selectedIndex, newgame ? "gameModeMenuNewGame" : "gameModeMenuLoadGame");
 				break;
 		}
+	}
+
+	private static void startNetworkGame() {
+
+		// TODO: Сhange the text to a nicer one
+
+		String ip = Cli.getUserInput("\n" + TextManager.get("cli.network.enterIp"));
+
+		while (!ip
+				.matches("^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")) {
+			ConsoleColors.redBoldColor();
+			ip = Cli.getUserInput("\n" + TextManager.get("cli.network.errorIpFormat") + ConsoleColors.RESET);
+		}
+
+		String port = Cli.getUserInput("\n" + TextManager.get("cli.network.enterPort"));
+
+		while (!port.matches("^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$")) {
+			ConsoleColors.redBoldColor();
+			port = Cli.getUserInput("\n" + TextManager.get("cli.network.errorPortFormat") + ConsoleColors.RESET);
+		}
+
+		System.out.println("\n" + TextManager.get("cli.network.connecting"));
+
+		// TODO: Handle other errors and print them
+
+		// TODO: Connection to network
+		// TODO: Start the network game
 	}
 
 	/**
@@ -130,6 +157,94 @@ public class CliMenus {
 				break;
 			default:
 				handleStandardMenuCommands(selectedIndex, "languageMenu");
+				break;
+		}
+	}
+
+	/**
+	 * Print the load menu and process the selected savings, searches for savings in
+	 * the entered path
+	 * 
+	 * @param path the path in which savings should be found
+	 */
+	private static void runLoadMenu(String path) {
+		String fullPath = "";
+		try {
+			fullPath = new File(path).getCanonicalPath();
+		} catch (IOException e) {
+			fullPath = path;
+		}
+		String title = TextManager.get("cli.load.youIn") + " " + fullPath + "\n" + TextManager.get("cli.load.foundSavings");
+		List<String> options = new ArrayList<>();
+		File[] savingFiles = SavingManager.findSavings(path);
+
+		for (File file : savingFiles) {
+			options.add(file.getName());
+		}
+
+		int filesCount = options.size();
+
+		if (options.isEmpty()) {
+			title = TextManager.get("cli.load.youIn") + " " + fullPath + "\n" + TextManager.get("cli.load.noSavings");
+		}
+
+		options.add(TextManager.get("cli.load.changeDir"));
+		options.add(TextManager.get("cli.load.manualPath"));
+		options.add(TextManager.get("cli.load.backToMain"));
+
+		Menu loadMenu = new Menu(title, options);
+		int selectedIndex = loadMenu.run();
+
+		if (selectedIndex == filesCount) {
+			checkManualDirPath(path, true);
+		} else if (selectedIndex == filesCount + 1) {
+			checkManualFilePath(path);
+		} else if (selectedIndex == filesCount + 2) {
+			runMainMenu();
+		} else if (selectedIndex >= 0 && selectedIndex < filesCount) {
+			loadGame(SavingManager.loadGame(savingFiles[selectedIndex]), path);
+		} else {
+			handleStandardMenuCommands(selectedIndex, "loadMenu/" + path);
+		}
+	}
+
+	/**
+	 * Print the save menu and saves current game in the selected directory
+	 * 
+	 * @param path the path in which saving should be saved
+	 */
+	public static void runSaveMenu(String path) {
+		String fullPath = "";
+		try {
+			fullPath = new File(path).getCanonicalPath();
+		} catch (IOException e) {
+			fullPath = path;
+		}
+		String title = TextManager.get("cli.load.youIn") + " " + fullPath;
+		List<String> options = new ArrayList<>();
+
+		options.add(TextManager.get("cli.save.chooseThis"));
+		options.add(TextManager.get("cli.save.manualDir"));
+		options.add(TextManager.get("cli.save.backToGame"));
+		options.add(TextManager.get("cli.save.backToMain"));
+
+		Menu saveMenu = new Menu(title, options);
+		int selectedIndex = saveMenu.run();
+
+		switch (selectedIndex) {
+			case 0:
+				saveGame(fullPath);
+				break;
+			case 1:
+				checkManualDirPath(path, false);
+				break;
+			case 2:
+				return;
+			case 3:
+				runMainMenu();
+				break;
+			default:
+				handleStandardMenuCommands(selectedIndex, "saveMenu/" + path);
 				break;
 		}
 	}
@@ -175,55 +290,10 @@ public class CliMenus {
 			runGameModeMenu(false, toMenu.split("/")[1]);
 		if (toMenu.equals("languageMenu"))
 			runLanguageMenu();
-		if (toMenu.matches("^savingsMenu/.+$"))
+		if (toMenu.matches("^loadMenu/.+$"))
 			runLoadMenu(toMenu.split("/")[1]);
-	}
-
-	/**
-	 * Print the savings menu and process the selected savings, searches for savings
-	 * in the entered path
-	 * 
-	 * @param path the path in which savings should be found
-	 */
-	private static void runLoadMenu(String path) {
-		String fullPath = "";
-		try {
-			fullPath = new File(path).getCanonicalPath();
-		} catch (IOException e) {
-			fullPath = path;
-		}
-		String title = TextManager.get("cli.load.youIn") + " " + fullPath + "\n" + TextManager.get("cli.load.foundSavings");
-		List<String> options = new ArrayList<>();
-		File[] savingFiles = SavingManager.findSavings(path);
-
-		for (File file : savingFiles) {
-			options.add(file.getName());
-		}
-
-		int filesCount = options.size();
-
-		if (options.isEmpty()) {
-			title = TextManager.get("cli.load.youIn") + " " + fullPath + "\n" + TextManager.get("cli.load.noSavings");
-		}
-
-		options.add(TextManager.get("cli.load.changeDir"));
-		options.add(TextManager.get("cli.load.manualPath"));
-		options.add(TextManager.get("cli.load.backToMain"));
-
-		Menu savingsMenu = new Menu(title, options);
-		int selectedIndex = savingsMenu.run();
-
-		if (selectedIndex == filesCount) {
-			checkManualDirPath(path);
-		} else if (selectedIndex == filesCount + 1) {
-			checkManualFilePath(path);
-		} else if (selectedIndex == filesCount + 2) {
-			runMainMenu();
-		} else if (selectedIndex >= 0 && selectedIndex < filesCount) {
-			loadGame(SavingManager.loadGame(savingFiles[selectedIndex]), path);
-		} else {
-			handleStandardMenuCommands(selectedIndex, "savingsMenu/" + path);
-		}
+		if (toMenu.matches("^saveMenu/.+$"))
+			runSaveMenu(toMenu.split("/")[1]);
 	}
 
 	/**
@@ -231,22 +301,33 @@ public class CliMenus {
 	 * once again
 	 * 
 	 * @param entryPath the path to return in case of cancellation
+	 * @param fromLoad  boolean whether this function was called from load menu or
+	 *                  save menu
 	 */
-	private static void checkManualDirPath(String entryPath) {
-		String path = Cli.getUserInput("\n" + TextManager.get("cli.load.enterDir"));
+	private static void checkManualDirPath(String entryPath, boolean fromLoad) {
+		String path = Cli.getUserInput("\n" + TextManager.get(fromLoad ? "cli.load.enterDir" : "cli.save.enterDir"));
 
 		while (!Files.isDirectory(Paths.get(path))) {
 			if (path.matches("^" + Help.CliCommand.CANCEL_EN.raw + "$|^" + Help.CliCommand.CANCEL_DE.raw + "$")) {
-				runLoadMenu(entryPath);
+				if (fromLoad) {
+					runLoadMenu(entryPath);
+				} else {
+					runSaveMenu(entryPath);
+				}
 				return;
 			}
 			if (!(new File(path).canRead())) {
-				path = Cli.getUserInput("\n" + TextManager.get("cli.load.dirAccessError"));
+				path = Cli
+						.getUserInput("\n" + TextManager.get(fromLoad ? "cli.load.dirAccessError" : "cli.save.dirAccessError"));
 			} else {
-				path = Cli.getUserInput("\n" + TextManager.get("cli.load.notDirError"));
+				path = Cli.getUserInput("\n" + TextManager.get(fromLoad ? "cli.load.notDirError" : "cli.save.notDirError"));
 			}
 		}
-		runLoadMenu(path);
+		if (fromLoad) {
+			runLoadMenu(path);
+		} else {
+			saveGame(path);
+		}
 	}
 
 	/**
@@ -288,6 +369,25 @@ public class CliMenus {
 		Cli.game = saving.getGame();
 		Cli.movesHistory = saving.getMovesHistory();
 		runGameModeMenu(false, path);
+	}
+
+	/**
+	 * Saves current game
+	 * 
+	 * @param path path to the directory where current game should be saved
+	 */
+	private static void saveGame(String path) {
+		Saving saving = new Saving(Cli.game, Cli.movesHistory);
+		String fullPath = "";
+		try {
+			fullPath = new File(path).getCanonicalPath();
+		} catch (IOException e) {
+			fullPath = path;
+		}
+		SavingManager.saveGame(saving, fullPath);
+		ConsoleColors.greenBoldColor();
+		System.out.println("\n" + TextManager.get("cli.save.saved") + " " + fullPath);
+		ConsoleColors.resetColor();
 	}
 
 }
