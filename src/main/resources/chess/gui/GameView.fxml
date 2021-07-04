@@ -46,7 +46,9 @@
                               <RowConstraints minHeight="10.0" percentHeight="3.03" prefHeight="20.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" percentHeight="3.03" prefHeight="20.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" percentHeight="3.03" prefHeight="20.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="290.0" percentHeight="87.87" prefHeight="580.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" percentHeight="77.27" prefHeight="510.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="3.03" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="7.57" prefHeight="50.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" percentHeight="3.03" prefHeight="20.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
@@ -75,6 +77,23 @@
                                     <Label fx:id="historyLabel" layoutX="65.0" layoutY="1.0" prefHeight="20.0" prefWidth="160.0" styleClass="historyLabel" text="Game history" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <children>
+                                    <Button fx:id="saveButton" graphicTextGap="20.0" layoutX="53.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleButtonOnAction" prefHeight="60.0" prefWidth="160.0" text="Save" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <styleClass>
+                                          <String fx:value="button" />
+                                          <String fx:value="saveButton" />
+                                       </styleClass>
+                                       <graphic>
+                                          <ImageView fitHeight="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/icons/saveIcon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
                            </children>
                         </GridPane>
                      </children>
@@ -83,7 +102,7 @@
                      <children>
                         <StackPane prefHeight="660.0" prefWidth="660.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <GridPane fx:id="boardGrid" alignment="CENTER" prefHeight="660.0" prefWidth="660.0" styleClass="boardGrid">
+                              <GridPane fx:id="boardGrid" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="660.0" prefWidth="660.0" styleClass="boardGrid">
                                  <columnConstraints>
                                     <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="41.25" prefWidth="82.5" />
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="41.25" prefWidth="82.5" />
@@ -491,7 +510,57 @@
                                     </AnchorPane>
                                  </children>
                               </GridPane>
-                              <AnchorPane fx:id="promotionPopup" maxHeight="150.0" maxWidth="500.0" prefHeight="150.0" prefWidth="500.0" styleClass="popupBox">
+                              <GridPane fx:id="lineNumbersPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="660.0" prefWidth="30.0" StackPane.alignment="CENTER">
+                                 <columnConstraints>
+                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="30.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label styleClass="squareLabel" text="8" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    <Label styleClass="squareLabel" text="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                    <Label styleClass="squareLabel" text="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                    <Label styleClass="squareLabel" text="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                    <Label styleClass="squareLabel" text="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                    <Label styleClass="squareLabel" text="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                                    <Label styleClass="squareLabel" text="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                                    <Label styleClass="squareLabel" text="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                                 </children>
+                              </GridPane>
+                              <GridPane fx:id="columnLettersPane" alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="660.0" StackPane.alignment="CENTER">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label styleClass="squareLabel" text="a" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    <Label styleClass="squareLabel" text="b" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    <Label styleClass="squareLabel" text="c" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    <Label styleClass="squareLabel" text="d" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    <Label styleClass="squareLabel" text="e" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    <Label styleClass="squareLabel" text="f" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    <Label styleClass="squareLabel" text="g" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    <Label styleClass="squareLabel" text="h" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                 </children>
+                              </GridPane>
+                              <AnchorPane fx:id="promotionPopup" maxHeight="150.0" maxWidth="500.0" prefHeight="150.0" prefWidth="500.0" styleClass="popupBox" visible="false">
                                  <children>
                                     <GridPane layoutX="100.0" layoutY="55.0" prefHeight="200.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <columnConstraints>
@@ -588,7 +657,7 @@
                                     </GridPane>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane fx:id="surePopup" layoutX="90.0" layoutY="265.0" maxHeight="150.0" maxWidth="500.0" prefHeight="150.0" prefWidth="500.0" styleClass="popupBox">
+                              <AnchorPane fx:id="surePopup" layoutX="90.0" layoutY="265.0" maxHeight="150.0" maxWidth="500.0" prefHeight="150.0" prefWidth="500.0" styleClass="popupBox" visible="false">
                                  <children>
                                     <GridPane layoutX="100.0" layoutY="55.0" prefHeight="200.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <columnConstraints>
@@ -621,7 +690,7 @@
                                              <children>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                    <children>
-                                                      <Button fx:id="surePopupCancelButton" graphicTextGap="20.0" layoutX="31.0" layoutY="30.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="153.0" text="Cancel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <Button fx:id="surePopupCancelButton" graphicTextGap="20.0" layoutX="31.0" layoutY="30.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="153.0" styleClass="surePopupButton" text="Cancel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                          <graphic>
                                                             <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
@@ -629,16 +698,12 @@
                                                                </image>
                                                             </ImageView>
                                                          </graphic>
-                                                         <styleClass>
-                                                            <String fx:value="historyButton" />
-                                                            <String fx:value="surePopupButton" />
-                                                         </styleClass>
                                                       </Button>
                                                    </children>
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                                                    <children>
-                                                      <Button fx:id="surePopupYesButton" graphicTextGap="20.0" layoutX="31.0" layoutY="18.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="153.0" text="Yes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <Button fx:id="surePopupYesButton" graphicTextGap="20.0" layoutX="31.0" layoutY="18.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="153.0" styleClass="surePopupButton" text="Yes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                          <graphic>
                                                             <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
@@ -646,10 +711,6 @@
                                                                </image>
                                                             </ImageView>
                                                          </graphic>
-                                                         <styleClass>
-                                                            <String fx:value="historyButton" />
-                                                            <String fx:value="surePopupButton" />
-                                                         </styleClass>
                                                       </Button>
                                                    </children>
                                                 </AnchorPane>
@@ -659,7 +720,7 @@
                                     </GridPane>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane fx:id="gameOverPopup" layoutX="90.0" layoutY="265.0" maxHeight="200.0" maxWidth="500.0" prefHeight="200.0" prefWidth="500.0" styleClass="popupBox">
+                              <AnchorPane fx:id="gameOverPopup" layoutX="90.0" layoutY="265.0" maxHeight="200.0" maxWidth="500.0" prefHeight="200.0" prefWidth="500.0" styleClass="popupBox" visible="false">
                                  <children>
                                     <GridPane layoutX="100.0" layoutY="55.0" prefHeight="200.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <columnConstraints>
@@ -820,19 +881,6 @@
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                              <children>
-                                                <Button fx:id="resignButton" graphicTextGap="20.0" layoutX="103.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleButtonOnAction" prefHeight="62.0" prefWidth="260.0" text="Resign" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                   <graphic>
-                                                      <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@images/icons/resignIcon.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </graphic>
-                                                </Button>
-                                             </children>
-                                          </AnchorPane>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
-                                             <children>
                                                 <Button fx:id="restartButton" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonOnAction" prefHeight="62.0" prefWidth="260.0" text="Restart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <graphic>
                                                       <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
@@ -844,15 +892,24 @@
                                                 </Button>
                                              </children>
                                           </AnchorPane>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                                             <children>
+                                                <Button fx:id="resignButton" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonOnAction" prefHeight="62.0" prefWidth="260.0" text="Resign" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <graphic>
+                                                      <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@images/icons/resignIcon.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </AnchorPane>
                                        </children>
                                     </GridPane>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <children>
-                                    <Label fx:id="timeLabel" layoutX="115.0" layoutY="11.0" prefHeight="40.0" prefWidth="260.0" styleClass="boxNameLabel" text="04.13" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                 </children>
-                              </AnchorPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <FlowPane fx:id="whiteBeatenFlowPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <FlowPane fx:id="blackBeatenFlowPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
@@ -870,64 +927,8 @@
                         </GridPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <children>
-                        <GridPane fx:id="lineNumbersPane" prefHeight="660.0" prefWidth="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                           <columnConstraints>
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Label styleClass="squareLabel" text="8" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                              <Label styleClass="squareLabel" text="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                              <Label styleClass="squareLabel" text="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                              <Label styleClass="squareLabel" text="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                              <Label styleClass="squareLabel" text="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                              <Label styleClass="squareLabel" text="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                              <Label styleClass="squareLabel" text="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-                              <Label styleClass="squareLabel" text="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
-                           </children>
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                     <children>
-                        <GridPane fx:id="columnLettersPane" prefHeight="30.0" prefWidth="660.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="82.5" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label styleClass="squareLabel" text="a" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                              <Label styleClass="squareLabel" text="b" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                              <Label styleClass="squareLabel" text="c" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                              <Label styleClass="squareLabel" text="d" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                              <Label styleClass="squareLabel" text="e" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                              <Label styleClass="squareLabel" text="f" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                              <Label styleClass="squareLabel" text="g" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                              <Label styleClass="squareLabel" text="h" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                           </children>
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </children>

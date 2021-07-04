@@ -1,7 +1,5 @@
 package chess.gui.util;
 
-import java.util.function.Predicate;
-
 import chess.gui.game.GameController;
 import chess.gui.menu.MenuController;
 import chess.gui.network.NetworkController;
@@ -13,9 +11,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 
+import java.util.function.Predicate;
+
 /**
  * Resizes GUI elements, depending on the current view.
  */
+@SuppressWarnings("PMD.TooManyFields")
+// since resizing means to modify many elements, many fields are needed.
 public class ResizeManager {
 
 	private MenuController menuController;
@@ -40,6 +42,13 @@ public class ResizeManager {
 	private double graphicTextGapH30;
 	private double graphicTextGapV20;
 	private double graphicTextGapV5;
+
+	private static String fxFontSize = "-fx-font-size: ";
+	private static String fxBorderRadius = "; -fx-border-radius: ";
+	private static String fxBackgroundRadius = "; -fx-background-radius: ";
+	private static String fxBackgroundRadiusNoSemicolon = "-fx-background-radius: ";
+	private static String fxGraphicTextGap = "; -fx-graphic-text-gap: ";
+	private static String fxBorderWidth = "; -fx-border-width: ";
 
 	/**
 	 * Create new ResizeManager instance of
@@ -113,16 +122,14 @@ public class ResizeManager {
 	public void resizeMenu(double rootWidth, double rootHeight) {
 		updateValues(rootWidth, rootHeight);
 
-		String buttonStyleV = "-fx-font-size: " + fontSize25 + "; -fx-graphic-text-gap: " + graphicTextGapV20
-				+ "; -fx-background-radius: " + borderRadius10 + "; -fx-border-radius: " + borderRadius10
-				+ "; -fx-border-width: " + borderWidth3;
-		String buttonStyleH = "-fx-font-size: " + fontSize25 + "; -fx-graphic-text-gap: " + graphicTextGapH30
-				+ "; -fx-background-radius: " + borderRadius10 + "; -fx-border-radius: " + borderRadius10
-				+ "; -fx-border-width: " + borderWidth3;
+		String buttonStyleV = fxFontSize + fontSize25 + fxGraphicTextGap + graphicTextGapV20 + fxBackgroundRadius
+				+ borderRadius10 + fxBorderRadius + borderRadius10 + fxBorderWidth + borderWidth3;
+		String buttonStyleH = fxFontSize + fontSize25 + fxGraphicTextGap + graphicTextGapH30 + fxBackgroundRadius
+				+ borderRadius10 + fxBorderRadius + borderRadius10 + fxBorderWidth + borderWidth3;
 
-		menuController.titleLabel.setStyle("-fx-font-size: " + fontSize60);
-		menuController.modeLabel.setStyle("-fx-font-size: " + fontSize40);
-		menuController.colorLabel.setStyle("-fx-font-size: " + fontSize40);
+		menuController.titleLabel.setStyle(fxFontSize + fontSize60);
+		menuController.modeLabel.setStyle(fxFontSize + fontSize40);
+		menuController.colorLabel.setStyle(fxFontSize + fontSize40);
 
 		menuController.playerModeButton.setStyle(buttonStyleV);
 		menuController.aiModeButton.setStyle(buttonStyleV);
@@ -130,6 +137,7 @@ public class ResizeManager {
 		menuController.whiteColorButton.setStyle(buttonStyleV);
 		menuController.blackColorButton.setStyle(buttonStyleV);
 		menuController.startButton.setStyle(buttonStyleH);
+		menuController.loadButton.setStyle(buttonStyleH);
 		menuController.settingsButton.setStyle(buttonStyleH);
 		menuController.quitButton.setStyle(buttonStyleH);
 
@@ -137,18 +145,19 @@ public class ResizeManager {
 				(ImageView) menuController.aiModeButton.getGraphic(), (ImageView) menuController.networkModeButton.getGraphic(),
 				(ImageView) menuController.whiteColorButton.getGraphic(),
 				(ImageView) menuController.blackColorButton.getGraphic(), (ImageView) menuController.startButton.getGraphic(),
-				(ImageView) menuController.settingsButton.getGraphic(), (ImageView) menuController.quitButton.getGraphic() };
+				(ImageView) menuController.loadButton.getGraphic(), (ImageView) menuController.settingsButton.getGraphic(),
+				(ImageView) menuController.quitButton.getGraphic() };
 
 		for (ImageView icon : icons) {
 			icon.setFitHeight(iconHeight35);
 		}
 
 		menuController.playerModeButton.getParent().getParent().getParent().getParent().getParent()
-				.setStyle("-fx-background-radius: " + borderRadius10 + "; -fx-border-radius: " + borderRadius10);
+				.setStyle(fxBackgroundRadiusNoSemicolon + borderRadius10 + fxBorderRadius + borderRadius10);
 		menuController.whiteColorButton.getParent().getParent().getParent().getParent().getParent()
-				.setStyle("-fx-background-radius: " + borderRadius10 + "; -fx-border-radius: " + borderRadius10);
+				.setStyle(fxBackgroundRadiusNoSemicolon + borderRadius10 + fxBorderRadius + borderRadius10);
 		menuController.startButton.getParent().getParent().getParent()
-				.setStyle("-fx-background-radius: " + borderRadius10 + "; -fx-border-radius: " + borderRadius10);
+				.setStyle(fxBackgroundRadiusNoSemicolon + borderRadius10 + fxBorderRadius + borderRadius10);
 	}
 
 	/**
@@ -160,19 +169,18 @@ public class ResizeManager {
 	public void resizeSettings(double rootWidth, double rootHeight) {
 		updateValues(rootWidth, rootHeight);
 
-		settingsController.titleLabel.setStyle("-fx-font-size: " + fontSize60);
-		settingsController.languageLabel.setStyle("-fx-font-size: " + fontSize25);
-		settingsController.flipBoardLabel.setStyle("-fx-font-size: " + fontSize25);
-		settingsController.oneTouchRuleLabel.setStyle("-fx-font-size: " + fontSize25);
-		settingsController.showInCheckLabel.setStyle("-fx-font-size: " + fontSize25);
-		settingsController.showPossibleMovesLabel.setStyle("-fx-font-size: " + fontSize25);
-		settingsController.soundEffectsLabel.setStyle("-fx-font-size: " + fontSize25);
+		settingsController.titleLabel.setStyle(fxFontSize + fontSize60);
+		settingsController.languageLabel.setStyle(fxFontSize + fontSize25);
+		settingsController.flipBoardLabel.setStyle(fxFontSize + fontSize25);
+		settingsController.oneTouchRuleLabel.setStyle(fxFontSize + fontSize25);
+		settingsController.showInCheckLabel.setStyle(fxFontSize + fontSize25);
+		settingsController.showPossibleMovesLabel.setStyle(fxFontSize + fontSize25);
+		settingsController.soundEffectsLabel.setStyle(fxFontSize + fontSize25);
 
-		String langButtonStyle = "-fx-font-size: " + fontSize18 + "; -fx-background-radius: " + borderRadius5
-				+ "; -fx-border-radius: " + borderRadius5 + "; -fx-border-width: " + borderWidth2;
-		String controlButtonStyle = "-fx-font-size: " + fontSize25 + "; -fx-graphic-text-gap: " + graphicTextGapH30
-				+ "; -fx-background-radius: " + borderRadius10 + "; -fx-border-radius: " + borderRadius10
-				+ "; -fx-border-width: " + borderWidth3;
+		String langButtonStyle = fxFontSize + fontSize18 + fxBackgroundRadius + borderRadius5 + fxBorderRadius
+				+ borderRadius5 + fxBorderWidth + borderWidth2;
+		String controlButtonStyle = fxFontSize + fontSize25 + fxGraphicTextGap + graphicTextGapH30 + fxBackgroundRadius
+				+ borderRadius10 + fxBorderRadius + borderRadius10 + fxBorderWidth + borderWidth3;
 
 		settingsController.englishButton.setStyle(langButtonStyle);
 		settingsController.germanButton.setStyle(langButtonStyle);
@@ -180,9 +188,9 @@ public class ResizeManager {
 		settingsController.saveButton.setStyle(controlButtonStyle);
 
 		settingsController.saveButton.getParent().getParent().getParent()
-				.setStyle("-fx-background-radius: " + borderRadius10 + "; -fx-border-radius: " + borderRadius10);
+				.setStyle(fxBackgroundRadiusNoSemicolon + borderRadius10 + fxBorderRadius + borderRadius10);
 		settingsController.englishButton.getParent().getParent().getParent().getParent().getParent()
-				.setStyle("-fx-background-radius: " + borderRadius10 + "; -fx-border-radius: " + borderRadius10);
+				.setStyle(fxBackgroundRadiusNoSemicolon + borderRadius10 + fxBorderRadius + borderRadius10);
 
 		ImageView[] icons = { (ImageView) settingsController.cancelButton.getGraphic(),
 				(ImageView) settingsController.saveButton.getGraphic() };
@@ -206,9 +214,8 @@ public class ResizeManager {
 		double width = checkbox.getHeight() != 0 ? checkbox.getHeight() * 2 : rootHeight / 20.57 * 2;
 		checkbox.setPrefWidth(width);
 		checkbox.setMaxWidth(width);
-		checkbox.setStyle(
-				"-fx-padding: 0 0 0 " + (width / 3.04) + "; -fx-border-width: " + borderWidth2 + "; -fx-background-radius: "
-						+ borderRadius5 + "; -fx-border-radius: " + borderRadius5 + "; -fx-font-size: " + fontSize15);
+		checkbox.setStyle("-fx-padding: 0 0 0 " + (width / 3.04) + fxBorderWidth + borderWidth2 + fxBackgroundRadius
+				+ borderRadius5 + fxBorderRadius + borderRadius5 + "; -fx-font-size: " + fontSize15);
 	}
 
 	/**
@@ -220,22 +227,22 @@ public class ResizeManager {
 	public void resizeNetwork(double rootWidth, double rootHeight) {
 		updateValues(rootWidth, rootHeight);
 
-		networkController.titleLabel.setStyle("-fx-font-size: " + fontSize60);
-		networkController.ipLabel.setStyle("-fx-font-size: " + fontSize25);
-		networkController.portLabel.setStyle("-fx-font-size: " + fontSize25);
-		networkController.errorLabel.setStyle("-fx-font-size: " + fontSize20);
+		networkController.titleLabel.setStyle(fxFontSize + fontSize60);
+		networkController.ipLabel.setStyle(fxFontSize + fontSize25);
+		networkController.portLabel.setStyle(fxFontSize + fontSize25);
+		networkController.errorLabel.setStyle(fxFontSize + fontSize20);
 
-		String textFieldStyle = "-fx-font-size: " + fontSize25 + "; -fx-background-radius: " + borderRadius10
-				+ "; -fx-border-radius: " + borderRadius10 + "; -fx-border-width: " + borderWidth2;
-		String controlButtonStyle = "-fx-font-size: " + fontSize25 + "; -fx-graphic-text-gap: " + graphicTextGapH30
-				+ "; -fx-background-radius: " + borderRadius10 + "; -fx-border-radius: " + borderRadius10
-				+ "; -fx-border-width: " + borderWidth3;
+		String textFieldStyle = fxFontSize + fontSize25 + fxBackgroundRadius + borderRadius10 + fxBorderRadius
+				+ borderRadius10 + fxBorderWidth + borderWidth2;
+		String controlButtonStyle = fxFontSize + fontSize25 + fxGraphicTextGap + graphicTextGapH30 + fxBackgroundRadius
+				+ borderRadius10 + fxBorderRadius + borderRadius10 + fxBorderWidth + borderWidth3;
 
 		networkController.ipTextField.setStyle(textFieldStyle);
 		networkController.portTextField.setStyle(textFieldStyle);
 
 		networkController.cancelButton.setStyle(controlButtonStyle);
 		networkController.connectButton.setStyle(controlButtonStyle);
+		networkController.connectingLabel.setStyle(controlButtonStyle);
 
 		ImageView[] icons = { (ImageView) networkController.cancelButton.getGraphic(),
 				(ImageView) networkController.connectButton.getGraphic() };
@@ -243,10 +250,13 @@ public class ResizeManager {
 			icon.setFitHeight(iconHeight35);
 		}
 
+		networkController.activityIndicator.setPrefHeight(iconHeight35);
+		networkController.activityIndicator.setPrefWidth(iconHeight35);
+
 		networkController.connectButton.getParent().getParent().getParent()
-				.setStyle("-fx-background-radius: " + borderRadius10 + "; -fx-border-radius: " + borderRadius10);
+				.setStyle(fxBackgroundRadiusNoSemicolon + borderRadius10 + fxBorderRadius + borderRadius10);
 		networkController.ipTextField.getParent().getParent().getParent()
-				.setStyle("-fx-background-radius: " + borderRadius10 + "; -fx-border-radius: " + borderRadius10);
+				.setStyle(fxBackgroundRadiusNoSemicolon + borderRadius10 + fxBorderRadius + borderRadius10);
 	}
 
 	/**
@@ -258,81 +268,33 @@ public class ResizeManager {
 	public void resizeGame(double rootWidth, double rootHeight) {
 		updateValues(rootWidth, rootHeight);
 
-		String buttonStyleH = "-fx-font-size: " + fontSize25 + "; -fx-graphic-text-gap: " + graphicTextGapH30 / 3
-				+ "; -fx-background-radius: " + borderRadius10 + "; -fx-border-radius: " + borderRadius10
-				+ "; -fx-border-width: " + borderWidth3;
+		String buttonStyleH = fxFontSize + fontSize25 + fxGraphicTextGap + graphicTextGapH30 / 3 + fxBackgroundRadius
+				+ borderRadius10 + fxBorderRadius + borderRadius10 + fxBorderWidth + borderWidth3;
 
 		gameController.resignButton.setStyle(buttonStyleH);
 		gameController.restartButton.setStyle(buttonStyleH);
 		gameController.settingsButton.setStyle(buttonStyleH);
 		gameController.menuButton.setStyle(buttonStyleH);
 
-		gameController.currentMoveLabel.setStyle("-fx-font-size: " + fontSize25);
-		gameController.checkLabel.setStyle("-fx-font-size: " + fontSize20);
-		gameController.timeLabel.setStyle("-fx-font-size: " + fontSize40);
-		gameController.historyLabel.setStyle("-fx-font-size: " + fontSize20);
-		gameController.promotionPopupLabel.setStyle("-fx-font-size: " + fontSize25);
-		gameController.surePopupLabel.setStyle("-fx-font-size: " + fontSize20);
-		gameController.gameOverPopupTitle.setStyle("-fx-font-size: " + fontSize25);
-		gameController.gameOverPopupLabel.setStyle("-fx-font-size: " + fontSize20);
+		setLabelStyles();
+		setHistoryStyles();
+		setPopupStyles();
 
-		gameController.historyLabel.getParent().getParent().getParent()
-				.setStyle("-fx-background-radius: " + borderRadius10 + "; -fx-border-radius: " + borderRadius10);
-		gameController.timeLabel.getParent().getParent().getParent()
-				.setStyle("-fx-background-radius: " + borderRadius10 + "; -fx-border-radius: " + borderRadius10);
-
-		gameController.historyGrid.setVgap(graphicTextGapV20 / 2);
-
-		for (Node historyNode : gameController.historyGrid.getChildren()) {
-			Button historyButton = (Button) ((AnchorPane) historyNode).getChildren().get(0);
-			historyButton.setStyle("-fx-font-size: " + fontSize18 + "; -fx-background-radius: " + borderRadius5
-					+ "; -fx-border-radius: " + borderRadius5 + "; -fx-border-width: " + borderWidth2);
-		}
-
-		String popupButtonStyleV = "-fx-font-size: " + fontSize15 + "; -fx-graphic-text-gap: " + graphicTextGapV5
-				+ "; -fx-background-radius: " + borderRadius5 + "; -fx-border-radius: " + borderRadius5 + "; -fx-border-width: "
-				+ borderWidth2;
-		String popupButtonStyleH = "-fx-font-size: " + fontSize18 + "; -fx-graphic-text-gap: " + graphicTextGapV20
-				+ "; -fx-background-radius: " + borderRadius5 + "; -fx-border-radius: " + borderRadius5 + "; -fx-border-width: "
-				+ borderWidth2;
-
-		gameController.promotionPopupQueenButton.setStyle(popupButtonStyleV);
-		gameController.promotionPopupRookButton.setStyle(popupButtonStyleV);
-		gameController.promotionPopupBishopButton.setStyle(popupButtonStyleV);
-		gameController.promotionPopupKnightButton.setStyle(popupButtonStyleV);
-
-		gameController.surePopupCancelButton.setStyle(popupButtonStyleH);
-		gameController.surePopupYesButton.setStyle(popupButtonStyleH);
-
-		gameController.gameOverPopupMenuButton.setStyle(popupButtonStyleV);
-		gameController.gameOverPopupRestartButton.setStyle(popupButtonStyleV);
-		gameController.gameOverPopupStayButton.setStyle(popupButtonStyleV);
-
-		ImageView[] promotionIcons = { (ImageView) gameController.promotionPopupQueenButton.getGraphic(),
-				(ImageView) gameController.promotionPopupRookButton.getGraphic(),
-				(ImageView) gameController.promotionPopupBishopButton.getGraphic(),
-				(ImageView) gameController.promotionPopupKnightButton.getGraphic(),
-				(ImageView) gameController.gameOverPopupMenuButton.getGraphic(),
-				(ImageView) gameController.gameOverPopupRestartButton.getGraphic(),
-				(ImageView) gameController.gameOverPopupStayButton.getGraphic() };
+		ImageView[] promotionIcons = getPromotionIcons();
 		for (ImageView icon : promotionIcons) {
 			icon.setFitHeight(iconHeight35 / 1.75);
 		}
 
-		ImageView[] icons = { (ImageView) gameController.resignButton.getGraphic(),
-				(ImageView) gameController.restartButton.getGraphic(), (ImageView) gameController.settingsButton.getGraphic(),
-				(ImageView) gameController.menuButton.getGraphic(),
-				(ImageView) gameController.surePopupCancelButton.getGraphic(),
-				(ImageView) gameController.surePopupYesButton.getGraphic() };
+		ImageView[] icons = getButtonIcons();
 		for (ImageView icon : icons) {
 			icon.setFitHeight(iconHeight35 / 1.4);
 		}
 
 		for (Node number : gameController.lineNumbersPane.getChildren()) {
-			number.setStyle("-fx-font-size: " + fontSize12);
+			number.setStyle(fxFontSize + fontSize12);
 		}
 		for (Node letter : gameController.columnLettersPane.getChildren()) {
-			letter.setStyle("-fx-font-size: " + fontSize12);
+			letter.setStyle(fxFontSize + fontSize12);
 		}
 
 		Double clipSize = Math.min(rootWidth / 1.94, rootHeight / 1.09);
@@ -352,6 +314,68 @@ public class ResizeManager {
 				centerPiecePosition(piece);
 			}
 		}
+	}
+
+	private void setHistoryStyles() {
+		gameController.historyGrid.setVgap(graphicTextGapV20 / 2);
+		String historyButtonStyle = fxFontSize + fontSize18 + fxGraphicTextGap + graphicTextGapH30 / 3 + fxBackgroundRadius
+				+ borderRadius5 + fxBorderRadius + borderRadius5 + fxBorderWidth + borderWidth2;
+		gameController.saveButton.setStyle(historyButtonStyle);
+		for (Node historyNode : gameController.historyGrid.getChildren()) {
+			Button historyButton = (Button) ((AnchorPane) historyNode).getChildren().get(0);
+			historyButton.setStyle(historyButtonStyle);
+		}
+	}
+
+	private void setPopupStyles() {
+		gameController.gameOverPopupTitle.setStyle(fxFontSize + fontSize25);
+
+		String popupButtonStyleV = fxFontSize + fontSize15 + fxGraphicTextGap + graphicTextGapV5 + fxBackgroundRadius
+				+ borderRadius5 + fxBorderRadius + borderRadius5 + fxBorderWidth + borderWidth2;
+		String popupButtonStyleH = fxFontSize + fontSize18 + fxGraphicTextGap + graphicTextGapV20 + fxBackgroundRadius
+				+ borderRadius5 + fxBorderRadius + borderRadius5 + fxBorderWidth + borderWidth2;
+
+		gameController.promotionPopupQueenButton.setStyle(popupButtonStyleV);
+		gameController.promotionPopupRookButton.setStyle(popupButtonStyleV);
+		gameController.promotionPopupBishopButton.setStyle(popupButtonStyleV);
+		gameController.promotionPopupKnightButton.setStyle(popupButtonStyleV);
+
+		gameController.surePopupCancelButton.setStyle(popupButtonStyleH);
+		gameController.surePopupYesButton.setStyle(popupButtonStyleH);
+
+		gameController.gameOverPopupMenuButton.setStyle(popupButtonStyleV);
+		gameController.gameOverPopupRestartButton.setStyle(popupButtonStyleV);
+		gameController.gameOverPopupStayButton.setStyle(popupButtonStyleV);
+	}
+
+	private void setLabelStyles() {
+		gameController.currentMoveLabel.setStyle(fxFontSize + fontSize25);
+		gameController.checkLabel.setStyle(fxFontSize + fontSize20);
+		gameController.historyLabel.setStyle(fxFontSize + fontSize20);
+		gameController.promotionPopupLabel.setStyle(fxFontSize + fontSize25);
+		gameController.surePopupLabel.setStyle(fxFontSize + fontSize20);
+		gameController.gameOverPopupLabel.setStyle(fxFontSize + fontSize20);
+
+		gameController.historyLabel.getParent().getParent().getParent()
+				.setStyle(fxBackgroundRadiusNoSemicolon + borderRadius10 + fxBorderRadius + borderRadius10);
+	}
+
+	private ImageView[] getPromotionIcons() {
+		return new ImageView[] { (ImageView) gameController.promotionPopupQueenButton.getGraphic(),
+				(ImageView) gameController.promotionPopupRookButton.getGraphic(),
+				(ImageView) gameController.promotionPopupBishopButton.getGraphic(),
+				(ImageView) gameController.promotionPopupKnightButton.getGraphic(),
+				(ImageView) gameController.gameOverPopupMenuButton.getGraphic(),
+				(ImageView) gameController.gameOverPopupRestartButton.getGraphic(),
+				(ImageView) gameController.gameOverPopupStayButton.getGraphic() };
+	}
+
+	private ImageView[] getButtonIcons() {
+		return new ImageView[] { (ImageView) gameController.resignButton.getGraphic(),
+				(ImageView) gameController.restartButton.getGraphic(), (ImageView) gameController.settingsButton.getGraphic(),
+				(ImageView) gameController.menuButton.getGraphic(), (ImageView) gameController.saveButton.getGraphic(),
+				(ImageView) gameController.surePopupCancelButton.getGraphic(),
+				(ImageView) gameController.surePopupYesButton.getGraphic() };
 	}
 
 	/**

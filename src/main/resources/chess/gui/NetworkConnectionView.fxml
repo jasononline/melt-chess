@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -110,7 +111,7 @@
                               </AnchorPane>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                  <children>
-                                    <Button fx:id="connectButton" alignment="CENTER" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleConnectButtonOnAction" prefHeight="60.0" prefWidth="420.0" text="Connect" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <Button fx:id="connectButton" alignment="CENTER" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleConnectButtonOnAction" prefHeight="60.0" prefWidth="420.0" text="Connect" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <graphic>
                                           <ImageView fitHeight="35.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -119,6 +120,11 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
+                                    <Label fx:id="connectingLabel" alignment="CENTER" graphicTextGap="20.0" prefHeight="60.0" prefWidth="420.0" styleClass="connectingLabel" text="Connecting" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <graphic>
+                                          <ProgressIndicator fx:id="activityIndicator" prefHeight="35.0" prefWidth="35.0" styleClass="progressIndicator" visible="false" />
+                                       </graphic>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                            </children>

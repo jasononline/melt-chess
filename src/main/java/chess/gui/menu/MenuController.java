@@ -4,7 +4,9 @@ import chess.gui.Gui;
 import chess.gui.game.GameModel;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.ResizeManager;
-import chess.gui.util.TextManager;
+import chess.model.Piece;
+import chess.util.*;
+import chess.util.networkservices.InitServerService;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,11 +14,20 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Controls the behaviour and actions of the UI elements in the menu scene,
  * mainly switching to one of the other scenes and selecting game options.
  */
+@SuppressWarnings({ "PMD.UnusedPrivateMethod", "PMD.TooManyFields" })
+// Some methods in this class seem unused but they are used by FXML
+// This class controls many elements of the gui, hence many fields are needed
+// here.
 public class MenuController {
 
 	@FXML
@@ -42,9 +53,13 @@ public class MenuController {
 	@FXML
 	public Button startButton;
 	@FXML
+	public Button loadButton;
+	@FXML
 	public Button settingsButton;
 	@FXML
 	public Button quitButton;
+
+	private static String selected = "selected";
 
 	private ResizeManager resizeManager = new ResizeManager(this);
 
@@ -60,8 +75,10 @@ public class MenuController {
 		TextManager.computeText(blackColorButton, "menu.black");
 		TextManager.computeText(settingsButton, "menu.settings");
 		TextManager.computeText(startButton, "menu.start");
+		TextManager.computeText(loadButton, "menu.load");
 		TextManager.computeText(quitButton, "menu.quit");
 		startButton.setDisable(true);
+		loadButton.setDisable(true);
 		colorPane.setDisable(true);
 
 		ChangeListener<Number> rootPaneSizeListener = (observable, oldValue, newValue) -> {
@@ -78,33 +95,38 @@ public class MenuController {
 	@FXML
 	private void handleModeButtonOnAction(ActionEvent event) {
 		Node source = (Node) event.getSource();
-		playerModeButton.getStyleClass().remove("selected");
-		aiModeButton.getStyleClass().remove("selected");
-		networkModeButton.getStyleClass().remove("selected");
+		playerModeButton.getStyleClass().remove(selected);
+		aiModeButton.getStyleClass().remove(selected);
+		networkModeButton.getStyleClass().remove(selected);
 		colorPane.setDisable(true);
-		source.getStyleClass().add("selected");
+		source.getStyleClass().add(selected);
 
-		if (source == playerModeButton) {
-			whiteColorButton.getStyleClass().remove("selected");
-			blackColorButton.getStyleClass().remove("selected");
-			GameModel.setColor(GameModel.ChessColor.None);
+		if (source.equals(playerModeButton)) {
+			whiteColorButton.getStyleClass().remove(selected);
+			blackColorButton.getStyleClass().remove(selected);
+			GameModel.setChoosenColor(Piece.None);
 			GameModel.setGameMode(GameModel.ChessMode.Player);
 		}
-		if (source == aiModeButton) {
+		if (source.equals(aiModeButton)) {
 			colorPane.setDisable(false);
 			GameModel.setGameMode(GameModel.ChessMode.Computer);
 		}
-		if (source == networkModeButton) {
-			whiteColorButton.getStyleClass().remove("selected");
-			blackColorButton.getStyleClass().remove("selected");
-			GameModel.setColor(GameModel.ChessColor.None);
+		if (source.equals(networkModeButton)) {
+			whiteColorButton.getStyleClass().remove(selected);
+			blackColorButton.getStyleClass().remove(selected);
+			GameModel.setChoosenColor(Piece.None);
 			GameModel.setGameMode(GameModel.ChessMode.Network);
+			loadButton.setDisable(true);
 		}
 
-		if (GameModel.getGameMode() != GameModel.ChessMode.None && GameModel.getGameMode() != GameModel.ChessMode.Computer) {
+		if (GameModel.getGameMode() != GameModel.ChessMode.None
+				&& GameModel.getGameMode() != GameModel.ChessMode.Computer) {
 			startButton.setDisable(false);
+			if (GameModel.getGameMode() != GameModel.ChessMode.Network)
+				loadButton.setDisable(false);
 		} else {
 			startButton.setDisable(true);
+			loadButton.setDisable(true);
 		}
 
 	}
@@ -116,17 +138,18 @@ public class MenuController {
 	@FXML
 	private void handleColorButtonOnAction(ActionEvent event) {
 		Node source = (Node) event.getSource();
-		whiteColorButton.getStyleClass().remove("selected");
-		blackColorButton.getStyleClass().remove("selected");
-		source.getStyleClass().add("selected");
+		whiteColorButton.getStyleClass().remove(selected);
+		blackColorButton.getStyleClass().remove(selected);
+		source.getStyleClass().add(selected);
 
-		if (source == whiteColorButton)
-			GameModel.setColor(GameModel.ChessColor.White);
-		if (source == blackColorButton)
-			GameModel.setColor(GameModel.ChessColor.Black);
+		if (source.equals(whiteColorButton))
+			GameModel.setChoosenColor(Piece.White);
+		if (source.equals(blackColorButton))
+			GameModel.setChoosenColor(Piece.Black);
 
-		if (GameModel.getColor() != GameModel.ChessColor.None) {
+		if (GameModel.getChoosenColor() != Piece.None) {
 			startButton.setDisable(false);
+			loadButton.setDisable(false);
 		}
 	}
 
@@ -134,26 +157,49 @@ public class MenuController {
 	 * Controls the effect when clicking one of the menu buttons.
 	 */
 	@FXML
-	private void handleMenuButtonOnAction(ActionEvent event) {
+	private void handleMenuButtonOnAction(ActionEvent event) throws IOException {
 		Node source = (Node) event.getSource();
 
-		if (source == startButton) {
+		if (source.equals(startButton)) {
+			GameModel.setTaskStopped(false);
 			if (GameModel.getGameMode() == GameModel.ChessMode.Network) {
+				InitServerService server = new InitServerService();
+				Server.endOldServer();
+				Client.endOldClient();
+				server.start();
 				Gui.switchTo(Gui.ChessScene.NetworkConnection);
 			} else {
 				GameModel.beginNewGame();
 				Gui.switchTo(Gui.ChessScene.Game);
 			}
-
 		}
 
-		if (source == settingsButton) {
+		if (source.equals(loadButton)) {
+			Saving saving = loadGame();
+			if (saving == null)
+				return;
+			GameModel.beginSavedGame(saving);
+
+			Gui.switchTo(Gui.ChessScene.Game);
+		}
+
+		if (source.equals(settingsButton)) {
 			SettingsModel.setLastScene(Gui.ChessScene.Menu);
 			Gui.switchTo(Gui.ChessScene.Settings);
 		}
 
-		if (source == quitButton)
+		if (source.equals(quitButton))
 			System.exit(0);
 	}
 
+	private Saving loadGame() {
+		FileChooser fc = new FileChooser();
+		fc.setTitle(TextManager.get("menu.selectFileTitle"));
+		fc.getExtensionFilters().addAll(new ExtensionFilter("MELT-CHESS Files", "*.melt"));
+		File file = fc.showOpenDialog(rootPane.getScene().getWindow());
+		if (file != null) {
+			return SavingManager.loadGame(file);
+		}
+		return null;
+	}
 }

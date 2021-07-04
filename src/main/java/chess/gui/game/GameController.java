@@ -4,12 +4,10 @@ import chess.gui.Gui;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.GraphicsManager;
 import chess.gui.util.ResizeManager;
-import chess.gui.util.TextManager;
-import chess.model.Board;
-import chess.model.Coordinate;
-import chess.model.Game;
-import chess.model.Move;
-import chess.model.Piece;
+import chess.model.*;
+import chess.util.Saving;
+import chess.util.SavingManager;
+import chess.util.TextManager;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,12 +21,20 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+
+import java.io.File;
 
 /**
  * Controls behaviour of GUI elements except the chessboard (see
  * BoardController). The chess.model.Game class should be used as GameModel for
  * this scene.
  */
+@SuppressWarnings({ "PMD.UnusedPrivateMethod", "PMD.TooManyFields" })
+// Some methods in this class seem unused but they are used by FXML
+// since there are many elements to be controlled in the game view, many fields
+// are required
 public class GameController {
 
 	@FXML
@@ -47,8 +53,6 @@ public class GameController {
 	public GridPane columnLettersPane;
 	@FXML
 	public GridPane boardGrid;
-	@FXML
-	public Label timeLabel;
 	@FXML
 	public FlowPane whiteBeatenFlowPane;
 	@FXML
@@ -69,6 +73,8 @@ public class GameController {
 	public Button settingsButton;
 	@FXML
 	public Button menuButton;
+	@FXML
+	public Button saveButton;
 
 	@FXML
 	public AnchorPane promotionPopup;
@@ -103,10 +109,15 @@ public class GameController {
 	@FXML
 	public Button gameOverPopupStayButton;
 
+	private static String focused = "focused";
+
 	private ResizeManager resizeManager = new ResizeManager(this);
 	protected GamePopup gamePopup = new GamePopup(this);
 	protected BoardController boardController = new BoardController(this);
 
+	/**
+	 * Initializes the elements in the Game view
+	 */
 	@FXML
 	protected void initialize() {
 		TextManager.computeText(historyLabel, "game.history");
@@ -116,6 +127,7 @@ public class GameController {
 		TextManager.computeText(resignButton, "game.resign");
 		TextManager.computeText(restartButton, "game.restart");
 		TextManager.computeText(menuButton, "game.menu");
+		TextManager.computeText(saveButton, "game.save");
 
 		ChangeListener<Number> rootPaneSizeListener = (observable, oldValue, newValue) -> {
 			resizeManager.resizeGame(rootPane.getWidth(), rootPane.getHeight());
@@ -124,14 +136,19 @@ public class GameController {
 		rootPane.heightProperty().addListener(rootPaneSizeListener);
 
 		checkLabel.setVisible(false);
+
 		if (!resignButton.disableProperty().isBound()) {
 			resignButton.setDisable(false);
 		}
 		restartButton.setDisable(false);
+		restartButton.setVisible(GameModel.getGameMode() != GameModel.ChessMode.Network);
 		if (!settingsButton.disableProperty().isBound()) {
 			settingsButton.setDisable(false);
 		}
 		menuButton.setDisable(false);
+		if (!saveButton.disableProperty().isBound()) {
+			saveButton.setDisable(false);
+		}
 
 		activityIndicator.visibleProperty().unbind();
 		activityIndicator.setVisible(false);
@@ -141,15 +158,24 @@ public class GameController {
 
 		updateUI();
 
+		boardController.continueAccordingToGameMode();
+
 	}
 
+	/**
+	 * Handles what to do when User clicks a button in the game view
+	 * 
+	 * @param event the Action event to handle
+	 */
 	@FXML
 	protected void handleButtonOnAction(ActionEvent event) {
 		Button button = (Button) event.getSource();
 
-		if (button == settingsButton) {
+		if (button.equals(settingsButton)) {
 			SettingsModel.setLastScene(Gui.ChessScene.Game);
 			Gui.switchTo(Gui.ChessScene.Settings);
+		} else if (button.equals(saveButton)) {
+			saveGame();
 		} else {
 			gamePopup.showSurePopup(button);
 		}
@@ -247,7 +273,6 @@ public class GameController {
 	 */
 	private void updateLabelsUI() {
 		String key;
-
 		// CurrentMoveLabel
 		if (GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.White) {
 			key = "game.whiteMove";
@@ -255,6 +280,20 @@ public class GameController {
 			key = "game.blackMove";
 		}
 		TextManager.computeText(currentMoveLabel, key);
+	}
+
+	/**
+	 * Saves current game
+	 */
+	private void saveGame() {
+		FileChooser fc = new FileChooser();
+		fc.getExtensionFilters().addAll(new ExtensionFilter("MELT-CHESS Files", "*.melt"));
+		fc.setInitialFileName(SavingManager.getDefaultFileName());
+		File file = fc.showSaveDialog(rootPane.getScene().getWindow());
+		if (file != null) {
+			Saving saving = new Saving(GameModel.getCurrentGame(), GameModel.getMovesHistory());
+			SavingManager.saveGame(saving, file);
+		}
 	}
 
 	@FXML
@@ -269,7 +308,7 @@ public class GameController {
 			}
 
 			if (GameModel.isSelected()) {
-				square.getStyleClass().add("focused");
+				square.getStyleClass().add(focused);
 			}
 		}
 	}
@@ -286,7 +325,7 @@ public class GameController {
 			}
 
 			if (GameModel.isSelected() && square != boardGrid.getChildren().get(GameModel.getSelectedIndex())) {
-				square.getStyleClass().removeAll("focused");
+				square.getStyleClass().removeAll(focused);
 			}
 		}
 
@@ -303,31 +342,52 @@ public class GameController {
 		AnchorPane square = (AnchorPane) event.getSource();
 		int index = Coordinate.toIndex(square.getId());
 
-		if (!GameModel.isSelected()) { // if a piece has not yet been selected (first press)
-
-			if (!square.getChildren().isEmpty()) {
-
-				int piece = GameModel.getCurrentGame().getCurrentPosition().getPieceAt(index);
-				boolean colorMatch = Piece.isColor(piece, GameModel.getCurrentGame().getCurrentPosition().getTurnColor());
-				if (SettingsModel.isOneTouchRule() && (!colorMatch || GameModel.getPossibleMoves(index).isEmpty())) {
-					GameModel.playSound(GameModel.ChessSound.Failure, true);
-					return;
-				}
-
-				GameModel.setSelectedIndex(index);
-				square.getStyleClass().add("focused");
-				if (!settingsButton.disableProperty().isBound()) {
-					settingsButton.setDisable(true);
-				}
-
-				if (SettingsModel.isShowPossibleMoves())
-					boardController.showPossibleMoves(index);
-			}
+		if (!GameModel.isSelected()) {
+			// if no piece has yet been selected (first press)
+			handleFirstClick(square, index);
 			return;
+		} else {
+			// if a piece has already been selected (second press)
+			handleSecondClick(index);
 		}
+	}
 
-		// if a piece has already been selected (second press)
+	/**
+	 * Has ability to control what should happen when there was a click on the board
+	 * and no Piece has been selected yet
+	 * 
+	 * @param square the AnchorPane of the clicked on square
+	 * @param index  the index of the clicked on square
+	 */
+	private void handleFirstClick(AnchorPane square, int index) {
+		if (!square.getChildren().isEmpty()) {
 
+			int piece = GameModel.getCurrentGame().getCurrentPosition().getPieceAt(index);
+			boolean colorMatch = Piece.isColor(piece, GameModel.getCurrentGame().getCurrentPosition().getTurnColor());
+			if (SettingsModel.isOneTouchRule() && (!colorMatch || GameModel.getPossibleMoves(index).isEmpty())) {
+				GameModel.playSound(GameModel.ChessSound.Failure, true);
+				return;
+			}
+
+			GameModel.setSelectedIndex(index);
+			square.getStyleClass().add(focused);
+			if (!settingsButton.disableProperty().isBound()) {
+				settingsButton.setDisable(true);
+			}
+			if (!saveButton.disableProperty().isBound())
+				saveButton.setDisable(true);
+			if (SettingsModel.isShowPossibleMoves())
+				boardController.showPossibleMoves(index);
+		}
+	}
+
+	/**
+	 * Has ability to control what should happen when there was a click on the board
+	 * and a Piece has been selected yet
+	 * 
+	 * @param index the index of the clicked on square
+	 */
+	private void handleSecondClick(int index) {
 		Move currentMove = new Move(GameModel.getSelectedIndex(), index);
 		Game testGame = GameModel.getCurrentGame();
 		testGame.addFlag(currentMove);
@@ -339,27 +399,32 @@ public class GameController {
 			GameModel.playSound(GameModel.ChessSound.Failure, true);
 		} else {
 			if (GameModel.getSelectedIndex() == index) {
+				// if clicked on selected piece
 				if (!settingsButton.disableProperty().isBound()) {
 					settingsButton.setDisable(false);
 				}
+				if (!saveButton.disableProperty().isBound())
+					saveButton.setDisable(false);
 				GameModel.setSelectedIndex(-1);
 				boardGrid.getChildren().forEach(s -> {
-					s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
+					s.getStyleClass().removeAll(focused, "possibleMove", "checkMove", "captureMove");
 				});
 
 			} else {
-
+				// if not clicked on selected piece
 				if (!settingsButton.disableProperty().isBound()) {
 					settingsButton.setDisable(promotionPopup.isVisible());
+				}
+				if (!saveButton.disableProperty().isBound()) {
+					saveButton.setDisable(promotionPopup.isVisible());
 				}
 				boardController.movePieceOnBoard(GameModel.getSelectedIndex(), index);
 
 				boardGrid.getChildren().forEach(s -> {
-					s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
+					s.getStyleClass().removeAll(focused, "possibleMove", "checkMove", "captureMove");
 				});
 				GameModel.setSelectedIndex(-1);
 			}
 		}
-
 	}
 }

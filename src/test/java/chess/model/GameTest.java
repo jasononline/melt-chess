@@ -2,7 +2,9 @@ package chess.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  *  Tests for the Game class
@@ -47,10 +49,10 @@ public class GameTest {
         Game game = new Game();
         System.out.println("Test win condition:");
         System.out.println(checkmatePosition);
-        assertEquals(Game.CHECKMATE, game.checkWinCondition(checkmatePosition));
+        assertEquals(Game.WinCondition.CHECKMATE, game.checkWinCondition(checkmatePosition));
         System.out.println("Test win condition:");
         System.out.println(notCheckmatePosition);
-        assertEquals(0, game.checkWinCondition(notCheckmatePosition));
+        assertEquals(Game.WinCondition.NONE, game.checkWinCondition(notCheckmatePosition));
     }
 
     /**
@@ -62,7 +64,7 @@ public class GameTest {
         Game game = new Game();
         System.out.println("Test win condition (remis):");
         System.out.println(simpleRemisPosition);
-        assertEquals(Game.REMIS, game.checkWinCondition(simpleRemisPosition));
+        assertEquals(Game.WinCondition.REMIS, game.checkWinCondition(simpleRemisPosition));
     }
 
 
@@ -113,7 +115,7 @@ public class GameTest {
     public void checkCheckCheckmateOfCurrentPlayer() {
         Game game = new Game();
         assertFalse(game.checkCheck());
-        assertEquals(0, game.checkWinCondition());
+        assertEquals(Game.WinCondition.NONE, game.checkWinCondition());
     }
 
 

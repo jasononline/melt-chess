@@ -1,10 +1,12 @@
 package chess.model;
 
+import java.io.Serializable;
+
 /**
  * Container for a possible Move. Contains start and destination square as well
  * as flags for capturing, castling and piece exchange
  */
-public class Move {
+public class Move implements Serializable {
 
 	public static final int EnPassantCapture = 1;
 	public static final int PawnTwoForward = 2;
@@ -43,6 +45,42 @@ public class Move {
 	}
 
 	/**
+	 * Parse the user input string and return Move object
+	 *
+	 * @param input User input like "e7-e8[Q]"
+	 * @param game  the current game
+	 * @return parsed move object from user input
+	 */
+	public static Move parseUserMoveInput(String input, Game game) {
+		String[] squares = input.split("-"); // Split input by '-'
+		int startSquare = Coordinate.toIndex(squares[0]); // start position in the board.squares array
+		int targetSquare = Coordinate.toIndex(squares[1].substring(0, 2)); // target position in the board.squares array
+		String flagString = squares[1].length() > 2 ? "" + squares[1].charAt(2) : "";
+		int flag = 0;
+
+		switch (flagString) {
+			case "Q":
+				flag = Move.PromoteToQueen;
+				break;
+			case "K":
+				flag = Move.PromoteToKnight;
+				break;
+			case "R":
+				flag = Move.PromoteToRook;
+				break;
+			case "B":
+				flag = Move.PromoteToBishop;
+				break;
+			default:
+				break;
+		}
+
+		Move move = new Move(startSquare, targetSquare, flag);
+		game.addFlag(move);
+		return move;
+	}
+
+	/**
 	 * @return the starting square
 	 */
 	public int getStartSquare() {
@@ -78,7 +116,6 @@ public class Move {
 	 */
 	@Override
 	public String toString() {
-		// TODO write tests for Move.toString
 		String promotion;
 		switch (flag) {
 			case Move.PromoteToQueen:

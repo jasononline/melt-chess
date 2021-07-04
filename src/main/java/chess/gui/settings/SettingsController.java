@@ -1,21 +1,25 @@
 package chess.gui.settings;
 
-import java.util.Locale;
-
 import chess.gui.Gui;
 import chess.gui.util.ResizeManager;
-import chess.gui.util.TextManager;
+import chess.util.TextManager;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+
+import java.util.Locale;
 
 /**
  * Controls the behaviour and actions of the UI elements in the settings scene
  */
+@SuppressWarnings({ "PMD.UnusedPrivateMethod", "PMD.TooManyFields" })
+// Some methods in this class seem unused but they are used by FXML
+// This class controls many elements of the gui, hence many fields are needed
+// here.
 public class SettingsController {
 
 	@FXML
@@ -56,6 +60,7 @@ public class SettingsController {
 	private ResizeManager resizeManager = new ResizeManager(this);
 
 	private Locale currentLocale = SettingsModel.getCurrentLocale();
+	private static String selected = "selected";
 
 	@FXML
 	private void initialize() {
@@ -78,11 +83,11 @@ public class SettingsController {
 		rootPane.heightProperty().addListener(rootPaneSizeListener);
 
 		if (SettingsModel.getCurrentLocale() == Locale.ENGLISH) {
-			englishButton.getStyleClass().add("selected");
-			germanButton.getStyleClass().remove("selected");
+			englishButton.getStyleClass().add(selected);
+			germanButton.getStyleClass().remove(selected);
 		} else {
-			englishButton.getStyleClass().remove("selected");
-			germanButton.getStyleClass().add("selected");
+			englishButton.getStyleClass().remove(selected);
+			germanButton.getStyleClass().add(selected);
 		}
 
 		flipBoardCheckbox.setSelected(SettingsModel.isFlipBoard());
@@ -112,15 +117,15 @@ public class SettingsController {
 	@FXML
 	private void handleLanguageButtonOnAction(ActionEvent event) {
 		Button button = (Button) event.getSource();
-		if (button == englishButton) {
+		if (button.equals(englishButton)) {
 			currentLocale = Locale.ENGLISH;
-			germanButton.getStyleClass().remove("selected");
-			englishButton.getStyleClass().add("selected");
+			germanButton.getStyleClass().remove(selected);
+			englishButton.getStyleClass().add(selected);
 		}
-		if (button == germanButton) {
+		if (button.equals(germanButton)) {
 			currentLocale = Locale.GERMAN;
-			englishButton.getStyleClass().remove("selected");
-			germanButton.getStyleClass().add("selected");
+			englishButton.getStyleClass().remove(selected);
+			germanButton.getStyleClass().add(selected);
 		}
 		TextManager.setLocale(currentLocale);
 	}

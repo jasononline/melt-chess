@@ -4,49 +4,30 @@ import chess.engine.Engine;
 import chess.gui.Gui;
 import chess.gui.settings.SettingsModel;
 import chess.gui.util.GraphicsManager;
-import chess.model.Game;
+import chess.model.*;
+import chess.util.Saving;
+import chess.util.Server;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import chess.model.Move;
-import chess.model.Piece;
-import chess.model.MoveGenerator;
-import chess.model.MoveValidator;
 
 /**
  * Storage for information on the currently visible board position, like
  * positions of image objects, which piece is selected, etc.
  */
+@SuppressWarnings("PMD.TooManyFields")
+// One of the main features of this class is to store states of variables.
+// That's why many fields are necessary here.
 public class GameModel {
-
-	/**
-	 * The current Game
-	 */
-	private static chess.model.Game currentGame;
-
-	private static Engine engine = new Engine();
-
-	/**
-	 * Stores whether the user is allowed do make a move. This variable is used to
-	 * prevent the user from making moves while the Engine computes a move.
-	 */
-	private static boolean allowedToMove = true;
 
 	/**
 	 * Enumeration of available game modes
 	 */
 	public enum ChessMode {
-		None, Player, Computer, Network;
-	}
-
-	/**
-	 * Enumeration of available colors
-	 */
-	public enum ChessColor {
-		None, White, Black;
+		None, Player, Computer, Network
 	}
 
 	/**
@@ -58,10 +39,30 @@ public class GameModel {
 
 		public final AudioClip audio;
 
-		private ChessSound(String filename) {
+		ChessSound(String filename) {
 			this.audio = new AudioClip(Gui.class.getResource("audio/" + filename).toExternalForm());
 		}
 	}
+
+	/**
+	 * The current Game
+	 */
+	private static Game currentGame;
+
+	private static boolean taskStopped = false;
+
+	public static boolean surrendered = false;
+
+	/**
+	 * The engine to get best moves from
+	 */
+	private static Engine engine = new Engine();
+
+	/**
+	 * Stores whether the user is allowed do make a move. This variable is used to
+	 * prevent the user from making moves while the Engine computes a move.
+	 */
+	private static boolean allowedToMove = true;
 
 	/**
 	 * Stores the chosen game mode
@@ -71,7 +72,7 @@ public class GameModel {
 	/**
 	 * Stores the chosen color (not to confuse with currentColor)
 	 */
-	private static ChessColor color = ChessColor.None;
+	private static int choosenColor = Piece.None;
 
 	/**
 	 * Stores the Move objects that represent the history of the game.
@@ -106,9 +107,6 @@ public class GameModel {
 	public static void beginNewGame() {
 		// start the new game
 		currentGame = new Game();
-		if (color == ChessColor.Black) {
-			currentGame.getCurrentPosition().setTurnColor(Piece.Black);
-		}
 
 		// clear outdated lists and do some reset
 		beatenWhitePiecesGraphics.clear();
@@ -117,6 +115,26 @@ public class GameModel {
 		selectedIndex = -1;
 
 		allowedToMove = true;
+		taskStopped = false;
+		surrendered = false;
+	}
+
+	/**
+	 * Begins a saved game
+	 *
+	 * @param saving saving object
+	 */
+	public static void beginSavedGame(Saving saving) {
+		// start saved game
+		currentGame = saving.getGame();
+
+		updateBeatenPiecesLists();
+		movesHistory = saving.getMovesHistory();
+		selectedIndex = -1;
+
+		allowedToMove = true;
+		taskStopped = false;
+		surrendered = false;
 	}
 
 	/**
@@ -151,17 +169,26 @@ public class GameModel {
 	}
 
 	/**
-	 * Uses the engine to generate the next PC-move and executes that move.
+	 * Uses the engine to generate the next PC-move, or Network-Opponent-move and
+	 * executes that move. Should only be used for PvPC or Network game
+	 *
 	 */
-	public static void performEngineMove() {
+	public static void performOpponentMove() throws IOException {
 		List<Integer> capturedPieces = currentGame.getCurrentPosition().getCapturedPieces();
-		Move next = engine.generateBestMove(currentGame.getCurrentPosition());
-		if (next != null) {
-			if (!currentGame.attemptMove(next)) {
-				return;
-			}
+		Move next;
+		if (gameMode == ChessMode.Computer) {
+			// PvPC
+			next = engineMove();
+		} else {
+			// Network
+			next = networkMove();
 		}
-		if (currentGame.checkWinCondition() == 0) {
+
+		if (next == null || !currentGame.attemptMove(next) || taskStopped) {
+			taskStopped = false;
+			return;
+		}
+		if (currentGame.checkWinCondition() == Game.WinCondition.NONE) {
 			if (currentGame.checkCheck() && SettingsModel.isShowInCheck()) {
 				GameModel.playSound(GameModel.ChessSound.Check, true);
 			} else if (currentGame.getCurrentPosition().getCapturedPieces().equals(capturedPieces)) {
@@ -171,7 +198,28 @@ public class GameModel {
 			}
 		}
 		movesHistory.add(0, next);
+	}
 
+	private static Move engineMove() {
+		Move next = engine.generateBestMove(currentGame.getCurrentPosition());
+		return next;
+	}
+
+	private static Move networkMove() throws IOException {
+		System.out.println("networkMove() was called.");
+		String opponentInput = Server.getOpponentInput();
+		if (opponentInput.equals("")) {
+			// this only happens when the task is being stopped
+			return null;
+		}
+		System.out.println("Opponent input was: " + opponentInput);
+		if (opponentInput.equals("resign")) {
+			System.out.println("Opponent resigned.");
+			surrendered = true;
+			taskStopped = true;
+			return null;
+		}
+		return Move.parseUserMoveInput(opponentInput, currentGame);
 	}
 
 	/**
@@ -193,7 +241,7 @@ public class GameModel {
 	}
 
 	/**
-	 * Getter for the allowedToMove vaiable
+	 * Getter for the allowedToMove variable
 	 * 
 	 * @return whether allowedToMove or not
 	 */
@@ -215,8 +263,8 @@ public class GameModel {
 	 * 
 	 * @param color the new color
 	 */
-	public static void setColor(ChessColor color) {
-		GameModel.color = color;
+	public static void setChoosenColor(int color) {
+		GameModel.choosenColor = color;
 	}
 
 	/**
@@ -254,8 +302,8 @@ public class GameModel {
 	 * 
 	 * @return current color
 	 */
-	public static ChessColor getColor() {
-		return color;
+	public static int getChoosenColor() {
+		return choosenColor;
 	}
 
 	/**
@@ -307,5 +355,22 @@ public class GameModel {
 		} else {
 			sound.audio.stop();
 		}
+	}
+
+	/**
+	 * Setter for the taskStopped variable
+	 * This can be called to prevent the engine from finishing its move when leaving
+	 * @param stop whether taskt should be stopped or not
+	 */
+	public static void setTaskStopped(boolean stop) {
+		taskStopped = stop;
+	}
+
+	/**
+	 * Used to find out if a Task should no longer work for this game
+	 * @return wheter a Task should no longer work for this game
+	 */
+	public static boolean isTaskStopped() {
+		return taskStopped;
 	}
 }

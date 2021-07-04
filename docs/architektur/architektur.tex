@@ -193,9 +193,13 @@ Die Klasse \lstj{Game} bietet ein einfaches, übersichtliches Interface zum ausf
 
 
 \chapter{\lstj{gui}}
+Dieses Aktivitäts Diagramm zeigt (in abstrahiert), wie ein Klick des Users auf dem Spielfeld verarbeitet wird.
+Dabei ist zu sehen, dass es nicht für jeden Spielmodus einen eigenen "loop" gibt.
+Stattdessen teilen sich die Spielmodi weitgehend funktionen. Dadurch werden Codeduplikate vermieden.
 
+\includegraphics[width=\linewidth]{ActivityDiagramMove}
 
 \chapter{\lstj{engine}}
-
+Die Klasse \lstj{Engine} stellt den Einstiegspunkt zum \lstj{engine} Paket dar und bietet mit \lstj{generateBestMove(Board board)} eine einfache Methode zum generieren neuer Züge an. Des weiter befindet sich im Paket die Klasse \lstj{EngineBoard} welche die Klasse \lstj{Board} aus dem Paket \lstj{model} Erweitert und eine Bewertung der Position ermöglicht. Dies erfolgt mithilfe des \lstj{ScoreGenerator}, in welchem der Materialwert geschlagener Figuren, sowie eine Bewertung für die Position für jede Figur hartkodiert ist. Die Bewertung einer Position ergibt sich durch die aufsummierung dieser einzelnen Werte. Um den bestmöglichen Zug zu finden wird der \lstj{minimax}-Algorithmus angewandt, der durch $\alpha$-$\beta$-pruning beschläunigt wird.
 
 \end{document}

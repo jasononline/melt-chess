@@ -1,15 +1,10 @@
 package chess.gui.game;
 
-import java.util.List;
-
 import chess.gui.settings.SettingsModel;
-import chess.gui.util.TextManager;
-import chess.model.Board;
-import chess.model.Coordinate;
-import chess.model.Game;
-import chess.model.Move;
-import chess.model.MoveValidator;
-import chess.model.Piece;
+import chess.model.*;
+import chess.util.Client;
+import chess.util.TextManager;
+import chess.util.networkservices.PerformOpponentActionService;
 import javafx.animation.RotateTransition;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Service;
@@ -20,13 +15,18 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
+import java.io.IOException;
+import java.util.List;
+
 /**
  * Controls behaviour of GUI chessboard.
  */
 public class BoardController {
 
 	private GameController gameController;
-	private Service service;
+
+	private static Service performEngineMoveService;
+	private static Service performOpponentActionService;
 	protected boolean isRotated = false;
 
 	/**
@@ -42,37 +42,53 @@ public class BoardController {
 	 * Initialize chessboard in GameView
 	 */
 	protected void initialize() {
-		if (service == null) {
-			service = new PerformEngineMoveService();
-		} else {
-			// cancel a running service
-			service.cancel();
-		}
+
+		performEngineMoveService = new PerformEngineMoveService();
+		performEngineMoveService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent workerStateEvent) {
+				finishOpponentAction();
+			}
+		});
+
+		performOpponentActionService = new PerformOpponentActionService();
+		performOpponentActionService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent workerStateEvent) {
+				System.out.println("OpponentMove Worker is done");
+				if (GameModel.surrendered) {
+					gameController.gamePopup.resign();
+				} else {
+					finishOpponentAction();
+				}
+			}
+		});
 
 		gameController.boardGrid.setDisable(false);
 		gameController.boardGrid.prefHeightProperty().bind(Bindings.min(
 				gameController.rootPane.widthProperty().divide(1.94), gameController.rootPane.heightProperty().divide(1.09)));
 		gameController.boardGrid.prefWidthProperty().bind(Bindings.min(gameController.rootPane.widthProperty().divide(1.94),
 				gameController.rootPane.heightProperty().divide(1.09)));
-		gameController.boardGrid.maxHeightProperty().bind(gameController.boardGrid.prefHeightProperty());
-		gameController.boardGrid.maxWidthProperty().bind(gameController.boardGrid.prefWidthProperty());
 
 		gameController.lineNumbersPane.prefHeightProperty().bind(gameController.boardGrid.heightProperty());
 		gameController.lineNumbersPane.prefWidthProperty().bind(Bindings.min(
 				gameController.rootPane.widthProperty().divide(42.66), gameController.rootPane.heightProperty().divide(24)));
+		gameController.lineNumbersPane.translateXProperty().bind(gameController.boardGrid.widthProperty().divide(2)
+				.add(gameController.lineNumbersPane.widthProperty().divide(2)).negate());
 
 		gameController.columnLettersPane.prefHeightProperty().bind(gameController.lineNumbersPane.widthProperty());
 		gameController.columnLettersPane.prefWidthProperty().bind(gameController.boardGrid.widthProperty());
+		gameController.columnLettersPane.translateYProperty().bind(gameController.boardGrid.heightProperty().divide(2)
+				.add(gameController.columnLettersPane.heightProperty().divide(2)));
 
 		gameController.boardGrid.getChildren().forEach(s -> {
 			s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
 		});
 
-		if ((GameModel.getCurrentGame().getCurrentPosition().getTurnColor() == Piece.Black && !isRotated
-				&& SettingsModel.isFlipBoard())
-				|| (GameModel.getGameMode() != GameModel.ChessMode.Player
-						&& GameModel.getColor() == GameModel.ChessColor.Black))
+		if (GameModel.getGameMode() != GameModel.ChessMode.Player && GameModel.getChoosenColor() == Piece.Black) {
+			isRotated = false;
 			flipBoard(false);
+		}
 
 		checkForGameOver();
 	}
@@ -90,16 +106,14 @@ public class BoardController {
 		Game testGame = GameModel.getCurrentGame();
 		testGame.addFlag(testMove);
 
+		// if promotion is possible
 		if (Piece.isColor(board.getPieceAt(startIndex), board.getTurnColor())
-				&& MoveValidator.validateMove(testGame.getCurrentPosition(), testMove)) {
-			// if promotion is possible
-			if ((Coordinate.isOnUpperBorder(targetIndex) || Coordinate.isOnLowerBorder(targetIndex))
-					&& Piece.isType(board.getPieceAt(startIndex), Piece.Pawn)) {
-				// open the PopupMenu to choose promotion
-				gameController.gamePopup.showPromotionPopup(GameModel.getCurrentGame().getCurrentPosition().getTurnColor(),
-						move);
-				return;
-			}
+				&& MoveValidator.validateMove(testGame.getCurrentPosition(), testMove)
+				&& (Coordinate.isOnUpperBorder(targetIndex) || Coordinate.isOnLowerBorder(targetIndex))
+				&& Piece.isType(board.getPieceAt(startIndex), Piece.Pawn)) {
+			// open the PopupMenu to choose promotion
+			gameController.gamePopup.showPromotionPopup(GameModel.getCurrentGame().getCurrentPosition().getTurnColor(), move);
+			return;
 		}
 		finishMove(move);
 	}
@@ -137,27 +151,24 @@ public class BoardController {
 	 */
 	protected void finishMove(Move move) {
 		GameModel.getCurrentGame().addFlag(move);
-		List<Integer> capturedPieces = GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces();
 
+		List<Integer> capturedPieces = GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces();
 		if (!GameModel.getCurrentGame().attemptMove(move)) {
 			GameModel.playSound(GameModel.ChessSound.Failure, true);
 			return;
 		}
 
-		if (GameModel.getCurrentGame().checkCheck() && SettingsModel.isShowInCheck()
-			&& GameModel.getCurrentGame().checkWinCondition() == 0) {
-			GameModel.playSound(GameModel.ChessSound.Check, true);
-		} else if (GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces().equals(capturedPieces)
-				   && GameModel.getCurrentGame().checkWinCondition() == 0) {
-			GameModel.playSound(GameModel.ChessSound.Move, true);
-		} else if (GameModel.getCurrentGame().checkWinCondition() == 0) {
-			GameModel.playSound(GameModel.ChessSound.Capture, true);
-		}
+		playMoveSounds(capturedPieces);
 
 		GameModel.getMovesHistory().add(0, move);
 		if (SettingsModel.isFlipBoard() && GameModel.getGameMode() != GameModel.ChessMode.Computer)
 			flipBoard(true);
 
+		try {
+			Client.send(move.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		gameController.updateUI();
 		if (checkForGameOver())
@@ -167,10 +178,29 @@ public class BoardController {
 	}
 
 	/**
+	 * Play sounds according to a happened Move
+	 */
+	private void playMoveSounds(List<Integer> capturedPieces) {
+
+		if (GameModel.getCurrentGame().checkWinCondition() != Game.WinCondition.NONE)
+			return;
+
+		if (GameModel.getCurrentGame().checkCheck() && SettingsModel.isShowInCheck()) {
+			GameModel.playSound(GameModel.ChessSound.Check, true);
+		} else if (!GameModel.getCurrentGame().getCurrentPosition().getCapturedPieces().equals(capturedPieces)) {
+			GameModel.playSound(GameModel.ChessSound.Capture, true);
+		} else {
+			GameModel.playSound(GameModel.ChessSound.Move, true);
+		}
+	}
+
+	/**
 	 * Continues the actions depending on the gamemode
 	 */
-	private void continueAccordingToGameMode() {
-
+	protected void continueAccordingToGameMode() {
+		if (GameModel.getChoosenColor() == GameModel.getCurrentGame().getCurrentPosition().getTurnColor()) {
+			return;
+		}
 		// PvP
 		if (GameModel.getGameMode() == GameModel.ChessMode.Player) {
 			return;
@@ -178,26 +208,23 @@ public class BoardController {
 		// PvPC
 		if (GameModel.getGameMode() == GameModel.ChessMode.Computer) {
 
-			gameController.activityIndicator.visibleProperty().bind(service.runningProperty());
+			gameController.activityIndicator.visibleProperty().bind(performEngineMoveService.runningProperty());
 			gameController.boardGrid.setDisable(true);
-			gameController.resignButton.disableProperty().bind(service.runningProperty());
-			gameController.settingsButton.disableProperty().bind(service.runningProperty());
+			gameController.resignButton.disableProperty().bind(performEngineMoveService.runningProperty());
+			gameController.settingsButton.disableProperty().bind(performEngineMoveService.runningProperty());
+			gameController.saveButton.disableProperty().bind(performEngineMoveService.runningProperty());
 
-			service.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-				@Override
-				public void handle(WorkerStateEvent workerStateEvent) {
-					finishEngineMove();
-				}
-			});
-			service.restart();
+			performEngineMoveService.restart();
 		}
 		// Network
 		if (GameModel.getGameMode() == GameModel.ChessMode.Network) {
-			// TODO implement what happens in Network game
-			return;
+			gameController.activityIndicator.visibleProperty().bind(performOpponentActionService.runningProperty());
+			gameController.boardGrid.setDisable(true);
+			gameController.settingsButton.disableProperty().bind(performOpponentActionService.runningProperty());
+			gameController.saveButton.disableProperty().bind(performOpponentActionService.runningProperty());
+
+			performOpponentActionService.restart();
 		}
-		// Default just in case
-		return;
 	}
 
 	/**
@@ -205,7 +232,7 @@ public class BoardController {
 	 * 
 	 * @return null
 	 */
-	private EventHandler<WorkerStateEvent> finishEngineMove() {
+	private EventHandler<WorkerStateEvent> finishOpponentAction() {
 		GameModel.setSelectedIndex(-1);
 		gameController.boardGrid.getChildren().forEach(s -> {
 			s.getStyleClass().removeAll("focused", "possibleMove", "checkMove", "captureMove");
@@ -214,6 +241,9 @@ public class BoardController {
 		gameController.boardGrid.setDisable(false);
 		if (!gameController.settingsButton.disableProperty().isBound()) {
 			gameController.settingsButton.setDisable(false);
+		}
+		if (!gameController.saveButton.disableProperty().isBound()) {
+			gameController.saveButton.setDisable(false);
 		}
 		if (!gameController.resignButton.disableProperty().isBound()) {
 			gameController.resignButton.setDisable(false);
@@ -226,6 +256,8 @@ public class BoardController {
 	/**
 	 * Checks whether the current game is over if that is the case the endGame()
 	 * function will be called
+	 * 
+	 * @return boolean whether the current game is over
 	 */
 	protected boolean checkForGameOver() {
 		gameController.checkLabel.setVisible(false);
@@ -241,7 +273,7 @@ public class BoardController {
 				gameController.checkLabel.setVisible(true);
 			TextManager.computeText(gameController.checkLabel, key);
 		}
-		if (game.checkWinCondition() != 0) {
+		if (game.checkWinCondition() != Game.WinCondition.NONE) {
 			endGame();
 			return true;
 		}
@@ -253,20 +285,20 @@ public class BoardController {
 	 */
 	public void endGame() {
 		Game game = GameModel.getCurrentGame();
-		int winCondition = game.checkWinCondition();
+		Game.WinCondition winCondition = game.checkWinCondition();
 
 		// only end the game when it should be ended
-		if (winCondition == 0)
+		if (winCondition == Game.WinCondition.NONE)
 			return;
 
 		String key = "";
-		if (winCondition == 1) {
+		if (winCondition == Game.WinCondition.CHECKMATE) {
 			if (game.getCurrentPosition().getTurnColor() == Piece.White) {
 				key = "game.whiteInCheckmate";
 			} else {
 				key = "game.blackInCheckmate";
 			}
-		} else if (winCondition == 2) {
+		} else if (winCondition == Game.WinCondition.REMIS) {
 			if (game.getCurrentPosition().getTurnColor() == Piece.White) {
 				key = "game.whiteInRemis";
 			} else {
@@ -307,6 +339,24 @@ public class BoardController {
 			squareNode.setRotate(isRotated ? 0 : 180);
 		}
 		isRotated = !isRotated;
+	}
+
+	/**
+	 * Getter for the performEngineMoveService
+	 * 
+	 * @return the performEngineMoveService
+	 */
+	public static Service getPerformEngineMoveService() {
+		return performEngineMoveService;
+	}
+
+	/**
+	 * Getter for the performOpponentActionService
+	 * 
+	 * @return the performOpponentActionService
+	 */
+	public static Service getPerformOpponentActionService() {
+		return performOpponentActionService;
 	}
 
 }

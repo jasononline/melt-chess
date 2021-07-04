@@ -24,7 +24,9 @@
   -fx-pref-height: 720;
   -fx-min-width: 640;
   -fx-min-height: 360;
-  -fx-background-image: url(../images/bgImage.jpg);
+  -fx-background-image: url("../images/bgImage.jpg");
+  /* -fx-background-image: url(https://artmouse.com.ua/img/sweng-pr/bgImage.jpg); */
+  /* -fx-background-image: url(https://projects.isp.uni-luebeck.de/melt-chess/melt-chess/-/raw/main/src/main/resources/chess/gui/images/bgImage.jpg); */
   -fx-background-size: 100% 100%;
   -fx-font-family: Montserrat;
 }
@@ -89,6 +91,17 @@
   -fx-cursor: hand;
 }
 
+.connectingLabel {
+  -fx-background-color: rgba(131, 131, 131, 0.3);
+  -fx-background-radius: 10;
+  -fx-border-radius: 10;
+  -fx-border-width: 3px;
+  -fx-font-family: Montserrat;
+  -fx-font-weight: 600;
+  -fx-font-size: 25px;
+  -fx-text-fill: #fff;
+}
+
 .button.selected {
   -fx-border-color: #fff;
   -fx-scale-x: 1.03;
@@ -109,6 +122,11 @@
 
 .surePopupButton {
   -fx-background-color: rgba(131, 131, 131, 0.7);
+  -fx-font-weight: 500;
+  -fx-font-size: 18px;
+  -fx-background-radius: 5;
+  -fx-border-radius: 5;
+  -fx-border-width: 2;
 }
 
 .langButton {
@@ -124,6 +142,7 @@
   -fx-background-radius: 5;
   -fx-border-radius: 5;
   -fx-border-width: 2;
+  -fx-cursor: none;
 }
 
 .historyButton:hover {
@@ -135,6 +154,14 @@
   -fx-font-size: 20px;
   -fx-text-fill: white;
   -fx-alignment: center;
+}
+
+.saveButton {
+  -fx-font-weight: 500;
+  -fx-font-size: 18px;
+  -fx-background-radius: 5;
+  -fx-border-radius: 5;
+  -fx-border-width: 2;
 }
 
 .checkLabel {

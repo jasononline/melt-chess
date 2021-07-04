@@ -1,11 +1,4 @@
-package chess.gui.util;
-
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+package chess.util;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
@@ -13,6 +6,9 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
+import java.text.MessageFormat;
+import java.util.*;
 
 /**
  * Replaces a placeholder for text values in GUI elements, depending on the
@@ -48,15 +44,30 @@ public final class TextManager {
 		return getSupportedLocales().contains(sysDefault) ? sysDefault : Locale.GERMAN;
 	}
 
+	/**
+	 * Get the current Locale
+	 * 
+	 * @return the current Locale
+	 */
 	public static Locale getLocale() {
 		return locale.get();
 	}
 
+	/**
+	 * Set the current Locale
+	 * 
+	 * @param locale the new locale
+	 */
 	public static void setLocale(Locale locale) {
 		localeProperty().set(locale);
 		Locale.setDefault(locale);
 	}
 
+	/**
+	 * Get Locale ObjectProperty
+	 * 
+	 * @return the current Locale ObjectProperty
+	 */
 	public static ObjectProperty<Locale> localeProperty() {
 		return locale;
 	}

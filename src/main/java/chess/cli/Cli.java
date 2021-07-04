@@ -1,22 +1,23 @@
 package chess.cli;
 
 import chess.engine.Engine;
-import chess.model.Coordinate;
 import chess.model.Game;
 import chess.model.Move;
 import chess.model.Piece;
+import chess.util.TextManager;
 
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Starting point of the command line interface
  */
 public class Cli {
-	private static Game game = new Game();
-	private static boolean runningPVP = false;
-	private static boolean runningPVPC = false;
-	private static Engine engine = new Engine();
+	static Game game = new Game();
+	private static final Engine engine = new Engine();
+	protected static boolean runningPVP = false;
+	protected static boolean runningPVPC = false;
+	static final Scanner scan = new Scanner(System.in);
+	static List<Move> movesHistory = new ArrayList<>();
 
 	/**
 	 * The entry point of the CLI application.
@@ -24,7 +25,6 @@ public class Cli {
 	 * @param args The command line arguments passed to the application
 	 */
 	public static void main(String[] args) {
-
 
 		boolean simpleRun = Arrays.asList(args).contains("--simple");
 
@@ -34,79 +34,30 @@ public class Cli {
 			runningPVPC = false;
 
 		} else {
-			// Ask the user to choose an opponent
-			String opponent = getUserInput("Choose an opponent: Person or Computer");
 
-			// Check if opponent is valid
-			while (!opponent.matches("^person$|^computer$|^quit$")) {
-				if (opponent.equals("help")) {
-					opponent = getUserInput(getHelpOutput());
-				} else {
-					opponent = getUserInput(
-							"There is no such opponent. Enter one of these opponents: Person or Computer");
-				}
-			}
+			System.out.println();
+			System.out.println("███╗   ███╗███████╗██╗  ████████╗     ██████╗██╗  ██╗███████╗███████╗███████╗");
+			System.out.println("████╗ ████║██╔════╝██║  ╚══██╔══╝    ██╔════╝██║  ██║██╔════╝██╔════╝██╔════╝");
+			System.out.println("██╔████╔██║█████╗  ██║     ██║       ██║     ███████║█████╗  ███████╗███████╗");
+			System.out.println("██║╚██╔╝██║██╔══╝  ██║     ██║       ██║     ██╔══██║██╔══╝  ╚════██║╚════██║");
+			System.out.println("██║ ╚═╝ ██║███████╗███████╗██║       ╚██████╗██║  ██║███████╗███████║███████║");
+			System.out.println("╚═╝     ╚═╝╚══════╝╚══════╝╚═╝        ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝");
 
-			switch (opponent) {
-				case "person":
-					// Start game against another player
-					runningPVP = true;
-					runningPVPC = false;
-					break;
-				case "computer":
-					// Start game against computer
-					runningPVP = false;
-					runningPVPC = true;
-					break;
-				case "quit":
-					System.exit(0);
-					break;
-			}
+			CliMenus.runMainMenu();
+
 		}
-
-		runGame();
+		scan.close();
 	}
 
 	/**
-	 * Parse the user input string and return Move object
-	 *
-	 * @param input User input like "e7-e8[Q]"
-	 * @return parsed move object from user input
+	 * Starts the correct new game loop
+	 * 
+	 * @param newgame boolean whether run a new game or a loaded one
 	 */
-	public static Move parseUserMoveInput(String input) {
-		String[] squares = input.split("-"); // Split input by '-'
-		int startSquare = Coordinate.toIndex(squares[0]); // start position in the board.squares array
-		int targetSquare = Coordinate.toIndex(squares[1].substring(0, 2)); // target position in the board.squares array
-		String flagString = squares[1].length() > 2 ? "" + squares[1].charAt(2) : "";
-		int flag = 0;
-
-		switch (flagString) {
-			case "Q":
-				flag = Move.PromoteToQueen;
-				break;
-			case "K":
-				flag = Move.PromoteToKnight;
-				break;
-			case "R":
-				flag = Move.PromoteToRook;
-				break;
-			case "B":
-				flag = Move.PromoteToBishop;
-				break;
-			default:
-				break;
-		}
-
-		Move move = new Move(startSquare, targetSquare, flag);
-		game.addFlag(move);
-		return move;
-	}
-
-	/**
-	 * Start the correct new game loop
-	 */
-	public static void runGame() {
-		System.out.println(game.getCurrentPosition().toString());
+	public static void runGame(boolean newgame) {
+		if (newgame)
+			game = new Game();
+		printGameBoard();
 		if (runningPVP) {
 			gameLoopPVP();
 		} else if (runningPVPC) {
@@ -115,7 +66,7 @@ public class Cli {
 	}
 
 	/**
-	 * Start a Player versus Player game
+	 * Starts a Player versus Player game
 	 */
 	public static void gameLoopPVP() {
 		while (runningPVP) {
@@ -124,99 +75,106 @@ public class Cli {
 	}
 
 	/**
-	 * Start a Player versus Computer game
+	 * Starts a Player versus Computer game
 	 */
 	public static void gameLoopPVPC() {
 		while (runningPVPC) {
-			if(game.getCurrentPosition().getTurnColor() == Piece.White) {
+			if (game.getCurrentPosition().getTurnColor() == Piece.White) {
 				performAction(getValidUserInput());
 			} else {
 				// let the Engine make a move
-				performEngineMove();
+				performMove(null, false);
 			}
 		}
 	}
 
 	/**
-	 * Perform the Action according to the user input
+	 * Performs the action according to the user input
 	 * 
 	 * @param userInput The user input
 	 */
 	public static void performAction(String userInput) {
 
-		switch (userInput) {
+		int code = Help.detectGameCommands(userInput);
 
-			case "quit":
-				System.exit(0);
-				break;
-
-			case "help":
-				System.out.println(getHelpOutput());
-				break;
-
-			case "beaten":
+		switch (code) {
+			case -1: // one of standard commands was entered and applied
+				return;
+			case 106: // beaten code
 				printBeatenPieces();
+				System.out.println("\n" + TextManager.get("cli.help.back"));
+				scan.nextLine();
+				printGameBoard();
 				break;
-
-			case "reset":
+			case 107: // restart code
 				game = new Game();
-				System.out.println(game.getCurrentPosition().toString());
+				printGameBoard();
 				break;
-
-			default:
-				if (!game.attemptMove(parseUserMoveInput(userInput))) {
-					System.out.println("!Move not allowed");
-				} else {
-					System.out.println("!" + userInput);
-					System.out.println(game.getCurrentPosition().toString());
-					if (game.checkCheck()) {
-						System.out.println("You are in check.");
-					}
-					if (game.checkWinCondition() != 0) {
-						endGame();
-					}
-				}
+			case 108: // resign code
+				printGameOverMessage(Game.WinCondition.RESIGN);
+				CliMenus.runMainMenu();
+				break;
+			case 109: // save code
+				CliMenus.runSaveMenu(".");
+				printGameBoard();
+				break;
+			default: // make a move
+				Move move = Move.parseUserMoveInput(userInput, game);
+				performMove(move, true);
 				break;
 		}
 	}
 
 	/**
-	 * Test if the user input will have a defined effect
+	 * Performs a move for both the user and the engine
 	 * 
-	 * @param userInput The user Input
-	 * @return whether the user input will have a defined effect
+	 * @param move     move to perform
+	 * @param userMove boolean whether the move is a user move
 	 */
-	public static boolean testUserInputSyntax(String userInput) {
-		// Checks if input matches one of valid inputs: move(e7-e8[Q]), beaten, help,
-		// quit, reset
-		return userInput.matches("^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[qrbn]?$|^beaten$|^help$|^quit$|^reset$");
-	}
+	public static void performMove(Move move, boolean userMove) {
 
-	/**
-	 * Uses the engine to generate the next PC-move and executes that move.
-	 */
-	public static void performEngineMove() {
-		Move next = engine.generateBestMove(game.getCurrentPosition());
-		System.out.println("The computers move: !" + next.toString());
-		game.attemptMove(next);
-		// print the new Position after the PCs move
-		System.out.println(game.getCurrentPosition().toString());
+		Move next = move;
+		if (!userMove) {
+			System.out.println(TextManager.get("cli.aiThink"));
+			next = engine.generateBestMove(game.getCurrentPosition());
+			ConsoleColors.greenBoldColor();
+			System.out.println("\n" + TextManager.get("cli.aiMove") + next.toString());
+			ConsoleColors.resetColor();
+		}
+
+		if (!game.attemptMove(next)) {
+			System.out.println(ConsoleColors.RED_BOLD + "\n!Move not allowed\n" + ConsoleColors.RESET);
+			return;
+		}
+
+		movesHistory.add(0, next);
+
+		if (userMove) {
+			ConsoleColors.greenBoldColor();
+			System.out.println("\n!" + next);
+			ConsoleColors.resetColor();
+		}
+		// print the new position after each move
+		printGameBoard();
 		// find out if the game is over
 		if (game.checkCheck()) {
-			System.out.println("You are in check.");
+			System.out.println(ConsoleColors.PURPLE_BOLD + "\n" + TextManager.get("cli.youInCheck") + ConsoleColors.RESET);
 		}
-		if (game.checkWinCondition() != 0) {
+		if (game.checkWinCondition() != Game.WinCondition.NONE) {
 			endGame();
 		}
 	}
 
 	/**
-	 * Getter for valid commands
-	 *
-	 * @return The list of valid commands as a String
+	 * Outputs the current game board and whose turn it is now
 	 */
-	public static String getHelpOutput() {
-		return "\nquit		Exit the game\nbeaten		Displays all captured pieces\nreset		Reset the game\n";
+	private static void printGameBoard() {
+		if (game.getCurrentPosition().getTurnColor() == Piece.White) {
+			System.out.println(ConsoleColors.BOLD + "\n" + TextManager.get("cli.whiteMove") + ConsoleColors.RESET);
+		} else {
+			System.out.println(ConsoleColors.BOLD + "\n" + TextManager.get("cli.blackMove") + ConsoleColors.RESET);
+		}
+		System.out.println("\n" + game.getCurrentPosition().toString());
 	}
 
 	/**
@@ -231,12 +189,41 @@ public class Cli {
 	}
 
 	/**
+	 * Handles standard commands, like help, english, german, quit
+	 * 
+	 * @param code command code
+	 */
+	public static void handleStandardCommands(int code) {
+		switch (code) {
+			case 101: // help code
+				Help.print();
+				break;
+			case 102: // english lang code
+				TextManager.setLocale(Locale.ENGLISH);
+				break;
+			case 103: // german lang code
+				TextManager.setLocale(Locale.GERMAN);
+				break;
+			case 104: // main menu code
+				CliMenus.runMainMenu();
+				break;
+			case 105: // quit code
+				exitGame();
+				break;
+		}
+
+		if (code != 104 || code != 105) {
+			printGameBoard();
+		}
+
+	}
+
+	/**
 	 * Request input from the User
 	 * 
 	 * @return The user input as a String (lowercase)
 	 */
 	public static String getUserInput() {
-		Scanner scan = new Scanner(System.in);
 		return scan.nextLine().toLowerCase();
 	}
 
@@ -248,35 +235,93 @@ public class Cli {
 	private static String getValidUserInput() {
 		String input = getUserInput();
 		while (!testUserInputSyntax(input)) {
-			input = getUserInput("!Invalid move");
+			input = getUserInput(ConsoleColors.RED_BOLD + "\n!Invalid move\n" + ConsoleColors.RESET);
 		}
 		return input;
 	}
 
 	/**
-	 * Print the list of beaten pieces
+	 * Test if the user input will have a defined effect
+	 * 
+	 * @param userInput The user Input
+	 * @return whether the user input will have a defined effect
 	 */
-	private static void printBeatenPieces() {
-		for (int i : game.getCurrentPosition().getCapturedPieces()) {
-			System.out.print(Piece.toString(i));
-		}
-		System.out.println();
+	public static boolean testUserInputSyntax(String userInput) {
+		// Checks if input matches one of valid inputs: move(e7-e8[Q]), beaten, help,
+		// quit, reset
+		return userInput.matches(
+				"^[a-h]{1}[1-8]{1}-[a-h]{1}[1-8]{1}[qrbn]?$|^help$|^hilfe$|^english$|^englisch$|^german$|^deutsch$|^beaten$|^geschlagen$|^restart$|^neustart$|^resign$|^aufgeben$|^save$|^speichern$|^menu$|^menue$|^quit$|^beenden$");
 	}
 
 	/**
-	 * End the game according to win conditions
+	 * Prints the list of beaten pieces
+	 */
+	private static void printBeatenPieces() {
+		System.out.println("\n" + TextManager.get("cli.beatenPieces") + "\n");
+		if (!game.getCurrentPosition().getCapturedPieces().isEmpty()) {
+			for (int i : game.getCurrentPosition().getCapturedPieces()) {
+				System.out.print(Piece.toString(i));
+			}
+			System.out.println();
+		} else {
+			System.out.println("> No beaten pieces");
+		}
+	}
+
+	/**
+	 * Ends the game according to win conditions
 	 */
 	private static void endGame() {
-		int winCondition = game.checkWinCondition();
-		if (winCondition == 1) {
-			System.out.println("CHECKMATE, game over.");
-		} else if (winCondition == 2) {
-			System.out.println("REMIS, game over.");
-		}
-		if (winCondition != 0) {
-			System.out.println("Beaten pieces:");
+		Game.WinCondition winCondition = game.checkWinCondition();
+		printGameOverMessage(winCondition);
+		if (winCondition != Game.WinCondition.NONE) {
 			printBeatenPieces();
-			System.exit(0);
+			exitGame();
 		}
+	}
+
+	/**
+	 * Outputs a message about the end of the game, depending on the win condition
+	 * 
+	 * @param winCondition condition of winning the game
+	 */
+	private static void printGameOverMessage(Game.WinCondition winCondition) {
+		int turnColor = game.getCurrentPosition().getTurnColor();
+		System.out.println(ConsoleColors.YELLOW_BOLD);
+		if (winCondition == Game.WinCondition.CHECKMATE) {
+
+			if (runningPVP) {
+				if (turnColor == Piece.White) {
+					System.out.println(TextManager.get("cli.blackWin"));
+				} else {
+					System.out.println(TextManager.get("cli.whiteWin"));
+				}
+			} else {
+				if (turnColor == Piece.White) {
+					System.out.println(TextManager.get("cli.lose"));
+				} else {
+					System.out.println(TextManager.get("cli.win"));
+				}
+			}
+		} else if (winCondition == Game.WinCondition.REMIS) {
+			System.out.println(TextManager.get("cli.remis"));
+		} else if (winCondition == Game.WinCondition.RESIGN) {
+			if (turnColor == Piece.White) {
+				System.out.println(TextManager.get("cli.whiteResign"));
+			} else {
+				System.out.println(TextManager.get("cli.blackResign"));
+			}
+		}
+		ConsoleColors.resetColor();
+	}
+
+	/**
+	 * Exits the game with the message
+	 */
+	static void exitGame() {
+		System.out.print(ConsoleColors.CYAN);
+		System.out.println("\n" + TextManager.get("cli.exit") + "\n");
+		ConsoleColors.resetColor();
+		System.exit(0);
 	}
 }

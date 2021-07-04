@@ -86,4 +86,16 @@ public class MoveTest {
             assertEquals(expectedStrings[i], testMoves[i].toString());
         }
     }
+
+    /**
+     * Method to test the expected behavior of the Method Cli.parseUserMoveInput()
+     */
+    @Test
+    public void parseMoveFromString() {
+        Game game = new Game();
+        assertEquals(Move.parseUserMoveInput("c2-c4", game), new Move(50, 34, Move.PawnTwoForward));
+        assertEquals(Move.parseUserMoveInput("c2-h4", game), new Move(50, 39, Move.PawnTwoForward));
+        assertEquals(Move.parseUserMoveInput("a8-h1Q", game), new Move(0, 63, Move.PromoteToQueen));
+        assertEquals(Move.parseUserMoveInput("h1-a8R",game), new Move(63, 0, Move.PromoteToRook));
+    }
 }
