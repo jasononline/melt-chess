@@ -73,7 +73,7 @@ public class Server {
     public static String getOpponentInput() throws IOException {
         System.out.println("I am listening to Opponent input!");
         String input = read();
-        while (!testUserInputSyntax(input)) {
+        while (!testUserInputSyntax(input.toLowerCase())) {
             if(GameModel.isTaskStopped()) {
                 return "";
             }
