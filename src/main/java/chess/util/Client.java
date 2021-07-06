@@ -47,12 +47,12 @@ public class Client {
      * @throws InterruptedException InterruptedException
      */
     public static int decideColor() throws InterruptedException, IOException {
-        System.out.println("decideColor() method call.");
+        // System.out.println("decideColor() method call.");
         Random rand = new Random();
         int result = rand.nextInt(100) + 1;
         String resultString = String.valueOf(result);
         String opponentString = "";
-        int opponentNumber;
+        int opponentNumber = 0;
 
         send(resultString);
         while (opponentString == "") {
@@ -61,22 +61,28 @@ public class Client {
             }
             try {
                 opponentString = Server.read();
+                opponentNumber = Integer.parseInt(opponentString);
             } catch (IOException e) {
-                System.out.println("Reading did not work, retrying...");
+                // System.out.println("#Debug: Reading did not work, retrying...");
+                e.printStackTrace();
+            } catch (NumberFormatException e) {
+                // System.out.println("#Debug: There was a NumberFormatException in Client.decideColor().");
+                opponentString = "";
             }
-            System.out.println("new Opponent String is: " + opponentString);
-            send(String.valueOf(resultString));
+            // System.out.println("#Debug: new Opponent String is: " + opponentString);
+            send(resultString);
             Thread.sleep(1000);
         }
         send(resultString);
 
         System.out.println("OpponentNumber is: " + opponentString);
-        opponentNumber = Integer.parseInt(opponentString);
 
         if (result < opponentNumber) {
             return Piece.White;
         } else if (result > opponentNumber) {
             return Piece.Black;
+        } else {
+            System.out.println("#Debug: Similar Number were generated, this has to be treated!");
         }
 
         return 0;
@@ -95,11 +101,11 @@ public class Client {
             Server.lastOpponentInput = "resign";
         }
         dataOutputStream.writeUTF(message);
-        System.out.println("This message has been sent: " + message);
+        // System.out.println("#Debug: This message has been sent: " + message);
     }
 
     /**
-     * This mehtod will close an existing Client socket and output stream
+     * This method will close an existing Client socket and output stream
      * @throws IOException
      */
     public static void endOldClient() throws IOException {

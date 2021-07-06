@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 /**
  * Class representing a Server for the Network Game mode
@@ -26,27 +27,9 @@ public class Server {
      */
     public static void initialize() throws IOException {
         serverSocket = new ServerSocket(0);
-        String ip = InetAddress.getLocalHost().getHostAddress();
-        //System.out.println("A Server has been setup. ip = " + ip + ", port = " + serverSocket.getLocalPort());
-        //System.out.println("ServerSocket awaiting connections...");
-        String line = "******************************************************";
-        System.out.println("\n" + line);
-        System.out.println("Other Players are now able to connect to you!");
-        System.out.println("If you want someone to connect share IP-Addr and Port:");
-        System.out.println("IP-Address:\t" + "\033[43m" + ip + "\033[0;0m");
-        System.out.println("Port:\t\t" + "\033[43m" + serverSocket.getLocalPort() + "\033[0;0m");
-        System.out.println(line + "\n");
         socket = serverSocket.accept(); // blocking call, this will wait until a connection is attempted on this port.
-        System.out.println("\n" + line);
-        System.out.println("An other Player connected to you!");
-        System.out.println("If you want to connect to that Player choose:");
-        System.out.println("IP-Address:\t" + "\033[42m" + socket.getInetAddress().getHostAddress() + "\033[0;0m");
-        System.out.println("Port:\t\t" + "Ask the other Player for the correct port.");
-        System.out.println(line + "\n");
-        // get the input stream from the connected socket
-        inputStream = socket.getInputStream();
-        // create a DataInputStream so we can read data from it.
-        dataInputStream = new DataInputStream(inputStream);
+        inputStream = socket.getInputStream(); // get the input stream from the connected socket
+        dataInputStream = new DataInputStream(inputStream); // create a DataInputStream so we can read data from it.
     }
 
     /**
@@ -56,11 +39,12 @@ public class Server {
      */
     public static String read() throws IOException {
         if (dataInputStream == null) {
-            // System.out.println("Not initialized yet.");
+            // System.out.println("#Debug: Not initialized yet.");
             return "" ;
         }
         String message = dataInputStream.readUTF();
-        System.out.println("The message sent from the socket was: " + message);
+        //System.out.println("#Debug: " + dataInputStream.skip(10));
+        // System.out.println("#Debug: The message sent from the socket was: " + message);
         return message;
     }
 
@@ -71,7 +55,7 @@ public class Server {
      * @throws IOException IOException
      */
     public static String getOpponentInput() throws IOException {
-        System.out.println("I am listening to Opponent input!");
+        // System.out.println("#Debug: I am listening to Opponent input!");
         String input = read();
         while (!testUserInputSyntax(input.toLowerCase())) {
             if(GameModel.isTaskStopped()) {
@@ -79,15 +63,14 @@ public class Server {
             }
             input = read();
             if (input.equals(lastOpponentInput)) {
+                // ignore input that has been sent directly before
                 continue;
-            }
-            if (input != "" && !testUserInputSyntax(input)) {
-                System.out.println("Probably illegal Opponent input was: " + input + " (will be ignored)");
             }
         }
 
-        System.out.println("Probably legal Opponent input was: " + input);
+        // System.out.println("#Debug: Probably legal Opponent input was: " + input);
         lastOpponentInput = input;
+
         return input;
     }
 
@@ -113,5 +96,30 @@ public class Server {
         if (socket != null) {
             socket.close();
         }
+        lastOpponentInput = "";
+    }
+
+    /**
+     * Getter for the port of the Server
+     * @return the port of the Server
+     */
+    public static int getPort() {
+        if (serverSocket != null) {
+            return serverSocket.getLocalPort();
+        }
+        return 0;
+    }
+
+    /**
+     * Getter for the ip of the Server
+     * @return the ip of the Server
+     */
+    public static String getIP() {
+        try {
+            return InetAddress.getLocalHost().getHostAddress().toString();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

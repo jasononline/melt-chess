@@ -4,8 +4,11 @@ import chess.engine.Engine;
 import chess.model.Game;
 import chess.model.Move;
 import chess.model.Piece;
+import chess.util.Client;
+import chess.util.Server;
 import chess.util.TextManager;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -16,8 +19,10 @@ public class Cli {
 	private static final Engine engine = new Engine();
 	protected static boolean runningPVP = false;
 	protected static boolean runningPVPC = false;
+	protected static boolean runningNetwork = false;
 	static final Scanner scan = new Scanner(System.in);
 	static List<Move> movesHistory = new ArrayList<>();
+	private static int usersColor = Piece.White;
 
 	/**
 	 * The entry point of the CLI application.
@@ -62,11 +67,13 @@ public class Cli {
 			gameLoopPVP();
 		} else if (runningPVPC) {
 			gameLoopPVPC();
+		} else if (runningNetwork) {
+			gameLoopNetwork();
 		}
 	}
 
 	/**
-	 * Starts a Player versus Player game
+	 * Starts and runs a Player versus Player game
 	 */
 	public static void gameLoopPVP() {
 		while (runningPVP) {
@@ -75,7 +82,7 @@ public class Cli {
 	}
 
 	/**
-	 * Starts a Player versus Computer game
+	 * Starts and runs a Player versus Computer game
 	 */
 	public static void gameLoopPVPC() {
 		while (runningPVPC) {
@@ -87,6 +94,49 @@ public class Cli {
 			}
 		}
 	}
+
+	/**
+	 * Starts and runs Player versus Computer game
+	 */
+	public static void gameLoopNetwork() {
+		while (runningNetwork) {
+			if (game.getCurrentPosition().getTurnColor() == usersColor) {
+				// Let User make a Move
+				System.out.println(TextManager.get("cli.network.yourTurn"));
+				performAction(getValidUserInput());
+			} else {
+				// Let the Opponent make a Move
+				String opponentInput = null;
+				try {
+					System.out.println(TextManager.get("cli.network.waitForOpponent"));
+					opponentInput = Server.getOpponentInput();
+					// System.out.println("#Debug: Opponent input was: " + opponentInput);
+					performAction(opponentInput);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	/*
+	private static Move networkMove() throws IOException {
+		System.out.println("networkMove() was called.");
+		String opponentInput = Server.getOpponentInput();
+		if (opponentInput.equals("")) {
+			// this only happens when the task is being stopped
+			return null;
+		}
+		System.out.println("Opponent input was: " + opponentInput);
+		if (opponentInput.equals("resign")) {
+			System.out.println("Opponent resigned.");
+			surrendered = true;
+			taskStopped = true;
+			return null;
+		}
+		return Move.parseUserMoveInput(opponentInput, currentGame);
+	}
+	 */
 
 	/**
 	 * Performs the action according to the user input
@@ -112,6 +162,7 @@ public class Cli {
 				break;
 			case 108: // resign code
 				printGameOverMessage(Game.WinCondition.RESIGN);
+				networkResign();
 				CliMenus.runMainMenu();
 				break;
 			case 109: // save code
@@ -121,6 +172,13 @@ public class Cli {
 			default: // make a move
 				Move move = Move.parseUserMoveInput(userInput, game);
 				performMove(move, true);
+				if (runningNetwork && game.getCurrentPosition().getTurnColor() != usersColor) {
+					try {
+						Client.send(move.toString());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 				break;
 		}
 	}
@@ -205,6 +263,7 @@ public class Cli {
 				TextManager.setLocale(Locale.GERMAN);
 				break;
 			case 104: // main menu code
+				networkResign();
 				CliMenus.runMainMenu();
 				break;
 			case 105: // quit code
@@ -216,6 +275,16 @@ public class Cli {
 			printGameBoard();
 		}
 
+	}
+
+	private static void networkResign() {
+		if (runningNetwork) {
+			try {
+				Client.send("resign");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -323,5 +392,13 @@ public class Cli {
 		System.out.println("\n" + TextManager.get("cli.exit") + "\n");
 		ConsoleColors.resetColor();
 		System.exit(0);
+	}
+
+	/**
+	 * Setter for the Users Color uses in network game
+	 * @param usersColor the users Color
+	 */
+	public static void setUsersColor(int usersColor) {
+		Cli.usersColor = usersColor;
 	}
 }
