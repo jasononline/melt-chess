@@ -119,25 +119,6 @@ public class Cli {
 		}
 	}
 
-	/*
-	private static Move networkMove() throws IOException {
-		System.out.println("networkMove() was called.");
-		String opponentInput = Server.getOpponentInput();
-		if (opponentInput.equals("")) {
-			// this only happens when the task is being stopped
-			return null;
-		}
-		System.out.println("Opponent input was: " + opponentInput);
-		if (opponentInput.equals("resign")) {
-			System.out.println("Opponent resigned.");
-			surrendered = true;
-			taskStopped = true;
-			return null;
-		}
-		return Move.parseUserMoveInput(opponentInput, currentGame);
-	}
-	 */
-
 	/**
 	 * Performs the action according to the user input
 	 * 
