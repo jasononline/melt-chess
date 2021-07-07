@@ -58,7 +58,7 @@ public class Menu {
 			selectedIndex = Integer.parseInt(choice) - 1;
 			if (selectedIndex >= options.size()) {
 				System.out.println("\n" + TextManager.get("cli.errorChoice"));
-				run();
+				selectedIndex = run();
 			}
 		} catch (NumberFormatException e) {
 			int code = Help.detectStandardCommands(choice);
@@ -67,7 +67,7 @@ public class Menu {
 			}
 
 			System.out.println("\n" + TextManager.get("cli.errorChoice"));
-			run();
+			selectedIndex = run();
 		}
 
 		ConsoleColors.resetColor();
