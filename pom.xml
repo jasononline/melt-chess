@@ -178,6 +178,7 @@
 						<!-- Ignore GUI classes for coverage -->
 						<exclude>chess/cli/**/*</exclude>
 						<exclude>chess/gui/**/*</exclude>
+						<exclude>chess/util/**/*</exclude>  <!-- Also ignore shared GUI and CLI classes -->
 						<exclude>chess/Main.class</exclude>
 					</excludes>
 				</configuration>
