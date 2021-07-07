@@ -1,11 +1,12 @@
 package chess.cli;
 
-import chess.util.Saving;
-import chess.util.SavingManager;
-import chess.util.TextManager;
+import chess.model.Piece;
+import chess.util.*;
+import chess.util.networkthreads.InitServerThread;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -72,20 +73,22 @@ public class CliMenus {
 		}
 		Menu gameModeMenu = new Menu(title, options);
 		int selectedIndex = gameModeMenu.run();
+		Cli.runningPVP = false;
+		Cli.runningPVPC = false;
+		Cli.runningNetwork = false;
 
 		switch (selectedIndex) {
 			case 0: // pvp mode
 				Cli.runningPVP = true;
-				Cli.runningPVPC = false;
 				Cli.runGame(newgame);
 				break;
 			case 1: // ai mode
-				Cli.runningPVP = false;
 				Cli.runningPVPC = true;
 				Cli.runGame(newgame);
 				break;
 			case 2: // network mode when newgame is true or back to main menu when false
 				if (newgame) {
+					Cli.runningNetwork = true;
 					startNetworkGame();
 				} else {
 					runMainMenu();
@@ -108,16 +111,34 @@ public class CliMenus {
 
 		// TODO: Сhange the text to a nicer one
 
-		String ip = Cli.getUserInput("\n" + TextManager.get("cli.network.enterIp"));
+		// System.out.println("#Debug: startNetworkGame() was called.");
 
+		// initialize the Server
+		Thread initServerThread = new Thread(new InitServerThread());
+		initServerThread.setDaemon(true);
+		initServerThread.start();
+
+		// wait for the Server to initialize
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("\n" + TextManager.get("cli.network.yourIp") + "\t" + Server.getIP());
+		System.out.println(TextManager.get("cli.network.yourPort") + "\t\t" + Server.getPort());
+
+
+		// ask User for Opponent IP
+		String ip = Cli.getUserInput("\n" + TextManager.get("cli.network.enterIp"));
 		while (!ip
 				.matches("^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")) {
 			ConsoleColors.redBoldColor();
 			ip = Cli.getUserInput("\n" + TextManager.get("cli.network.errorIpFormat") + ConsoleColors.RESET);
 		}
 
+		// ask User for Opponent Port
 		String port = Cli.getUserInput("\n" + TextManager.get("cli.network.enterPort"));
-
 		while (!port.matches("^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$")) {
 			ConsoleColors.redBoldColor();
 			port = Cli.getUserInput("\n" + TextManager.get("cli.network.errorPortFormat") + ConsoleColors.RESET);
@@ -127,8 +148,32 @@ public class CliMenus {
 
 		// TODO: Handle other errors and print them
 
-		// TODO: Connection to network
-		// TODO: Start the network game
+		// Connection to network
+		Client.setConnectionValues(ip, Integer.parseInt(port));
+		try {
+			if (InetAddress.getByName(Client.getIpAddress()).isReachable(10000)) {
+				Client.initialize();
+			} else {
+				return;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		int color = 0;
+		try {
+			color = Client.decideColor();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+
+		Cli.setUsersColor(color);
+		if (color == Piece.White) {
+			System.out.println(TextManager.get("cli.network.yourColorWhite"));
+		} else {
+			System.out.println(TextManager.get("cli.network.yourColorBlack"));
+		}
+		Cli.runGame(true);
 	}
 
 	/**
