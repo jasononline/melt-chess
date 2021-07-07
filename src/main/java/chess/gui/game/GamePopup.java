@@ -11,6 +11,7 @@ import chess.util.Client;
 import chess.util.TextManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 
@@ -119,18 +120,8 @@ public class GamePopup {
 		disableUI();
 
 		EventHandler<ActionEvent> buttonActionHandler = (event) -> {
-
-			if (event.getSource() == gameController.promotionPopupQueenButton) {
-				move.setFlag(Move.PromoteToQueen);
-			} else if (event.getSource() == gameController.promotionPopupRookButton) {
-				move.setFlag(Move.PromoteToRook);
-			} else if (event.getSource() == gameController.promotionPopupBishopButton) {
-				move.setFlag(Move.PromoteToBishop);
-			} else if (event.getSource() == gameController.promotionPopupKnightButton) {
-				move.setFlag(Move.PromoteToKnight);
-			}
-
-			gameController.boardController.finishMove(move);
+			// add the flag and finish the move
+			addPromotionFlag(move, (Node) event.getSource());
 
 			gameController.promotionPopup.setVisible(false);
 			gameController.boardGrid.setDisable(false);
@@ -150,6 +141,20 @@ public class GamePopup {
 		gameController.promotionPopupRookButton.setOnAction(buttonActionHandler);
 		gameController.promotionPopupBishopButton.setOnAction(buttonActionHandler);
 		gameController.promotionPopupKnightButton.setOnAction(buttonActionHandler);
+	}
+
+	private void addPromotionFlag(Move move, Node button) {
+		if (button.equals(gameController.promotionPopupQueenButton)) {
+			move.setFlag(Move.PromoteToQueen);
+		} else if (button.equals(gameController.promotionPopupRookButton)) {
+			move.setFlag(Move.PromoteToRook);
+		} else if (button.equals(gameController.promotionPopupBishopButton)) {
+			move.setFlag(Move.PromoteToBishop);
+		} else if (button.equals(gameController.promotionPopupKnightButton)) {
+			move.setFlag(Move.PromoteToKnight);
+		}
+
+		gameController.boardController.finishMove(move);
 	}
 
 	/**
@@ -192,6 +197,11 @@ public class GamePopup {
 			if (button == gameController.menuButton && event.getSource() == gameController.surePopupYesButton) {
 				// Main menu
 				GameModel.setTaskStopped(true);
+				try {
+					Client.send("resign");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				Gui.switchTo(Gui.ChessScene.Menu);
 			}
 

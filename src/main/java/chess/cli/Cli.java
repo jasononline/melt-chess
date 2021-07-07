@@ -248,6 +248,7 @@ public class Cli {
 				CliMenus.runMainMenu();
 				break;
 			case 105: // quit code
+				networkResign();
 				exitGame();
 				break;
 		}
