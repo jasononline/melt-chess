@@ -1,7 +1,6 @@
 package chess.util.networkservices;
 
 import chess.gui.game.GameModel;
-import chess.model.Game;
 import javafx.concurrent.Task;
 
 import java.io.IOException;
