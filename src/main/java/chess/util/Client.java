@@ -115,7 +115,7 @@ public class Client {
 
     /**
      * This method will close an existing Client socket and output stream
-     * @throws IOException
+     * @throws IOException IOException
      */
     public static void endOldClient() throws IOException {
         if (dataOutputStream != null) {

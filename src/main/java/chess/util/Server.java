@@ -87,7 +87,7 @@ public class Server {
 
     /**
      * Closes an active Server
-     * @throws IOException
+     * @throws IOException IOExeption
      */
     public static void endOldServer() throws IOException {
         // System.out.println("#Debug: If there already was a Server, it will now be closed.");

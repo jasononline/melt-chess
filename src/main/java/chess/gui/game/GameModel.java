@@ -172,6 +172,7 @@ public class GameModel {
 	 * Uses the engine to generate the next PC-move, or Network-Opponent-move and
 	 * executes that move. Should only be used for PvPC or Network game
 	 *
+	 * @throws IOException IOException
 	 */
 	public static void performOpponentMove() throws IOException {
 		List<Integer> capturedPieces = currentGame.getCurrentPosition().getCapturedPieces();
