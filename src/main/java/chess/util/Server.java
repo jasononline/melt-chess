@@ -59,6 +59,7 @@ public class Server {
         String input = read();
         while (!testUserInputSyntax(input.toLowerCase())) {
             if(GameModel.isTaskStopped()) {
+                // System.out.println("#Debug: getOpponentInput() was caused to stop.");
                 return "";
             }
             input = read();
@@ -89,7 +90,7 @@ public class Server {
      * @throws IOException
      */
     public static void endOldServer() throws IOException {
-        System.out.println("If there already was a Server, it will now be closed.");
+        // System.out.println("#Debug: If there already was a Server, it will now be closed.");
         if (serverSocket != null) {
             serverSocket.close();
         }

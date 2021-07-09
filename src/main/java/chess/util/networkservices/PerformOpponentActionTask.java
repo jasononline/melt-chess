@@ -1,6 +1,7 @@
 package chess.util.networkservices;
 
 import chess.gui.game.GameModel;
+import chess.model.Game;
 import javafx.concurrent.Task;
 
 import java.io.IOException;
@@ -11,9 +12,9 @@ import java.io.IOException;
 public class PerformOpponentActionTask extends Task {
     @Override
     protected Object call() throws IOException {
-        System.out.println("PerformOpponentActionTask started.");
+        // System.out.println("#Debug: PerformOpponentActionTask started.");
         GameModel.performOpponentMove();
-        System.out.println("PerformOpponentActionTask finished.");
+        // System.out.println("#Debug: PerformOpponentActionTask finished.");
         return null;
     }
 }

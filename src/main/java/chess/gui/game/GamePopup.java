@@ -219,7 +219,7 @@ public class GamePopup {
 	 * Takes care of actions that have to happen when resigning
 	 */
 	protected void resign() {
-		System.out.println("resign() was called in GamePopup.java!");
+		// System.out.println("#Debug: resign() was called in GamePopup.java!");
 		gameController.activityIndicator.visibleProperty().unbind();
 		gameController.activityIndicator.setVisible(false);
 

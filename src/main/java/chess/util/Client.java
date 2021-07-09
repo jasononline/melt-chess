@@ -18,6 +18,7 @@ public class Client {
     private static DataOutputStream dataOutputStream;
     private static String ipAddress;
     private static int port;
+    private static int oldOpponentNumber = -2;
 
     /**
      * Initializes and connects the Client
@@ -49,7 +50,12 @@ public class Client {
     public static int decideColor() throws InterruptedException, IOException {
         // System.out.println("decideColor() method call.");
         Random rand = new Random();
-        int result = rand.nextInt(100) + 1;
+        int result;
+
+        do {
+            result = rand.nextInt(100) + 1;
+        } while (result == oldOpponentNumber);
+
         String resultString = String.valueOf(result);
         String opponentString = "";
         int opponentNumber = 0;
@@ -60,8 +66,11 @@ public class Client {
                 return 0;
             }
             try {
-                opponentString = Server.read();
-                opponentNumber = Integer.parseInt(opponentString);
+                String serverInput = Server.read();
+                if (!serverInput.equals(String.valueOf(oldOpponentNumber))) {
+                    opponentString = serverInput;
+                    opponentNumber = Integer.parseInt(opponentString);
+                }
             } catch (IOException e) {
                 // System.out.println("#Debug: Reading did not work, retrying...");
                 e.printStackTrace();
@@ -75,17 +84,17 @@ public class Client {
         }
         send(resultString);
 
-        System.out.println("OpponentNumber is: " + opponentString);
+        // System.out.println("#Debug: OpponentNumber is: " + opponentString);
 
         if (result < opponentNumber) {
             return Piece.White;
         } else if (result > opponentNumber) {
             return Piece.Black;
         } else {
-            System.out.println("#Debug: Similar Number were generated, this has to be treated!");
+            // System.out.println("#Debug: Similar Numbers were generated");
+            oldOpponentNumber = opponentNumber;
+            return decideColor();
         }
-
-        return 0;
     }
 
     /**
