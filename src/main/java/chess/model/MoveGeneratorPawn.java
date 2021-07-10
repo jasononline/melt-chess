@@ -61,45 +61,39 @@ public class MoveGeneratorPawn {
 		}
 	}
 
+	// perform diagonal capturing
 	private static void captureDiagonal(Board board, List<Move> generatedMoves, int direction, int startSquare) {
-		captureDiagonalLeft(board, generatedMoves, direction, startSquare);
-		captureDiagonalRight(board, generatedMoves, direction, startSquare);
-	}
-
-	private static void captureDiagonalLeft(Board board, List<Move> generatedMoves, int direction, int startSquare) {
-		int opponentColor = Piece.getColor(board.getPieceAt(startSquare)) == Piece.Black ? Piece.White : Piece.Black;
-		int diagonalPosition = startSquare + direction + MoveGenerator.LEFT;
-
+		int diagonalPosition;
+		int[] positionalValues = new int[] {startSquare, direction, 0};
 		if (!Coordinate.isOnLeftBorder(startSquare)) {
-			if (Piece.isColor(board.getPieceAt(diagonalPosition), opponentColor)) {
-				if (Coordinate.isOnUpperBorder(diagonalPosition) || Coordinate.isOnLowerBorder(diagonalPosition)) {
-					addPromotionMoves(generatedMoves, startSquare, diagonalPosition);
-				} else {
-					generatedMoves.add(new Move(startSquare, diagonalPosition));
-				}
-			}
-			if (board.getEnPassantSquare() == diagonalPosition
-					&& Piece.isColor(board.getPieceAt(diagonalPosition - direction), opponentColor))
-				generatedMoves.add(new Move(startSquare, diagonalPosition, Move.EnPassantCapture));
+			diagonalPosition = startSquare + direction + MoveGenerator.LEFT;
+			positionalValues[2] = diagonalPosition;
+			captureDiagonalToward(board, generatedMoves, positionalValues);
+		}
+		if (!Coordinate.isOnRightBorder(startSquare)) {
+			diagonalPosition = startSquare + direction + MoveGenerator.RIGHT;
+			positionalValues[2] = diagonalPosition;
+			captureDiagonalToward(board, generatedMoves, positionalValues);
 		}
 	}
 
-	private static void captureDiagonalRight(Board board, List<Move> generatedMoves, int direction, int startSquare) {
-		int diagonalPosition = startSquare + direction + MoveGenerator.RIGHT;
+	// capture either diagonal right or left
+	private static void captureDiagonalToward(Board board, List<Move> generatedMoves, int[] positionalValues) {
+		int startSquare = positionalValues[0];
+		int direction = positionalValues[1];
+		int diagonalPosition = positionalValues[2];
 		int opponentColor = Piece.getColor(board.getPieceAt(startSquare)) == Piece.Black ? Piece.White : Piece.Black;
-		if (!Coordinate.isOnRightBorder(startSquare)) {
-			if (Piece.isColor(board.getPieceAt(diagonalPosition), opponentColor)) {
-				if (Coordinate.isOnUpperBorder(diagonalPosition) || Coordinate.isOnLowerBorder(diagonalPosition)) {
-					addPromotionMoves(generatedMoves, startSquare, diagonalPosition);
-				} else {
-					generatedMoves.add(new Move(startSquare, diagonalPosition));
-				}
-			}
-			if (board.getEnPassantSquare() == diagonalPosition
-					&& Piece.isColor(board.getPieceAt(diagonalPosition - direction), opponentColor))
-				generatedMoves.add(new Move(startSquare, diagonalPosition, Move.EnPassantCapture));
-		}
 
+		if (Piece.isColor(board.getPieceAt(diagonalPosition), opponentColor)) {
+			if (Coordinate.isOnUpperBorder(diagonalPosition) || Coordinate.isOnLowerBorder(diagonalPosition)) {
+				addPromotionMoves(generatedMoves, startSquare, diagonalPosition);
+			} else {
+				generatedMoves.add(new Move(startSquare, diagonalPosition));
+			}
+		}
+		if (board.getEnPassantSquare() == diagonalPosition
+				&& Piece.isColor(board.getPieceAt(diagonalPosition - direction), opponentColor))
+			generatedMoves.add(new Move(startSquare, diagonalPosition, Move.EnPassantCapture));
 	}
 
 	private static void addPromotionMoves(List<Move> generatedMoves, int startSquare, int targetSquare) {
