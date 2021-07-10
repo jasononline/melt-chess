@@ -231,6 +231,7 @@ public class ResizeManager {
 		networkController.ipLabel.setStyle(fxFontSize + fontSize25);
 		networkController.portLabel.setStyle(fxFontSize + fontSize25);
 		networkController.errorLabel.setStyle(fxFontSize + fontSize20);
+		networkController.networkInformationLabel.setStyle(fxFontSize + fontSize25);
 
 		String textFieldStyle = fxFontSize + fontSize25 + fxBackgroundRadius + borderRadius10 + fxBorderRadius
 				+ borderRadius10 + fxBorderWidth + borderWidth2;

@@ -44,25 +44,8 @@ public class BoardController {
 	protected void initialize() {
 
 		performEngineMoveService = new PerformEngineMoveService();
-		performEngineMoveService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-			@Override
-			public void handle(WorkerStateEvent workerStateEvent) {
-				finishOpponentAction();
-			}
-		});
 
 		performOpponentActionService = new PerformOpponentActionService();
-		performOpponentActionService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-			@Override
-			public void handle(WorkerStateEvent workerStateEvent) {
-				System.out.println("OpponentMove Worker is done");
-				if (GameModel.surrendered) {
-					gameController.gamePopup.resign();
-				} else {
-					finishOpponentAction();
-				}
-			}
-		});
 
 		gameController.boardGrid.setDisable(false);
 		gameController.boardGrid.prefHeightProperty().bind(Bindings.min(
@@ -214,6 +197,13 @@ public class BoardController {
 			gameController.settingsButton.disableProperty().bind(performEngineMoveService.runningProperty());
 			gameController.saveButton.disableProperty().bind(performEngineMoveService.runningProperty());
 
+			performEngineMoveService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+				@Override
+				public void handle(WorkerStateEvent workerStateEvent) {
+					finishOpponentAction();
+				}
+			});
+
 			performEngineMoveService.restart();
 		}
 		// Network
@@ -222,6 +212,20 @@ public class BoardController {
 			gameController.boardGrid.setDisable(true);
 			gameController.settingsButton.disableProperty().bind(performOpponentActionService.runningProperty());
 			gameController.saveButton.disableProperty().bind(performOpponentActionService.runningProperty());
+
+			performOpponentActionService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+				@Override
+				public void handle(WorkerStateEvent workerStateEvent) {
+					// System.out.println("#Debug: OpponentMove Worker is done");
+					// System.out.println("#Debug: GameModel.surrendered = " + GameModel.surrendered);
+					if (GameModel.surrendered) {
+						// System.out.println("#Debug: resign found after performOpponentActionServiece succeeded.");
+						gameController.gamePopup.resign();
+					} else {
+						finishOpponentAction();
+					}
+				}
+			});
 
 			performOpponentActionService.restart();
 		}

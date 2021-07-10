@@ -128,7 +128,6 @@ public class CliMenus {
 		System.out.println("\n" + TextManager.get("cli.network.yourIp") + "\t" + Server.getIP());
 		System.out.println(TextManager.get("cli.network.yourPort") + "\t\t" + Server.getPort());
 
-
 		// ask User for Opponent IP
 		String ip = Cli.getUserInput("\n" + TextManager.get("cli.network.enterIp"));
 		while (!ip
@@ -318,6 +317,7 @@ public class CliMenus {
 				Cli.exitGame();
 				break;
 		}
+		System.out.println(calledFrom);
 		returnToMenu(calledFrom);
 	}
 

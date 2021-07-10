@@ -56,13 +56,14 @@ public class Move implements Serializable {
 		int startSquare = Coordinate.toIndex(squares[0]); // start position in the board.squares array
 		int targetSquare = Coordinate.toIndex(squares[1].substring(0, 2)); // target position in the board.squares array
 		String flagString = squares[1].length() > 2 ? "" + squares[1].charAt(2) : "";
+		// System.out.println("#Debug: flagString in parseUserMoveInput(..) is: " + flagString);
 		int flag = 0;
 
 		switch (flagString) {
 			case "Q":
 				flag = Move.PromoteToQueen;
 				break;
-			case "K":
+			case "N":
 				flag = Move.PromoteToKnight;
 				break;
 			case "R":

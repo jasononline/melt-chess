@@ -32,6 +32,7 @@ public class Engine {
     private int maxDepth = 3; // only use odd values!
 
     private static final boolean alphaBetaPruningFeatureSwitch = true;
+    private EngineBoard currentPosition;
 
     /**
      * Contructor of the engine
@@ -102,18 +103,22 @@ public class Engine {
         int alpha, beta;
         alpha = Integer.MIN_VALUE;
         beta  = Integer.MAX_VALUE;
-        return alphaBetaPruning(board, depth, maximizingColor, alpha, beta);
+        currentPosition = board;
+        return alphaBetaPruning(depth, maximizingColor, alpha, beta);
     }
 
-    private int alphaBetaPruning(EngineBoard board, int depth, int maximizingColor, int alpha, int beta) {
+    @SuppressWarnings({ "PMD.AvoidReassigningParameters", "PMD.UnusedLocalVariable" })
+    // Since this is recursive method reassigning is needed
+    // UnusedLocalVariable warning is wrong since value is used within the Math.max and Math.min Methods
+    private int alphaBetaPruning(int depth, int maximizingColor, int alpha, int beta) {
         int value;
         if (depth == 0) {
-            return board.getScore();
+            return currentPosition.getScore();
         }
-        if (board.getTurnColor() == maximizingColor) {
+        if (currentPosition.getTurnColor() == maximizingColor) {
             value = Integer.MIN_VALUE;
-            for (EngineBoard newPosition : getNextPositions(board)) {
-                value = Math.max(value, alphaBetaPruning(newPosition, depth-1, maximizingColor, alpha, beta));
+            for (EngineBoard newPosition : getNextPositions(currentPosition)) {
+                value = Math.max(value, alphaBetaPruning(depth-1, maximizingColor, alpha, beta));
                 if (value <= beta) {
                     break;
                 }
@@ -122,8 +127,8 @@ public class Engine {
             return value;
         }
         value = Integer.MAX_VALUE;
-        for (EngineBoard newPosition : getNextPositions(board)) {
-            value = Math.min(value, alphaBetaPruning(newPosition, depth-1, maximizingColor, alpha, beta));
+        for (EngineBoard newPosition : getNextPositions(currentPosition)) {
+            value = Math.min(value, alphaBetaPruning(depth-1, maximizingColor, alpha, beta));
             if (value <= alpha) {
                 break;
             }

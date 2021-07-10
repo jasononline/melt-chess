@@ -172,6 +172,7 @@ public class GameModel {
 	 * Uses the engine to generate the next PC-move, or Network-Opponent-move and
 	 * executes that move. Should only be used for PvPC or Network game
 	 *
+	 * @throws IOException IOException
 	 */
 	public static void performOpponentMove() throws IOException {
 		List<Integer> capturedPieces = currentGame.getCurrentPosition().getCapturedPieces();
@@ -182,6 +183,13 @@ public class GameModel {
 		} else {
 			// Network
 			next = networkMove();
+			/*
+			if (next == null) {
+				System.out.println("#Debug: next is null.");
+			} else {
+				System.out.println("#Debug: Parsed Opponent input: " + next.toString());
+			}
+			 */
 		}
 
 		if (next == null || !currentGame.attemptMove(next) || taskStopped) {
@@ -206,17 +214,20 @@ public class GameModel {
 	}
 
 	private static Move networkMove() throws IOException {
-		System.out.println("networkMove() was called.");
+		// System.out.println("\n#Debug: NetworkMove() was called.");
 		String opponentInput = Server.getOpponentInput();
+		// System.out.println("#Debug: Message received from Server: " + opponentInput);
 		if (opponentInput.equals("")) {
 			// this only happens when the task is being stopped
 			return null;
 		}
-		System.out.println("Opponent input was: " + opponentInput);
+		// System.out.println("#Debug: Opponent input was: " + opponentInput);
 		if (opponentInput.equals("resign")) {
 			System.out.println("Opponent resigned.");
+
 			surrendered = true;
 			taskStopped = true;
+
 			return null;
 		}
 		return Move.parseUserMoveInput(opponentInput, currentGame);

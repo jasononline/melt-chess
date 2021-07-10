@@ -4,6 +4,7 @@ import chess.gui.Gui;
 import chess.gui.game.GameModel;
 import chess.gui.util.ResizeManager;
 import chess.util.Client;
+import chess.util.Server;
 import chess.util.TextManager;
 import chess.util.networkservices.ConnectClientService;
 import javafx.beans.value.ChangeListener;
@@ -56,6 +57,8 @@ public class NetworkController {
 	public Label connectingLabel;
 	@FXML
 	public ProgressIndicator activityIndicator;
+	@FXML
+	public Label networkInformationLabel;
 
 	private ResizeManager resizeManager = new ResizeManager(this);
 
@@ -127,6 +130,8 @@ public class NetworkController {
 				portTextField.getStyleClass().removeAll(error);
 			}
 		});
+		networkInformationLabel.setText(TextManager.get("network.yourIp") + " " + Server.getIP()
+									  + "\t" + TextManager.get("network.yourPort") + " " + Server.getPort());
 	}
 
 	@FXML

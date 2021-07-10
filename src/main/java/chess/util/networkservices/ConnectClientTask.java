@@ -29,13 +29,13 @@ public class ConnectClientTask extends Task {
 		}
 		if (color == Piece.White) {
 			GameModel.setChoosenColor(Piece.White);
-			System.out.println("My color is WHITE.");
+			// System.out.println("#Debug: My color is WHITE.");
 		} else if (color == Piece.Black) {
 			GameModel.setChoosenColor(Piece.Black);
-			System.out.println("My color is BLACK.");
-		} else {
-			System.out.println("Connection timeout (treat this in ConnectClientTask.java----------------------");
-			System.exit(0);
+			// System.out.println("#Debug: My color is BLACK.");
+		} else if(color == 0){
+			// System.out.println("#Debug: Task not allowed to continue");
+			return null;
 		}
 		GameModel.beginNewGame();
 		Gui.switchTo(Gui.ChessScene.Game);
