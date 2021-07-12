@@ -18,7 +18,7 @@ public class MoveValidatorTest {
      * Test for checkCheck
      */
     @Test
-    public void CheckCheck() {
+    public void checkCheck() {
         Board board;
         // simple tests
         board = new Board("8/8/8/8/8/4q3/8/1q2K3");

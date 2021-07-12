@@ -36,10 +36,11 @@ public class CoordinateTest {
 	 * Method to test the expected behavior of the Method Coordinate.toIndex()
 	 */
 	@Test
-	public void CoordinateToIndex() {
+	public void coordinateToIndex() {
 		assertEquals(Coordinate.toIndex("a8"), 0);
 		assertEquals(Coordinate.toIndex("h1"), 63);
 		assertEquals(Coordinate.toIndex("b4"), 33);
+
 	}
 
 	/**
