@@ -16,7 +16,6 @@ Eine ausführliche Bedienungsanleitung finden Sie unter Bedienungsanleitung.pdf
 Neben dem regulären Schachspiel, nach den allgemeinen Regeln des Weltschachverbands (FIDE) in der deutschen Übersetzung von 2018 (ausgenommen von Sonderregeln), gibt es die folgenden Features:
 
 - Interfacesprache in Deutsch und Englisch
-- Spieluhr
 - Schachbrett nach jedem Zug drehen
 - Schach anzeigen
 - Geschlagene Figuren anzeigen
