@@ -281,6 +281,8 @@ public class ResizeManager {
 		setHistoryStyles();
 		setPopupStyles();
 
+		resizeBeaten();
+
 		ImageView[] promotionIcons = getPromotionIcons();
 		for (ImageView icon : promotionIcons) {
 			icon.setFitHeight(iconHeight35 / 1.75);
@@ -314,6 +316,17 @@ public class ResizeManager {
 				ImageView piece = (ImageView) node;
 				centerPiecePosition(piece);
 			}
+		}
+	}
+
+	public void resizeBeaten() {
+		for (Node node : gameController.blackBeatenFlowPane.getChildren()) {
+			ImageView img = (ImageView) node;
+			img.setFitHeight(fontSize25);
+		}
+		for (Node node : gameController.whiteBeatenFlowPane.getChildren()) {
+			ImageView img = (ImageView) node;
+			img.setFitHeight(fontSize25);
 		}
 	}
 

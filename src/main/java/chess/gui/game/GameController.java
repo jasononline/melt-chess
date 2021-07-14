@@ -208,6 +208,7 @@ public class GameController {
 			piece.setFitHeight(25);
 			blackBeatenFlowPane.getChildren().add(piece);
 		}
+		resizeManager.resizeBeaten();
 	}
 
 	/**
