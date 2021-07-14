@@ -31,7 +31,6 @@ public class Engine {
     private static final List<Integer> promotionFilter = new ArrayList<>();
     private int maxDepth = 3; // only use odd values!
 
-    private static final boolean alphaBetaPruningFeatureSwitch = true;
     private EngineBoard currentPosition;
 
     /**
@@ -62,11 +61,7 @@ public class Engine {
         int value;
 
         for (EngineBoard position : possiblePositions) {
-            if (alphaBetaPruningFeatureSwitch) {
                 value = alphaBetaPruning(position, maxDepth, color);
-            } else {
-                value = minimax(position, maxDepth, color);
-            }
             if (bestValue < value) {
                 bestValue = value;
                 bestPosition = position;
@@ -76,26 +71,6 @@ public class Engine {
             return possiblePositions.get(0).getLastMove();
         }
         return bestPosition.getLastMove();
-    }
-
-
-    private int minimax(EngineBoard board, int depth, int maximizingColor) {
-        int value;
-        if (depth == 0) {
-            return board.getScore();
-        }
-        if (board.getTurnColor() == maximizingColor) {
-            value = Integer.MIN_VALUE;
-            for (EngineBoard newPosition : getNextPositions(board)) {
-                value = Math.max(value, minimax(newPosition, depth-1, maximizingColor));
-            }
-            return value;
-        }
-        value = Integer.MAX_VALUE;
-        for (EngineBoard newPosition : getNextPositions(board)) {
-            value = Math.min(value, minimax(newPosition, depth-1, maximizingColor));
-        }
-        return value;
     }
 
 
