@@ -8,7 +8,7 @@
 	<!-- the id of the artifact (project) -->
 	<artifactId>chess</artifactId>
 	<!-- the version of the artifact under the specified group -->
-	<version>0.2-SNAPSHOT</version>
+	<version>0.3-Latest Stable Release</version>
 
 	<properties>
 		<!-- Set file encoding for all source files. This avoids warnings about Maven copying files without knowing their encoding. -->
