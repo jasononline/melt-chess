@@ -65,6 +65,7 @@ if __name__ == '__main__':
     regex_head = re.compile('- \*\*(\w+)\*\*: ?([A-Z]|\d+|low|high)')
     regex_closedif = re.compile('- \[([x ])\]([^-]+)')
     regex_descr = re.compile('ko\*\*: (?:low|high)?(.+)\*\*Abgeschlossen')
+    regex_descr = re.compile('ko\*\*: ?(?:low|high)?(.+)\*\*Abgeschlossen', re.DOTALL)
     
     tex = ''
     for row in csv:

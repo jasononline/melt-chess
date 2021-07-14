@@ -346,7 +346,7 @@ Speichert den Status der aktuellen Einstellungen und stellt sie zur Abfrage bere
 \textbf{Abgeschlossen wenn}
 \begin{todolist}
     \item[\done]  Die Klasse besitzt alle nötigen Felder für die verschiedenen Einstellungsmöglichkeiten
-  \item  Die Klasse kann serialsiert werden
+  \item[\done]  Die Klasse kann serialsiert werden
 
 \end{todolist}
 
@@ -392,7 +392,7 @@ Die `NetworkConnectView` gibt dem Benutzer die Möglichkeit, die Daten für die 
 
 
 \subsection*{Erstellen NetworkConnectController}
-id: \#22 Milestone: 2. Iteration\\
+id: \#22 Milestone: 3. Iteration\\
 
 \begin{itemize}
 \item[Priorisierung] 
@@ -404,10 +404,11 @@ Der `NetworkConnectController` interpretiert die Aktionen des Benutzers, die die
 
 \textbf{Abgeschlossen wenn}
 \begin{todolist}
-    \item  Bei Klick auf `btnConnect` wird das `lblConnectionFail` auf "unsichtbar" geändert und ein Verbindungsaufbau entsprechend der Nutzereingabe versucht.
-  \item  Schlägt die Verbindung fehl, wird die Sichtbarkeit von `lblConnectionFail` auf "sichtbar" geändert.
-  \item  Gelingt die Verbindung, so wird die `GameView` als aktuelle `Scene` gesetzt.
+    \item[\done]  Bei Klick auf `btnConnect` wird das `lblConnectionFail` auf "unsichtbar" geändert und ein Verbindungsaufbau entsprechend der Nutzereingabe versucht.
+  \item[\done]  Schlägt die Verbindung fehl, wird die Sichtbarkeit von `lblConnectionFail` auf "sichtbar" geändert.
+  \item[\done]  Gelingt die Verbindung, so wird die `GameView` als aktuelle `Scene` gesetzt und das Spiel wird gestartet.
   \item[\done]  Bei einem Klick auf `btnCancel` wird die `MainMenueView` als aktuelle `scene` gesetzt.
+  \item[\done]  Die eigene IP
 
 \end{todolist}
 
@@ -520,6 +521,110 @@ Hier werden Informationen über das gerade sichtbare Schachbrett gespeichert. Da
     \item[\done]  speichert ob eine Figur ausgewählt ist.
   \item[\done]  speichert welche Figur ausgewählt ist.
   \item[\done]  speichert eine Liste der geschlagenen Figuren als `ImageView`
+
+\end{todolist}
+
+
+\subsection*{Alpha Beta Pruning}
+id: \#28 Milestone: 3. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] A
+\item[Storypoints] 6
+\item[Risiko] low
+\end{itemize}
+
+In der Engine soll die Suche nach neuen Zügen via `minimax`-Algorithmus durch alpha-beta-pruning beschläunigt werden.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  minimax wurde durch alphabetapruning erweitert
+  \item[\done]  Mit GUI getestet
+  \item[\done]  feature switch und minimax Algorithmus entfernen
+  \item[\done]  Resolve pmd violations
+
+\end{todolist}
+
+
+\subsection*{Network Game implementieren}
+id: \#29 Milestone: 3. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] E
+\item[Storypoints] 21
+\item[Risiko] high
+\end{itemize}
+
+Das Netzwerkspiel soll in GUI und CLI möglich sein.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Zur Kommunikation zwischen zwei Spielen werden die bekannten Befehle aus der CLI genutzt.
+  \item[\done]  Nach einem Zug des Spielers (ggf auch zu Beginn) wird auf einen Zug des Netzwerkgegners gewartet.
+  \item[\done]  \"resign\" wird als Befehl beim Aufgeben oder Abbrechen des Spiels verwendet.
+
+\end{todolist}
+
+
+\subsection*{Speichern/Laden implementieren}
+id: \#31 Milestone: 3. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] 
+\item[Storypoints] 
+\item[Risiko] E
+\end{itemize}
+
+Erstellen die Klassen `Saving` und `SavingManager` im Paket `util`. Die Klasse `Saving` enthält das Spielobjekt und die Historie der Züge. Die Klasse `SavingManager` speichert und lädt das Spiel.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Enthält das Spielobjekt.
+  \item[\done]  Enthält die Historie der Züge._`SavingManager`:_
+  \item[\done]  Sucht nach Speicherdateien in einem angegebenen Verzeichnis.
+  \item[\done]  Erzeugt einen Standardnamen basierend auf dem aktuellen Datum.
+  \item[\done]  Erzeugt eine Datei und speichert das Speicherobjekt(`Saving`) darin.
+  \item[\done]  Lädt das Spiel aus der ausgewählten Speicherdatei.
+
+\end{todolist}
+
+
+\subsection*{Resizeable GUI Feature implementieren}
+id: \#32 Milestone: 3. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] 
+\item[Storypoints] 
+\item[Risiko] D
+\end{itemize}
+
+Das GUI-basierte Frontend lässt sich jederzeit auf eine beliebige Größe ziehen.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Reagieren auf Änderungen der Größe des Spielfensters.
+  \item[\done]  Aktualisieren die Größe von Text, Symbolen und anderen Elementen, wenn die Größe des Fensters geändert wird.
+
+\end{todolist}
+
+
+\subsection*{Zweisprachigkeit implementieren}
+id: \#34 Milestone: 3. Iteration\\
+
+\begin{itemize}
+\item[Priorisierung] 
+\item[Storypoints] 
+\item[Risiko] V
+\end{itemize}
+
+Von jeder Stelle im Spiel aus kann zwischen zwei Sprachen gewechselt werden.
+
+\textbf{Abgeschlossen wenn}
+\begin{todolist}
+    \item[\done]  Erstellen `TextManager` Klasse.
+  \item[\done]  Fügen .properties
+  \item[\done]  Übernehmen den Text aus der gewünschten .proteries
+  \item[\done]  Ändern das Locale.
 
 \end{todolist}
 
