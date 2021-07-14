@@ -317,7 +317,6 @@ public class CliMenus {
 				Cli.exitGame();
 				break;
 		}
-		System.out.println(calledFrom);
 		returnToMenu(calledFrom);
 	}
 
