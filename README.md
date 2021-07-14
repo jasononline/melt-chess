@@ -1,7 +1,6 @@
 # Schach
 
-Dieses Programm ist ein Schachspiel. Es besteht die Möglichkeit das Spiel gegen eine Person, den Computer oder einen Netzwerk-Spieler zu spielen.
-Es gibt zwei Möglichkeiten das Spiel zu starten und zu spielen:
+Dieses Programm ist ein Schachspiel. Es besteht die Möglichkeit das Spiel gegen eine Person, den Computer oder einen Netzwerk-Spieler zu spielen:
 
 Client:
 
@@ -21,6 +20,9 @@ Neben dem regulären Schachspiel, nach den allgemeinen Regeln des Weltschachverb
 - Geschlagene Figuren anzeigen
 - Mögliche Züge für die Spielfiguren anzeigen
 - Spielhistorie
+- Speichern/Laden von Spielen
+- Resizeable GUI
+- Verbesserte KI mithilfe Min-/Max-Suche mit α/β\alpha/\betaα/β-Pruning
 
 # Maven
 
