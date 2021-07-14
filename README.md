@@ -22,7 +22,7 @@ Neben dem regulären Schachspiel, nach den allgemeinen Regeln des Weltschachverb
 - Spielhistorie
 - Speichern/Laden von Spielen
 - Resizeable GUI
-- Verbesserte KI mithilfe Min-/Max-Suche mit α/β\alpha/\betaα/β-Pruning
+- Verbesserte KI mithilfe Min-/Max-Suche mit α/β-Pruning
 
 # Maven
 
